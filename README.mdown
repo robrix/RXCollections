@@ -1,0 +1,38 @@
+#RXCollections
+
+`map`, `filter`, `fold`, and `detect` for Cocoa collections, with as little chaff as possible.
+
+In short:
+
+	#import "RXCollections.h"
+	
+	…
+	
+	[NSArray rx_arrayByMappingCollection:people withBlock:^(id each) { return [each phoneNumber]; }];
+	
+	[NSSet rx_setByFilteringCollection:ungulates withBlock:^(id each) { return [each stomachCount] == 4; }];
+	
+	[stringsToConcatenate rx_foldInitialValue:@"" withBlock:^(id memo, id each) { return [memo stringByAppendingString:each]; }];
+	
+	[collection rx_detectWithBlock:^(id each) { return [[each name] isEqualToString:@"Richard Feynman"]; }];
+
+##Collections that can be created
+
+Currently, `RXCollections` can create `NSArray` and `NSSet` instances. You select which you want by calling one of the factory methods:
+
+- `+[NSArray rx_arrayByMappingCollection:withBlock:]`
+- `+[NSArray rx_arrayByFilteringCollection:withBlock:]`
+- `+[NSSet rx_setByMappingCollection:withBlock:]`
+- `+[NSSet rx_setByFilteringCollection:withBlock:]`
+
+Creating dictionaries is not yet implemented as it requires some sort of cons-type class for `map` and is even less obvious for `filter`.
+
+##Collections that can be traversed
+
+Anything that conforms to the NSFastEnumeration protocol can be traversed. This includes arrays, sets, dictionaries, enumerators, and any third-party classes which conform to the protocol.
+
+##Notes
+
+More documentation is available in `RXCollections.h`.
+
+The included Xcode target compiles a static archive, but there’s no real need to use it; you can just link `RXCollections.m` in directly and `#import "RXCollections.h"`. I would recommend this approach, as static archives are a pain.
