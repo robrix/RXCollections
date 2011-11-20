@@ -12,9 +12,12 @@
 		D49E8FA3147978C8004490EA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8F147978C8004490EA /* Cocoa.framework */; };
 		D49E8FA6147978C9004490EA /* libRXCollections.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8C147978C8004490EA /* libRXCollections.a */; };
 		D49E8FAC147978C9004490EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D49E8FAA147978C9004490EA /* InfoPlist.strings */; };
-		D49E8FAF147978C9004490EA /* RXCollectionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FAE147978C9004490EA /* RXCollectionsTests.m */; };
 		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
+		D49E8FC21479A489004490EA /* RXCollectionSetTests.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FC01479A489004490EA /* RXCollectionSetTests.h */; };
+		D49E8FC41479A491004490EA /* RXCollectionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC11479A489004490EA /* RXCollectionSetTests.m */; };
+		D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC61479ACEE004490EA /* RXAssertions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,10 +41,14 @@
 		D49E8FA1147978C8004490EA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D49E8FA9147978C9004490EA /* RXCollectionsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RXCollectionsTests-Info.plist"; sourceTree = "<group>"; };
 		D49E8FAB147978C9004490EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D49E8FAD147978C9004490EA /* RXCollectionsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXCollectionsTests.h; sourceTree = "<group>"; };
-		D49E8FAE147978C9004490EA /* RXCollectionsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RXCollectionsTests.m; sourceTree = "<group>"; };
 		D49E8FB81479790E004490EA /* RXCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollection.h; sourceTree = "<group>"; };
 		D49E8FB91479790E004490EA /* RXCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollection.m; sourceTree = "<group>"; };
+		D49E8FC01479A489004490EA /* RXCollectionSetTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollectionSetTests.h; sourceTree = "<group>"; };
+		D49E8FC11479A489004490EA /* RXCollectionSetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionSetTests.m; sourceTree = "<group>"; };
+		D49E8FC51479ACEE004490EA /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
+		D49E8FC61479ACEE004490EA /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
+		D49E8FC81479B440004490EA /* RXCollectionArrayTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollectionArrayTests.h; sourceTree = "<group>"; };
+		D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionArrayTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +133,12 @@
 		D49E8FA7147978C9004490EA /* RXCollectionsTests */ = {
 			isa = PBXGroup;
 			children = (
-				D49E8FAD147978C9004490EA /* RXCollectionsTests.h */,
-				D49E8FAE147978C9004490EA /* RXCollectionsTests.m */,
+				D49E8FC51479ACEE004490EA /* RXAssertions.h */,
+				D49E8FC61479ACEE004490EA /* RXAssertions.m */,
+				D49E8FC81479B440004490EA /* RXCollectionArrayTests.h */,
+				D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */,
+				D49E8FC01479A489004490EA /* RXCollectionSetTests.h */,
+				D49E8FC11479A489004490EA /* RXCollectionSetTests.m */,
 				D49E8FA8147978C9004490EA /* Supporting Files */,
 			);
 			path = RXCollectionsTests;
@@ -150,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49E8FBA1479790E004490EA /* RXCollection.h in Headers */,
+				D49E8FC21479A489004490EA /* RXCollectionSetTests.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +271,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FAF147978C9004490EA /* RXCollectionsTests.m in Sources */,
+				D49E8FC41479A491004490EA /* RXCollectionSetTests.m in Sources */,
+				D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */,
+				D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,9 +320,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -327,8 +341,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				SDKROOT = macosx10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -337,6 +351,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -346,6 +361,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -357,6 +373,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				INFOPLIST_FILE = "RXCollectionsTests/RXCollectionsTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -369,6 +386,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				INFOPLIST_FILE = "RXCollectionsTests/RXCollectionsTests-Info.plist";
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -393,6 +411,7 @@
 				D49E8FB4147978C9004490EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D49E8FB5147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollectionsTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +420,7 @@
 				D49E8FB7147978C9004490EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

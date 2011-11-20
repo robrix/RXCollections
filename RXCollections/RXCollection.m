@@ -62,7 +62,7 @@
 	for(id each in collection) {
 		id result = block(each);
 		if(result != nil)
-			[set addObject:set];
+			[set addObject:result];
 	}
 	return set;
 }

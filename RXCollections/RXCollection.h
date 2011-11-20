@@ -19,6 +19,9 @@
  - folding without an initial value is the same as providing an initial value of nil
  - it doesn’t make much sense to fold a set or dictionary (since they’re unordered) unless your operation is commutative. e.g. + is commutative, - is not; a + b = b + a, but a - b may not equal b - a
  
+ - detecting returns the first element of the collection for which the block returns YES
+ - detecting over an unordered collection is defined, but if multiple elements may match the block then which is returned is undefined
+ 
  */
 
 typedef id (^RXCollectionMapBlock)(id each);
@@ -53,6 +56,25 @@ typedef id (^RXCollectionFoldBlock)(id memo, id each); // memo is the initial va
 @end
 
 @interface NSSet (RXCollectionFold)
+
+-(id)rx_foldInitialValue:(id)initial withBlock:(RXCollectionFoldBlock)block;
+-(id)rx_foldWithBlock:(RXCollectionFoldBlock)block;
+
+-(id)rx_detectWithBlock:(RXCollectionFilterBlock)block;
+
+@end
+
+
+// don’t have a sensible way to get keys for either of these, with the latter being vastly more damning since it doesn’t do object returns either
+//@interface NSDictionary (RXCollection)
+//
+//+(NSDictionary *)rx_dictionaryByMappingCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionMapBlock)block;
+//
+//+(NSDictionary *)rx_dictionaryByFilteringCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionFilterBlock)block;
+//
+//@end
+
+@interface NSDictionary (RXCollectionFold)
 
 -(id)rx_foldInitialValue:(id)initial withBlock:(RXCollectionFoldBlock)block;
 -(id)rx_foldWithBlock:(RXCollectionFoldBlock)block;
