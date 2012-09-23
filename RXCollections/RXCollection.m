@@ -4,9 +4,16 @@
 
 #import "RXCollection.h"
 
+RXCollectionMapBlock RXCollectionIdentityBlock = ^(id x) { return x; };
+
 @implementation NSObject (RXCollection)
 
--(id)rx_foldInitialValue:(id)initial withBlock:(RXCollectionFoldBlock)block {
++(NSMutableArray *)rx_emptyMutableCollection {
+	return [NSMutableArray array];
+}
+
+
+-(id)rx_foldInitialValue:(id)initial block:(RXCollectionFoldBlock)block {
 	for(id each in (id<NSFastEnumeration>)self) {
 		initial = block(initial, each);
 	}
@@ -14,7 +21,7 @@
 }
 
 -(id)rx_foldWithBlock:(RXCollectionFoldBlock)block {
-	return [self rx_foldInitialValue:nil withBlock:block];
+	return [self rx_foldInitialValue:nil block:block];
 }
 
 
@@ -27,54 +34,58 @@
 	return nil;
 }
 
+
+-(instancetype)rx_mapIntoCollection:(id<RXMutableCollection>)collection block:(RXCollectionMapBlock)block {
+	return [self rx_foldInitialValue:collection block:^id(id<RXMutableCollection> memo, id each) {
+		return [memo rx_append:block(each)];
+	}];
+}
+
+-(instancetype)rx_mapWithBlock:(RXCollectionMapBlock)block {
+	return [self rx_mapIntoCollection:[self.class rx_emptyMutableCollection] block:block];
+}
+
+
+-(instancetype)rx_filterIntoCollection:(id<RXMutableCollection>)collection block:(RXCollectionFilterBlock)block {
+	return [self rx_mapIntoCollection:collection block:^id(id each) {
+		return block(each)?
+			each
+		:	nil;
+	}];
+}
+
+-(instancetype)rx_filterWithBlock:(RXCollectionFilterBlock)block {
+	return [self rx_filterIntoCollection:[self.class rx_emptyMutableCollection] block:block];
+}
+
 @end
 
 
-@implementation NSArray (RXCollection)
+@implementation NSMutableArray (RXCollection)
 
-+(NSArray *)rx_arrayByMappingCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionMapBlock)block {
-	NSMutableArray *array = [NSMutableArray array];
-	for(id each in collection) {
-		id result = block(each);
-		if(result != nil)
-			[array addObject:result];
-	}
-	return array;
-}
-
-+(NSArray *)rx_arrayByFilteringCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionFilterBlock)block {
-	NSMutableArray *array = [NSMutableArray array];
-	for(id each in collection) {
-		if(block(each)) {
-			[array addObject:each];
-		}
-	}
-	return array;
+-(instancetype)rx_append:(id)element {
+	if (element)
+		[self addObject:element];
+	return self;
 }
 
 @end
 
 
-@implementation NSSet (RXCollection)
+@implementation NSSet (RXCollectionEmpty)
 
-+(NSSet *)rx_setByMappingCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionMapBlock)block {
-	NSMutableSet *set = [NSMutableSet set];
-	for(id each in collection) {
-		id result = block(each);
-		if(result != nil)
-			[set addObject:result];
-	}
-	return set;
++(instancetype)rx_emptyMutableCollection {
+	return [NSMutableSet set];
 }
 
-+(NSSet *)rx_setByFilteringCollection:(id<NSFastEnumeration>)collection withBlock:(RXCollectionFilterBlock)block {
-	NSMutableSet *set = [NSMutableSet set];
-	for(id each in collection) {
-		if(block(each)) {
-			[set addObject:each];
-		}
-	}
-	return set;
+@end
+
+@implementation NSMutableSet (RXCollection)
+
+-(instancetype)rx_append:(id)element {
+	if (element)
+		[self addObject:element];
+	return self;
 }
 
 @end
