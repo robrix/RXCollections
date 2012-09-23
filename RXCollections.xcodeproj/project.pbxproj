@@ -210,7 +210,7 @@
 		D49E8F83147978C8004490EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Monochrome Industries";
 			};
 			buildConfigurationList = D49E8F86147978C8004490EA /* Build configuration list for PBXProject "RXCollections" */;
@@ -347,6 +347,7 @@
 		D49E8FB3147978C9004490EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -357,6 +358,7 @@
 		D49E8FB4147978C9004490EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -367,6 +369,7 @@
 		D49E8FB6147978C9004490EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
@@ -380,6 +383,7 @@
 		D49E8FB7147978C9004490EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
