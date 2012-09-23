@@ -8,9 +8,9 @@ In short:
 	
 	…
 	
-	[NSArray rx_arrayByMappingCollection:people withBlock:^(id each) { return [each phoneNumber]; }];
+	[people rx_mapWithBlock:^(id each) { return [each phoneNumber]; }];
 	
-	[NSSet rx_setByFilteringCollection:ungulates withBlock:^(id each) { return [each stomachCount] == 4; }];
+	[ungulates rx_filterWithBlock:^(id each) { return [each stomachCount] == 4; }];
 	
 	[stringsToConcatenate rx_foldInitialValue:@"" withBlock:^(id memo, id each) { return [memo stringByAppendingString:each]; }];
 	
@@ -18,14 +18,7 @@ In short:
 
 ##Collections that can be created
 
-Currently, `RXCollections` can create `NSArray` and `NSSet` instances. You select which you want by calling one of the factory methods:
-
-- `+[NSArray rx_arrayByMappingCollection:withBlock:]`
-- `+[NSArray rx_arrayByFilteringCollection:withBlock:]`
-- `+[NSSet rx_setByMappingCollection:withBlock:]`
-- `+[NSSet rx_setByFilteringCollection:withBlock:]`
-
-Creating dictionaries is not yet implemented as it requires some sort of cons-type class for `map` and is even less obvious for `filter`.
+Currently, RXCollections will create sets when mapping or filtering sets, or arrays when mapping or filtering anything else. Your collections can map/filter to other types by implementing `+rx_emptyMutableCollection`. One-off maps and filters into other collections can be done with the `…IntoCollection:` variants.
 
 ##Collections that can be traversed
 
