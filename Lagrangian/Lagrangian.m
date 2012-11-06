@@ -8,6 +8,33 @@
 
 #import "Lagrangian.h"
 
-@implementation Lagrangian
+@l3suite("Lagrangian tests")
 
-@end
+//@l3setUp {
+//	
+//}
+
+@l3test("test cases receive a suite") {
+	
+}
+
+//@l3tearDown {
+//	
+//}
+
+
+//@l3precondition {
+//	
+//}
+
+//@l3postcondition {
+//	
+//}
+
+//@l3invariant {
+//	
+//}
+
+//@l3benchmark {
+//	
+//}
