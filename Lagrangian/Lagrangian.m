@@ -8,15 +8,20 @@
 
 #import "Lagrangian.h"
 
-@l3suite("Lagrangian tests")
+@l3suite("Lagrangian tests");
 
 //@l3setUp {
 //	
 //}
 
-@l3test("test cases receive a suite") {
+@l3test("test cases take a reference to their test suite") {
 	
 }
+
+@l3test("test cases take a reference to their test case") {
+	
+}
+
 
 //@l3tearDown {
 //	
