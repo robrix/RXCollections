@@ -18,6 +18,8 @@
 }
 
 -(instancetype)initWithName:(NSString *)name function:(L3TestCaseImplementationFunction)function {
+	NSParameterAssert(name != nil);
+	NSParameterAssert(function != nil);
 	if((self = [super init])) {
 		_name = [name copy];
 		_block = [^(L3TestSuite *testSuite, L3TestCase *testCase){

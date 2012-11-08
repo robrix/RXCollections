@@ -15,11 +15,11 @@
 //}
 
 @l3test("test cases take a reference to their test suite") {
-	
+	NSLog(@"name: %@", self.name);
 }
 
 @l3test("test cases take a reference to their test case") {
-	
+	NSLog(@"name: %@", self.name);
 }
 
 

@@ -18,6 +18,7 @@
 }
 
 -(instancetype)initWithName:(NSString *)name {
+	NSParameterAssert(name != nil);
 	if ((self = [super init])) {
 		_name = [name copy];
 		_testCases = [NSMutableArray new];
@@ -27,8 +28,8 @@
 
 
 -(void)addTestCase:(L3TestCase *)testCase {
-//	[self.testCases addObject:testCase];
-	NSLog(@"adding case to %@", self.name);
+	NSParameterAssert(testCase != nil);
+	[self.testCases addObject:testCase];
 }
 
 @end
