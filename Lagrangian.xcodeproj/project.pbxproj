@@ -13,6 +13,8 @@
 		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
 		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
 		D4A5B2D1164B4FC100338EB4 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; };
+		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
+		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
 		D4AC43161648B5D300C0A25B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43151648B5D300C0A25B /* Cocoa.framework */; };
 		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,8 @@
 		D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "lagrangian-tool.m"; sourceTree = "<group>"; };
 		D4A5B2C9164B4FAF00338EB4 /* lagrangian-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "lagrangian-Prefix.pch"; sourceTree = "<group>"; };
 		D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = lagrangian.1; sourceTree = "<group>"; };
+		D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestCase.h; sourceTree = "<group>"; };
+		D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCase.m; sourceTree = "<group>"; };
 		D4AC43121648B5D300C0A25B /* Lagrangian.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Lagrangian.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4AC43151648B5D300C0A25B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D4AC43181648B5D300C0A25B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -142,9 +146,11 @@
 			children = (
 				D4AC431E1648B5D300C0A25B /* Lagrangian.h */,
 				D4AC431F1648B5D300C0A25B /* Lagrangian.m */,
-				D4AC431C1648B5D300C0A25B /* Supporting Files */,
+				D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */,
+				D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */,
 				D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */,
 				D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */,
+				D4AC431C1648B5D300C0A25B /* Supporting Files */,
 			);
 			name = Library;
 			path = Lagrangian;
@@ -166,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */,
+				D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +256,7 @@
 			files = (
 				D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */,
 				D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */,
+				D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

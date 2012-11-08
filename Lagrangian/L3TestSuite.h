@@ -8,7 +8,7 @@
 
 @interface L3TestSuite : NSObject
 
-+(instancetype)suiteWithName:(NSString *)name;
++(instancetype)testSuiteWithName:(NSString *)name;
 
 @property (copy, nonatomic, readonly) NSString *name;
 

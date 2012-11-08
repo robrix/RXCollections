@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "L3TestCase.h"
 #import "L3TestSuite.h"
 
 #pragma mark -
@@ -20,7 +21,7 @@
 		static L3TestSuite *suite = nil; \
 		static dispatch_once_t onceToken; \
 		dispatch_once(&onceToken, ^{ \
-			suite = [L3TestSuite suiteWithName:@(str)]; \
+			suite = [L3TestSuite testSuiteWithName:@(str)]; \
 		}); \
 		return suite; \
 	}
@@ -33,16 +34,15 @@
 	class L3TestSuite, L3TestCase; \
 	\
 	static void l3identifier(test_case_impl_, __LINE__)(L3TestSuite *suite, L3TestCase *self); \
-	static L3TestCase *l3identifier(test_case_builder_, __LINE__)(L3TestSuite *suite); \
+	static L3TestCase *l3identifier(test_case_builder_, __LINE__)(); \
 	\
 	__attribute__((constructor)) static void l3identifier(test_case_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			\
 			[l3current_suite addTestCase:l3identifier(test_case_builder_, __LINE__)(nil)]; \
 		} \
 	} \
-	static L3TestCase *l3identifier(test_case_builder_, __LINE__)(L3TestSuite *suite) { \
-		return nil; \
+	static L3TestCase *l3identifier(test_case_builder_, __LINE__)() { \
+		return [L3TestCase testCaseWithName:@(str) function:l3identifier(test_case_impl_, __LINE__)]; \
 	} \
 	static void l3identifier(test_case_impl_, __LINE__)(L3TestSuite *suite, L3TestCase *self)
 
