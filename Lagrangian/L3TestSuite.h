@@ -12,6 +12,17 @@
 
 @property (copy, nonatomic, readonly) NSString *name;
 
+@property (strong, nonatomic, readonly) NSMutableDictionary *testCasesByName;
+
+// must not have the same name as another case already in the suite
 -(void)addTestCase:(L3TestCase *)testCase;
+
+@property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
+@property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;
+//-(void)addSetUpFunction:(L3TestCaseSetUpFunction)function;
+//-(void)addTearDownFunction:(L3TestCaseTearDownFunction)function;
+
+-(void)runTestCase:(L3TestCase *)testCase;
+-(void)runTestCases;
 
 @end

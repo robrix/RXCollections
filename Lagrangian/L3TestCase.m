@@ -7,17 +7,17 @@
 @interface L3TestCase ()
 
 @property (copy, nonatomic, readwrite) NSString *name;
-@property (copy, nonatomic, readwrite) L3TestCaseImplementationBlock block;
+@property (copy, nonatomic, readwrite) L3TestCaseBlock block;
 
 @end
 
 @implementation L3TestCase
 
-+(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseImplementationFunction)function {
++(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function {
 	return [[self alloc] initWithName:name function:function];
 }
 
--(instancetype)initWithName:(NSString *)name function:(L3TestCaseImplementationFunction)function {
+-(instancetype)initWithName:(NSString *)name function:(L3TestCaseFunction)function {
 	NSParameterAssert(name != nil);
 	NSParameterAssert(function != nil);
 	if((self = [super init])) {
@@ -27,6 +27,22 @@
 		} copy];
 	}
 	return self;
+}
+
+
+-(void)runInSuite:(L3TestSuite *)suite setUpFunction:(L3TestCaseSetUpFunction)setUp tearDownFunction:(L3TestCaseTearDownFunction)tearDown {
+	// flush state?
+	// clone?
+	// stack state for reentrancy?
+	@autoreleasepool {
+		if (setUp)
+			setUp(suite, self);
+		
+		self.block(suite, self);
+		
+		if (tearDown)
+			tearDown(suite, self);
+	}
 }
 
 @end
