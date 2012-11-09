@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "L3Types.h"
 
 @class L3TestCase;
 
@@ -12,7 +13,7 @@
 
 @property (copy, nonatomic, readonly) NSString *name;
 
-@property (strong, nonatomic, readonly) NSMutableDictionary *testCasesByName;
+@property (strong, nonatomic, readonly) NSDictionary *testCasesByName;
 
 // must not have the same name as another case already in the suite
 -(void)addTestCase:(L3TestCase *)testCase;

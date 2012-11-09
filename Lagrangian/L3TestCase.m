@@ -31,6 +31,7 @@
 
 
 -(void)runInSuite:(L3TestSuite *)suite setUpFunction:(L3TestCaseSetUpFunction)setUp tearDownFunction:(L3TestCaseTearDownFunction)tearDown {
+	NSLog(@"running test case %@", self.name);
 	// flush state?
 	// clone?
 	// stack state for reentrancy?

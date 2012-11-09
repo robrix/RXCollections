@@ -7,8 +7,8 @@
 
 @interface L3TestSuite ()
 
-@property (strong, nonatomic) NSMutableArray *testCases;
-@property (strong, nonatomic, readwrite) NSMutableDictionary *testCasesByName;
+@property (strong, nonatomic, readonly) NSMutableArray *testCases;
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestCasesByName;
 //@property (strong, nonatomic) NSMutableArray *setUpBlocks;
 //@property (strong, nonatomic) NSMutableArray *tearDownBlocks;
 
@@ -25,9 +25,14 @@
 	if ((self = [super init])) {
 		_name = [name copy];
 		_testCases = [NSMutableArray new];
-		_testCasesByName = [NSMutableDictionary new];
+		_mutableTestCasesByName = [NSMutableDictionary new];
 	}
 	return self;
+}
+
+
+-(NSDictionary *)testCasesByName {
+	return self.mutableTestCasesByName;
 }
 
 
@@ -36,7 +41,7 @@
 	NSParameterAssert([self.testCasesByName objectForKey:testCase.name] == nil);
 	
 	[self.testCases addObject:testCase];
-	[self.testCasesByName setObject:testCase forKey:testCase.name];
+	[self.mutableTestCasesByName setObject:testCase forKey:testCase.name];
 }
 
 //-(void)addSetUpFunction:(L3TestCaseSetUpFunction)function {
@@ -56,6 +61,7 @@
 }
 
 -(void)runTestCases {
+	NSLog(@"running all tests in %@", self.name);
 	for (L3TestCase *testCase in self.testCases) {
 		[self runTestCase:testCase];
 	}
