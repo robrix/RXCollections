@@ -4,6 +4,7 @@
 
 #import <Foundation/Foundation.h>
 #import "L3TestCase.h"
+#import "L3TestRunner.h"
 #import "L3TestSuite.h"
 
 #pragma mark -
@@ -36,7 +37,8 @@
 	static L3TestSuite *l3_identifier(test_suite_builder_, __LINE__)(); \
 	__attribute__((constructor)) static void l3_identifier(test_suite_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			l3_current_suite = l3_identifier(test_suite_builder_, __LINE__)();\
+			l3_current_suite = l3_identifier(test_suite_builder_, __LINE__)(); \
+			[[L3TestRunner runner] addTestSuite:l3_current_suite]; \
 		} \
 	} \
 	static L3TestSuite *l3_identifier(test_suite_builder_, __LINE__)() { \
