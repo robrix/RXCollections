@@ -1,0 +1,24 @@
+- @l3_suiteForClass() to make a suite for a specific class; can it function automatically if placed in the @implementation block?
+- @l3_testForSelector() to make a test for a given method selector
+- add a macro to disable the prefix
+- multiple setUp/tearDown blocks per suite
+- prototypal suite inheritance?
+- how do we want to store test state?
+	@l3_suite("Dude")
+	@property Dude *dude;
+	@end
+	
+	@l3_setUp {
+		self.dude = [Dude new];
+	}
+	
+	@implementation Dude
+	
+	-(void)eatCake { … }
+	@l3_test("eating cake removes cake from its inventory") {
+		[self.dude addInventoryItem:[Cake new]];
+		[self.dude eatCake];
+		assertThat(self.dude.inventory, doesNot(contain([Cake class])));
+	}
+	
+	@end
