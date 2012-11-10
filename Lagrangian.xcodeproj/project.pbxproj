@@ -64,6 +64,7 @@
 /* Begin PBXFileReference section */
 		D40DE660164E26030033DE88 /* L3TestState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestState.h; sourceTree = "<group>"; };
 		D40DE661164E26030033DE88 /* L3TestState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestState.m; sourceTree = "<group>"; };
+		D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3PreprocessorUtilities.h; sourceTree = "<group>"; };
 		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
 		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
 		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +201,7 @@
 				D40DE660164E26030033DE88 /* L3TestState.h */,
 				D40DE661164E26030033DE88 /* L3TestState.m */,
 				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
+				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
 				D4AC431C1648B5D300C0A25B /* Supporting Files */,
 			);
 			name = Library;
