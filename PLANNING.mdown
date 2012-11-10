@@ -23,10 +23,9 @@
 	
 	@end
 	- if we do this, we can’t define suites within @implementation blocks any more
-	- if we do this, some part of suites presumably get baked into release builds
-		- can you define categories on weak-linked libraries?
+	- if we do this, some part of suites presumably get baked into release builds (if we add @implementation, which appears to be very hard)
+		- can you define categories on weak-linked libraries? YES
 - it feels like the test runner, test suite, and test case classes are basically all the same thing
 	- protocol for test-y things?
 	- one class for all three?
-- test case data should be passed to tests and setup/teardown functions separately from test cases and suites
 - assertions should be passed to tests and setup/teardown functions separately from test cases and suites

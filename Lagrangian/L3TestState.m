@@ -10,4 +10,10 @@
 //	return [NSStringFromSelector(selector) rangeOfString:@":"].length != 0;
 //}
 
+// - forwarding for foo and set foo
+// - can this specialize for bool? maybe detect has/is/did/should/etc?
+// - do the properties we declare in categories actually show up anywhere at runtime?
+// - cache method impls during forwarding
+// - dynamically subclass per-suite
+
 @end

@@ -5,7 +5,7 @@
 #import "L3TAAppDelegate.h"
 #import "Lagrangian.h"
 
-@l3_suite_state("App delegate")
+@l3_suite("App delegate", L3TAAppDelegate)
 @property L3TAAppDelegate *appDelegate;
 @end
 
@@ -14,10 +14,10 @@
 
 @implementation L3TAAppDelegate
 
-@l3_suite("App delegate 2");
+//@l3_suite("App delegate 2");
 
 @l3_set_up {
-	state.appDelegate = [L3TAAppDelegate new];
+	test.appDelegate = [L3TAAppDelegate new];
 }
 
 
@@ -26,7 +26,7 @@
 }
 
 @l3_test(" state ") {
-	NSLog(@"this is a test of tests: %@", [(id)state appDelegate]);
+	NSLog(@"this is a test of tests: %@", test.appDelegate);
 }
 
 @end

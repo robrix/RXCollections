@@ -4,20 +4,29 @@
 
 #import "Lagrangian.h"
 
-@l3_suite_state("Lagrangian tests")
+@l3_suite("Lagrangian tests", Lagrangian)
 @property L3TestSuite *testSuite;
 @end
+
+@l3_suite("Hello");
+
+//@l3_suite_state("Lagrangian tests 2");
+//@end
 
 //@l3_setUp {
 //	
 //}
 
 @l3_test("test cases take a reference to their test suite") {
-	NSLog(@"how do we test this? just assert suite is not nil?");
+	assert(suite != nil);
 }
 
 @l3_test("test cases take a reference to their test case") {
-	NSLog(@"how do we test this? just assert case is not nil?");
+	assert(testCase != nil);
+}
+
+@l3_test("test cases take a reference to their test state") {
+	assert(test != nil);
 }
 
 
