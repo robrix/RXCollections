@@ -30,3 +30,6 @@
 }
 
 @end
+
+@l3_suite_implementation(L3TAAppDelegate)
+@end

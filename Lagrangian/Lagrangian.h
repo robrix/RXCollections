@@ -75,10 +75,16 @@
 	\
 	l3_cond(l3_count(__VA_ARGS__), @interface l3_state_class(__VA_ARGS__) : L3TestState, @class NSObject) 
 
+#define l3_suite_implementation(identifier) \
+	implementation l3_state_class(identifier)
+
 #else
 
 #define l3_suite(str, ...) \
 	l3_cond(l3_count(__VA_ARGS__), interface L3TestState (l3_state_class(__VA_ARGS__)), class NSObject)
+
+#define l3_suite_implementation(identifier) \
+	implementation L3TestState (l3_state_class(identifier))
 
 #endif
 
