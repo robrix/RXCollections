@@ -4,18 +4,16 @@
 
 #import "Lagrangian.h"
 
-//@l3_suite("Lagrangian tests", Lagrangian)
-//@property L3TestSuite *testSuite;
-//@end
+@l3_suite("Lagrangian tests");
 
-@l3_suite("Hello");
+@l3_test("set up functions are used to define state to be available during each test") {
+	assert(test[@"suite"] == suite);
+}
 
-//@l3_suite_state("Lagrangian tests 2");
-//@end
+@l3_set_up {
+	test[@"suite"] = suite;
+}
 
-//@l3_setUp {
-//	
-//}
 
 @l3_test("test cases take a reference to their test suite") {
 	assert(suite != nil);
@@ -30,23 +28,24 @@
 }
 
 
-//@l3tearDown {
+
+//@l3_tear_down {
 //	
 //}
 
 
-//@l3precondition {
+//@l3_precondition {
 //	
 //}
 
-//@l3postcondition {
+//@l3_postcondition {
 //	
 //}
 
-//@l3invariant {
+//@l3_invariant {
 //	
 //}
 
-//@l3benchmark {
+//@l3_benchmark {
 //	
 //}

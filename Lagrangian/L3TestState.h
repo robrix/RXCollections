@@ -5,4 +5,9 @@
 #import <Foundation/Foundation.h>
 
 @interface L3TestState : NSObject
+
+// subscripting support for arbitrary object state
+-(id)objectForKeyedSubscript:(NSString *)key;
+-(void)setObject:(id)object forKeyedSubscript:(NSString *)key;
+
 @end

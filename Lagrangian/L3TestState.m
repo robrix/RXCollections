@@ -4,16 +4,28 @@
 
 #import "L3TestState.h"
 
+@interface L3TestState ()
+
+@property (nonatomic, readonly) NSMutableDictionary *contents;
+
+@end
+
 @implementation L3TestState
 
-//static bool l3_sel_takesArguments(SEL selector) {
-//	return [NSStringFromSelector(selector) rangeOfString:@":"].length != 0;
-//}
+-(instancetype)init {
+	if((self = [super init])) {
+		_contents = [NSMutableDictionary new];
+	}
+	return self;
+}
 
-// - forwarding for foo and set foo
-// - can this specialize for bool? maybe detect has/is/did/should/etc?
-// - do the properties we declare in categories actually show up anywhere at runtime?
-// - cache method impls during forwarding
-// - dynamically subclass per-suite
+
+-(id)objectForKeyedSubscript:(NSString *)key {
+	return self.contents[key];
+}
+
+-(void)setObject:(id)object forKeyedSubscript:(NSString *)key {
+	self.contents[key] = object;
+}
 
 @end
