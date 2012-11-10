@@ -1,31 +1,10 @@
-- @l3_suiteForClass() to make a suite for a specific class; can it function automatically if placed in the @implementation block?
-- @l3_testForSelector() to make a test for a given method selector
-- add a macro to disable the prefix
+- add a macro to remove the prefix
+- assert macros
+- test steps that can be run ad hoc
 - multiple setUp/tearDown blocks per suite
 - prototypal suite inheritance?
-- how do we want to store test state?
-	@l3_suite("Dude")
-	@property Dude *dude;
-	@end
-	
-	@l3_setUp {
-		self.dude = [Dude new];
-	}
-	
-	@implementation Dude
-	
-	-(void)eatCake { … }
-	@l3_test("eating cake removes cake from its inventory") {
-		[self.dude addInventoryItem:[Cake new]];
-		[self.dude eatCake];
-		assertThat(self.dude.inventory, doesNot(contain([Cake class])));
-	}
-	
-	@end
-	- if we do this, we can’t define suites within @implementation blocks any more
-	- if we do this, some part of suites presumably get baked into release builds (if we add @implementation, which appears to be very hard)
-		- can you define categories on weak-linked libraries? YES
 - it feels like the test runner, test suite, and test case classes are basically all the same thing
 	- protocol for test-y things?
 	- one class for all three?
-- assertions should be passed to tests and setup/teardown functions separately from test cases and suites
+	- a collection of tests
+- assertions should be passed to tests and setup/teardown functions separately from test cases and suites?

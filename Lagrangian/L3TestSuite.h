@@ -22,8 +22,6 @@
 
 @property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
 @property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;
-//-(void)addSetUpFunction:(L3TestCaseSetUpFunction)function;
-//-(void)addTearDownFunction:(L3TestCaseTearDownFunction)function;
 
 -(void)runTestCase:(L3TestCase *)testCase;
 -(void)runTestCases;

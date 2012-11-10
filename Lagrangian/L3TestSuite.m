@@ -10,8 +10,6 @@
 
 @property (strong, nonatomic, readonly) NSMutableArray *testCases;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestCasesByName;
-//@property (strong, nonatomic) NSMutableArray *setUpBlocks;
-//@property (strong, nonatomic) NSMutableArray *tearDownBlocks;
 
 @end
 
@@ -51,14 +49,6 @@
 	[self.testCases addObject:testCase];
 	[self.mutableTestCasesByName setObject:testCase forKey:testCase.name];
 }
-
-//-(void)addSetUpFunction:(L3TestCaseSetUpFunction)function {
-//	
-//}
-//
-//-(void)addTearDownFunction:(L3TestCaseTearDownFunction)function {
-//	
-//}
 
 
 -(void)runTestCase:(L3TestCase *)testCase {
