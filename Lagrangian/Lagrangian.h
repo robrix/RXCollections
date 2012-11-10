@@ -59,8 +59,8 @@
 
 #else
 
-#define l3_suite(str) \
-	class NSObject;
+#define l3_suite(str, ...) \
+	l3_cond(l3_count(__VA_ARGS__), interface L3TestState (l3_state_class(__VA_ARGS__)), class NSObject)
 
 #endif
 
@@ -101,13 +101,13 @@
 
 #else
 
+#define l3_set_up \
+	l3_test("")
+
 #define l3_test(str) \
 	class NSObject; \
 	__attribute__((unused)) \
-	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestSuite *suite, L3TestCase *self)
-
-#define l3_set_up \
-	l3_test("")
+	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestSuite *suite, L3TestCase *testCase)
 
 #endif
 
