@@ -38,6 +38,12 @@
 }
 
 
+-(void)setStateClass:(Class)stateClass {
+	NSAssert(stateClass != nil, @"No state class found for suite ‘%@’. Did you forget to add a @l3_suite_implementation for this suite? Did you add one but give it the wrong name?", self.name);
+	_stateClass = stateClass;
+}
+
+
 -(void)addTestCase:(L3TestCase *)testCase {
 	NSParameterAssert(testCase != nil);
 	NSParameterAssert([self.testCasesByName objectForKey:testCase.name] == nil);

@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic, readonly) NSDictionary *testCasesByName;
 
-@property (strong) Class stateClass;
+@property (strong, nonatomic) Class stateClass;
 
 // must not have the same name as another case already in the suite
 -(void)addTestCase:(L3TestCase *)testCase;

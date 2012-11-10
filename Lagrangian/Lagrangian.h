@@ -143,7 +143,7 @@
 #define l3_type_of_state_class_implementation(x) \
 	__typeof__(x)
 #define l3_state_class_variable			l3_paste(l3_domain, state_class_variable)
-#define l3_state_class(identifier)		l3_paste(l3_domain, l3_paste(__VA_ARGS__, TestState))
+#define l3_state_class(identifier)		l3_paste(l3_domain, l3_paste(identifier, TestState))
 
 
 #pragma mark -
