@@ -15,8 +15,12 @@
 
 @property (strong, nonatomic, readonly) NSDictionary *testCasesByName;
 
+@property (strong) Class stateClass;
+
 // must not have the same name as another case already in the suite
 -(void)addTestCase:(L3TestCase *)testCase;
+
+@property (copy, nonatomic) dispatch_block_t onLoad;
 
 @property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
 @property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;

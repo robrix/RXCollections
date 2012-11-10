@@ -4,6 +4,7 @@
 
 #import "L3TestCase.h"
 #import "L3TestSuite.h"
+#import "L3TestState.h"
 
 @interface L3TestSuite ()
 
@@ -26,6 +27,7 @@
 		_name = [name copy];
 		_testCases = [NSMutableArray new];
 		_mutableTestCasesByName = [NSMutableDictionary new];
+		_stateClass = [L3TestState class];
 	}
 	return self;
 }
@@ -56,11 +58,13 @@
 -(void)runTestCase:(L3TestCase *)testCase {
 	NSParameterAssert(testCase != nil);
 	@autoreleasepool {
-		[testCase runInSuite:self setUpFunction:self.setUpFunction tearDownFunction:self.tearDownFunction];
+		[testCase runInSuite:self];
 	}
 }
 
 -(void)runTestCases {
+	if (self.onLoad)
+		self.onLoad();
 	NSLog(@"running all tests in %@", self.name);
 	for (L3TestCase *testCase in self.testCases) {
 		[self runTestCase:testCase];

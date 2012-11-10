@@ -4,7 +4,9 @@
 
 #import "Lagrangian.h"
 
-@l3_suite("Lagrangian tests");
+@l3_suite_state("Lagrangian tests")
+@property L3TestSuite *testSuite;
+@end
 
 //@l3_setUp {
 //	

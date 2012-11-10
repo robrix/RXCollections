@@ -3,6 +3,8 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3TestCase.h"
+#import "L3TestState.h"
+#import "L3TestSuite.h"
 
 @interface L3TestCase ()
 
@@ -22,27 +24,28 @@
 	NSParameterAssert(function != nil);
 	if((self = [super init])) {
 		_name = [name copy];
-		_block = [^(L3TestSuite *testSuite, L3TestCase *testCase){
-			function(testSuite, testCase);
+		_block = [^(L3TestState *testState, L3TestSuite *testSuite, L3TestCase *testCase){
+			function(testState, testSuite, testCase);
 		} copy];
 	}
 	return self;
 }
 
 
--(void)runInSuite:(L3TestSuite *)suite setUpFunction:(L3TestCaseSetUpFunction)setUp tearDownFunction:(L3TestCaseTearDownFunction)tearDown {
+-(void)runInSuite:(L3TestSuite *)suite {
 	NSLog(@"running test case %@", self.name);
 	// flush state?
 	// clone?
 	// stack state for reentrancy?
 	@autoreleasepool {
-		if (setUp)
-			setUp(suite, self);
+		L3TestState *state = [suite.stateClass new];
+		if (suite.setUpFunction)
+			suite.setUpFunction(state, suite, self);
 		
-		self.block(suite, self);
+		self.block(state, suite, self);
 		
-		if (tearDown)
-			tearDown(suite, self);
+		if (suite.tearDownFunction)
+			suite.tearDownFunction(state, suite, self);
 	}
 }
 

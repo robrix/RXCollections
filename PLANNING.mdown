@@ -28,3 +28,5 @@
 - it feels like the test runner, test suite, and test case classes are basically all the same thing
 	- protocol for test-y things?
 	- one class for all three?
+- test case data should be passed to tests and setup/teardown functions separately from test cases and suites
+- assertions should be passed to tests and setup/teardown functions separately from test cases and suites

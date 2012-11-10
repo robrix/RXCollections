@@ -13,6 +13,6 @@
 
 @property (copy, nonatomic, readonly) NSString *name;
 
--(void)runInSuite:(L3TestSuite *)suite setUpFunction:(L3TestCaseSetUpFunction)setUp tearDownFunction:(L3TestCaseTearDownFunction)tearDown;
+-(void)runInSuite:(L3TestSuite *)suite;
 
 @end
