@@ -68,7 +68,7 @@
 
 #if L3_DEBUG
 
-#define l3_setUp \
+#define l3_set_up \
 	class L3TestSuite, L3TestCase; \
 	\
 	static void l3_identifier(set_up_, __LINE__)(L3TestSuite *suite, L3TestCase *test); \
@@ -104,7 +104,7 @@
 	__attribute__((unused)) \
 	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestSuite *suite, L3TestCase *self)
 
-#define l3_setUp \
+#define l3_set_up \
 	l3_test("")
 
 #endif

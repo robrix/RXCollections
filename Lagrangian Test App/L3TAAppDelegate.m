@@ -16,7 +16,7 @@
 
 @l3_suite("App delegate");
 
-@l3_setUp {
+@l3_set_up {
 //	suite.appDelegate = [L3TAAppDelegate new];
 }
 
