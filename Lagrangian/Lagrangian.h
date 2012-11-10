@@ -48,7 +48,8 @@
 			suite = [L3TestSuite testSuiteWithName:@(str)]; \
 		}); \
 		return suite; \
-	}
+	} \
+	@class L3TestSuite
 
 #else
 
@@ -56,6 +57,10 @@
 	class NSObject;
 
 #endif
+
+#define l3_suite_interface(str) \
+	l3_suite(str); \
+	@interface L3TestSuite (l3_identifier(test_suite_state_, __COUNTER__))
 
 
 #pragma mark -
