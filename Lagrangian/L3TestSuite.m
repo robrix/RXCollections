@@ -69,8 +69,6 @@
 }
 
 -(void)runTestCases {
-	if (self.onLoad)
-		self.onLoad();
 	NSLog(@"running all tests in %@", self.name);
 	for (L3TestCase *testCase in self.testCases) {
 		[self runTestCase:testCase];
