@@ -106,7 +106,7 @@
 		} \
 	} \
 	\
-	static void l3_identifier(set_up_, __LINE__)(l3_type_of_state_class __strong test, L3TestSuite *suite, L3TestCase *testCase)
+	static void l3_identifier(set_up_, __LINE__)(l3_type_of_state_class __strong test, L3TestSuite *suite, L3TestCase *_case)
 
 #define l3_test(str) \
 	class L3TestSuite, L3TestCase; \
@@ -122,7 +122,7 @@
 	static L3TestCase *l3_identifier(test_case_builder_, __LINE__)() { \
 		return [L3TestCase testCaseWithName:@"" str function:l3_identifier(test_case_impl_, __LINE__)]; \
 	} \
-	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestSuite *suite, L3TestCase *testCase)
+	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestSuite *suite, L3TestCase *_case)
 
 #else
 

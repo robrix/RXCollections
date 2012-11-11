@@ -5,11 +5,10 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 
-#define l3_assert(object, pattern) \
-	[testCase assertThat:l3_to_object(object) matches:pattern]
+#define l3_assert(object, pattern)	[_case assertThat:l3_to_object(object) matches:l3_to_pattern(pattern)]
 
-#define l3_notNil() \
-	(^bool(id x){ return x != nil; })
+#define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
 
-#define l3_equalTo(other) \
-	(^bool(id x){ return [x isEqual:other]; })
+#define l3_is(pattern)				pattern
+#define l3_equalTo(pattern)			pattern
+#define l3_equals(pattern)			pattern

@@ -1,5 +1,4 @@
-- add a macro to remove the prefix
-- assert macros
+- add a config macro to remove the prefix
 - test steps that can be run ad hoc
 - multiple setUp/tearDown blocks per suite
 - prototypal suite inheritance?
@@ -7,4 +6,3 @@
 	- protocol for test-y things?
 	- one class for all three?
 	- a collection of tests
-- assertions should be passed to tests and setup/teardown functions separately from test cases and suites?

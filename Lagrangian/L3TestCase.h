@@ -12,6 +12,7 @@
 +(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function;
 
 @property (copy, nonatomic, readonly) NSString *name;
+@property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
 -(void)runInSuite:(L3TestSuite *)suite;
 
