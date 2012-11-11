@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		D40DE662164E26030033DE88 /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; };
 		D40DE663164E26030033DE88 /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
+		D40DE690164FFE5E0033DE88 /* L3EventSink.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE68E164FFE5E0033DE88 /* L3EventSink.h */; };
+		D40DE694164FFE780033DE88 /* L3Event.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE692164FFE780033DE88 /* L3Event.h */; };
+		D40DE695164FFE780033DE88 /* L3Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE693164FFE780033DE88 /* L3Event.m */; };
 		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; };
 		D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
@@ -66,6 +69,9 @@
 		D40DE661164E26030033DE88 /* L3TestState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestState.m; sourceTree = "<group>"; };
 		D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3PreprocessorUtilities.h; sourceTree = "<group>"; };
 		D40DE670164F18AF0033DE88 /* L3Assertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Assertions.h; sourceTree = "<group>"; };
+		D40DE68E164FFE5E0033DE88 /* L3EventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventSink.h; sourceTree = "<group>"; };
+		D40DE692164FFE780033DE88 /* L3Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Event.h; sourceTree = "<group>"; };
+		D40DE693164FFE780033DE88 /* L3Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Event.m; sourceTree = "<group>"; };
 		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
 		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
 		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +134,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D40DE689164FFCCD0033DE88 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				D40DE692164FFE780033DE88 /* L3Event.h */,
+				D40DE693164FFE780033DE88 /* L3Event.m */,
+				D40DE68E164FFE5E0033DE88 /* L3EventSink.h */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
 		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +220,7 @@
 				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
 				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
 				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+				D40DE689164FFCCD0033DE88 /* Events */,
 				D4AC431C1648B5D300C0A25B /* Supporting Files */,
 			);
 			name = Library;
@@ -252,6 +269,8 @@
 				D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */,
 				D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */,
 				D40DE662164E26030033DE88 /* L3TestState.h in Headers */,
+				D40DE690164FFE5E0033DE88 /* L3EventSink.h in Headers */,
+				D40DE694164FFE780033DE88 /* L3Event.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +389,7 @@
 				D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */,
 				D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */,
 				D40DE663164E26030033DE88 /* L3TestState.m in Sources */,
+				D40DE695164FFE780033DE88 /* L3Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

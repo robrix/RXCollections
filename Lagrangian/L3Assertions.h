@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 
-#define l3_assert(object, pattern)	[_case assertThat:l3_to_object(object) matches:l3_to_pattern(pattern)]
+#define l3_assert(object, pattern)	[_case assertThat:l3_to_object(object) matches:l3_to_pattern(pattern) collectingEventsInto:nil]
 
 #define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
 

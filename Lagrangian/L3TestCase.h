@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 
+@protocol L3EventSink;
 @class L3TestSuite;
 
 @interface L3TestCase : NSObject
@@ -16,6 +17,6 @@
 
 -(void)runInSuite:(L3TestSuite *)suite;
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern;
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(id<L3EventSink>)eventSink;
 
 @end

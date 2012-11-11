@@ -3,15 +3,18 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "L3EventSink.h"
 
 @class L3TestSuite;
 
-@interface L3TestRunner : NSObject
+@interface L3TestRunner : NSObject <L3EventSink>
 
 +(instancetype)runner;
 
-@property (strong, nonatomic, readonly) NSDictionary *testSuitesByName;
+@property (nonatomic, readonly) NSDictionary *testSuitesByName;
 
 -(void)addTestSuite:(L3TestSuite *)testSuite;
+
+@property (nonatomic, readonly) NSArray *events;
 
 @end

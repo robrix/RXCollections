@@ -5,11 +5,15 @@
 #import <Cocoa/Cocoa.h>
 #import "L3TestRunner.h"
 #import "L3TestSuite.h"
+#import "L3Event.h"
 
 @interface L3TestRunner ()
 
 @property (strong, nonatomic, readonly) NSMutableArray *testSuites;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestSuitesByName;
+
+@property (strong, nonatomic, readonly) NSMutableArray *mutableEvents;
+
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
 @property (assign, nonatomic, readonly) bool shouldRunAutomatically;
@@ -31,6 +35,8 @@
 	if ((self = [super init])) {
 		_testSuites = [NSMutableArray new];
 		_mutableTestSuitesByName = [NSMutableDictionary new];
+		
+		_mutableEvents = [NSMutableArray new];
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
 		_queue.maxConcurrentOperationCount = 1;
@@ -54,6 +60,10 @@
 
 -(NSDictionary *)testSuitesByName {
 	return self.mutableTestSuitesByName;
+}
+
+-(NSArray *)events {
+	return self.mutableEvents;
 }
 
 
@@ -80,6 +90,14 @@
 	for (L3TestSuite *testSuite in self.testSuites) {
 		[self runTestSuite:testSuite];
 	}
+}
+
+
+#pragma mark -
+#pragma mark Event sink
+
+-(void)addEvent:(L3Event *)event {
+	[self.mutableEvents addObject:event];
 }
 
 @end
