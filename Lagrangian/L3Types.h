@@ -35,7 +35,12 @@ static inline id l3_to_object(...) __attribute__((overloadable, unavailable));
 
 // box these types automatically
 l3_fold(l3_define_to_object_by_boxing_with_type,
-		uint64_t, uint32_t, uint16_t, uint8_t, int64_t, int32_t, int16_t, int8_t, double, float, bool, char *)
+		uint64_t, uint32_t, uint16_t, uint8_t,
+		int64_t, int32_t, int16_t, int8_t,
+		unsigned long, signed long,
+		double, float,
+		bool,
+		char *)
 __attribute__((overloadable)) static inline id l3_to_object(id x) { return x; }
 __attribute__((overloadable)) static inline id l3_to_object(void *x) { return [NSValue valueWithPointer:0]; }
 
@@ -55,6 +60,12 @@ static inline L3Pattern l3_to_pattern_f(...) __attribute__((overloadable, unavai
 	}
 
 l3_fold(l3_define_to_pattern_by_equality_with_type,
-		uint64_t, uint32_t, uint16_t, uint8_t, int64_t, int32_t, int16_t, int8_t, double, float, bool, char *, id)
+		uint64_t, uint32_t, uint16_t, uint8_t,
+		int64_t, int32_t, int16_t, int8_t,
+		unsigned long, signed long,
+		double, float,
+		bool,
+		char *,
+		id)
 
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(L3Pattern x) { return x; }
