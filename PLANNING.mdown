@@ -2,7 +2,6 @@
 - test steps that can be run ad hoc
 - multiple setUp/tearDown blocks per suite
 - prototypal suite inheritance?
-- it feels like the test runner, test suite, and test case classes are basically all the same thing
-	- protocol for test-y things?
-	- one class for all three?
-	- a collection of tests
+- test suites nest
+- test cases are for the individual methods
+- test runners figure out what to run and collect events
