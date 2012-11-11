@@ -15,4 +15,6 @@
 
 -(void)runInSuite:(L3TestSuite *)suite;
 
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern;
+
 @end

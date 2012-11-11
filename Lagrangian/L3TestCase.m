@@ -49,4 +49,11 @@
 	}
 }
 
+
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern {
+	bool matched = pattern(object);
+	assert(matched);
+	return matched;
+}
+
 @end
