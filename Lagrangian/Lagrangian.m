@@ -7,7 +7,7 @@
 @l3_suite("Lagrangian tests");
 
 @l3_test("set up functions are used to define state to be available during each test") {
-	assert(test[@"suite"] == suite);
+	l3_assert(test[@"suite"], l3_equalTo(suite));
 }
 
 @l3_set_up {
@@ -16,15 +16,15 @@
 
 
 @l3_test("test cases take a reference to their test suite") {
-	l3_assert(suite, l3_isNotNil());
+	l3_assert(suite, l3_notNil());
 }
 
 @l3_test("test cases take a reference to their test case") {
-	l3_assert(testCase, l3_isNotNil());
+	l3_assert(testCase, l3_notNil());
 }
 
 @l3_test("test cases take a reference to their test state") {
-	l3_assert(test, l3_isNotNil());
+	l3_assert(test, l3_notNil());
 }
 
 

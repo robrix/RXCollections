@@ -26,7 +26,7 @@
 }
 
 @l3_test("app delegates exist?") {
-	l3_assert(test.appDelegate, l3_isNotNil());
+	l3_assert(test.appDelegate, l3_notNil());
 }
 
 @end

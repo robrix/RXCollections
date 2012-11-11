@@ -8,5 +8,8 @@
 #define l3_assert(object, pattern) \
 	[testCase assertThat:l3_to_object(object) matches:pattern]
 
-#define l3_isNotNil() \
+#define l3_notNil() \
 	(^bool(id x){ return x != nil; })
+
+#define l3_equalTo(other) \
+	(^bool(id x){ return [x isEqual:other]; })
