@@ -12,3 +12,14 @@
 #define l3_is(pattern)				pattern
 #define l3_equalTo(pattern)			pattern
 #define l3_equals(pattern)			pattern
+
+#define l3_ordered(object, ordering) \
+	(^bool(id x){ return [x compare:l3_to_object(object)] == ordering; })
+#define l3_ordered_or_same(object, ordering) \
+	(^bool(id x){ NSComparisonResult comparison = [x compare:l3_to_object(object)]; return (comparison == ordering) || (comparison == NSOrderedSame); })
+#define l3_greaterThan(object)		l3_ordered(object, NSOrderedDescending)
+#define l3_greaterThanOrEqualTo(object) \
+	l3_ordered_or_same(object, NSOrderedDescending)
+#define l3_lessThan(object)			l3_ordered(object, NSOrderedAscending)
+#define l3_lessThanOrEqualTo(object) \
+	l3_ordered_or_same(object, NSOrderedAscending)
