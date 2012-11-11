@@ -16,17 +16,16 @@
 
 
 @l3_test("test cases take a reference to their test suite") {
-	assert(suite != nil);
+	l3_assert(suite, l3_isNotNil());
 }
 
 @l3_test("test cases take a reference to their test case") {
-	assert(testCase != nil);
+	l3_assert(testCase, l3_isNotNil());
 }
 
 @l3_test("test cases take a reference to their test state") {
-	assert(test != nil);
+	l3_assert(test, l3_isNotNil());
 }
-
 
 
 //@l3_tear_down {

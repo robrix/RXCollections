@@ -25,8 +25,8 @@
 	NSLog(@"applicationDidFinishLaunching:");
 }
 
-@l3_test(" state ") {
-	NSLog(@"this is a test of tests: %@", test.appDelegate);
+@l3_test("app delegates exist?") {
+	l3_assert(test.appDelegate, l3_isNotNil());
 }
 
 @end
