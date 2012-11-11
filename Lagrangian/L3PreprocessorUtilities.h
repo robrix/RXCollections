@@ -14,6 +14,9 @@
 #define l3_string(x)					l3_string_implementation(x)
 #define l3_string_implementation(x)		#x
 
+#pragma mark -
+#pragma mark bool
+
 #define l3_bool(x)						l3_bool_implementation(x)
 #define l3_bool_implementation(x)		l3_paste(l3_bool_, x)
 #define l3_bool_0						0
@@ -26,12 +29,84 @@
 #define l3_bool_7						1
 #define l3_bool_8						1
 #define l3_bool_9						1
+#define l3_bool_10						1
+#define l3_bool_11						1
+#define l3_bool_12						1
+#define l3_bool_13						1
+#define l3_bool_14						1
+#define l3_bool_15						1
+#define l3_bool_16						1
+#define l3_bool_17						1
+#define l3_bool_18						1
+#define l3_bool_19						1
+#define l3_bool_20						1
+#define l3_bool_21						1
+#define l3_bool_22						1
+#define l3_bool_23						1
+#define l3_bool_24						1
+#define l3_bool_25						1
+#define l3_bool_26						1
+#define l3_bool_27						1
+#define l3_bool_28						1
+#define l3_bool_29						1
+#define l3_bool_30						1
+#define l3_bool_31						1
+
+
+#pragma mark -
+#pragma mark Variadic folding
+
+#define l3_fold(f, ...) \
+	l3_fold_implementation(f, l3_count(__VA_ARGS__), __VA_ARGS__)
+#define l3_fold_implementation(f, n, ...) \
+	l3_paste(l3_fold_, n)(f, __VA_ARGS__)
+
+#define l3_fold_1(f, each)				f(each)
+#define l3_fold_2(f, each, ...)			l3_fold_1(f, each) l3_fold_1(f, __VA_ARGS__)
+#define l3_fold_3(f, each, ...)			l3_fold_1(f, each) l3_fold_2(f, __VA_ARGS__)
+#define l3_fold_4(f, each, ...)			l3_fold_1(f, each) l3_fold_3(f, __VA_ARGS__)
+#define l3_fold_5(f, each, ...)			l3_fold_1(f, each) l3_fold_4(f, __VA_ARGS__)
+#define l3_fold_6(f, each, ...)			l3_fold_1(f, each) l3_fold_5(f, __VA_ARGS__)
+#define l3_fold_7(f, each, ...)			l3_fold_1(f, each) l3_fold_6(f, __VA_ARGS__)
+#define l3_fold_8(f, each, ...)			l3_fold_1(f, each) l3_fold_7(f, __VA_ARGS__)
+#define l3_fold_9(f, each, ...)			l3_fold_1(f, each) l3_fold_8(f, __VA_ARGS__)
+#define l3_fold_10(f, each, ...)		l3_fold_1(f, each) l3_fold_9(f, __VA_ARGS__)
+#define l3_fold_11(f, each, ...)		l3_fold_1(f, each) l3_fold_10(f, __VA_ARGS__)
+#define l3_fold_12(f, each, ...)		l3_fold_1(f, each) l3_fold_11(f, __VA_ARGS__)
+#define l3_fold_13(f, each, ...)		l3_fold_1(f, each) l3_fold_12(f, __VA_ARGS__)
+#define l3_fold_14(f, each, ...)		l3_fold_1(f, each) l3_fold_13(f, __VA_ARGS__)
+#define l3_fold_15(f, each, ...)		l3_fold_1(f, each) l3_fold_14(f, __VA_ARGS__)
+#define l3_fold_16(f, each, ...)		l3_fold_1(f, each) l3_fold_15(f, __VA_ARGS__)
+#define l3_fold_17(f, each, ...)		l3_fold_1(f, each) l3_fold_16(f, __VA_ARGS__)
+#define l3_fold_18(f, each, ...)		l3_fold_1(f, each) l3_fold_17(f, __VA_ARGS__)
+#define l3_fold_19(f, each, ...)		l3_fold_1(f, each) l3_fold_18(f, __VA_ARGS__)
+#define l3_fold_20(f, each, ...)		l3_fold_1(f, each) l3_fold_19(f, __VA_ARGS__)
+#define l3_fold_21(f, each, ...)		l3_fold_1(f, each) l3_fold_20(f, __VA_ARGS__)
+#define l3_fold_22(f, each, ...)		l3_fold_1(f, each) l3_fold_21(f, __VA_ARGS__)
+#define l3_fold_23(f, each, ...)		l3_fold_1(f, each) l3_fold_22(f, __VA_ARGS__)
+#define l3_fold_24(f, each, ...)		l3_fold_1(f, each) l3_fold_23(f, __VA_ARGS__)
+#define l3_fold_25(f, each, ...)		l3_fold_1(f, each) l3_fold_24(f, __VA_ARGS__)
+#define l3_fold_26(f, each, ...)		l3_fold_1(f, each) l3_fold_25(f, __VA_ARGS__)
+#define l3_fold_27(f, each, ...)		l3_fold_1(f, each) l3_fold_26(f, __VA_ARGS__)
+#define l3_fold_28(f, each, ...)		l3_fold_1(f, each) l3_fold_27(f, __VA_ARGS__)
+#define l3_fold_29(f, each, ...)		l3_fold_1(f, each) l3_fold_28(f, __VA_ARGS__)
+#define l3_fold_30(f, each, ...)		l3_fold_1(f, each) l3_fold_29(f, __VA_ARGS__)
+#define l3_fold_31(f, each, ...)		l3_fold_1(f, each) l3_fold_30(f, __VA_ARGS__)
+#define l3_fold_32(f, each, ...)		l3_fold_1(f, each) l3_fold_31(f, __VA_ARGS__)
+
+
+#pragma mark -
+#pragma mark Conditional macro expansion
 
 #define l3_cond(cond, then, else)		l3_cond_implementation(cond, then, else)
 #define l3_cond_implementation(cond, then, else) \
 	l3_paste(l3_cond_, l3_bool(cond))(then, else)
 #define l3_cond_0(x, y)					y
 #define l3_cond_1(x, y)					x
+
+
+#pragma mark -
+#pragma mark - Variadic counting
 
 #define l3_count(...) \
 	l3_count_implementation(_0, ## __VA_ARGS__, l3_reverse_ordinals())
