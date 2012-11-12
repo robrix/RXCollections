@@ -55,7 +55,7 @@ static inline L3Pattern l3_to_pattern_f(...) __attribute__((overloadable, unavai
 
 #define l3_define_to_pattern_by_equality_with_type(type) \
 	__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(type x) { \
-		return ^bool(id y){ return [l3_to_object(x) isEqual:y]; }; \
+		return ^bool(id y){ return [y isEqual:l3_to_object(x)]; }; \
 	}
 
 l3_fold(l3_define_to_pattern_by_equality_with_type,
