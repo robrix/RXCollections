@@ -4,5 +4,12 @@
 
 #import "L3Event.h"
 
+@class L3TestCase;
+
 @interface L3TestCaseStartEvent : L3Event
+
++(instancetype)eventWithSource:(L3TestCase<L3EventSource> *)source;
+
+@property (strong, nonatomic, readonly) L3TestCase<L3EventSource> *source;
+
 @end

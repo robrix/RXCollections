@@ -7,6 +7,17 @@
 @implementation L3TestSuiteEndEvent
 
 #pragma mark -
+#pragma mark Constructors
+
++(instancetype)eventWithSource:(L3TestSuite<L3EventSource> *)source {
+	return [super eventWithSource:source];
+}
+
+
+@dynamic source;
+
+
+#pragma mark -
 #pragma mark Visitors
 
 -(id)acceptVisitor:(id<L3EventVisitor>)visitor {
