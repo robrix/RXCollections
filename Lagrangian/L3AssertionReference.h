@@ -6,12 +6,13 @@
 
 @interface L3AssertionReference : NSObject <NSCopying>
 
-+(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource patternSource:(NSString *)patternSource;
++(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource;
 
 @property (copy, nonatomic, readonly) NSString *file;
 @property (assign, nonatomic, readonly) NSUInteger line;
 
 @property (copy, nonatomic, readonly) NSString *subjectSource;
+@property (strong, nonatomic, readonly) id subject;
 @property (copy, nonatomic, readonly) NSString *patternSource;
 
 @end

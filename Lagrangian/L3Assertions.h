@@ -6,11 +6,15 @@
 #import "L3Types.h"
 #import "L3AssertionReference.h"
 
-#define l3_assertionReference(subject, pattern) \
-	[L3AssertionReference assertionReferenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" #subject patternSource:@"" #pattern]
+#define l3_assertionReference(_subject, _subjectSource, _patternSource) \
+	[L3AssertionReference assertionReferenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" _subjectSource subject:_subject patternSource:@"" _patternSource]
 
 #define l3_assert(subject, pattern) \
-	[_case assertThat:l3_to_object(subject) matches:l3_to_pattern(pattern) assertionReference:l3_assertionReference(subject, pattern) eventAlgebra:_case.eventAlgebra]
+	^bool{ \
+		id subject_ = l3_to_object(subject); \
+		L3Pattern pattern_ = l3_to_pattern(pattern); \
+		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventAlgebra:_case.eventAlgebra]; \
+	}()
 
 #define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
 

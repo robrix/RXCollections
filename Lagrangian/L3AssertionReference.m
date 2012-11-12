@@ -9,15 +9,16 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource patternSource:(NSString *)patternSource {
-	return [[self alloc] initWithFile:file line:line subjectSource:subjectSource patternSource:patternSource];
++(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
+	return [[self alloc] initWithFile:file line:line subjectSource:subjectSource subject:subject patternSource:patternSource];
 }
 
--(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource patternSource:(NSString *)patternSource {
+-(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
 	if ((self = [super init])) {
 		_file = [file copy];
 		_line = line;
 		_subjectSource = [subjectSource copy];
+		_subject = subject;
 		_patternSource = [patternSource copy];
 	}
 	return self;

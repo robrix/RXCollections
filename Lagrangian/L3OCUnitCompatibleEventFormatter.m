@@ -53,18 +53,18 @@
 }
 
 
-@l3_test("formats assertion failures with their file, line, source, and expectation") {
-	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" patternSource:@"src"];
+@l3_test("formats assertion failures with their file, line, source, actual value, and expectation") {
+	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
 	NSString *string = [[L3OCUnitCompatibleEventFormatter new] assertionFailureWithAssertionReference:assertionReference date:nil];
-	l3_assert(string, @"/foo/bar/file.m:42: error: 'x' should have matched 'src'");
+	l3_assert(string, @"/foo/bar/file.m:42: error: 'x' was 'y' but should have matched 'src'");
 }
 
 -(NSString *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	return [NSString stringWithFormat:@"%@:%lu: error: '%@' should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.patternSource];
+	return [NSString stringWithFormat:@"%@:%lu: error: '%@' was '%@' but should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.subject, assertionReference.patternSource];
 }
 
 @l3_test("does not format assertion successes") {
-	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3AssertionSuccessEvent eventWithAssertionReference:l3_assertionReference(@"a", @"b") date:nil]];
+	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3AssertionSuccessEvent eventWithAssertionReference:l3_assertionReference(@"a", @"a", @"b") date:nil]];
 	l3_assert(string, l3_is(nil));
 }
 

@@ -100,18 +100,18 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Assertions
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", l3_is(YES)) eventAlgebra:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", @"a", @".") eventAlgebra:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", l3_is(NO)) eventAlgebra:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", @"a", @"!") eventAlgebra:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
 	L3EventSink *eventSink = [L3EventSink new];
-	L3AssertionReference *assertionReference = l3_assertionReference(@"a", l3_is(YES));
+	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @".");
 	[_case assertThat:@"a" matches:^bool(id x) { return YES; } assertionReference:assertionReference eventAlgebra:eventSink];
 	
 	L3AssertionEvent *event = eventSink.events.lastObject;
@@ -121,7 +121,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 @l3_test("generate assertion failed events for failed assertions") {
 	L3EventSink *eventSink = [L3EventSink new];
-	L3AssertionReference *assertionReference = l3_assertionReference(@"a", l3_is(NO));
+	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @"!");
 	[_case assertThat:@"a" matches:^bool(id x) { return NO; } assertionReference:assertionReference eventAlgebra:eventSink];
 	
 	L3AssertionEvent *event = eventSink.events.lastObject;

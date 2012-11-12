@@ -206,9 +206,7 @@
 		D40DE69616501B000033DE88 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				D457D677165094F100340DAC /* L3AssertionReference.h */,
-				D457D678165094F100340DAC /* L3AssertionReference.m */,
-				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+				D457D68D1650AD9900340DAC /* Assertions */,
 				D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */,
 				D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */,
 				D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */,
@@ -258,6 +256,16 @@
 				D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */,
 			);
 			name = "Event formatters";
+			sourceTree = "<group>";
+		};
+		D457D68D1650AD9900340DAC /* Assertions */ = {
+			isa = PBXGroup;
+			children = (
+				D457D677165094F100340DAC /* L3AssertionReference.h */,
+				D457D678165094F100340DAC /* L3AssertionReference.m */,
+				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+			);
+			name = Assertions;
 			sourceTree = "<group>";
 		};
 		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
