@@ -15,6 +15,20 @@
 		D40DE69D165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */; };
 		D40DE69E165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */; };
 		D40DE6A2165072880033DE88 /* L3EventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6A1165072880033DE88 /* L3EventSink.m */; };
+		D40DE6A8165085440033DE88 /* L3AssertionFailureEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6A6165085440033DE88 /* L3AssertionFailureEvent.h */; };
+		D40DE6A9165085440033DE88 /* L3AssertionFailureEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6A7165085440033DE88 /* L3AssertionFailureEvent.m */; };
+		D40DE6B0165089330033DE88 /* L3TestCaseStartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6AE165089320033DE88 /* L3TestCaseStartEvent.h */; };
+		D40DE6B1165089330033DE88 /* L3TestCaseStartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6AF165089320033DE88 /* L3TestCaseStartEvent.m */; };
+		D40DE6B416508BF60033DE88 /* L3TestCaseEndEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6B216508BF50033DE88 /* L3TestCaseEndEvent.h */; };
+		D40DE6B516508BF60033DE88 /* L3TestCaseEndEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6B316508BF50033DE88 /* L3TestCaseEndEvent.m */; };
+		D40DE6B816508C5E0033DE88 /* L3TestSuiteStartEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6B616508C5D0033DE88 /* L3TestSuiteStartEvent.h */; };
+		D40DE6B916508C5E0033DE88 /* L3TestSuiteStartEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6B716508C5E0033DE88 /* L3TestSuiteStartEvent.m */; };
+		D40DE6BC16508C710033DE88 /* L3TestSuiteEndEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6BA16508C710033DE88 /* L3TestSuiteEndEvent.h */; };
+		D40DE6BD16508C710033DE88 /* L3TestSuiteEndEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6BB16508C710033DE88 /* L3TestSuiteEndEvent.m */; };
+		D40DE6C016508DC90033DE88 /* L3AssertionEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6BE16508DC80033DE88 /* L3AssertionEvent.h */; };
+		D40DE6C116508DC90033DE88 /* L3AssertionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6BF16508DC80033DE88 /* L3AssertionEvent.m */; };
+		D40DE6C416508E1D0033DE88 /* L3AssertionSuccessEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE6C216508E1D0033DE88 /* L3AssertionSuccessEvent.h */; };
+		D40DE6C516508E1D0033DE88 /* L3AssertionSuccessEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6C316508E1D0033DE88 /* L3AssertionSuccessEvent.m */; };
 		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; };
 		D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
@@ -83,6 +97,20 @@
 		D40DE69F165037DB0033DE88 /* L3EventFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventFormatter.h; sourceTree = "<group>"; };
 		D40DE6A016503B600033DE88 /* L3EventSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventSource.h; sourceTree = "<group>"; };
 		D40DE6A1165072880033DE88 /* L3EventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3EventSink.m; sourceTree = "<group>"; };
+		D40DE6A6165085440033DE88 /* L3AssertionFailureEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionFailureEvent.h; sourceTree = "<group>"; };
+		D40DE6A7165085440033DE88 /* L3AssertionFailureEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionFailureEvent.m; sourceTree = "<group>"; };
+		D40DE6AE165089320033DE88 /* L3TestCaseStartEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestCaseStartEvent.h; sourceTree = "<group>"; };
+		D40DE6AF165089320033DE88 /* L3TestCaseStartEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCaseStartEvent.m; sourceTree = "<group>"; };
+		D40DE6B216508BF50033DE88 /* L3TestCaseEndEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestCaseEndEvent.h; sourceTree = "<group>"; };
+		D40DE6B316508BF50033DE88 /* L3TestCaseEndEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCaseEndEvent.m; sourceTree = "<group>"; };
+		D40DE6B616508C5D0033DE88 /* L3TestSuiteStartEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuiteStartEvent.h; sourceTree = "<group>"; };
+		D40DE6B716508C5E0033DE88 /* L3TestSuiteStartEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuiteStartEvent.m; sourceTree = "<group>"; };
+		D40DE6BA16508C710033DE88 /* L3TestSuiteEndEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuiteEndEvent.h; sourceTree = "<group>"; };
+		D40DE6BB16508C710033DE88 /* L3TestSuiteEndEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuiteEndEvent.m; sourceTree = "<group>"; };
+		D40DE6BE16508DC80033DE88 /* L3AssertionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionEvent.h; sourceTree = "<group>"; };
+		D40DE6BF16508DC80033DE88 /* L3AssertionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionEvent.m; sourceTree = "<group>"; };
+		D40DE6C216508E1D0033DE88 /* L3AssertionSuccessEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionSuccessEvent.h; sourceTree = "<group>"; };
+		D40DE6C316508E1D0033DE88 /* L3AssertionSuccessEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionSuccessEvent.m; sourceTree = "<group>"; };
 		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
 		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
 		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,15 +176,12 @@
 		D40DE689164FFCCD0033DE88 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				D40DE692164FFE780033DE88 /* L3Event.h */,
-				D40DE693164FFE780033DE88 /* L3Event.m */,
+				D40DE6C616508E570033DE88 /* Event classes */,
 				D40DE68E164FFE5E0033DE88 /* L3EventSink.h */,
 				D40DE6A1165072880033DE88 /* L3EventSink.m */,
 				D40DE6A016503B600033DE88 /* L3EventSource.h */,
-				D40DE69F165037DB0033DE88 /* L3EventFormatter.h */,
 				D40DE69A165037530033DE88 /* L3EventVisitor.h */,
-				D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */,
-				D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */,
+				D40DE6C716508E7C0033DE88 /* Event formatters */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -177,6 +202,39 @@
 				D40DE699165028AC0033DE88 /* L3TestContext.h */,
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		D40DE6C616508E570033DE88 /* Event classes */ = {
+			isa = PBXGroup;
+			children = (
+				D40DE692164FFE780033DE88 /* L3Event.h */,
+				D40DE693164FFE780033DE88 /* L3Event.m */,
+				D40DE6BE16508DC80033DE88 /* L3AssertionEvent.h */,
+				D40DE6BF16508DC80033DE88 /* L3AssertionEvent.m */,
+				D40DE6A6165085440033DE88 /* L3AssertionFailureEvent.h */,
+				D40DE6A7165085440033DE88 /* L3AssertionFailureEvent.m */,
+				D40DE6C216508E1D0033DE88 /* L3AssertionSuccessEvent.h */,
+				D40DE6C316508E1D0033DE88 /* L3AssertionSuccessEvent.m */,
+				D40DE6AE165089320033DE88 /* L3TestCaseStartEvent.h */,
+				D40DE6AF165089320033DE88 /* L3TestCaseStartEvent.m */,
+				D40DE6B216508BF50033DE88 /* L3TestCaseEndEvent.h */,
+				D40DE6B316508BF50033DE88 /* L3TestCaseEndEvent.m */,
+				D40DE6B616508C5D0033DE88 /* L3TestSuiteStartEvent.h */,
+				D40DE6B716508C5E0033DE88 /* L3TestSuiteStartEvent.m */,
+				D40DE6BA16508C710033DE88 /* L3TestSuiteEndEvent.h */,
+				D40DE6BB16508C710033DE88 /* L3TestSuiteEndEvent.m */,
+			);
+			name = "Event classes";
+			sourceTree = "<group>";
+		};
+		D40DE6C716508E7C0033DE88 /* Event formatters */ = {
+			isa = PBXGroup;
+			children = (
+				D40DE69F165037DB0033DE88 /* L3EventFormatter.h */,
+				D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */,
+				D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */,
+			);
+			name = "Event formatters";
 			sourceTree = "<group>";
 		};
 		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
@@ -299,6 +357,13 @@
 				D40DE690164FFE5E0033DE88 /* L3EventSink.h in Headers */,
 				D40DE694164FFE780033DE88 /* L3Event.h in Headers */,
 				D40DE69D165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h in Headers */,
+				D40DE6A8165085440033DE88 /* L3AssertionFailureEvent.h in Headers */,
+				D40DE6B0165089330033DE88 /* L3TestCaseStartEvent.h in Headers */,
+				D40DE6B416508BF60033DE88 /* L3TestCaseEndEvent.h in Headers */,
+				D40DE6B816508C5E0033DE88 /* L3TestSuiteStartEvent.h in Headers */,
+				D40DE6BC16508C710033DE88 /* L3TestSuiteEndEvent.h in Headers */,
+				D40DE6C016508DC90033DE88 /* L3AssertionEvent.h in Headers */,
+				D40DE6C416508E1D0033DE88 /* L3AssertionSuccessEvent.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +485,13 @@
 				D40DE695164FFE780033DE88 /* L3Event.m in Sources */,
 				D40DE69E165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m in Sources */,
 				D40DE6A2165072880033DE88 /* L3EventSink.m in Sources */,
+				D40DE6A9165085440033DE88 /* L3AssertionFailureEvent.m in Sources */,
+				D40DE6B1165089330033DE88 /* L3TestCaseStartEvent.m in Sources */,
+				D40DE6B516508BF60033DE88 /* L3TestCaseEndEvent.m in Sources */,
+				D40DE6B916508C5E0033DE88 /* L3TestSuiteStartEvent.m in Sources */,
+				D40DE6BD16508C710033DE88 /* L3TestSuiteEndEvent.m in Sources */,
+				D40DE6C116508DC90033DE88 /* L3AssertionEvent.m in Sources */,
+				D40DE6C516508E1D0033DE88 /* L3AssertionSuccessEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,16 +4,22 @@
 
 #import <Foundation/Foundation.h>
 
-@class L3Event;
+@class L3TestSuiteStartEvent;
+@class L3TestSuiteEndEvent;
+@class L3TestCaseStartEvent;
+@class L3TestCaseEndEvent;
+@class L3AssertionFailureEvent;
+@class L3AssertionSuccessEvent;
 
 @protocol L3EventVisitor <NSObject>
 
--(id)unknownEvent:(L3Event *)event;
+-(id)testSuiteStartEvent:(L3TestSuiteStartEvent *)event;
+-(id)testSuiteEndEvent:(L3TestSuiteEndEvent *)event;
 
--(id)startedEvent:(L3Event *)started;
--(id)endedEvent:(L3Event *)event;
+-(id)testCaseStartEvent:(L3TestCaseStartEvent *)event;
+-(id)testCaseEndEvent:(L3TestCaseEndEvent *)event;
 
--(id)succeededEvent:(L3Event *)event;
--(id)failedEvent:(L3Event *)event;
+-(id)assertionFailureEvent:(L3AssertionFailureEvent *)event;
+-(id)assertionSuccessEvent:(L3AssertionSuccessEvent *)event;
 
 @end

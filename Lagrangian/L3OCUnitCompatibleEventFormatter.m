@@ -6,6 +6,12 @@
 #import "L3Event.h"
 #import "L3EventSource.h"
 #import "Lagrangian.h"
+#import "L3TestSuiteStartEvent.h"
+#import "L3TestSuiteEndEvent.h"
+#import "L3TestCaseStartEvent.h"
+#import "L3TestCaseEndEvent.h"
+#import "L3AssertionFailureEvent.h"
+#import "L3AssertionSuccessEvent.h"
 
 @interface L3OCUnitCompatibleEventFormatter () <L3EventVisitor>
 @end
@@ -19,43 +25,35 @@
 }
 
 
--(NSString *)unknownEvent:(L3Event *)event {
-	return nil;
+-(NSString *)testSuiteStartEvent:(L3TestSuiteStartEvent *)event {
+	return [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", event.source.name, event.date];
+}
+
+-(NSString *)testSuiteEndEvent:(L3TestSuiteEndEvent *)event {
+	return [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", event.source.name, event.date, 0u, 0u, 0u, 0.0f, 0.0f];
 }
 
 
 @l3_test("format test case started events compatibly with OCUnit") {
-	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3Event eventWithState:L3EventStateStarted source:_case]];
-	assert(l3_assert(string, l3_not(nil)));
+	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3TestCaseStartEvent eventWithSource:_case]];
+	l3_assert(string, l3_not(nil));
 }
 
--(NSString *)startedEvent:(L3Event *)event {
-	NSString *result = nil;
-	if ([event.source isKindOfClass:[L3TestCase class]]) {
-		result = [NSString stringWithFormat:@"Test Case '-[%@]' started.", event.source.name];
-	} else if ([event.source isKindOfClass:[L3TestSuite class]]) {
-		result = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", event.source.name, event.date];
-	}
-	return result;
+-(NSString *)testCaseStartEvent:(L3TestCaseStartEvent *)event {
+	return [NSString stringWithFormat:@"Test Case '-[%@]' started.", event.source.name];
 }
 
--(NSString *)endedEvent:(L3Event *)event {
-	NSString *result = nil;
-	if ([event.source isKindOfClass:[L3TestCase class]]) {
-		result = [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", event.source.name, @"passed", 0.0f];
-	} else if ([event.source isKindOfClass:[L3TestSuite class]]) {
-		result = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", event.source.name, event.date, 0u, 0u, 0u, 0.0f, 0.0f];
-	}
-	return result;
+-(NSString *)testCaseEndEvent:(L3TestCaseEndEvent *)event {
+	return [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", event.source.name, @"passed", 0.0f];
 }
 
 
--(NSString *)succeededEvent:(L3Event *)event {
+-(NSString *)assertionFailureEvent:(L3AssertionFailureEvent *)event {
+	return @"failure!";
+}
+
+-(NSString *)assertionSuccessEvent:(L3AssertionSuccessEvent *)event {
 	return nil;
-}
-
--(NSString *)failedEvent:(L3Event *)event {
-	return @"fail!!";
 }
 
 @end

@@ -5,5 +5,4 @@
 - composable contexts (inheriting setUp/tearDown/stateClass/steps from parent context)?
 - test functions take only state object? or state + test?
 - post run state to NSUserNotificationCenter
-- events are specialized to their various roles, not just using the state enum
 - events nest?

@@ -6,7 +6,10 @@
 #import "L3TestContext.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
-#import "L3Event.h"
+#import "L3TestCaseStartEvent.h"
+#import "L3TestCaseEndEvent.h"
+#import "L3AssertionFailureEvent.h"
+#import "L3AssertionSuccessEvent.h"
 #import "L3EventSink.h"
 #import "Lagrangian.h"
 
@@ -58,7 +61,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	[testCase runInContext:nil collectingEventsInto:eventSink];
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
 		L3Event *event = [eventSink.events objectAtIndex:0];
-		l3_assert(event.state, l3_is(L3EventStateStarted));
+		l3_assert(event, l3_isKindOfClass([L3TestCaseStartEvent class]));
+		l3_assert(event.source, l3_is(_case));
 	}
 }
 
@@ -68,14 +72,15 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	[testCase runInContext:nil collectingEventsInto:eventSink];
 	l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u));
 	L3Event *event = eventSink.events.lastObject;
-	l3_assert(event.state, l3_is(L3EventStateEnded));
+	l3_assert(event, l3_isKindOfClass([L3TestCaseEndEvent class]));
+	l3_assert(event.source, l3_is(_case));
 }
 
 -(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
 	L3TestState *state = [context.stateClass new];
 	self.eventSink = eventSink;
 	
-	[eventSink addEvent:[L3Event eventWithState:L3EventStateStarted source:self]];
+	[eventSink addEvent:[L3TestCaseStartEvent eventWithSource:self]];
 	
 	if (context.setUpFunction)
 		context.setUpFunction(state, self);
@@ -85,7 +90,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (context.tearDownFunction)
 		context.tearDownFunction(state, self);
 	
-	[eventSink addEvent:[L3Event eventWithState:L3EventStateEnded source:self]];
+	[eventSink addEvent:[L3TestCaseEndEvent eventWithSource:self]];
 	
 	self.eventSink = nil;
 }
@@ -109,7 +114,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	[_case assertThat:@"a" matches:^bool(id x) { return YES; } collectingEventsInto:eventSink];
 	
 	L3Event *event = eventSink.events.lastObject;
-	assert(l3_assert(event.state, l3_is(L3EventStateSucceeded)) == YES);
+	l3_assert(event, l3_isKindOfClass([L3AssertionSuccessEvent class]));
+	l3_assert(event.source, l3_is(_case));
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
@@ -117,12 +123,14 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	[_case assertThat:@"a" matches:^bool(id x) { return NO; } collectingEventsInto:eventSink];
 	
 	L3Event *event = eventSink.events.lastObject;
-	assert(l3_assert(event.state, l3_is(L3EventStateFailed)) == YES);
+	l3_assert(event, l3_isKindOfClass([L3AssertionFailureEvent class]));
+	l3_assert(event.source, l3_is(_case));
 }
 
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink {
+	// assertion start event
 	bool matched = pattern(object);
-	[eventSink addEvent:[L3Event eventWithState:matched? L3EventStateSucceeded : L3EventStateFailed source:self]];
+	[eventSink addEvent:[matched? [L3AssertionSuccessEvent class] : [L3AssertionFailureEvent class] eventWithFile:@"wtf" line:1 actualValue:@"a" expectedPattern:@"b" source:self]];
 	return matched;
 }
 

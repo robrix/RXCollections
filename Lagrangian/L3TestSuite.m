@@ -7,6 +7,8 @@
 #import "L3TestState.h"
 #import "L3Event.h"
 #import "L3EventSink.h"
+#import "L3TestSuiteStartEvent.h"
+#import "L3TestSuiteEndEvent.h"
 #import "Lagrangian.h"
 
 @interface L3TestSuite () <L3TestContext>
@@ -87,7 +89,8 @@
 	[testSuite runInContext:nil collectingEventsInto:eventSink];
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
 		L3Event *event = [eventSink.events objectAtIndex:0];
-		assert(l3_assert(event.state, l3_is(L3EventStateStarted)));
+		l3_assert(event, l3_isKindOfClass([L3TestSuiteStartEvent class]));
+		l3_assert(event.source, l3_is(_case));
 	}
 }
 
@@ -96,15 +99,16 @@
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
 	[testSuite runInContext:nil collectingEventsInto:eventSink];
 	L3Event *event = eventSink.events.lastObject;
-	l3_assert(event.state, l3_is(L3EventStateEnded));
+	l3_assert(event, l3_isKindOfClass([L3TestSuiteEndEvent class]));
+	l3_assert(event.source, l3_is(_case));
 }
 
 -(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
-	[eventSink addEvent:[L3Event eventWithState:L3EventStateStarted source:self]];
+	[eventSink addEvent:[L3TestSuiteStartEvent eventWithSource:self]];
 	for (id<L3Test> test in self.tests) {
 		[test runInContext:self collectingEventsInto:eventSink];
 	}
-	[eventSink addEvent:[L3Event eventWithState:L3EventStateEnded source:self]];
+	[eventSink addEvent:[L3TestSuiteEndEvent eventWithSource:self]];
 }
 
 @end
