@@ -34,7 +34,7 @@
 	if ([event.source isKindOfClass:[L3TestCase class]]) {
 		result = [NSString stringWithFormat:@"Test Case '-[%@]' started.", event.source.name];
 	} else if ([event.source isKindOfClass:[L3TestSuite class]]) {
-		result = [NSString stringWithFormat:@"Test Suite '%@' started at %@", event.source.name, event.date];
+		result = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", event.source.name, event.date];
 	}
 	return result;
 }
@@ -42,9 +42,9 @@
 -(NSString *)endedEvent:(L3Event *)event {
 	NSString *result = nil;
 	if ([event.source isKindOfClass:[L3TestCase class]]) {
-		result = [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).", event.source.name, @"passed", 0.0f];
+		result = [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", event.source.name, @"passed", 0.0f];
 	} else if ([event.source isKindOfClass:[L3TestSuite class]]) {
-		result = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds", event.source.name, event.date, 0u, 0u, 0u, 0.0f, 0.0f];
+		result = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", event.source.name, event.date, 0u, 0u, 0u, 0.0f, 0.0f];
 	}
 	return result;
 }

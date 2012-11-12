@@ -14,6 +14,8 @@
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
+@property (weak, nonatomic, readwrite) L3EventSink *eventSink;
+
 @end
 
 @implementation L3TestCase
@@ -51,15 +53,30 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Running
 
 @l3_test("generate case started events when starting to run") {
-	
+	L3EventSink *eventSink = [L3EventSink new];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
+	[testCase runInContext:nil collectingEventsInto:eventSink];
+	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
+		L3Event *event = [eventSink.events objectAtIndex:0];
+		l3_assert(event.state, l3_is(L3EventStateStarted));
+	}
 }
 
 @l3_test("generate case finished events when done running") {
-	
+	L3EventSink *eventSink = [L3EventSink new];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
+	[testCase runInContext:nil collectingEventsInto:eventSink];
+	l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u));
+	L3Event *event = eventSink.events.lastObject;
+	l3_assert(event.state, l3_is(L3EventStateEnded));
 }
 
 -(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
 	L3TestState *state = [context.stateClass new];
+	self.eventSink = eventSink;
+	
+	[eventSink addEvent:[L3Event eventWithState:L3EventStateStarted source:self]];
+	
 	if (context.setUpFunction)
 		context.setUpFunction(state, self);
 	
@@ -67,6 +84,10 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	if (context.tearDownFunction)
 		context.tearDownFunction(state, self);
+	
+	[eventSink addEvent:[L3Event eventWithState:L3EventStateEnded source:self]];
+	
+	self.eventSink = nil;
 }
 
 

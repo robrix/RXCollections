@@ -15,6 +15,7 @@
 
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
+@property (weak, nonatomic, readonly) L3EventSink *eventSink;
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink;
 
 @end
