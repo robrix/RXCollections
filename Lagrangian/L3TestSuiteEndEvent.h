@@ -8,8 +8,8 @@
 
 @interface L3TestSuiteEndEvent : L3Event
 
-+(instancetype)eventWithSource:(L3TestSuite<L3EventSource> *)source;
++(instancetype)eventWithTestSuite:(L3TestSuite *)testSuite;
 
-@property (strong, nonatomic, readonly) L3TestSuite<L3EventSource> *source;
+@property (strong, nonatomic, readonly) L3TestSuite *testSuite;
 
 @end

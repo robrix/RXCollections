@@ -18,7 +18,7 @@
 #pragma mark Algebras
 
 -(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
-	return [algebra assertionFailureWithAssertionReference:self.assertionReference source:self.source];
+	return [algebra assertionFailureWithAssertionReference:self.assertionReference];
 }
 
 @end

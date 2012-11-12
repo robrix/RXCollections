@@ -5,11 +5,10 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 #import "L3Test.h"
-#import "L3EventSource.h"
 
 @class L3TestCase;
 
-@interface L3TestSuite : NSObject <L3EventSource, L3Test>
+@interface L3TestSuite : NSObject <L3Test>
 
 +(instancetype)defaultSuite;
 

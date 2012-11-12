@@ -12,30 +12,30 @@
 
 @implementation L3EventFactory
 
--(id)testSuiteStartEventWithSource:(L3TestSuite<L3EventSource> *)source {
-	return [L3TestSuiteStartEvent eventWithSource:source];
+-(id)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite {
+	return [L3TestSuiteStartEvent eventWithTestSuite:testSuite];
 }
 
--(id)testSuiteEndEventWithSource:(L3TestSuite<L3EventSource> *)source {
-	return [L3TestSuiteEndEvent eventWithSource:source];
-}
-
-
--(id)testCaseStartEventWithSource:(L3TestCase<L3EventSource> *)source {
-	return [L3TestCaseStartEvent eventWithSource:source];
-}
-
--(id)testCaseEndEventWithSource:(L3TestCase<L3EventSource> *)source {
-	return [L3TestCaseEndEvent eventWithSource:source];
+-(id)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite {
+	return [L3TestSuiteEndEvent eventWithTestSuite:testSuite];
 }
 
 
--(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source {
-	return [L3AssertionFailureEvent eventWithAssertionReference:assertionReference source:source];
+-(id)testCaseStartEventWithTestCase:(L3TestCase *)testCase {
+	return [L3TestCaseStartEvent eventWithTestCase:testCase];
 }
 
--(L3AssertionSuccessEvent *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source {
-	return [L3AssertionSuccessEvent eventWithAssertionReference:assertionReference source:source];
+-(id)testCaseEndEventWithTestCase:(L3TestCase *)testCase {
+	return [L3TestCaseEndEvent eventWithTestCase:testCase];
+}
+
+
+-(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference {
+	return [L3AssertionFailureEvent eventWithAssertionReference:assertionReference];
+}
+
+-(L3AssertionSuccessEvent *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference {
+	return [L3AssertionSuccessEvent eventWithAssertionReference:assertionReference];
 }
 
 @end

@@ -88,9 +88,9 @@
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
 	[testSuite runInContext:nil collectingEventsInto:eventSink];
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
-		L3Event *event = [eventSink.events objectAtIndex:0];
+		L3TestSuiteStartEvent *event = [eventSink.events objectAtIndex:0];
 		l3_assert(event, l3_isKindOfClass([L3TestSuiteStartEvent class]));
-		l3_assert(event.source, l3_is(_case));
+		l3_assert(event.testSuite, l3_is(_case));
 	}
 }
 
@@ -98,17 +98,17 @@
 	L3EventSink *eventSink = [L3EventSink new];
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
 	[testSuite runInContext:nil collectingEventsInto:eventSink];
-	L3Event *event = eventSink.events.lastObject;
+	L3TestSuiteEndEvent *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3TestSuiteEndEvent class]));
-	l3_assert(event.source, l3_is(_case));
+	l3_assert(event.testSuite, l3_is(_case));
 }
 
 -(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
-	[eventSink addEvent:[L3TestSuiteStartEvent eventWithSource:self]];
+	[eventSink addEvent:[L3TestSuiteStartEvent eventWithTestSuite:self]];
 	for (id<L3Test> test in self.tests) {
 		[test runInContext:self collectingEventsInto:eventSink];
 	}
-	[eventSink addEvent:[L3TestSuiteEndEvent eventWithSource:self]];
+	[eventSink addEvent:[L3TestSuiteEndEvent eventWithTestSuite:self]];
 }
 
 @end

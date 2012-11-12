@@ -9,12 +9,16 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)eventWithSource:(L3TestSuite<L3EventSource> *)source {
-	return [super eventWithSource:source];
++(instancetype)eventWithTestSuite:(L3TestSuite *)testSuite {
+	return [[self alloc] initWithTestSuite:testSuite];
 }
 
-
-@dynamic source;
+-(instancetype)initWithTestSuite:(L3TestSuite *)testSuite {
+	if ((self = [super init])) {
+		_testSuite = testSuite;
+	}
+	return self;
+}
 
 
 #pragma mark -
@@ -29,7 +33,7 @@
 #pragma mark Algebras
 
 -(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
-	return [algebra testSuiteStartEventWithSource:self.source];
+	return [algebra testSuiteStartEventWithTestSuite:self.testSuite];
 }
 
 @end

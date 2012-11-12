@@ -5,13 +5,12 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 #import "L3Test.h"
-#import "L3EventSource.h"
 
 @class L3AssertionReference;
 @class L3EventSink;
 @class L3TestSuite;
 
-@interface L3TestCase : NSObject <L3EventSource, L3Test>
+@interface L3TestCase : NSObject <L3Test>
 
 +(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function;
 

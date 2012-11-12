@@ -5,9 +5,6 @@
 #import "L3Event.h"
 
 @interface L3Event ()
-
-@property (nonatomic, readwrite) NSDate *date;
-
 @end
 
 @implementation L3Event
@@ -15,13 +12,8 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)eventWithSource:(id<L3EventSource>)source {
-	return [(L3Event *)[self alloc] initWithSource:source];
-}
-
--(instancetype)initWithSource:(id<L3EventSource>)source {
+-(instancetype)init {
 	if ((self = [super init])) {
-		_source = source;
 		_date = [NSDate date];
 	}
 	return self;
@@ -35,6 +27,7 @@
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
+
 
 #pragma mark -
 #pragma mark Algebras
