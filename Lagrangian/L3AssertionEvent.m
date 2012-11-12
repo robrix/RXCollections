@@ -9,7 +9,7 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)eventWithAssertion:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source {
++(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source {
 	return [[self alloc] initWithAssertion:assertionReference source:source];
 }
 

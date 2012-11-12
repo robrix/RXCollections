@@ -8,7 +8,7 @@
 
 @interface L3AssertionEvent : L3Event
 
-+(instancetype)eventWithAssertion:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source;
++(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference source:(id<L3EventSource>)source;
 
 @property (copy, nonatomic, readonly) L3AssertionReference *assertionReference;
 

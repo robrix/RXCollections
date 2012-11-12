@@ -9,7 +9,7 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)assertionWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource patternSource:(NSString *)patternSource {
++(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource patternSource:(NSString *)patternSource {
 	return [[self alloc] initWithFile:file line:line subjectSource:subjectSource patternSource:patternSource];
 }
 
