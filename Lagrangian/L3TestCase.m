@@ -130,7 +130,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion collectingEventsInto:(L3EventSink *)eventSink {
 	// assertion start event
 	bool matched = pattern(object);
-	[eventSink addEvent:[matched? [L3AssertionSuccessEvent class] : [L3AssertionFailureEvent class] eventWithAssertion:assertion source:self]];
+	[eventSink addEvent:[matched? [L3AssertionSuccessEvent class] : [L3AssertionFailureEvent class] eventWithAssertionReference:assertion source:self]];
 	return matched;
 }
 
