@@ -86,7 +86,7 @@
 @l3_test("generate suite started events when starting to run") {
 	L3EventSink *eventSink = [L3EventSink new];
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil collectingEventsInto:eventSink];
+	[testSuite runInContext:nil eventAlgebra:eventSink];
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
 		L3TestSuiteStartEvent *event = [eventSink.events objectAtIndex:0];
 		l3_assert(event, l3_isKindOfClass([L3TestSuiteStartEvent class]));
@@ -97,18 +97,18 @@
 @l3_test("generate suite finished events when done running") {
 	L3EventSink *eventSink = [L3EventSink new];
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil collectingEventsInto:eventSink];
+	[testSuite runInContext:nil eventAlgebra:eventSink];
 	L3TestSuiteEndEvent *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3TestSuiteEndEvent class]));
 	l3_assert(event.testSuite, l3_is(_case));
 }
 
--(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
-	[eventSink addEvent:[L3TestSuiteStartEvent eventWithTestSuite:self]];
+-(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
+	[eventAlgebra testSuiteStartEventWithTestSuite:self];
 	for (id<L3Test> test in self.tests) {
-		[test runInContext:self collectingEventsInto:eventSink];
+		[test runInContext:self eventAlgebra:eventAlgebra];
 	}
-	[eventSink addEvent:[L3TestSuiteEndEvent eventWithTestSuite:self]];
+	[eventAlgebra testSuiteEndEventWithTestSuite:self];
 }
 
 @end

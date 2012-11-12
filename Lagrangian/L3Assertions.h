@@ -10,7 +10,7 @@
 	[L3AssertionReference assertionReferenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" #subject patternSource:@"" #pattern]
 
 #define l3_assert(subject, pattern) \
-	[_case assertThat:l3_to_object(subject) matches:l3_to_pattern(pattern) assertionReference:l3_assertionReference(subject, pattern) collectingEventsInto:_case.eventSink]
+	[_case assertThat:l3_to_object(subject) matches:l3_to_pattern(pattern) assertionReference:l3_assertionReference(subject, pattern) eventAlgebra:_case.eventAlgebra]
 
 #define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
 

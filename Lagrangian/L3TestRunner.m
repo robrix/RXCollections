@@ -79,7 +79,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:nil collectingEventsInto:_eventSink];
+			[test runInContext:nil eventAlgebra:_eventSink];
 		}];
 	}
 }

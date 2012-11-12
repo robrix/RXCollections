@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 #import "L3Test.h"
+#import "L3EventAlgebra.h"
 
 @class L3AssertionReference;
 @class L3EventSink;
@@ -16,8 +17,8 @@
 
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
-@property (weak, nonatomic, readonly) L3EventSink *eventSink;
+@property (weak, nonatomic, readonly) id<L3EventAlgebra> eventAlgebra;
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion collectingEventsInto:(L3EventSink *)eventSink;
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion eventAlgebra:(id<L3EventAlgebra>)eventAlgebra;
 
 @end
