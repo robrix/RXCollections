@@ -12,25 +12,25 @@
 
 @implementation L3EventFactory
 
--(id)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite {
+-(L3TestSuiteStartEvent *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite {
 	return [L3TestSuiteStartEvent eventWithTestSuite:testSuite];
 }
 
--(id)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite {
+-(L3TestSuiteEndEvent *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite {
 	return [L3TestSuiteEndEvent eventWithTestSuite:testSuite];
 }
 
 
--(id)testCaseStartEventWithTestCase:(L3TestCase *)testCase {
+-(L3TestCaseStartEvent *)testCaseStartEventWithTestCase:(L3TestCase *)testCase {
 	return [L3TestCaseStartEvent eventWithTestCase:testCase];
 }
 
--(id)testCaseEndEventWithTestCase:(L3TestCase *)testCase {
+-(L3TestCaseEndEvent *)testCaseEndEventWithTestCase:(L3TestCase *)testCase {
 	return [L3TestCaseEndEvent eventWithTestCase:testCase];
 }
 
 
--(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference {
+-(L3AssertionFailureEvent *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference {
 	return [L3AssertionFailureEvent eventWithAssertionReference:assertionReference];
 }
 
