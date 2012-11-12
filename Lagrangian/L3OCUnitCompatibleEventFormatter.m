@@ -15,10 +15,14 @@
 @interface L3OCUnitCompatibleEventFormatter () <L3EventAlgebra>
 
 @property (strong, nonatomic, readonly) NSMutableArray *currentSuites;
+-(void)pushSuite:(L3TestSuite *)suite;
+-(L3TestSuite *)popSuite;
 @property (strong, nonatomic, readonly) L3TestSuite *currentSuite;
 @property (strong, nonatomic) L3TestCase *currentCase;
 
+
 -(NSString *)formatTestName:(NSString *)name;
+-(NSString *)methodNameWithCurrentSuiteAndCase;
 
 @end
 
@@ -55,12 +59,13 @@
 
 -(NSString *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
 	self.currentCase = testCase;
-	return [NSString stringWithFormat:@"Test Case '-[%@ %@]' started.", [self formatTestName:self.currentSuite.name], [self formatTestName:testCase.name]];
+	return [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameWithCurrentSuiteAndCase]];
 }
 
 -(NSString *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+	NSString *formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameWithCurrentSuiteAndCase], @"passed", 0.0f];
 	self.currentCase = nil;
-	return [NSString stringWithFormat:@"Test Case '-[%@ %@]' %@ (%.3f seconds).\n", [self formatTestName:self.currentSuite.name], [self formatTestName:testCase.name], @"passed", 0.0f];
+	return formatted;
 }
 
 
@@ -112,6 +117,19 @@
 		[formatted replaceCharactersInRange:range withString:@"_"];
 	}
 	return formatted;
+}
+
+static void dummyFunction(L3TestState *test, L3TestCase *_case) {}
+
+@l3_test("formats faux method names from suite and test case names") {
+	L3OCUnitCompatibleEventFormatter *formatter = [L3OCUnitCompatibleEventFormatter new];
+	[formatter pushSuite:[L3TestSuite testSuiteWithName:@"suite of tests!"]];
+	formatter.currentCase = [L3TestCase testCaseWithName:@"test of suites!" function:dummyFunction];
+	l3_assert([formatter methodNameWithCurrentSuiteAndCase], @"-[suite_of_tests_ test_of_suites_]");
+}
+
+-(NSString *)methodNameWithCurrentSuiteAndCase {
+	return [NSString stringWithFormat:@"-[%@ %@]", [self formatTestName:self.currentSuite.name], [self formatTestName:self.currentCase.name]];
 }
 
 
