@@ -5,15 +5,35 @@
 #import "L3TestCase.h"
 #import "L3TestSuite.h"
 #import "L3TestState.h"
+#import "L3Event.h"
+#import "L3EventSink.h"
+#import "Lagrangian.h"
 
-@interface L3TestSuite ()
+@interface L3TestSuite () <L3TestContext>
 
-@property (strong, nonatomic, readonly) NSMutableArray *testCases;
-@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestCasesByName;
+@property (copy, nonatomic, readwrite) NSString *name;
+
+@property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
 @end
 
 @implementation L3TestSuite
+
+@l3_suite("Test suites");
+
+#pragma mark -
+#pragma mark Constructors
+
++(instancetype)defaultSuite {
+	static L3TestSuite *defaultSuite = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		defaultSuite = [self testSuiteWithName:[NSBundle mainBundle].bundlePath.lastPathComponent ?: [NSProcessInfo processInfo].processName];
+	});
+	return defaultSuite;
+}
+
 
 +(instancetype)testSuiteWithName:(NSString *)name {
 	return [[self alloc] initWithName:name];
@@ -23,16 +43,32 @@
 	NSParameterAssert(name != nil);
 	if ((self = [super init])) {
 		_name = [name copy];
-		_testCases = [NSMutableArray new];
-		_mutableTestCasesByName = [NSMutableDictionary new];
+		_mutableTests = [NSMutableArray new];
+		_mutableTestsByName = [NSMutableDictionary new];
 		_stateClass = [L3TestState class];
 	}
 	return self;
 }
 
 
--(NSDictionary *)testCasesByName {
-	return self.mutableTestCasesByName;
+#pragma mark -
+#pragma mark Tests
+
+-(void)addTest:(id<L3Test>)test {
+	NSParameterAssert(test != nil);
+	NSParameterAssert([self.testsByName objectForKey:test.name] == nil);
+	
+	[self.mutableTests addObject:test];
+	[self.mutableTestsByName setObject:test forKey:test.name];
+}
+
+
+-(NSArray *)tests {
+	return self.mutableTests;
+}
+
+-(NSDictionary *)testsByName {
+	return self.mutableTestsByName;
 }
 
 
@@ -42,27 +78,33 @@
 }
 
 
--(void)addTestCase:(L3TestCase *)testCase {
-	NSParameterAssert(testCase != nil);
-	NSParameterAssert([self.testCasesByName objectForKey:testCase.name] == nil);
-	
-	[self.testCases addObject:testCase];
-	[self.mutableTestCasesByName setObject:testCase forKey:testCase.name];
-}
+#pragma mark -
+#pragma mark L3Test
 
-
--(void)runTestCase:(L3TestCase *)testCase {
-	NSParameterAssert(testCase != nil);
-	@autoreleasepool {
-		[testCase runInSuite:self];
+@l3_test("generate suite started events when starting to run") {
+	L3EventSink *eventSink = [L3EventSink new];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	[testSuite runInContext:nil collectingEventsInto:eventSink];
+	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
+		L3Event *event = [eventSink.events objectAtIndex:0];
+		assert(l3_assert(event.state, l3_is(L3EventStateStarted)));
 	}
 }
 
--(void)runTestCases {
-	NSLog(@"running all tests in %@", self.name);
-	for (L3TestCase *testCase in self.testCases) {
-		[self runTestCase:testCase];
+@l3_test("generate suite finished events when done running") {
+	L3EventSink *eventSink = [L3EventSink new];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	[testSuite runInContext:nil collectingEventsInto:eventSink];
+	L3Event *event = eventSink.events.lastObject;
+	l3_assert(event.state, l3_is(L3EventStateEnded));
+}
+
+-(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
+	[eventSink addEvent:[L3Event eventWithState:L3EventStateStarted source:self]];
+	for (id<L3Test> test in self.tests) {
+		[test runInContext:self collectingEventsInto:eventSink];
 	}
+	[eventSink addEvent:[L3Event eventWithState:L3EventStateEnded source:self]];
 }
 
 @end

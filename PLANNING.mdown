@@ -1,7 +1,9 @@
-- add a config macro to remove the prefix
-- test steps that can be run ad hoc
+- config macro to remove the prefix
+- test steps that can be run at test cases’ discretion
 - multiple setUp/tearDown blocks per suite
-- prototypal suite inheritance?
-- test suites nest
-- test cases are for the individual methods
-- test runners figure out what to run and collect events
+- differential-prototypal suite inheritance?
+- composable contexts (inheriting setUp/tearDown/stateClass/steps from parent context)?
+- test functions take only state object? or state + test?
+- post run state to NSUserNotificationCenter
+- events are specialized to their various roles, not just using the state enum
+- events nest?

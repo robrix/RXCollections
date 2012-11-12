@@ -4,14 +4,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class L3TestCase;
-@class L3TestSuite;
 @class L3TestState;
+@class L3TestCase;
 
 #pragma mark -
 #pragma mark Test functions
 
-typedef void(*L3TestCaseFunction)(L3TestState *, L3TestSuite *, L3TestCase *);
+typedef void(*L3TestCaseFunction)(L3TestState *, L3TestCase *);
 typedef L3TestCaseFunction L3TestCaseSetUpFunction;
 typedef L3TestCaseFunction L3TestCaseTearDownFunction;
 

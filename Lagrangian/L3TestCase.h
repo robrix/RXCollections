@@ -4,19 +4,17 @@
 
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
+#import "L3Test.h"
+#import "L3EventSource.h"
 
-@protocol L3EventSink;
-@class L3TestSuite;
+@class L3EventSink, L3TestSuite;
 
-@interface L3TestCase : NSObject
+@interface L3TestCase : NSObject <L3EventSource, L3Test>
 
 +(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function;
 
-@property (copy, nonatomic, readonly) NSString *name;
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
--(void)runInSuite:(L3TestSuite *)suite;
-
--(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(id<L3EventSink>)eventSink;
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink;
 
 @end

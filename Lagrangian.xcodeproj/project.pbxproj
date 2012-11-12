@@ -12,6 +12,9 @@
 		D40DE690164FFE5E0033DE88 /* L3EventSink.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE68E164FFE5E0033DE88 /* L3EventSink.h */; };
 		D40DE694164FFE780033DE88 /* L3Event.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE692164FFE780033DE88 /* L3Event.h */; };
 		D40DE695164FFE780033DE88 /* L3Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE693164FFE780033DE88 /* L3Event.m */; };
+		D40DE69D165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */; };
+		D40DE69E165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */; };
+		D40DE6A2165072880033DE88 /* L3EventSink.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE6A1165072880033DE88 /* L3EventSink.m */; };
 		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; };
 		D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
@@ -72,6 +75,14 @@
 		D40DE68E164FFE5E0033DE88 /* L3EventSink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventSink.h; sourceTree = "<group>"; };
 		D40DE692164FFE780033DE88 /* L3Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Event.h; sourceTree = "<group>"; };
 		D40DE693164FFE780033DE88 /* L3Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Event.m; sourceTree = "<group>"; };
+		D40DE69716501CA00033DE88 /* L3Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
+		D40DE699165028AC0033DE88 /* L3TestContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestContext.h; sourceTree = "<group>"; };
+		D40DE69A165037530033DE88 /* L3EventVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventVisitor.h; sourceTree = "<group>"; };
+		D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3OCUnitCompatibleEventFormatter.h; sourceTree = "<group>"; };
+		D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3OCUnitCompatibleEventFormatter.m; sourceTree = "<group>"; };
+		D40DE69F165037DB0033DE88 /* L3EventFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventFormatter.h; sourceTree = "<group>"; };
+		D40DE6A016503B600033DE88 /* L3EventSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventSource.h; sourceTree = "<group>"; };
+		D40DE6A1165072880033DE88 /* L3EventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3EventSink.m; sourceTree = "<group>"; };
 		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
 		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
 		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,8 +151,32 @@
 				D40DE692164FFE780033DE88 /* L3Event.h */,
 				D40DE693164FFE780033DE88 /* L3Event.m */,
 				D40DE68E164FFE5E0033DE88 /* L3EventSink.h */,
+				D40DE6A1165072880033DE88 /* L3EventSink.m */,
+				D40DE6A016503B600033DE88 /* L3EventSource.h */,
+				D40DE69F165037DB0033DE88 /* L3EventFormatter.h */,
+				D40DE69A165037530033DE88 /* L3EventVisitor.h */,
+				D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */,
+				D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */,
 			);
 			name = Events;
+			sourceTree = "<group>";
+		};
+		D40DE69616501B000033DE88 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+				D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */,
+				D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */,
+				D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */,
+				D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */,
+				D4BC3A5D164D483E003AD167 /* L3TestRunner.h */,
+				D4BC3A5E164D483E003AD167 /* L3TestRunner.m */,
+				D40DE660164E26030033DE88 /* L3TestState.h */,
+				D40DE661164E26030033DE88 /* L3TestState.m */,
+				D40DE69716501CA00033DE88 /* L3Test.h */,
+				D40DE699165028AC0033DE88 /* L3TestContext.h */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
@@ -209,17 +244,9 @@
 			children = (
 				D4AC431E1648B5D300C0A25B /* Lagrangian.h */,
 				D4AC431F1648B5D300C0A25B /* Lagrangian.m */,
-				D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */,
-				D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */,
-				D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */,
-				D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */,
-				D4BC3A5D164D483E003AD167 /* L3TestRunner.h */,
-				D4BC3A5E164D483E003AD167 /* L3TestRunner.m */,
-				D40DE660164E26030033DE88 /* L3TestState.h */,
-				D40DE661164E26030033DE88 /* L3TestState.m */,
 				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
 				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
-				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+				D40DE69616501B000033DE88 /* Tests */,
 				D40DE689164FFCCD0033DE88 /* Events */,
 				D4AC431C1648B5D300C0A25B /* Supporting Files */,
 			);
@@ -271,6 +298,7 @@
 				D40DE662164E26030033DE88 /* L3TestState.h in Headers */,
 				D40DE690164FFE5E0033DE88 /* L3EventSink.h in Headers */,
 				D40DE694164FFE780033DE88 /* L3Event.h in Headers */,
+				D40DE69D165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +418,8 @@
 				D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */,
 				D40DE663164E26030033DE88 /* L3TestState.m in Sources */,
 				D40DE695164FFE780033DE88 /* L3Event.m in Sources */,
+				D40DE69E165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m in Sources */,
+				D40DE6A2165072880033DE88 /* L3EventSink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

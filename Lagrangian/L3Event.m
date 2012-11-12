@@ -6,7 +6,7 @@
 
 @interface L3Event ()
 
-@property (strong, nonatomic, readonly) id source;
+@property (nonatomic, readwrite) NSDate *date;
 
 @end
 
@@ -15,17 +15,47 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)eventWithState:(L3EventState)state source:(id)source {
++(instancetype)eventWithState:(L3EventState)state source:(id<L3EventSource>)source {
 	return [[self alloc] initWithState:state source:source];
 }
 
--(instancetype)initWithState:(L3EventState)state source:(id)source {
+-(instancetype)initWithState:(L3EventState)state source:(id<L3EventSource>)source {
 	if ((self = [super init])) {
 		_state = state;
 		_source = source;
 		_date = [NSDate date];
 	}
 	return self;
+}
+
+
+#pragma mark -
+#pragma mark Visitors
+
+-(id)acceptVisitor:(id<L3EventVisitor>)visitor {
+	id result = nil;
+	switch (self.state) {
+		case L3EventStateStarted:
+			result = [visitor startedEvent:self];
+			break;
+		
+		case L3EventStateEnded:
+			result = [visitor endedEvent:self];
+			break;
+			
+		case L3EventStateSucceeded:
+			result = [visitor succeededEvent:self];
+			break;
+			
+		case L3EventStateFailed:
+			result = [visitor failedEvent:self];
+			break;
+			
+		default:
+			result = [visitor unknownEvent:self];
+			break;
+	}
+	return result;
 }
 
 @end

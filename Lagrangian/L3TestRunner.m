@@ -6,15 +6,20 @@
 #import "L3TestRunner.h"
 #import "L3TestSuite.h"
 #import "L3Event.h"
+#import "L3EventSink.h"
+#import "L3OCUnitCompatibleEventFormatter.h"
 
-@interface L3TestRunner ()
+@interface L3TestRunner () <L3EventSinkDelegate>
 
-@property (strong, nonatomic, readonly) NSMutableArray *testSuites;
-@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestSuitesByName;
+@property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
-@property (strong, nonatomic, readonly) NSMutableArray *mutableEvents;
+@property (strong, nonatomic, readonly) L3EventSink *eventSink;
+@property (strong, nonatomic, readonly) id<L3EventFormatter> eventFormatter;
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
+
+@property (strong, nonatomic, readonly) id<L3Test> test;
 
 @property (assign, nonatomic, readonly) bool shouldRunAutomatically;
 
@@ -31,15 +36,23 @@
 	return runner;
 }
 
+static void __attribute__((constructor)) L3TestRunnerLoader() {
+	[L3TestRunner runner];
+}
+
 -(instancetype)init {
 	if ((self = [super init])) {
-		_testSuites = [NSMutableArray new];
-		_mutableTestSuitesByName = [NSMutableDictionary new];
+		_mutableTests = [NSMutableArray new];
+		_mutableTestsByName = [NSMutableDictionary new];
 		
-		_mutableEvents = [NSMutableArray new];
+		_eventSink = [L3EventSink new];
+		_eventSink.delegate = self;
+		_eventFormatter = [L3OCUnitCompatibleEventFormatter new];
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
 		_queue.maxConcurrentOperationCount = 1;
+		
+		_test = [L3TestSuite defaultSuite];
 		
 #if L3_TESTS || L3_RUN_TESTS_ON_LAUNCH
 		_shouldRunAutomatically = YES;
@@ -48,7 +61,7 @@
 		if (_shouldRunAutomatically && [NSApplication class]) { // weak linking
 			__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 				if (self.shouldRunAutomatically)
-					[self runTestSuites];
+					[self runTest:self.test];
 				
 				[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 			}];
@@ -58,46 +71,27 @@
 }
 
 
--(NSDictionary *)testSuitesByName {
-	return self.mutableTestSuitesByName;
-}
+#pragma mark -
+#pragma mark Running
 
--(NSArray *)events {
-	return self.mutableEvents;
-}
-
-
--(void)addTestSuite:(L3TestSuite *)testSuite {
-	NSParameterAssert(testSuite != nil);
-	NSParameterAssert([self.testSuitesByName objectForKey:testSuite.name] == nil);
+-(void)runTest:(id<L3Test>)test {
+	NSParameterAssert(test != nil);
 	
-	[self.testSuites addObject:testSuite];
-	[self.mutableTestSuitesByName setObject:testSuite forKey:testSuite.name];
-}
-
-
--(void)runTestSuite:(L3TestSuite *)testSuite {
-	NSParameterAssert(testSuite != nil);
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
-			[testSuite runTestCases];
+			[test runInContext:nil collectingEventsInto:_eventSink];
 		}];
-	}
-}
-
--(void)runTestSuites {
-	NSLog(@"running all test suites");
-	for (L3TestSuite *testSuite in self.testSuites) {
-		[self runTestSuite:testSuite];
 	}
 }
 
 
 #pragma mark -
-#pragma mark Event sink
+#pragma mark L3EventSinkDelegate
 
--(void)addEvent:(L3Event *)event {
-	[self.mutableEvents addObject:event];
+-(void)eventSink:(L3EventSink *)eventSink didAddEvent:(L3Event *)event {
+	NSString *formattedEvent = [self.eventFormatter formatEvent:event];
+	if (formattedEvent)
+		printf("%s\n", formattedEvent.UTF8String);
 }
 
 @end

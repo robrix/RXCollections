@@ -21,10 +21,13 @@
 
 
 -(id)objectForKeyedSubscript:(NSString *)key {
+	NSParameterAssert(key != nil);
 	return self.contents[key];
 }
 
 -(void)setObject:(id)object forKeyedSubscript:(NSString *)key {
+	NSParameterAssert(object != nil);
+	NSParameterAssert(key != nil);
 	self.contents[key] = object;
 }
 

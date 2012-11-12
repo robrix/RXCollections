@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3TestCase.h"
+#import "L3TestContext.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
 #import "L3Event.h"
@@ -19,7 +20,10 @@
 
 @l3_suite("Test cases");
 
-static void test_function(L3TestState *state, L3TestSuite *suite, L3TestCase *testCase) {}
+static void test_function(L3TestState *state, L3TestCase *testCase) {}
+
+#pragma mark -
+#pragma mark Constructors
 
 @l3_test("correlate names with functions") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"test case name" function:test_function];
@@ -46,18 +50,23 @@ static void test_function(L3TestState *state, L3TestSuite *suite, L3TestCase *te
 #pragma mark -
 #pragma mark Running
 
--(void)runInSuite:(L3TestSuite *)suite {
-	NSLog(@"running test case %@", self.name);
-	@autoreleasepool {
-		L3TestState *state = [suite.stateClass new];
-		if (suite.setUpFunction)
-			suite.setUpFunction(state, suite, self);
-		
-		self.function(state, suite, self);
-		
-		if (suite.tearDownFunction)
-			suite.tearDownFunction(state, suite, self);
-	}
+@l3_test("generate case started events when starting to run") {
+	
+}
+
+@l3_test("generate case finished events when done running") {
+	
+}
+
+-(void)runInContext:(id<L3TestContext>)context collectingEventsInto:(L3EventSink *)eventSink {
+	L3TestState *state = [context.stateClass new];
+	if (context.setUpFunction)
+		context.setUpFunction(state, self);
+	
+	self.function(state, self);
+	
+	if (context.tearDownFunction)
+		context.tearDownFunction(state, self);
 }
 
 
@@ -75,25 +84,24 @@ static void test_function(L3TestState *state, L3TestSuite *suite, L3TestCase *te
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
-	L3TestRunner *testRunner = [L3TestRunner new];
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } collectingEventsInto:testRunner];
+	L3EventSink *eventSink = [L3EventSink new];
+	[_case assertThat:@"a" matches:^bool(id x) { return YES; } collectingEventsInto:eventSink];
 	
-	L3Event *event = testRunner.events.lastObject;
-	assert(l3_assert(event.state, l3_is(L3EventStatusSucceeded)) == YES);
+	L3Event *event = eventSink.events.lastObject;
+	assert(l3_assert(event.state, l3_is(L3EventStateSucceeded)) == YES);
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
-	L3TestRunner *testRunner = [L3TestRunner new];
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } collectingEventsInto:testRunner];
+	L3EventSink *eventSink = [L3EventSink new];
+	[_case assertThat:@"a" matches:^bool(id x) { return NO; } collectingEventsInto:eventSink];
 	
-	L3Event *event = testRunner.events.lastObject;
-	assert(l3_assert(event.state, l3_is(L3EventStatusFailed)) == YES);
+	L3Event *event = eventSink.events.lastObject;
+	assert(l3_assert(event.state, l3_is(L3EventStateFailed)) == YES);
 }
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(id<L3EventSink>)eventSink {
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink {
 	bool matched = pattern(object);
-	if (eventSink)
-		[eventSink addEvent:[L3Event eventWithState:matched? L3EventStatusSucceeded : L3EventStatusFailed source:self]];
+	[eventSink addEvent:[L3Event eventWithState:matched? L3EventStateSucceeded : L3EventStateFailed source:self]];
 	return matched;
 }
 

@@ -4,26 +4,26 @@
 
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
+#import "L3Test.h"
+#import "L3EventSource.h"
 
 @class L3TestCase;
 
-@interface L3TestSuite : NSObject
+@interface L3TestSuite : NSObject <L3EventSource, L3Test>
+
++(instancetype)defaultSuite;
 
 +(instancetype)testSuiteWithName:(NSString *)name;
 
-@property (copy, nonatomic, readonly) NSString *name;
-
-@property (strong, nonatomic, readonly) NSDictionary *testCasesByName;
-
 @property (strong, nonatomic) Class stateClass;
-
-// must not have the same name as another case already in the suite
--(void)addTestCase:(L3TestCase *)testCase;
 
 @property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
 @property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;
 
--(void)runTestCase:(L3TestCase *)testCase;
--(void)runTestCases;
+// must be unique by name within this collection
+-(void)addTest:(id<L3Test>)test;
+
+@property (copy, nonatomic, readonly) NSArray *tests;
+@property (copy, nonatomic, readonly) NSDictionary *testsByName;
 
 @end
