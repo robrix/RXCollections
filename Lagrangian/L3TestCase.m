@@ -62,7 +62,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
 		L3TestCaseStartEvent *event = [eventSink.events objectAtIndex:0];
 		l3_assert(event, l3_isKindOfClass([L3TestCaseStartEvent class]));
-		l3_assert(event.testCase, l3_is(_case));
+		l3_assert(event.testCase, l3_is(testCase));
 	}
 }
 
@@ -73,7 +73,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u));
 	L3TestCaseEndEvent *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3TestCaseEndEvent class]));
-	l3_assert(event.testCase, l3_is(_case));
+	l3_assert(event.testCase, l3_is(testCase));
 }
 
 -(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {

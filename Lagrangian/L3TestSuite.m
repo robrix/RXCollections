@@ -90,7 +90,7 @@
 	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
 		L3TestSuiteStartEvent *event = [eventSink.events objectAtIndex:0];
 		l3_assert(event, l3_isKindOfClass([L3TestSuiteStartEvent class]));
-		l3_assert(event.testSuite, l3_is(_case));
+		l3_assert(event.testSuite, l3_is(testSuite));
 	}
 }
 
@@ -100,7 +100,7 @@
 	[testSuite runInContext:nil eventAlgebra:eventSink];
 	L3TestSuiteEndEvent *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3TestSuiteEndEvent class]));
-	l3_assert(event.testSuite, l3_is(_case));
+	l3_assert(event.testSuite, l3_is(testSuite));
 }
 
 -(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
