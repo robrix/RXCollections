@@ -13,4 +13,12 @@
 	return [visitor assertionSuccessEvent:self];
 }
 
+
+#pragma mark -
+#pragma mark Algebras
+
+-(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
+	return [algebra assertionSuccessWithAssertionReference:self.assertionReference source:self.source];
+}
+
 @end

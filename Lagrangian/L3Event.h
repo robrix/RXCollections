@@ -2,6 +2,7 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
+#import "L3EventAlgebra.h"
 #import "L3EventVisitor.h"
 #import "L3EventSource.h"
 
@@ -19,13 +20,6 @@
 @property (strong, nonatomic, readonly) id<L3EventSource> source;
 
 -(id)acceptVisitor:(id<L3EventVisitor>)visitor;
+-(id)acceptAlgebra:(id<L3EventAlgebra>)algebra;
 
 @end
-
-// suite started
-// suite ended
-// test started
-// test ended
-// assertion passed
-// assertion failed
-// assertion failed unexpectedly (exception)

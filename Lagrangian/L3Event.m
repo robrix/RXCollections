@@ -36,4 +36,12 @@
 	return nil;
 }
 
+#pragma mark -
+#pragma mark Algebras
+
+-(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
+	[self doesNotRecognizeSelector:_cmd];
+	return nil;
+}
+
 @end

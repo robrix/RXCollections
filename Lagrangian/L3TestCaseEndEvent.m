@@ -24,4 +24,12 @@
 	return [visitor testCaseEndEvent:self];
 }
 
+
+#pragma mark -
+#pragma mark Algebras
+
+-(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
+	return [algebra testCaseEndEventWithSource:self.source];
+}
+
 @end
