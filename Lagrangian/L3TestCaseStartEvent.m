@@ -7,21 +7,6 @@
 @implementation L3TestCaseStartEvent
 
 #pragma mark -
-#pragma mark Constructors
-
-+(instancetype)eventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	return [[self alloc] initWithTestCase:testCase date:date];
-}
-
--(instancetype)initWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	if ((self = [super initWithDate:date])) {
-		_testCase = testCase;
-	}
-	return self;
-}
-
-
-#pragma mark -
 #pragma mark Algebras
 
 -(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {

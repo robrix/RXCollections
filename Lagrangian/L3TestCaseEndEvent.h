@@ -2,14 +2,7 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3Event.h"
+#import "L3TestCaseEvent.h"
 
-@class L3TestCase;
-
-@interface L3TestCaseEndEvent : L3Event
-
-+(instancetype)eventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
-
-@property (strong, nonatomic, readonly) L3TestCase *testCase;
-
+@interface L3TestCaseEndEvent : L3TestCaseEvent
 @end
