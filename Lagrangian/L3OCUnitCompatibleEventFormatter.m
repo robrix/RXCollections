@@ -13,6 +13,13 @@
 #import "L3AssertionSuccessEvent.h"
 
 @interface L3OCUnitCompatibleEventFormatter () <L3EventAlgebra>
+
+@property (strong, nonatomic, readonly) NSMutableArray *currentSuites;
+@property (strong, nonatomic, readonly) L3TestSuite *currentSuite;
+@property (strong, nonatomic) L3TestCase *currentCase;
+
+-(NSString *)formatTestName:(NSString *)name;
+
 @end
 
 @implementation L3OCUnitCompatibleEventFormatter
@@ -31,11 +38,13 @@
 #pragma mark Event algebra
 
 -(NSString *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	return [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", testSuite.name, date];
+	[self pushSuite:testSuite];
+	return [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:testSuite.name], date];
 }
 
 -(NSString *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	return [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", testSuite.name, date, 0u, 0u, 0u, 0.0f, 0.0f];
+	[self popSuite];
+	return [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", [self formatTestName:testSuite.name], date, 0u, 0u, 0u, 0.0f, 0.0f];
 }
 
 
@@ -45,11 +54,13 @@
 }
 
 -(NSString *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	return [NSString stringWithFormat:@"Test Case '-[%@]' started.", testCase.name];
+	self.currentCase = testCase;
+	return [NSString stringWithFormat:@"Test Case '-[%@ %@]' started.", [self formatTestName:self.currentSuite.name], [self formatTestName:testCase.name]];
 }
 
 -(NSString *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	return [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", testCase.name, @"passed", 0.0f];
+	self.currentCase = nil;
+	return [NSString stringWithFormat:@"Test Case '-[%@ %@]' %@ (%.3f seconds).\n", [self formatTestName:self.currentSuite.name], [self formatTestName:testCase.name], @"passed", 0.0f];
 }
 
 
@@ -70,6 +81,55 @@
 
 -(NSString *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	return nil;
+}
+
+
+#pragma mark -
+#pragma mark Constructors
+
+-(instancetype)init {
+	if ((self = [super init])) {
+		_currentSuites = [NSMutableArray new];
+	}
+	return self;
+}
+
+
+#pragma mark -
+#pragma mark Test name formatting
+
+@l3_test("formats test names by replacing nonalphanumeric characters with underscores") {
+	l3_assert([[L3OCUnitCompatibleEventFormatter new] formatTestName:@"foo bar's quux: herp?"], @"foo_bar_s_quux__herp_");
+}
+
+-(NSString *)formatTestName:(NSString *)name {
+	NSMutableString *formatted = [name mutableCopy];
+	NSRange range = {0};
+	NSMutableCharacterSet *disallowed = [NSMutableCharacterSet new];
+	[disallowed formUnionWithCharacterSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
+	[disallowed removeCharactersInString:@"_"];
+	while ((range = [formatted rangeOfCharacterFromSet:disallowed]).length > 0) {
+		[formatted replaceCharactersInRange:range withString:@"_"];
+	}
+	return formatted;
+}
+
+
+#pragma mark -
+#pragma mark Suite stack
+
+-(void)pushSuite:(L3TestSuite *)suite {
+	[self.currentSuites addObject:suite];
+}
+
+-(L3TestSuite *)popSuite {
+	L3TestSuite *suite = self.currentSuite;
+	[self.currentSuites removeLastObject];
+	return suite;
+}
+
+-(L3TestSuite *)currentSuite {
+	return self.currentSuites.lastObject;
 }
 
 @end

@@ -8,3 +8,6 @@
 	When a test suite runs a test case, the case would start a new test case event (immediately filing it with the event sink) and then pass the successes/failures and test ending into it. This would make it easier for the visitors to see the structure of the tests without having to build stacks or anything.
 - code coverage generation
 - documentation generation
+- ui to show test results in test builds
+- ui to run test suites and show their results in debug builds
+- test that release builds really don’t have the test methods, classes, etc compiled in (dead code stripped)
