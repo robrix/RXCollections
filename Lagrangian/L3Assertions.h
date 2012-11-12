@@ -13,6 +13,9 @@
 #define l3_equalTo(pattern)			pattern
 #define l3_equals(pattern)			pattern
 
+#define l3_isKindOfClass(class) \
+	(^bool(id x){ return [x isKindOfClass:class]; })
+
 #define l3_ordered(object, ordering) \
 	(^bool(id x){ return [x compare:l3_to_object(object)] == ordering; })
 #define l3_ordered_or_same(object, ordering) \
