@@ -12,46 +12,57 @@
 #import "L3AssertionFailureEvent.h"
 #import "L3AssertionSuccessEvent.h"
 
-@interface L3OCUnitCompatibleEventFormatter () <L3EventVisitor>
+@interface L3OCUnitCompatibleEventFormatter () <L3EventAlgebra>
 @end
 
 @implementation L3OCUnitCompatibleEventFormatter
 
+#pragma mark -
+#pragma mark Formatting
+
 @l3_suite("OCUnit-compatible event formatters");
 
 -(NSString *)formatEvent:(L3Event *)event {
-	return [event acceptVisitor:self];
+	return [event acceptAlgebra:self];
 }
 
 
--(NSString *)testSuiteStartEvent:(L3TestSuiteStartEvent *)event {
-	return [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", event.testSuite.name, event.date];
+#pragma mark -
+#pragma mark Event algebra
+
+-(NSString *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
+	return [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", testSuite.name, date];
 }
 
--(NSString *)testSuiteEndEvent:(L3TestSuiteEndEvent *)event {
-	return [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", event.testSuite.name, event.date, 0u, 0u, 0u, 0.0f, 0.0f];
+-(NSString *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
+	return [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %u tests, with %u failures (%u unexpected) in %.3f (%.3f) seconds\n", testSuite.name, date, 0u, 0u, 0u, 0.0f, 0.0f];
 }
 
 
 @l3_test("format test case started events compatibly with OCUnit") {
-	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3TestCaseStartEvent eventWithTestCase:_case]];
+	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3TestCaseStartEvent eventWithTestCase:_case date:nil]];
 	l3_assert(string, l3_not(nil));
 }
 
--(NSString *)testCaseStartEvent:(L3TestCaseStartEvent *)event {
-	return [NSString stringWithFormat:@"Test Case '-[%@]' started.", event.testCase.name];
+-(NSString *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+	return [NSString stringWithFormat:@"Test Case '-[%@]' started.", testCase.name];
 }
 
--(NSString *)testCaseEndEvent:(L3TestCaseEndEvent *)event {
-	return [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", event.testCase.name, @"passed", 0.0f];
+-(NSString *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+	return [NSString stringWithFormat:@"Test Case '-[%@]' %@ (%.3f seconds).\n", testCase.name, @"passed", 0.0f];
 }
 
 
--(NSString *)assertionFailureEvent:(L3AssertionFailureEvent *)event {
+-(NSString *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	return @"failure!";
 }
 
--(NSString *)assertionSuccessEvent:(L3AssertionSuccessEvent *)event {
+@l3_test("does not format assertion successes") {
+	NSString *string = [[L3OCUnitCompatibleEventFormatter new] formatEvent:[L3AssertionSuccessEvent eventWithAssertionReference:l3_assertionReference(@"a", @"b") date:nil]];
+	l3_assert(string, l3_is(nil));
+}
+
+-(NSString *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	return nil;
 }
 

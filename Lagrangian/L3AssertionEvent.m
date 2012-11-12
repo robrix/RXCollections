@@ -9,12 +9,12 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference {
-	return [[self alloc] initWithAssertion:assertionReference];
++(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	return [[self alloc] initWithAssertion:assertionReference date:date];
 }
 
--(instancetype)initWithAssertion:(L3AssertionReference *)assertionReference {
-	if ((self = [super init])) {
+-(instancetype)initWithAssertion:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	if ((self = [super initWithDate:date])) {
 		_assertionReference = assertionReference;
 	}
 	return self;

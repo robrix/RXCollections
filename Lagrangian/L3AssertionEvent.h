@@ -8,7 +8,7 @@
 
 @interface L3AssertionEvent : L3Event
 
-+(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference;
++(instancetype)eventWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
 
 @property (copy, nonatomic, readonly) L3AssertionReference *assertionReference;
 

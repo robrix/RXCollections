@@ -44,30 +44,30 @@
 #pragma mark -
 #pragma mark Event algebra
 
--(L3Event *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite {
-	return [self addEvent:[self.factory testSuiteStartEventWithTestSuite:testSuite]];
+-(L3Event *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
+	return [self addEvent:[self.factory testSuiteStartEventWithTestSuite:testSuite date:date]];
 }
 
--(L3Event *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite {
-	return [self addEvent:[self.factory testSuiteEndEventWithTestSuite:testSuite]];
-}
-
-
--(L3Event *)testCaseStartEventWithTestCase:(L3TestCase *)testCase {
-	return [self addEvent:[self.factory testCaseStartEventWithTestCase:testCase]];
-}
-
--(L3Event *)testCaseEndEventWithTestCase:(L3TestCase *)testCase {
-	return [self addEvent:[self.factory testCaseEndEventWithTestCase:testCase]];
+-(L3Event *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
+	return [self addEvent:[self.factory testSuiteEndEventWithTestSuite:testSuite date:date]];
 }
 
 
--(L3Event *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference {
-	return [self addEvent:[self.factory assertionFailureWithAssertionReference:assertionReference]];
+-(L3Event *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+	return [self addEvent:[self.factory testCaseStartEventWithTestCase:testCase date:date]];
 }
 
--(L3Event *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference {
-	return [self addEvent:[self.factory assertionSuccessWithAssertionReference:assertionReference]];
+-(L3Event *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+	return [self addEvent:[self.factory testCaseEndEventWithTestCase:testCase date:date]];
+}
+
+
+-(L3Event *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	return [self addEvent:[self.factory assertionFailureWithAssertionReference:assertionReference date:date]];
+}
+
+-(L3Event *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	return [self addEvent:[self.factory assertionSuccessWithAssertionReference:assertionReference date:date]];
 }
 
 @end

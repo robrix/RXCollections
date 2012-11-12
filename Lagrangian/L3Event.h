@@ -3,13 +3,13 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3EventAlgebra.h"
-#import "L3EventVisitor.h"
 
 @interface L3Event : NSObject
 
+-(instancetype)initWithDate:(NSDate *)date;
+
 @property (nonatomic, readonly) NSDate *date;
 
--(id)acceptVisitor:(id<L3EventVisitor>)visitor;
 -(id)acceptAlgebra:(id<L3EventAlgebra>)algebra;
 
 @end

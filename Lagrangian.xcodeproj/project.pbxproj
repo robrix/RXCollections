@@ -96,7 +96,6 @@
 		D40DE693164FFE780033DE88 /* L3Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Event.m; sourceTree = "<group>"; };
 		D40DE69716501CA00033DE88 /* L3Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
 		D40DE699165028AC0033DE88 /* L3TestContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestContext.h; sourceTree = "<group>"; };
-		D40DE69A165037530033DE88 /* L3EventVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventVisitor.h; sourceTree = "<group>"; };
 		D40DE69B165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3OCUnitCompatibleEventFormatter.h; sourceTree = "<group>"; };
 		D40DE69C165037BA0033DE88 /* L3OCUnitCompatibleEventFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3OCUnitCompatibleEventFormatter.m; sourceTree = "<group>"; };
 		D40DE69F165037DB0033DE88 /* L3EventFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3EventFormatter.h; sourceTree = "<group>"; };
@@ -190,7 +189,6 @@
 				D40DE6C616508E570033DE88 /* Event classes */,
 				D40DE68E164FFE5E0033DE88 /* L3EventSink.h */,
 				D40DE6A1165072880033DE88 /* L3EventSink.m */,
-				D40DE69A165037530033DE88 /* L3EventVisitor.h */,
 				D457D67B165097CA00340DAC /* L3EventAlgebra.h */,
 				D40DE6C716508E7C0033DE88 /* Event formatters */,
 			);

@@ -8,7 +8,7 @@
 
 @interface L3TestCaseEndEvent : L3Event
 
-+(instancetype)eventWithTestCase:(L3TestCase *)testCase;
++(instancetype)eventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
 
 @property (strong, nonatomic, readonly) L3TestCase *testCase;
 

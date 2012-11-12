@@ -104,11 +104,11 @@
 }
 
 -(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
-	[eventAlgebra testSuiteStartEventWithTestSuite:self];
+	[eventAlgebra testSuiteStartEventWithTestSuite:self date:nil];
 	for (id<L3Test> test in self.tests) {
 		[test runInContext:self eventAlgebra:eventAlgebra];
 	}
-	[eventAlgebra testSuiteEndEventWithTestSuite:self];
+	[eventAlgebra testSuiteEndEventWithTestSuite:self date:nil];
 }
 
 @end

@@ -8,7 +8,7 @@
 
 @interface L3TestSuiteStartEvent : L3Event
 
-+(instancetype)eventWithTestSuite:(L3TestSuite *)testSuite;
++(instancetype)eventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
 
 @property (strong, nonatomic, readonly) L3TestSuite *testSuite;
 

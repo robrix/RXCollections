@@ -10,13 +10,13 @@
 
 @protocol L3EventAlgebra <NSObject>
 
--(id)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite;
--(id)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite;
+-(id)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
+-(id)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
 
--(id)testCaseStartEventWithTestCase:(L3TestCase *)testCase;
--(id)testCaseEndEventWithTestCase:(L3TestCase *)testCase;
+-(id)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
+-(id)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
 
--(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference;
--(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference;
+-(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
+-(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
 
 @end

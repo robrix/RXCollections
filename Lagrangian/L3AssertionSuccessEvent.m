@@ -7,18 +7,10 @@
 @implementation L3AssertionSuccessEvent
 
 #pragma mark -
-#pragma mark Visitors
-
--(id)acceptVisitor:(id<L3EventVisitor>)visitor {
-	return [visitor assertionSuccessEvent:self];
-}
-
-
-#pragma mark -
 #pragma mark Algebras
 
 -(id)acceptAlgebra:(id<L3EventAlgebra>)algebra {
-	return [algebra assertionSuccessWithAssertionReference:self.assertionReference];
+	return [algebra assertionSuccessWithAssertionReference:self.assertionReference date:self.date];
 }
 
 @end

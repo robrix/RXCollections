@@ -12,20 +12,11 @@
 #pragma mark -
 #pragma mark Constructors
 
--(instancetype)init {
+-(instancetype)initWithDate:(NSDate *)date {
 	if ((self = [super init])) {
-		_date = [NSDate date];
+		_date = date ?: [NSDate date];
 	}
 	return self;
-}
-
-
-#pragma mark -
-#pragma mark Visitors
-
--(id)acceptVisitor:(id<L3EventVisitor>)visitor {
-	[self doesNotRecognizeSelector:_cmd];
-	return nil;
 }
 
 
