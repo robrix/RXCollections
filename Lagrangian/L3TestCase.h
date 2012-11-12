@@ -7,7 +7,9 @@
 #import "L3Test.h"
 #import "L3EventSource.h"
 
-@class L3EventSink, L3TestSuite;
+@class L3AssertionReference;
+@class L3EventSink;
+@class L3TestSuite;
 
 @interface L3TestCase : NSObject <L3EventSource, L3Test>
 
@@ -16,6 +18,7 @@
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
 @property (weak, nonatomic, readonly) L3EventSink *eventSink;
--(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink;
+
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion collectingEventsInto:(L3EventSink *)eventSink;
 
 @end

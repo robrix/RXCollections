@@ -4,8 +4,13 @@
 
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
+#import "L3AssertionReference.h"
 
-#define l3_assert(object, pattern)	[_case assertThat:l3_to_object(object) matches:l3_to_pattern(pattern) collectingEventsInto:_case.eventSink]
+#define l3_assertionReference(subject, pattern) \
+	[L3AssertionReference assertionWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" #subject patternSource:@"" #pattern]
+
+#define l3_assert(subject, pattern) \
+	[_case assertThat:l3_to_object(subject) matches:l3_to_pattern(pattern) assertionReference:l3_assertionReference(subject, pattern) collectingEventsInto:_case.eventSink]
 
 #define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
 

@@ -100,18 +100,18 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Assertions
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } collectingEventsInto:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", l3_is(YES)) collectingEventsInto:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } collectingEventsInto:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", l3_is(NO)) collectingEventsInto:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
 	L3EventSink *eventSink = [L3EventSink new];
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } collectingEventsInto:eventSink];
+	[_case assertThat:@"a" matches:^bool(id x) { return YES; } assertionReference:l3_assertionReference(@"a", l3_is(YES)) collectingEventsInto:eventSink];
 	
 	L3Event *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3AssertionSuccessEvent class]));
@@ -120,17 +120,17 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 @l3_test("generate assertion failed events for failed assertions") {
 	L3EventSink *eventSink = [L3EventSink new];
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } collectingEventsInto:eventSink];
+	[_case assertThat:@"a" matches:^bool(id x) { return NO; } assertionReference:l3_assertionReference(@"a", l3_is(NO)) collectingEventsInto:eventSink];
 	
 	L3Event *event = eventSink.events.lastObject;
 	l3_assert(event, l3_isKindOfClass([L3AssertionFailureEvent class]));
 	l3_assert(event.source, l3_is(_case));
 }
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern collectingEventsInto:(L3EventSink *)eventSink {
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion collectingEventsInto:(L3EventSink *)eventSink {
 	// assertion start event
 	bool matched = pattern(object);
-	[eventSink addEvent:[matched? [L3AssertionSuccessEvent class] : [L3AssertionFailureEvent class] eventWithFile:@"wtf" line:1 actualValue:@"a" expectedPattern:@"b" source:self]];
+	[eventSink addEvent:[matched? [L3AssertionSuccessEvent class] : [L3AssertionFailureEvent class] eventWithAssertion:assertion source:self]];
 	return matched;
 }
 

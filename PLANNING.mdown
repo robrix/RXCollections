@@ -5,4 +5,7 @@
 - composable contexts (inheriting setUp/tearDown/stateClass/steps from parent context)?
 - test functions take only state object? or state + test?
 - post run state to NSUserNotificationCenter
-- events nest?
+- can events nest?
+	When a test suite runs a test case, the case would start a new test case event (immediately filing it with the event sink) and then pass the successes/failures and test ending into it. This would make it easier for the visitors to see the structure of the tests without having to build stacks or anything.
+- implement events as an object algebra?
+	- would make support for new event types easier
