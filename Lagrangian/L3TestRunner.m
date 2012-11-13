@@ -81,10 +81,14 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		[self.queue addOperationWithBlock:^{
 			[test runInContext:nil eventAlgebra:_eventSink];
 			[self.queue addOperationWithBlock:^{
-				if (_shouldRunAutomatically && [NSApplication class])
-					[[NSApplication sharedApplication] terminate:nil];
-				else if (_shouldRunAutomatically)
-					exit(0);
+				if (_shouldRunAutomatically) {
+					if ([NSApplication class])
+						[[NSApplication sharedApplication] terminate:nil];
+					else
+						exit(0);
+					
+					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
+				}
 			}];
 		}];
 	}
