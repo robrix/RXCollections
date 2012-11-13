@@ -18,6 +18,7 @@
 @property (assign, nonatomic) NSUInteger assertionFailureCount;
 @property (assign, nonatomic) NSUInteger exceptionCount;
 
+@property (nonatomic, readonly) NSArray *testResults;
 -(void)addTestResult:(L3TestResult *)testResult;
 
 @end

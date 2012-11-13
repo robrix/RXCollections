@@ -7,7 +7,7 @@
 
 @interface L3TestResult ()
 
-@property (strong, nonatomic, readonly) NSMutableArray *testResults;
+@property (strong, nonatomic, readonly) NSMutableArray *mutableTestResults;
 
 @end
 
@@ -28,7 +28,7 @@
 	if ((self = [super init])) {
 		_name = name;
 		_startDate = startDate;
-		_testResults = [NSMutableArray new];
+		_mutableTestResults = [NSMutableArray new];
 	}
 	return self;
 }
@@ -53,8 +53,12 @@
 #pragma mark -
 #pragma mark Composition
 
+-(NSArray *)testResults {
+	return _mutableTestResults;
+}
+
 -(void)addTestResult:(L3TestResult *)child {
-	[self.testResults addObject:child];
+	[self.mutableTestResults addObject:child];
 	_duration += child.duration;
 	_testCaseCount += child.testCaseCount;
 	_assertionCount += child.assertionCount;
