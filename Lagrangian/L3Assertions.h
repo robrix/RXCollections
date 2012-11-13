@@ -16,11 +16,11 @@
 		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventAlgebra:_case.eventAlgebra]; \
 	}()
 
-#define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
+#define l3_not(...)					(^bool(id x){ return !l3_to_pattern(__VA_ARGS__)(x); })
 
-#define l3_is(pattern)				pattern
-#define l3_equalTo(pattern)			pattern
-#define l3_equals(pattern)			pattern
+#define l3_is(...)					(__VA_ARGS__)
+#define l3_equalTo(...)				(__VA_ARGS__)
+#define l3_equals(...)				(__VA_ARGS__)
 
 #define l3_isKindOfClass(class) \
 	(^bool(id x){ return [x isKindOfClass:class]; })
