@@ -58,6 +58,8 @@
 		D4BC3A8C164D54FB003AD167 /* L3TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */; };
 		D4BC3A8F164D54FB003AD167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A8D164D54FB003AD167 /* MainMenu.xib */; };
 		D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
+		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +158,8 @@
 		D4BC3A8A164D54FB003AD167 /* L3TAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TAAppDelegate.h; sourceTree = "<group>"; };
 		D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = L3TAAppDelegate.m; sourceTree = "<group>"; };
 		D4BC3A8E164D54FB003AD167 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D4E394C31650C2BC00C72FBD /* L3TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResult.h; sourceTree = "<group>"; };
+		D4E394C41650C2BC00C72FBD /* L3TestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +221,8 @@
 				D40DE661164E26030033DE88 /* L3TestState.m */,
 				D40DE69716501CA00033DE88 /* L3Test.h */,
 				D40DE699165028AC0033DE88 /* L3TestContext.h */,
+				D4E394C31650C2BC00C72FBD /* L3TestResult.h */,
+				D4E394C41650C2BC00C72FBD /* L3TestResult.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 				D457D6831650992B00340DAC /* L3EventFactory.h in Headers */,
 				D457D6871650AC3000340DAC /* L3TestCaseEvent.h in Headers */,
 				D457D68B1650ACF600340DAC /* L3TestSuiteEvent.h in Headers */,
+				D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +539,7 @@
 				D457D6841650992B00340DAC /* L3EventFactory.m in Sources */,
 				D457D6881650AC3000340DAC /* L3TestCaseEvent.m in Sources */,
 				D457D68C1650ACF600340DAC /* L3TestSuiteEvent.m in Sources */,
+				D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
