@@ -102,7 +102,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 }
 
 -(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
-	if ([NSUserNotification class]) {
+	if ([NSUserNotification class]) { // weak linking
 		NSUserNotification *notification = [NSUserNotification new];
 		notification.title = testResult.succeeded?
 			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
