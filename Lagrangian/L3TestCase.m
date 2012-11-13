@@ -80,7 +80,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	L3TestState *state = [context.stateClass new];
 	self.eventAlgebra = eventAlgebra;
 	
-	[eventAlgebra testCaseStartEventWithTestCase:self date:nil];
+	[eventAlgebra testCaseStartEventWithTestCase:self date:[NSDate date]];
 	
 	if (context.setUpFunction)
 		context.setUpFunction(state, self);
@@ -90,7 +90,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (context.tearDownFunction)
 		context.tearDownFunction(state, self);
 	
-	[eventAlgebra testCaseEndEventWithTestCase:self date:nil];
+	[eventAlgebra testCaseEndEventWithTestCase:self date:[NSDate date]];
 	
 	self.eventAlgebra = nil;
 }
@@ -133,9 +133,9 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	// assertion start event
 	bool matched = pattern(object);
 	if (matched)
-		[eventAlgebra assertionSuccessWithAssertionReference:assertionReference date:nil];
+		[eventAlgebra assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
 	else
-		[eventAlgebra assertionFailureWithAssertionReference:assertionReference date:nil];
+		[eventAlgebra assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
 	return matched;
 }
 
