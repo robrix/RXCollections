@@ -11,9 +11,15 @@
 
 @end
 
+@l3_suite("Test results", L3TestResult)
+@property L3TestResult *result;
+@end
+
 @implementation L3TestResult
 
-@l3_suite("Test results");
+@l3_set_up {
+	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
+}
 
 #pragma mark -
 #pragma mark Constructors
@@ -35,18 +41,42 @@
 
 
 @l3_test("store duration") {
-	L3TestResult *result = [L3TestResult testResultWithName:@"name" startDate:[NSDate date]];
-	result.duration = 1.0;
-	l3_assert(result.duration, l3_is(1.0));
+	test.result.duration = 1.0;
+	l3_assert(test.result.duration, l3_is(1.0));
 }
 
 @l3_test("sum their children’s durations with their own") {
-	L3TestResult *result = [L3TestResult testResultWithName:@"parent" startDate:[NSDate date]];
-	result.duration = 1.0;
+	test.result.duration = 1.0;
 	L3TestResult *child = [L3TestResult testResultWithName:@"child" startDate:[NSDate date]];
 	child.duration = 1.0;
-	[result addTestResult:child];
-	l3_assert(result.duration, l3_is(2.0));
+	[test.result addTestResult:child];
+	l3_assert(test.result.duration, l3_is(2.0));
+}
+
+
+#pragma mark -
+#pragma mark Success/failure
+
+@l3_test("succeed when no exceptions or assertion failures occurred") {
+	l3_assert(test.result.succeeded, l3_is(YES));
+}
+
+-(bool)succeeded {
+	return !self.failed;
+}
+
+@l3_test("fail when assertion failures occur") {
+	test.result.assertionFailureCount = 1;
+	l3_assert(test.result.failed, l3_is(YES));
+}
+
+@l3_test("fail when unexpected exceptions occur") {
+	test.result.exceptionCount = 1;
+	l3_assert(test.result.failed, l3_is(YES));
+}
+
+-(bool)failed {
+	return (self.assertionFailureCount + self.exceptionCount) > 0;
 }
 
 
@@ -66,4 +96,7 @@
 	_exceptionCount += child.exceptionCount;
 }
 
+@end
+
+@l3_suite_implementation (L3TestResult)
 @end

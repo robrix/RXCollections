@@ -3,7 +3,6 @@
 - multiple setUp/tearDown blocks per suite
 - differential-prototypal suite inheritance?
 - composable contexts (inheriting setUp/tearDown/stateClass/steps from parent context)?
-- post run state to NSUserNotificationCenter
 - algebra/visitor protocol for test suites & cases
 - code coverage generation
 	- how would this work? lexically? not sure I like this idea much at all.
@@ -23,7 +22,6 @@
 - integrate with Xcode
 	- it should run L3 as part of the test scheme!
 	- it should show our test results among the logs and highlight failed assertions in the editor
-	- optionally quit on test conclusion
 	- just like OCUnit, only better
 - asynchronous tests
 - test context should include the queue
@@ -40,3 +38,8 @@
 - patterns to match exceptions?
 - test the assertion patterns
 - output warning lines for test cases without any assertions
+- are the event classes and the factory still necessary at all? we can just spit events out into the formatter
+- is the event sink necessary at all?
+- split formatting out from test result building
+- multiplexer algebra which sends events to each of its child algebras
+	- use that to send events to both the formatter and the test result builder

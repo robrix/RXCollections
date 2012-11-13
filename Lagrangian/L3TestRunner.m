@@ -3,18 +3,17 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Cocoa/Cocoa.h>
+#import "L3Event.h"
+#import "L3OCUnitCompatibleEventFormatter.h"
+#import "L3TestResult.h"
 #import "L3TestRunner.h"
 #import "L3TestSuite.h"
-#import "L3Event.h"
-#import "L3EventSink.h"
-#import "L3OCUnitCompatibleEventFormatter.h"
 
-@interface L3TestRunner () <L3EventSinkDelegate>
+@interface L3TestRunner () <L3EventFormatterDelegate>
 
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
-@property (strong, nonatomic, readonly) L3EventSink *eventSink;
 @property (strong, nonatomic, readonly) id<L3EventFormatter> eventFormatter;
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
@@ -45,9 +44,8 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
 		
-		_eventSink = [L3EventSink new];
-		_eventSink.delegate = self;
 		_eventFormatter = [L3OCUnitCompatibleEventFormatter new];
+		_eventFormatter.delegate = self;
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
 		_queue.maxConcurrentOperationCount = 1;
@@ -79,15 +77,15 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:nil eventAlgebra:_eventSink];
+			[test runInContext:nil eventAlgebra:_eventFormatter];
 			[self.queue addOperationWithBlock:^{
 				if (_shouldRunAutomatically) {
+					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
+					
 					if ([NSApplication class])
 						[[NSApplication sharedApplication] terminate:nil];
 					else
 						exit(0);
-					
-					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
 				}
 			}];
 		}];
@@ -96,12 +94,22 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 
 
 #pragma mark -
-#pragma mark L3EventSinkDelegate
+#pragma mark L3EventFormatterDelegate
 
--(void)eventSink:(L3EventSink *)eventSink didAddEvent:(L3Event *)event {
-	NSString *formattedEvent = [self.eventFormatter formatEvent:event];
-	if (formattedEvent)
-		printf("%s\n", formattedEvent.UTF8String);
+-(void)formatter:(id<L3EventFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
+	if (string)
+		printf("%s\n", string.UTF8String);
+}
+
+-(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
+	if ([NSUserNotification class]) {
+		NSUserNotification *notification = [NSUserNotification new];
+		notification.title = testResult.succeeded?
+			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
+		:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
+		notification.subtitle = [NSString stringWithFormat:@"%lu tests, %lu assertions, %lu failures", testResult.testCaseCount, testResult.assertionCount, testResult.assertionFailureCount];
+		[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+	}
 }
 
 @end

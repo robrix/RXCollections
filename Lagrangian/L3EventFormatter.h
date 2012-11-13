@@ -2,12 +2,21 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import "L3EventAlgebra.h"
 
-@class L3Event;
+@protocol L3EventFormatterDelegate;
 
-@protocol L3EventFormatter <NSObject>
+@protocol L3EventFormatter <L3EventAlgebra>
 
--(NSString *)formatEvent:(L3Event *)event;
+@property (weak, nonatomic) id<L3EventFormatterDelegate> delegate;
+
+@end
+
+@class L3TestResult;
+
+@protocol L3EventFormatterDelegate <NSObject>
+
+-(void)formatter:(id<L3EventFormatter>)formatter didFormatEventWithResultString:(NSString *)string;
+-(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult;
 
 @end

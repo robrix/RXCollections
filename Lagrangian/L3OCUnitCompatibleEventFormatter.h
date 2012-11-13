@@ -5,7 +5,4 @@
 #import "L3EventFormatter.h"
 
 @interface L3OCUnitCompatibleEventFormatter : NSObject <L3EventFormatter>
-
--(NSString *)formatEvent:(L3Event *)event;
-
 @end
