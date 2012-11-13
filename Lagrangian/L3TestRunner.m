@@ -80,6 +80,12 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
 			[test runInContext:nil eventAlgebra:_eventSink];
+			[self.queue addOperationWithBlock:^{
+				if (_shouldRunAutomatically && [NSApplication class])
+					[[NSApplication sharedApplication] terminate:nil];
+				else if (_shouldRunAutomatically)
+					exit(0);
+			}];
 		}];
 	}
 }
