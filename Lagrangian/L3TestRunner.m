@@ -4,6 +4,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "L3OCUnitTestResultFormatter.h"
+#import "L3StringInflections.h"
 #import "L3TestResult.h"
 #import "L3TestResultBuilder.h"
 #import "L3TestRunner.h"
@@ -129,7 +130,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		notification.title = result.succeeded?
 		NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
 		:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
-		notification.subtitle = [NSString stringWithFormat:@"%lu tests, %lu assertions, %lu failures", result.testCaseCount, result.assertionCount, result.assertionFailureCount];
+		notification.subtitle = [NSString stringWithFormat:@"%@, %@, %@",
+								 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
+								 [L3StringInflections cardinalizeNoun:@"assertion" count:result.assertionCount],
+								 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount]];
 		[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 	}
 }
