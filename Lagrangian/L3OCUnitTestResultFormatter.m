@@ -1,0 +1,191 @@
+//  L3OCUnitTestResultFormatter.m
+//  Created by Rob Rix on 2012-11-11.
+//  Copyright (c) 2012 Rob Rix. All rights reserved.
+
+#import "L3OCUnitTestResultFormatter.h"
+#import "Lagrangian.h"
+#import "L3TestResult.h"
+
+@interface L3OCUnitTestResultFormatter ()
+
+-(NSString *)formatTestName:(NSString *)name;
+-(NSString *)methodNameForTestResult:(L3TestResult *)testResult;
+-(NSString *)pluralizeNoun:(NSString *)noun count:(NSUInteger)count;
+-(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count;
+
+@end
+
+@l3_suite("OCUnit-compatible event formatters", L3OCUnitTestResultFormatter) <L3TestResultFormatterDelegate>
+
+@property L3OCUnitTestResultFormatter *formatter;
+@property NSString *formattedString;
+@property id<L3TestResult> result;
+@property id<L3TestResult> compositeResult;
+
+@end
+
+@implementation L3OCUnitTestResultFormatter
+
+@synthesize delegate = _delegate;
+
+@l3_set_up {
+	test.formatter = [L3OCUnitTestResultFormatter new];
+	test.formatter.delegate = test;
+	
+	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
+}
+
+static void dummyFunction(L3TestState *test, L3TestCase *_case);
+
+#pragma mark -
+#pragma mark L3TestResultBuilderDelegate
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
+	NSString *formatted = nil;
+	if (result.isComposite) {
+		formatted = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:result.name], result.startDate];
+	} else {
+		formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameForTestResult:result]];
+	}
+	[self.delegate formatter:self didFormatResult:formatted];
+}
+
+@l3_test("do not format assertion successes") {
+	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithSuccessfulAssertionReference:l3_assertionReference(@"a", @"a", @"b")];
+	l3_assert(test.formattedString, l3_is(nil));
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {}
+
+@l3_test("format assertion failures with their file, line, source, actual value, and expectation") {
+	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
+	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithFailedAssertionReference:assertionReference];
+	l3_assert(test.formattedString, @"/foo/bar/file.m:42: error: 'x' was 'y' but should have matched 'src'");
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
+	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: '%@' was '%@' but should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.subject, assertionReference.patternSource];
+	[self.delegate formatter:self didFormatResult:formatted];
+}
+
+@l3_test("format test suite end events with the sums of the test cases, failures, and durations they encompassed") {
+	test.compositeResult.endDate = [NSDate dateWithTimeInterval:10 sinceDate:test.compositeResult.startDate];
+	test.result.endDate = [NSDate dateWithTimeInterval:5 sinceDate:test.result.startDate];
+	test.result.assertionCount = 3;
+	test.result.assertionFailureCount = 3;
+	test.result.parent = test.compositeResult;
+	[test.compositeResult addTestResult:test.result];
+	
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.compositeResult];
+	l3_assert([test.formattedString rangeOfString:@"Executed 1 test, with 3 failures (0 unexpected) in 5.000 (10.000) seconds"].length > 0, l3_is(YES));
+}
+
+@l3_test("format test case end events with ‘passed’ for cases without any assertion failures") {
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
+	l3_assert([test.formattedString rangeOfString:@"passed"].length > 0, l3_is(YES));
+}
+
+@l3_test("format test case end events with ‘failed’ for cases with assertion failures") {
+	test.result.assertionFailureCount = 1;
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
+	l3_assert([test.formattedString rangeOfString:@"failed"].length > 0, l3_is(YES));
+}
+
+@l3_test("format test case end events with the duration of the test") {
+	test.result.endDate = [NSDate dateWithTimeInterval:5 sinceDate:test.result.startDate];
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
+	l3_assert([test.formattedString rangeOfString:@"(5.000 seconds)"].length > 0, @l3_is(YES));
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
+	NSString *formatted = nil;
+	if (result.isComposite) {
+		formatted = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds\n",
+					 [self formatTestName:result.name],
+					 result.endDate,
+					 [self cardinalizeNoun:@"test" count:result.testCaseCount],
+					 [self cardinalizeNoun:@"failure" count:result.assertionFailureCount],
+					 result.exceptionCount,
+					 result.duration,
+					 [result.endDate timeIntervalSinceDate:result.startDate]];
+	} else {
+		bool success = result.assertionFailureCount == 0;
+		formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameForTestResult:result], success? @"passed" : @"failed", result.duration];
+	}
+	[self.delegate formatter:self didFormatResult:formatted];
+}
+
+
+#pragma mark -
+#pragma mark String formatting
+
+@l3_test("format test names by replacing nonalphanumeric characters with underscores") {
+	l3_assert([test.formatter formatTestName:@"foo bar's quux: herp?"], @"foo_bar_s_quux__herp_");
+}
+
+-(NSString *)formatTestName:(NSString *)name {
+	NSMutableString *formatted = [name mutableCopy];
+	NSRange range = {0};
+	NSMutableCharacterSet *disallowed = [NSMutableCharacterSet new];
+	[disallowed formUnionWithCharacterSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
+	[disallowed removeCharactersInString:@"_"];
+	while ((range = [formatted rangeOfCharacterFromSet:disallowed]).length > 0) {
+		[formatted replaceCharactersInRange:range withString:@"_"];
+	}
+	return formatted;
+}
+
+@l3_test("format faux method names from suite and test case names") {
+	L3TestResult *suiteResult = [L3CompositeTestResult testResultWithName:@"suite of tests!" startDate:[NSDate distantPast]];
+	L3TestResult *caseResult = [L3TestResult testResultWithName:@"test of suites!" startDate:[NSDate date]];
+	[suiteResult addTestResult:caseResult];
+	caseResult.parent = suiteResult;
+	l3_assert([test.formatter methodNameForTestResult:caseResult], @"-[suite_of_tests_ test_of_suites_]");
+}
+
+-(NSString *)methodNameForTestResult:(L3TestResult *)result {
+	return [NSString stringWithFormat:@"-[%@ %@]", [self formatTestName:result.parent.name], [self formatTestName:result.name]];
+}
+
+
+@l3_test("pluralize nouns when their cardinality is 0") {
+	l3_assert([test.formatter pluralizeNoun:@"dog" count:0], l3_is(@"dogs"));
+}
+
+@l3_test("do not pluralize nouns when their cardinality is 1") {
+	l3_assert([test.formatter pluralizeNoun:@"cat" count:1], l3_is(@"cat"));
+}
+
+@l3_test("pluralize nouns when their cardinality is 2 or greater") {
+	l3_assert([test.formatter pluralizeNoun:@"bird" count:2], l3_is(@"birds"));
+}
+
+-(NSString *)pluralizeNoun:(NSString *)noun count:(NSUInteger)count {
+	return count == 1?
+		noun
+	:	[noun stringByAppendingString:@"s"];
+}
+
+
+@l3_test("cardinalize nouns with their plurals when cardinality is not 1") {
+	l3_assert([test.formatter cardinalizeNoun:@"plural" count:0], @"0 plurals");
+	l3_assert([test.formatter cardinalizeNoun:@"cardinal" count:1], @"1 cardinal");
+	l3_assert([test.formatter cardinalizeNoun:@"ordinal" count:2], @"2 ordinals");
+}
+
+-(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count {
+	return [NSString stringWithFormat:@"%lu %@", count, [self pluralizeNoun:noun count:count]];
+}
+
+@end
+
+@l3_suite_implementation (L3OCUnitTestResultFormatter)
+
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
+	self.formattedString = string;
+}
+
+@end
+
+static void dummyFunction(L3TestState *test, L3TestCase *_case) {}

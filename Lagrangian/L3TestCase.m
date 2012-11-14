@@ -6,24 +6,28 @@
 #import "L3TestContext.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
-#import "L3TestCaseStartEvent.h"
-#import "L3TestCaseEndEvent.h"
-#import "L3AssertionFailureEvent.h"
-#import "L3AssertionSuccessEvent.h"
-#import "L3EventSink.h"
 #import "Lagrangian.h"
 
 @interface L3TestCase ()
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
-@property (weak, nonatomic, readwrite) id<L3EventAlgebra> eventAlgebra;
+@property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
 
 @end
 
-@implementation L3TestCase
+@l3_suite("Test cases", L3TestCase) <L3EventObserver>
 
-@l3_suite("Test cases");
+@property NSMutableArray *events;
+
+@end
+
+@l3_set_up {
+	test.events = [NSMutableArray new];
+}
+
+
+@implementation L3TestCase
 
 static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
@@ -53,34 +57,33 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 #pragma mark -
-#pragma mark Running
+#pragma mark L3Test
 
-@l3_test("generate case started events when starting to run") {
-	L3EventSink *eventSink = [L3EventSink new];
+@l3_test("generate test start events when starting to run") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventAlgebra:eventSink];
-	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
-		L3TestCaseStartEvent *event = [eventSink.events objectAtIndex:0];
-		l3_assert(event, l3_isKindOfClass([L3TestCaseStartEvent class]));
-		l3_assert(event.testCase, l3_is(testCase));
+	[testCase runInContext:nil eventObserver:test];
+	
+	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
+		NSDictionary *event = test.events[0];
+		l3_assert(event[@"name"], l3_equals(@"name"));
+		l3_assert(event[@"type"], l3_equals(@"start"));
 	}
 }
 
-@l3_test("generate case finished events when done running") {
-	L3EventSink *eventSink = [L3EventSink new];
+@l3_test("generate test end events when done running") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventAlgebra:eventSink];
-	l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u));
-	L3TestCaseEndEvent *event = eventSink.events.lastObject;
-	l3_assert(event, l3_isKindOfClass([L3TestCaseEndEvent class]));
-	l3_assert(event.testCase, l3_is(testCase));
+	[testCase runInContext:nil eventObserver:test];
+	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u));
+	NSDictionary *event = test.events.lastObject;
+	l3_assert(event[@"name"], l3_equals(@"name"));
+	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
+-(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
 	L3TestState *state = [context.stateClass new];
-	self.eventAlgebra = eventAlgebra;
+	self.eventObserver = eventObserver;
 	
-	[eventAlgebra testCaseStartEventWithTestCase:self date:[NSDate date]];
+	[eventObserver testStartEventWithTest:self date:[NSDate date]];
 	
 	if (context.setUpFunction)
 		context.setUpFunction(state, self);
@@ -90,9 +93,14 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (context.tearDownFunction)
 		context.tearDownFunction(state, self);
 	
-	[eventAlgebra testCaseEndEventWithTestCase:self date:[NSDate date]];
+	[eventObserver testEndEventWithTest:self date:[NSDate date]];
 	
-	self.eventAlgebra = nil;
+	self.eventObserver = nil;
+}
+
+
+-(bool)isComposite {
+	return NO;
 }
 
 
@@ -100,43 +108,57 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Assertions
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", @"a", @".") eventAlgebra:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", @"a", @".") eventObserver:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", @"a", @"!") eventAlgebra:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", @"a", @"!") eventObserver:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
-	L3EventSink *eventSink = [L3EventSink new];
 	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @".");
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } assertionReference:assertionReference eventAlgebra:eventSink];
+	[_case assertThat:@"a" matches:^bool(id x) { return YES; } assertionReference:assertionReference eventObserver:test];
 	
-	L3AssertionEvent *event = eventSink.events.lastObject;
-	l3_assert(event, l3_isKindOfClass([L3AssertionSuccessEvent class]));
-	l3_assert(event.assertionReference, l3_equals(assertionReference));
+	l3_assert(test.events.lastObject[@"assertionReference"], l3_equals(assertionReference));
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
-	L3EventSink *eventSink = [L3EventSink new];
 	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @"!");
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } assertionReference:assertionReference eventAlgebra:eventSink];
+	[_case assertThat:@"a" matches:^bool(id x) { return NO; } assertionReference:assertionReference eventObserver:test];
 	
-	L3AssertionEvent *event = eventSink.events.lastObject;
-	l3_assert(event, l3_isKindOfClass([L3AssertionFailureEvent class]));
-	l3_assert(event.assertionReference, l3_equals(assertionReference));
+	l3_assert(test.events.lastObject[@"assertionReference"], l3_equals(assertionReference));
 }
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertionReference eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertionReference eventObserver:(id<L3EventObserver>)eventObserver {
 	// assertion start event
 	bool matched = pattern(object);
 	if (matched)
-		[eventAlgebra assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
+		[eventObserver assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
 	else
-		[eventAlgebra assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
+		[eventObserver assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
 	return matched;
+}
+
+@end
+
+@l3_suite_implementation (L3TestCase)
+
+-(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"start" }];
+}
+
+-(void)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
+}
+
+-(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+}
+
+-(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
 }
 
 @end

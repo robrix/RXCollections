@@ -4,16 +4,22 @@
 
 #import <Foundation/Foundation.h>
 
-@interface L3TestResult : NSObject
+@protocol L3TestResult <NSObject>
 
-+(instancetype)testResultWithName:(NSString *)name startDate:(NSDate *)startDate;
++(id<L3TestResult>)testResultWithName:(NSString *)name startDate:(NSDate *)startDate;
 
-@property (strong, nonatomic) L3TestResult *parent; // this really only exists to make stacks easier; nil it out on pop or you get retain cycles
+@property (assign, nonatomic, readonly, getter = isComposite) bool composite;
+
+@property (weak, nonatomic) id<L3TestResult> parent;
 
 @property (copy, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) NSDate *startDate;
-@property (assign, nonatomic) NSTimeInterval duration;
-@property (assign, nonatomic) NSUInteger testCaseCount;
+@property (strong, nonatomic) NSDate *endDate;
+@property (assign, nonatomic, readonly) NSTimeInterval totalDuration; // span between startDate and endDate
+@property (assign, nonatomic, readonly) NSTimeInterval duration; // sum of children’s durations if composite; otherwise totalDuration
+
+@property (assign, nonatomic, readonly) NSUInteger testCaseCount;
+
 @property (assign, nonatomic) NSUInteger assertionCount;
 @property (assign, nonatomic) NSUInteger assertionFailureCount;
 @property (assign, nonatomic) NSUInteger exceptionCount;
@@ -22,6 +28,15 @@
 @property (nonatomic, readonly) bool failed;
 
 @property (nonatomic, readonly) NSArray *testResults;
--(void)addTestResult:(L3TestResult *)testResult;
+-(void)addTestResult:(id<L3TestResult>)testResult;
 
+@end
+
+@interface L3AbstractTestResult : NSObject
+@end
+
+@interface L3TestResult : L3AbstractTestResult <L3TestResult>
+@end
+
+@interface L3CompositeTestResult : L3AbstractTestResult <L3TestResult>
 @end

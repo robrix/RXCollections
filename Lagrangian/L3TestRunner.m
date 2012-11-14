@@ -3,18 +3,19 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Cocoa/Cocoa.h>
-#import "L3Event.h"
-#import "L3OCUnitCompatibleEventFormatter.h"
+#import "L3OCUnitTestResultFormatter.h"
 #import "L3TestResult.h"
+#import "L3TestResultBuilder.h"
 #import "L3TestRunner.h"
 #import "L3TestSuite.h"
 
-@interface L3TestRunner () <L3EventFormatterDelegate>
+@interface L3TestRunner () <L3TestResultBuilderDelegate, L3TestResultFormatterDelegate>
 
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
-@property (strong, nonatomic, readonly) id<L3EventFormatter> eventFormatter;
+@property (strong, nonatomic, readonly) L3TestResultBuilder *testResultBuilder;
+@property (strong, nonatomic, readonly) id<L3TestResultFormatter> eventFormatter;
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
@@ -44,7 +45,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
 		
-		_eventFormatter = [L3OCUnitCompatibleEventFormatter new];
+		_testResultBuilder = [L3TestResultBuilder new];
+		_testResultBuilder.delegate = self;
+		
+		_eventFormatter = [L3OCUnitTestResultFormatter new];
 		_eventFormatter.delegate = self;
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
@@ -77,7 +81,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:nil eventAlgebra:_eventFormatter];
+			[test runInContext:nil eventObserver:_testResultBuilder];
 			[self.queue addOperationWithBlock:^{
 				if (_shouldRunAutomatically) {
 					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
@@ -94,20 +98,38 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 
 
 #pragma mark -
-#pragma mark L3EventFormatterDelegate
+#pragma mark L3TestResultFormatterDelegate
 
--(void)formatter:(id<L3EventFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
 	if (string)
 		printf("%s\n", string.UTF8String);
 }
 
--(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
-	if ([NSUserNotification class]) { // weak linking
+
+#pragma mark -
+#pragma mark L3TestResultBuilderDelegate
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
+	[_eventFormatter testResultBuilder:builder testResultDidStart:result];
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {
+	[_eventFormatter testResultBuilder:builder testResult:result didChangeWithSuccessfulAssertionReference:assertionReference];
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
+	[_eventFormatter testResultBuilder:builder testResult:result didChangeWithFailedAssertionReference:assertionReference];
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
+	[_eventFormatter testResultBuilder:builder testResultDidFinish:result];
+	
+	if (result.parent == nil && [NSUserNotification class]) { // weak linking
 		NSUserNotification *notification = [NSUserNotification new];
-		notification.title = testResult.succeeded?
-			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
+		notification.title = result.succeeded?
+		NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
 		:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
-		notification.subtitle = [NSString stringWithFormat:@"%lu tests, %lu assertions, %lu failures", testResult.testCaseCount, testResult.assertionCount, testResult.assertionFailureCount];
+		notification.subtitle = [NSString stringWithFormat:@"%lu tests, %lu assertions, %lu failures", result.testCaseCount, result.assertionCount, result.assertionFailureCount];
 		[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 	}
 }

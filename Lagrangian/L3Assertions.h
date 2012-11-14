@@ -13,14 +13,16 @@
 	^bool{ \
 		id subject_ = l3_to_object(subject); \
 		L3Pattern pattern_ = l3_to_pattern(pattern); \
-		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventAlgebra:_case.eventAlgebra]; \
+		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventObserver:_case.eventObserver]; \
 	}()
 
-#define l3_not(pattern)				(^bool(id x){ return !l3_to_pattern(pattern)(x); })
+#define l3_not(...) \
+	(^bool(id x){ return !l3_to_pattern(__VA_ARGS__)(x); })
 
-#define l3_is(pattern)				pattern
-#define l3_equalTo(pattern)			pattern
-#define l3_equals(pattern)			pattern
+#define l3_is(...)						(__VA_ARGS__)
+#define l3_equalTo(...)					(__VA_ARGS__)
+#define l3_equals(...)					(__VA_ARGS__)
+#define l3_equalsWithEpsilon(x, y)		l3_to_pattern_f(x, y)
 
 #define l3_isKindOfClass(class) \
 	(^bool(id x){ return [x isKindOfClass:class]; })

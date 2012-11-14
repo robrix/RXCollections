@@ -3,13 +3,16 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3EventAlgebra.h"
 #import "L3TestContext.h"
+
+@protocol L3EventObserver;
 
 @protocol L3Test <NSObject>
 
 @property (copy, nonatomic, readonly) NSString *name;
 
--(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra;
+@property (nonatomic, readonly, getter = isComposite) bool composite;
+
+-(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver;
 
 @end
