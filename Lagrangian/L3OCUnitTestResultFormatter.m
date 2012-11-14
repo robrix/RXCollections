@@ -8,13 +8,8 @@
 
 @interface L3OCUnitTestResultFormatter ()
 
--(void)pushTestResultWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
--(void)pushTestResultWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
--(L3TestResult *)popTestResultWithDate:(NSDate *)date;
-@property (strong, nonatomic) L3TestResult *currentTestResult;
-
 -(NSString *)formatTestName:(NSString *)name;
--(NSString *)methodNameWithCurrentSuiteAndCase;
+-(NSString *)methodNameForTestResult:(L3TestResult *)testResult;
 -(NSString *)pluralizeNoun:(NSString *)noun count:(NSUInteger)count;
 -(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count;
 
@@ -24,6 +19,8 @@
 
 @property L3OCUnitTestResultFormatter *formatter;
 @property NSString *formattedString;
+@property id<L3TestResult> result;
+@property id<L3TestResult> compositeResult;
 
 @end
 
@@ -34,114 +31,89 @@
 @l3_set_up {
 	test.formatter = [L3OCUnitTestResultFormatter new];
 	test.formatter.delegate = test;
+	
+	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
 }
 
 static void dummyFunction(L3TestState *test, L3TestCase *_case);
 
-
 #pragma mark -
-#pragma mark Event algebra
+#pragma mark L3TestResultBuilderDelegate
 
-#pragma mark -
-#pragma mark Test events
-
--(NSString *)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
 	NSString *formatted = nil;
-	[self pushTestResultWithTestSuite:test date:date];
-	if (test.isComposite) {
-		formatted = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:test.name], date];
+	if (result.isComposite) {
+		formatted = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:result.name], result.startDate];
 	} else {
-		self.currentTestResult.testCaseCount++;
-		formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameWithCurrentSuiteAndCase]];
+		formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameForTestResult:result]];
 	}
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
-	return formatted;
+	[self.delegate formatter:self didFormatResult:formatted];
+}
+
+@l3_test("do not format assertion successes") {
+	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithSuccessfulAssertionReference:l3_assertionReference(@"a", @"a", @"b")];
+	l3_assert(test.formattedString, l3_is(nil));
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {}
+
+@l3_test("format assertion failures with their file, line, source, actual value, and expectation") {
+	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
+	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithFailedAssertionReference:assertionReference];
+	l3_assert(test.formattedString, @"/foo/bar/file.m:42: error: 'x' was 'y' but should have matched 'src'");
+}
+
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
+	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: '%@' was '%@' but should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.subject, assertionReference.patternSource];
+	[self.delegate formatter:self didFormatResult:formatted];
 }
 
 @l3_test("format test suite end events with the sums of the test cases, failures, and durations they encompassed") {
-	NSDate *now = [NSDate date];
-	NSDate *then = [NSDate dateWithTimeInterval:-10 sinceDate:now];
-	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
-	[test.formatter pushTestResultWithTestSuite:suite date:then];
-	L3TestResult *currentTestResult = test.formatter.currentTestResult;
-	currentTestResult.assertionFailureCount = 3;
-	currentTestResult.duration = 5;
-	currentTestResult.testCaseCount = 2;
-	[test.formatter testEndEventWithTest:suite date:now];
-	l3_assert([test.formattedString rangeOfString:@"Executed 2 tests, with 3 failures (0 unexpected) in 5.000 (10.000) seconds"].length > 0, l3_is(YES));
+	test.compositeResult.endDate = [NSDate dateWithTimeInterval:10 sinceDate:test.compositeResult.startDate];
+	test.result.endDate = [NSDate dateWithTimeInterval:5 sinceDate:test.result.startDate];
+	test.result.assertionCount = 3;
+	test.result.assertionFailureCount = 3;
+	test.result.parent = test.compositeResult;
+	[test.compositeResult addTestResult:test.result];
+	
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.compositeResult];
+	l3_assert([test.formattedString rangeOfString:@"Executed 1 test, with 3 failures (0 unexpected) in 5.000 (10.000) seconds"].length > 0, l3_is(YES));
 }
 
 @l3_test("format test case end events with ‘passed’ for cases without any assertion failures") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:dummyFunction];
-	[test.formatter testEndEventWithTest:testCase date:[NSDate date]];
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
 	l3_assert([test.formattedString rangeOfString:@"passed"].length > 0, l3_is(YES));
 }
 
 @l3_test("format test case end events with ‘failed’ for cases with assertion failures") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:dummyFunction];
-	[test.formatter pushTestResultWithTestCase:testCase date:[NSDate date]];
-	test.formatter.currentTestResult.assertionFailureCount += 1;
-	[test.formatter testEndEventWithTest:testCase date:[NSDate date]];
+	test.result.assertionFailureCount = 1;
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
 	l3_assert([test.formattedString rangeOfString:@"failed"].length > 0, l3_is(YES));
 }
 
 @l3_test("format test case end events with the duration of the test") {
-	NSDate *now = [NSDate date];
-	NSDate *then = [NSDate dateWithTimeInterval:-10 sinceDate:now];
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:dummyFunction];
-	[test.formatter pushTestResultWithTestCase:testCase date:then];
-	[test.formatter testEndEventWithTest:testCase date:now];
-	l3_assert([test.formattedString rangeOfString:@"(10.000 seconds)"].length > 0, @l3_is(YES));
+	test.result.endDate = [NSDate dateWithTimeInterval:5 sinceDate:test.result.startDate];
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
+	l3_assert([test.formattedString rangeOfString:@"(5.000 seconds)"].length > 0, @l3_is(YES));
 }
 
--(NSString *)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
 	NSString *formatted = nil;
-	L3TestResult *testResult = self.currentTestResult;
-	if (test.isComposite) {
+	if (result.isComposite) {
 		formatted = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds\n",
-					 [self formatTestName:test.name],
-					 date,
-					 [self cardinalizeNoun:@"test" count:testResult.testCaseCount],
-					 [self cardinalizeNoun:@"failure" count:testResult.assertionFailureCount],
-					 testResult.exceptionCount,
-					 testResult.duration,
-					 [date timeIntervalSinceDate:testResult.startDate]];
+					 [self formatTestName:result.name],
+					 result.endDate,
+					 [self cardinalizeNoun:@"test" count:result.testCaseCount],
+					 [self cardinalizeNoun:@"failure" count:result.assertionFailureCount],
+					 result.exceptionCount,
+					 result.duration,
+					 [result.endDate timeIntervalSinceDate:result.startDate]];
 	} else {
-		bool success = self.currentTestResult.assertionFailureCount == 0;
-		NSTimeInterval duration = [date timeIntervalSinceDate:self.currentTestResult.startDate];
-		formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameWithCurrentSuiteAndCase], success? @"passed" : @"failed", duration];
+		bool success = result.assertionFailureCount == 0;
+		formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameForTestResult:result], success? @"passed" : @"failed", result.duration];
 	}
-	[self popTestResultWithDate:date];
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
-	return formatted;
-}
-
-
-#pragma mark -
-#pragma mark Assertion events
-
-@l3_test("format assertion failures with their file, line, source, actual value, and expectation") {
-	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
-	[test.formatter assertionFailureWithAssertionReference:assertionReference date:nil];
-	l3_assert(test.formattedString, @"/foo/bar/file.m:42: error: 'x' was 'y' but should have matched 'src'");
-}
-
--(NSString *)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	self.currentTestResult.assertionCount++;
-	self.currentTestResult.assertionFailureCount++;
-	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: '%@' was '%@' but should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.subject, assertionReference.patternSource];
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
-	return formatted;
-}
-
-@l3_test("do not format assertion successes") {
-	[test.formatter assertionSuccessWithAssertionReference:l3_assertionReference(@"a", @"a", @"b") date:nil];
-	l3_assert(test.formattedString, l3_is(nil));
-}
-
--(NSString *)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	self.currentTestResult.assertionCount++;
-	return nil;
+	[self.delegate formatter:self didFormatResult:formatted];
 }
 
 
@@ -165,15 +137,15 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 }
 
 @l3_test("format faux method names from suite and test case names") {
-	L3TestResult *suiteResult = [L3TestResult testResultWithName:@"suite of tests!" startDate:[NSDate distantPast]];
+	L3TestResult *suiteResult = [L3CompositeTestResult testResultWithName:@"suite of tests!" startDate:[NSDate distantPast]];
 	L3TestResult *caseResult = [L3TestResult testResultWithName:@"test of suites!" startDate:[NSDate date]];
+	[suiteResult addTestResult:caseResult];
 	caseResult.parent = suiteResult;
-	[test.formatter setCurrentTestResult:caseResult];
-	l3_assert([test.formatter methodNameWithCurrentSuiteAndCase], @"-[suite_of_tests_ test_of_suites_]");
+	l3_assert([test.formatter methodNameForTestResult:caseResult], @"-[suite_of_tests_ test_of_suites_]");
 }
 
--(NSString *)methodNameWithCurrentSuiteAndCase {
-	return [NSString stringWithFormat:@"-[%@ %@]", [self formatTestName:self.currentTestResult.parent.name], [self formatTestName:self.currentTestResult.name]];
+-(NSString *)methodNameForTestResult:(L3TestResult *)result {
+	return [NSString stringWithFormat:@"-[%@ %@]", [self formatTestName:result.parent.name], [self formatTestName:result.name]];
 }
 
 
@@ -206,43 +178,12 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 	return [NSString stringWithFormat:@"%lu %@", count, [self pluralizeNoun:noun count:count]];
 }
 
-
-#pragma mark -
-#pragma mark Test result stack
-
--(void)pushTestResultWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	[self pushTestResult:[L3TestResult testResultWithName:testSuite.name startDate:date]];
-}
-
--(void)pushTestResultWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	[self pushTestResult:[L3TestResult testResultWithName:testCase.name startDate:date]];
-}
-
--(void)pushTestResult:(L3TestResult *)testResult {
-	testResult.parent = self.currentTestResult;
-	self.currentTestResult = testResult;
-}
-
--(L3TestResult *)popTestResultWithDate:(NSDate *)date {
-	L3TestResult *result = self.currentTestResult;
-	self.currentTestResult = result.parent;
-	[result.parent addTestResult:result];
-	if (!result.parent)
-		[self.delegate formatter:self didFinishFormattingEventsWithFinalTestResult:result];
-	result.parent = nil;
-	return result;
-}
-
 @end
 
 @l3_suite_implementation (L3OCUnitTestResultFormatter)
 
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
 	self.formattedString = string;
-}
-
--(void)formatter:(id<L3TestResultFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
-	
 }
 
 @end

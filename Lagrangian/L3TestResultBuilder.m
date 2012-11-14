@@ -64,6 +64,7 @@
 	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-10];
 	[test.builder testStartEventWithTest:test date:date];
 	L3TestResult *testResult = [test.builder testResultStack].topObject;
+	
 	l3_assert(testResult.name, l3_equals(_case.name));
 	l3_assert(testResult.startDate, l3_equals(date));
 }
@@ -74,8 +75,16 @@
 	l3_assert(test.builtResult.name, l3_equals(_case.name));
 }
 
+@l3_test("set new test results’ parent relationships when pushing them") {
+	[test.builder testStartEventWithTest:test date:[NSDate date]];
+	[test.builder testStartEventWithTest:test date:[NSDate date]];
+	
+	l3_assert(test.builder.currentTestResult.parent, l3_equals(test.builder.testResultStack.objects[0]));
+}
+
 -(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	L3TestResult *testResult = [L3TestResult testResultWithName:test.name startDate:date];
+	L3TestResult *testResult = [(test.isComposite? [L3CompositeTestResult class] : [L3TestResult class]) testResultWithName:test.name startDate:date];
+	testResult.parent = self.currentTestResult;
 	[self.testResultStack pushObject:testResult];
 	[self.delegate testResultBuilder:self testResultDidStart:testResult];
 }
@@ -107,6 +116,7 @@
 -(void)testEndEventWithTest:(L3TestSuite *)testSuite date:(NSDate *)date {
 	L3TestResult *testResult = [self.testResultStack popObject];
 	testResult.endDate = date;
+	[self.currentTestResult addTestResult:testResult];
 	[self.delegate testResultBuilder:self testResultDidFinish:testResult];
 }
 

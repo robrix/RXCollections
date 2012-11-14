@@ -2,11 +2,11 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3EventObserver.h"
+#import "L3TestResultBuilder.h"
 
 @protocol L3TestResultFormatterDelegate;
 
-@protocol L3TestResultFormatter <L3EventObserver>
+@protocol L3TestResultFormatter <L3TestResultBuilderDelegate>
 
 @property (weak, nonatomic) id<L3TestResultFormatterDelegate> delegate;
 
@@ -16,7 +16,6 @@
 
 @protocol L3TestResultFormatterDelegate <NSObject>
 
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatEventWithResultString:(NSString *)string;
--(void)formatter:(id<L3TestResultFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult;
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string;
 
 @end

@@ -5,21 +5,34 @@
 #import "L3TestResult.h"
 #import "Lagrangian.h"
 
-@interface L3TestResult ()
-
-@property (strong, nonatomic, readonly) NSMutableArray *mutableTestResults;
-
-@end
-
 @l3_suite("Test results", L3TestResult)
 @property L3TestResult *result;
+@property L3CompositeTestResult *compositeResult;
 @end
-
-@implementation L3TestResult
 
 @l3_set_up {
 	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
 }
+
+
+@interface L3AbstractTestResult (L3TestResult) <L3TestResult>
+@end
+
+@interface L3AbstractTestResult ()
+
+-(instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate;
+
+@property (weak, nonatomic) id<L3TestResult> parent;
+
+@property (copy, nonatomic, readonly) NSString *name;
+@property (strong, nonatomic, readonly) NSDate *startDate;
+@property (strong, nonatomic) NSDate *endDate;
+@property (assign, nonatomic) NSTimeInterval totalDuration;
+
+@end
+
+@implementation L3AbstractTestResult
 
 #pragma mark -
 #pragma mark Constructors
@@ -34,23 +47,16 @@
 	if ((self = [super init])) {
 		_name = name;
 		_startDate = startDate;
-		_mutableTestResults = [NSMutableArray new];
 	}
 	return self;
 }
 
 
-@l3_test("store duration") {
-	test.result.duration = 1.0;
-	l3_assert(test.result.duration, l3_is(1.0));
-}
+#pragma mark -
+#pragma mark Total duration
 
-@l3_test("sum their children’s durations with their own") {
-	test.result.duration = 1.0;
-	L3TestResult *child = [L3TestResult testResultWithName:@"child" startDate:[NSDate date]];
-	child.duration = 1.0;
-	[test.result addTestResult:child];
-	l3_assert(test.result.duration, l3_is(2.0));
+-(NSTimeInterval)totalDuration {
+	return [self.endDate timeIntervalSinceDate:self.startDate];
 }
 
 
@@ -84,19 +90,158 @@
 #pragma mark Composition
 
 -(NSArray *)testResults {
+	[self doesNotRecognizeSelector:_cmd];
+	return nil;
+}
+
+-(void)addTestResult:(L3TestResult *)child {
+	[self doesNotRecognizeSelector:_cmd];
+}
+
+@end
+
+
+@interface L3TestResult ()
+@end
+
+@implementation L3TestResult
+
+#pragma mark -
+#pragma mark Properties
+
+-(bool)isComposite {
+	return NO;
+}
+
+
+@l3_test("atomic results return the span between their start and end dates as their duration") {
+	test.result.endDate = [NSDate dateWithTimeInterval:1 sinceDate:test.result.startDate];
+	l3_assert(test.result.duration, l3_equals(1.0));
+}
+
+-(NSTimeInterval)duration {
+	return self.totalDuration;
+}
+
+
+-(NSUInteger)testCaseCount {
+	return 1;
+}
+
+
+@synthesize assertionCount = _assertionCount;
+@synthesize assertionFailureCount = _assertionFailureCount;
+@synthesize exceptionCount = _exceptionCount;
+
+
+#pragma mark -
+#pragma mark Inherited properties
+
+@dynamic parent;
+@dynamic name;
+@dynamic startDate;
+@dynamic endDate;
+@dynamic totalDuration;
+@dynamic testResults;
+@dynamic succeeded;
+@dynamic failed;
+
+@end
+
+
+@interface L3CompositeTestResult ()
+
+@property (strong, nonatomic, readonly) NSMutableArray *mutableTestResults;
+
+@end
+
+@implementation L3CompositeTestResult
+
+#pragma mark -
+#pragma mark Constructors
+
+-(instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate {
+	if ((self = [super initWithName:name startDate:startDate])) {
+		_mutableTestResults = [NSMutableArray new];
+	}
+	return self;
+}
+
+
+#pragma mark -
+#pragma mark Properties
+
+-(bool)isComposite {
+	return YES;
+}
+
+
+#pragma mark -
+#pragma mark Recursive properties
+
+@l3_test("composite results sum their children’s durations") {
+	L3TestResult *child = [L3TestResult testResultWithName:@"child" startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
+	child.endDate = [NSDate date];
+	[test.compositeResult addTestResult:child];
+	child = [L3TestResult testResultWithName:@"child" startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
+	child.endDate = [NSDate date];
+	[test.compositeResult addTestResult:child];
+	l3_assert(test.compositeResult.duration, l3_equalsWithEpsilon(2.0, 0.0001));
+}
+
+-(NSTimeInterval)duration {
+	return [[self.testResults valueForKeyPath:@"@sum.duration"] doubleValue];
+}
+
+-(NSUInteger)testCaseCount {
+	return [[self.testResults valueForKeyPath:@"@sum.testCaseCount"] unsignedIntegerValue];
+}
+
+
+-(NSUInteger)assertionCount {
+	return [[self.testResults valueForKeyPath:@"@sum.assertionCount"] unsignedIntegerValue];
+}
+
+-(void)setAssertionCount:(NSUInteger)assertionCount {}
+
+-(NSUInteger)assertionFailureCount {
+	return [[self.testResults valueForKeyPath:@"@sum.assertionFailureCount"] unsignedIntegerValue];
+}
+
+-(void)setAssertionFailureCount:(NSUInteger)assertionFailureCount {}
+
+-(NSUInteger)exceptionCount {
+	return [[self.testResults valueForKeyPath:@"@sum.exceptionCount"] unsignedIntegerValue];
+}
+
+-(void)setExceptionCount:(NSUInteger)exceptionCount {}
+
+
+#pragma mark -
+#pragma mark Inherited properties
+
+@dynamic parent;
+@dynamic name;
+@dynamic startDate;
+@dynamic endDate;
+@dynamic totalDuration;
+@dynamic succeeded;
+@dynamic failed;
+
+
+#pragma mark -
+#pragma mark Composite
+
+-(NSArray *)testResults {
 	return _mutableTestResults;
 }
 
 -(void)addTestResult:(L3TestResult *)child {
 	[self.mutableTestResults addObject:child];
-	_duration += child.duration;
-	_testCaseCount += child.testCaseCount;
-	_assertionCount += child.assertionCount;
-	_assertionFailureCount += child.assertionFailureCount;
-	_exceptionCount += child.exceptionCount;
 }
 
 @end
+
 
 @l3_suite_implementation (L3TestResult)
 @end
