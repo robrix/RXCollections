@@ -35,7 +35,6 @@
 	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
 }
 
-static void dummyFunction(L3TestState *test, L3TestCase *_case);
 
 #pragma mark -
 #pragma mark L3TestResultBuilderDelegate
@@ -156,5 +155,3 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 }
 
 @end
-
-static void dummyFunction(L3TestState *test, L3TestCase *_case) {}
