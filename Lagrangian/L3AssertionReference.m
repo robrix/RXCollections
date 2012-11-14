@@ -28,7 +28,7 @@
 #pragma mark -
 #pragma mark NSCopying
 
--(id)copyWithZone:(NSZone *)zone {
+-(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
 

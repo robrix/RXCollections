@@ -28,6 +28,9 @@
 
 @implementation L3TestRunner
 
+#pragma mark -
+#pragma mark Constructors
+
 +(instancetype)runner {
 	static L3TestRunner *runner = nil;
 	static dispatch_once_t onceToken;
