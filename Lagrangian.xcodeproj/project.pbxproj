@@ -33,6 +33,8 @@
 		D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
 		D426E49816528701001C9105 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; };
 		D426E49916528701001C9105 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
+		D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; };
+		D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
 		D457D679165094F100340DAC /* L3AssertionReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3AssertionReference.h */; };
 		D457D67A165094F100340DAC /* L3AssertionReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3AssertionReference.m */; };
 		D457D67C165097CA00340DAC /* L3EventAlgebra.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventAlgebra.h */; };
@@ -128,6 +130,8 @@
 		D426E49216527B8D001C9105 /* L3TestResultBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResultBuilder.m; sourceTree = "<group>"; };
 		D426E49616528701001C9105 /* L3Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Stack.h; sourceTree = "<group>"; };
 		D426E49716528701001C9105 /* L3Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Stack.m; sourceTree = "<group>"; };
+		D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3FunctionalUtilities.h; sourceTree = "<group>"; };
+		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
 		D457D677165094F100340DAC /* L3AssertionReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3AssertionReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventAlgebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventAlgebra.h; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 			children = (
 				D426E49616528701001C9105 /* L3Stack.h */,
 				D426E49716528701001C9105 /* L3Stack.m */,
+				D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */,
+				D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -437,6 +443,7 @@
 				D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */,
 				D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */,
 				D426E49816528701001C9105 /* L3Stack.h in Headers */,
+				D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +579,7 @@
 				D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */,
 				D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */,
 				D426E49916528701001C9105 /* L3Stack.m in Sources */,
+				D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

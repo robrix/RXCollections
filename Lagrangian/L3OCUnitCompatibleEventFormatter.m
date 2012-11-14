@@ -31,9 +31,6 @@
 
 @synthesize delegate = _delegate;
 
-#pragma mark -
-#pragma mark Formatting
-
 @l3_suite("OCUnit-compatible event formatters");
 
 @l3_set_up {

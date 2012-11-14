@@ -44,3 +44,4 @@
 - multiplexer algebra which sends events to each of its child algebras
 	- use that to send events to both the formatter and the test result builder
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?
+- reduce the event algebra to -testStartEventWithTest:date:/-testEndEventWithTest:date:, both taking id<L3Test>
