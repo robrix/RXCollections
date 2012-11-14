@@ -68,4 +68,10 @@ l3_fold(l3_define_to_pattern_by_equality_with_type,
 		id)
 
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(L3Pattern x) { return x; }
+
+// nil comparisons
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(void *x) { return ^bool(id y){ return (__bridge void *)y == x; }; }
+
+// floating point comparisons with epsilon
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(double x, double epsilon) { return ^bool(id y){ return [y isKindOfClass:[NSNumber class]] && fabs(x - [y doubleValue]) < epsilon; }; }
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(float x, float epsilon) { return ^bool(id y){ return [y isKindOfClass:[NSNumber class]] && fabsf(x - [y doubleValue]) < epsilon; }; }
