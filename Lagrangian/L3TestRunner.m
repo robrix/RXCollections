@@ -3,7 +3,6 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Cocoa/Cocoa.h>
-#import "L3Event.h"
 #import "L3OCUnitCompatibleEventFormatter.h"
 #import "L3TestResult.h"
 #import "L3TestRunner.h"

@@ -5,10 +5,6 @@
 #import "L3TestCase.h"
 #import "L3TestSuite.h"
 #import "L3TestState.h"
-#import "L3Event.h"
-#import "L3EventSink.h"
-#import "L3TestSuiteStartEvent.h"
-#import "L3TestSuiteEndEvent.h"
 #import "Lagrangian.h"
 
 @interface L3TestSuite () <L3TestContext>
@@ -20,9 +16,15 @@
 
 @end
 
-@implementation L3TestSuite
+@l3_suite("Test suites", L3TestSuite) <L3EventAlgebra>
+@property NSMutableArray *events;
+@end
 
-@l3_suite("Test suites");
+@l3_set_up {
+	test.events = [NSMutableArray new];
+}
+
+@implementation L3TestSuite
 
 #pragma mark -
 #pragma mark Constructors
@@ -83,32 +85,59 @@
 #pragma mark -
 #pragma mark L3Test
 
-@l3_test("generate suite started events when starting to run") {
-	L3EventSink *eventSink = [L3EventSink new];
+@l3_test("generate test start events when starting to run") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventAlgebra:eventSink];
-	if (l3_assert(eventSink.events.count, l3_greaterThanOrEqualTo(1u))) {
-		L3TestSuiteStartEvent *event = [eventSink.events objectAtIndex:0];
-		l3_assert(event, l3_isKindOfClass([L3TestSuiteStartEvent class]));
-		l3_assert(event.testSuite, l3_is(testSuite));
+	[testSuite runInContext:nil eventAlgebra:test];
+	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
+		NSDictionary *event = test.events[0];
+		l3_assert(event[@"name"], l3_equals(testSuite.name));
+		l3_assert(event[@"type"], l3_equals(@"start"));
 	}
 }
 
-@l3_test("generate suite finished events when done running") {
-	L3EventSink *eventSink = [L3EventSink new];
+@l3_test("generate test end events when done running") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventAlgebra:eventSink];
-	L3TestSuiteEndEvent *event = eventSink.events.lastObject;
-	l3_assert(event, l3_isKindOfClass([L3TestSuiteEndEvent class]));
-	l3_assert(event.testSuite, l3_is(testSuite));
+	[testSuite runInContext:nil eventAlgebra:test];
+	NSDictionary *event = test.events.lastObject;
+	l3_assert(event[@"name"], l3_equals(testSuite.name));
+	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
 -(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
-	[eventAlgebra testSuiteStartEventWithTestSuite:self date:[NSDate date]];
+	[eventAlgebra testStartEventWithTest:self date:[NSDate date]];
 	for (id<L3Test> test in self.tests) {
 		[test runInContext:self eventAlgebra:eventAlgebra];
 	}
-	[eventAlgebra testSuiteEndEventWithTestSuite:self date:[NSDate date]];
+	[eventAlgebra testEndEventWithTest:self date:[NSDate date]];
+}
+
+
+-(bool)isComposite {
+	return YES;
+}
+
+@end
+
+@l3_suite_implementation (L3TestSuite)
+
+-(id)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"start" }];
+	return nil;
+}
+
+-(id)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
+	return nil;
+}
+
+-(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+	return nil;
+}
+
+-(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+	return nil;
 }
 
 @end

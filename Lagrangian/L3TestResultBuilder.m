@@ -48,16 +48,16 @@
 #pragma mark Event algebra
 
 #pragma mark -
-#pragma mark Suite events
+#pragma mark Test events
 
 @l3_test("push a result when starting suites") {
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
-	L3TestResult *testResult = [test.builder testSuiteStartEventWithTestSuite:suite date:[NSDate date]];
+	L3TestResult *testResult = [test.builder testStartEventWithTest:suite date:[NSDate date]];
 	l3_assert([test.builder testResultStack].objects, l3_equals(@[testResult]));
 }
 
--(L3TestResult *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	L3TestResult *testResult = [L3TestResult testResultWithName:testSuite.name startDate:date];
+-(L3TestResult *)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	L3TestResult *testResult = [L3TestResult testResultWithName:test.name startDate:date];
 	[self.testResultStack pushObject:testResult];
 	return testResult;
 }
@@ -67,7 +67,7 @@
 	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeIntervalSinceNow:-10]];
 	[[test.builder testResultStack] pushObject:testResult];
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
-	[test.builder testSuiteEndEventWithTestSuite:suite date:[NSDate date]];
+	[test.builder testEndEventWithTest:suite date:[NSDate date]];
 	l3_assert([test.builder testResultStack].objects, l3_equals(@[]));
 }
 
@@ -75,42 +75,20 @@
 	NSDate *now = [NSDate date];
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
 	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
-	L3TestResult *testResult = [test.builder testSuiteEndEventWithTestSuite:suite date:now];
+	L3TestResult *testResult = [test.builder testEndEventWithTest:suite date:now];
 	l3_assert(testResult.endDate, l3_equals(now));
 }
-
--(L3TestResult *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	L3TestResult *testResult = [self.testResultStack popObject];
-	testResult.endDate = date;
-	return testResult;
-}
-
-
-#pragma mark -
-#pragma mark Case events
-
-@l3_test("push a result when starting cases") {
-	L3TestResult *testResult = [test.builder testCaseStartEventWithTestCase:_case date:[NSDate date]];
-	l3_assert(test.builder.testResultStack.objects, l3_equals(@[testResult]));
-}
-
--(L3TestResult *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	L3TestResult *testResult = [L3TestResult testResultWithName:testCase.name startDate:date];
-	[self.testResultStack pushObject:testResult];
-	return testResult;
-}
-
 
 @l3_test("provide their delegate with a result when ending cases") {
 	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeInterval:-10 sinceDate:[NSDate date]]];
 	[test.builder.testResultStack pushObject:testResult];
-	[test.builder testCaseEndEventWithTestCase:_case date:[NSDate date]];
+	[test.builder testEndEventWithTest:_case date:[NSDate date]];
 	l3_assert(test.builtResult, l3_equals(testResult));
 }
 
--(L3TestResult *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
+-(L3TestResult *)testEndEventWithTest:(L3TestSuite *)testSuite date:(NSDate *)date {
 	L3TestResult *testResult = [self.testResultStack popObject];
-	testResult.endDate = [NSDate date];
+	testResult.endDate = date;
 	[self.delegate testResultBuilder:self didCompleteTestResult:testResult];
 	return testResult;
 }

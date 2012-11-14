@@ -4,17 +4,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class L3TestSuite;
-@class L3TestCase;
+@protocol L3Test;
+
 @class L3AssertionReference;
 
 @protocol L3EventAlgebra <NSObject>
 
--(id)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
--(id)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
-
--(id)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
--(id)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
+-(id)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date;
+-(id)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date;
 
 -(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
 -(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;

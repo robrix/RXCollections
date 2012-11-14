@@ -45,3 +45,5 @@
 	- use that to send events to both the formatter and the test result builder
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?
 - reduce the event algebra to -testStartEventWithTest:date:/-testEndEventWithTest:date:, both taking id<L3Test>
+- the event algebra protocol methods do not need to return objects
+	- it is therefore not a real algebra; rename it to L3EventObserver

@@ -8,7 +8,6 @@
 #import "L3EventAlgebra.h"
 
 @class L3AssertionReference;
-@class L3EventSink;
 @class L3TestSuite;
 
 @interface L3TestCase : NSObject <L3Test>

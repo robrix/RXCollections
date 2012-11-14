@@ -3,14 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3OCUnitCompatibleEventFormatter.h"
-#import "L3Event.h"
 #import "Lagrangian.h"
-#import "L3TestSuiteStartEvent.h"
-#import "L3TestSuiteEndEvent.h"
-#import "L3TestCaseStartEvent.h"
-#import "L3TestCaseEndEvent.h"
-#import "L3AssertionFailureEvent.h"
-#import "L3AssertionSuccessEvent.h"
 #import "L3TestResult.h"
 
 @interface L3OCUnitCompatibleEventFormatter ()
@@ -44,11 +37,17 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 #pragma mark Event algebra
 
 #pragma mark -
-#pragma mark Suite events
+#pragma mark Test events
 
--(NSString *)testSuiteStartEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	[self pushTestResultWithTestSuite:testSuite date:date];
-	NSString *formatted = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:testSuite.name], date];
+-(NSString *)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	NSString *formatted = nil;
+	[self pushTestResultWithTestSuite:test date:date];
+	if (test.isComposite) {
+		formatted = [NSString stringWithFormat:@"Test Suite '%@' started at %@\n", [self formatTestName:test.name], date];
+	} else {
+		self.currentTestResult.testCaseCount++;
+		formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameWithCurrentSuiteAndCase]];
+	}
 	[self.delegate formatter:self didFormatEventWithResultString:formatted];
 	return formatted;
 }
@@ -63,44 +62,13 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 	currentTestResult.assertionFailureCount = 3;
 	currentTestResult.duration = 5;
 	currentTestResult.testCaseCount = 2;
-	NSString *formatted = [formatter testSuiteEndEventWithTestSuite:suite date:now];
+	NSString *formatted = [formatter testEndEventWithTest:suite date:now];
 	l3_assert([formatted rangeOfString:@"Executed 2 tests, with 3 failures (0 unexpected) in 5.000 (10.000) seconds"].length > 0, l3_is(YES));
-}
-
--(NSString *)testSuiteEndEventWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date {
-	L3TestResult *testResult = [self popTestResultWithDate:date];
-	NSString *formatted = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds\n",
-						   [self formatTestName:testSuite.name],
-						   date,
-						   [self cardinalizeNoun:@"test" count:testResult.testCaseCount],
-						   [self cardinalizeNoun:@"failure" count:testResult.assertionFailureCount],
-						   testResult.exceptionCount,
-						   testResult.duration,
-						   [date timeIntervalSinceDate:testResult.startDate]];
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
-	return formatted;
-}
-
-
-#pragma mark -
-#pragma mark Test events
-
-@l3_test("format test case started events compatibly with OCUnit") {
-	NSString *string = [[L3OCUnitCompatibleEventFormatter new] testCaseEndEventWithTestCase:_case date:nil];
-	l3_assert(string, l3_not(nil));
-}
-
--(NSString *)testCaseStartEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	self.currentTestResult.testCaseCount++;
-	[self pushTestResultWithTestCase:testCase date:date];
-	NSString *formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameWithCurrentSuiteAndCase]];
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
-	return formatted;
 }
 
 @l3_test("format test case end events with ‘passed’ for cases without any assertion failures") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:dummyFunction];
-	NSString *formattedResult = [[L3OCUnitCompatibleEventFormatter new] testCaseEndEventWithTestCase:testCase date:[NSDate date]];
+	NSString *formattedResult = [[L3OCUnitCompatibleEventFormatter new] testEndEventWithTest:testCase date:[NSDate date]];
 	l3_assert([formattedResult rangeOfString:@"passed"].length > 0, l3_is(YES));
 }
 
@@ -109,7 +77,7 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 	L3OCUnitCompatibleEventFormatter *formatter = [L3OCUnitCompatibleEventFormatter new];
 	[formatter pushTestResultWithTestCase:testCase date:[NSDate date]];
 	formatter.currentTestResult.assertionFailureCount += 1;
-	NSString *formattedResult = [formatter testCaseEndEventWithTestCase:testCase date:[NSDate date]];
+	NSString *formattedResult = [formatter testEndEventWithTest:testCase date:[NSDate date]];
 	l3_assert([formattedResult rangeOfString:@"failed"].length > 0, l3_is(YES));
 }
 
@@ -119,16 +87,29 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:dummyFunction];
 	L3OCUnitCompatibleEventFormatter *formatter = [L3OCUnitCompatibleEventFormatter new];
 	[formatter pushTestResultWithTestCase:testCase date:then];
-	NSString *formattedResult = [formatter testCaseEndEventWithTestCase:testCase date:now];
+	NSString *formattedResult = [formatter testEndEventWithTest:testCase date:now];
 	l3_assert([formattedResult rangeOfString:@"(10.000 seconds)"].length > 0, @l3_is(YES));
 }
 
--(NSString *)testCaseEndEventWithTestCase:(L3TestCase *)testCase date:(NSDate *)date {
-	bool success = self.currentTestResult.assertionFailureCount == 0;
-	NSTimeInterval duration = [date timeIntervalSinceDate:self.currentTestResult.startDate];
-	NSString *formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameWithCurrentSuiteAndCase], success? @"passed" : @"failed", duration];
-	[self.delegate formatter:self didFormatEventWithResultString:formatted];
+-(NSString *)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+	NSString *formatted = nil;
+	L3TestResult *testResult = self.currentTestResult;
+	if (test.isComposite) {
+		formatted = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds\n",
+					 [self formatTestName:test.name],
+					 date,
+					 [self cardinalizeNoun:@"test" count:testResult.testCaseCount],
+					 [self cardinalizeNoun:@"failure" count:testResult.assertionFailureCount],
+					 testResult.exceptionCount,
+					 testResult.duration,
+					 [date timeIntervalSinceDate:testResult.startDate]];
+	} else {
+		bool success = self.currentTestResult.assertionFailureCount == 0;
+		NSTimeInterval duration = [date timeIntervalSinceDate:self.currentTestResult.startDate];
+		formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameWithCurrentSuiteAndCase], success? @"passed" : @"failed", duration];
+	}
 	[self popTestResultWithDate:date];
+	[self.delegate formatter:self didFormatEventWithResultString:formatted];
 	return formatted;
 }
 
