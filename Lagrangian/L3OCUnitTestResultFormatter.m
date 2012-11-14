@@ -3,15 +3,14 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3OCUnitTestResultFormatter.h"
-#import "Lagrangian.h"
+#import "L3StringInflections.h"
 #import "L3TestResult.h"
+#import "Lagrangian.h"
 
 @interface L3OCUnitTestResultFormatter ()
 
 -(NSString *)formatTestName:(NSString *)name;
 -(NSString *)methodNameForTestResult:(L3TestResult *)testResult;
--(NSString *)pluralizeNoun:(NSString *)noun count:(NSUInteger)count;
--(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count;
 
 @end
 
@@ -104,8 +103,8 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 		formatted = [NSString stringWithFormat:@"Test Suite '%@' finished at %@.\nExecuted %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds\n",
 					 [self formatTestName:result.name],
 					 result.endDate,
-					 [self cardinalizeNoun:@"test" count:result.testCaseCount],
-					 [self cardinalizeNoun:@"failure" count:result.assertionFailureCount],
+					 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
+					 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount],
 					 result.exceptionCount,
 					 result.duration,
 					 [result.endDate timeIntervalSinceDate:result.startDate]];
@@ -146,36 +145,6 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 
 -(NSString *)methodNameForTestResult:(L3TestResult *)result {
 	return [NSString stringWithFormat:@"-[%@ %@]", [self formatTestName:result.parent.name], [self formatTestName:result.name]];
-}
-
-
-@l3_test("pluralize nouns when their cardinality is 0") {
-	l3_assert([test.formatter pluralizeNoun:@"dog" count:0], l3_is(@"dogs"));
-}
-
-@l3_test("do not pluralize nouns when their cardinality is 1") {
-	l3_assert([test.formatter pluralizeNoun:@"cat" count:1], l3_is(@"cat"));
-}
-
-@l3_test("pluralize nouns when their cardinality is 2 or greater") {
-	l3_assert([test.formatter pluralizeNoun:@"bird" count:2], l3_is(@"birds"));
-}
-
--(NSString *)pluralizeNoun:(NSString *)noun count:(NSUInteger)count {
-	return count == 1?
-		noun
-	:	[noun stringByAppendingString:@"s"];
-}
-
-
-@l3_test("cardinalize nouns with their plurals when cardinality is not 1") {
-	l3_assert([test.formatter cardinalizeNoun:@"plural" count:0], @"0 plurals");
-	l3_assert([test.formatter cardinalizeNoun:@"cardinal" count:1], @"1 cardinal");
-	l3_assert([test.formatter cardinalizeNoun:@"ordinal" count:2], @"2 ordinals");
-}
-
--(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count {
-	return [NSString stringWithFormat:@"%lu %@", count, [self pluralizeNoun:noun count:count]];
 }
 
 @end

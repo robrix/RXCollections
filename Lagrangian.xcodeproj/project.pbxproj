@@ -30,6 +30,8 @@
 		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
 		D4AC43161648B5D300C0A25B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43151648B5D300C0A25B /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
+		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; };
+		D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
 		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
 		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
 		D4BC3A62164D4CB9003AD167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC431A1648B5D300C0A25B /* Foundation.framework */; };
@@ -111,6 +113,8 @@
 		D4AC431D1648B5D300C0A25B /* Lagrangian-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lagrangian-Prefix.pch"; sourceTree = "<group>"; };
 		D4AC431E1648B5D300C0A25B /* Lagrangian.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lagrangian.h; sourceTree = "<group>"; };
 		D4AC431F1648B5D300C0A25B /* Lagrangian.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lagrangian.m; sourceTree = "<group>"; };
+		D4B152B21653969E002858C3 /* L3StringInflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3StringInflections.h; sourceTree = "<group>"; };
+		D4B152B31653969E002858C3 /* L3StringInflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3StringInflections.m; sourceTree = "<group>"; };
 		D4BC3A5D164D483E003AD167 /* L3TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestRunner.h; sourceTree = "<group>"; };
 		D4BC3A5E164D483E003AD167 /* L3TestRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestRunner.m; sourceTree = "<group>"; };
 		D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lagrangian Test App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +202,8 @@
 				D426E49716528701001C9105 /* L3Stack.m */,
 				D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */,
 				D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */,
+				D4B152B21653969E002858C3 /* L3StringInflections.h */,
+				D4B152B31653969E002858C3 /* L3StringInflections.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -336,6 +342,7 @@
 				D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */,
 				D426E49816528701001C9105 /* L3Stack.h in Headers */,
 				D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */,
+				D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +467,7 @@
 				D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */,
 				D426E49916528701001C9105 /* L3Stack.m in Sources */,
 				D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */,
+				D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
