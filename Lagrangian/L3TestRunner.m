@@ -61,7 +61,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_shouldRunAutomatically = YES;
 #endif
 		
-		if (_shouldRunAutomatically && [NSApplication class]) { // weak linking
+		if (self.shouldRunAutomatically && [NSApplication class]) { // weak linking
 			__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 				if (self.shouldRunAutomatically)
 					[self runTest:self.test];
@@ -84,7 +84,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		[self.queue addOperationWithBlock:^{
 			[test runInContext:nil eventObserver:_testResultBuilder];
 			[self.queue addOperationWithBlock:^{
-				if (_shouldRunAutomatically) {
+				if (self.shouldRunAutomatically) {
 					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
 					
 					if ([NSApplication class])
@@ -125,10 +125,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
 	[_eventFormatter testResultBuilder:builder testResultDidFinish:result];
 	
-	if (result.parent == nil && [NSUserNotification class]) { // weak linking
+	if (result.parent == nil && self.shouldRunAutomatically && [NSUserNotification class]) { // weak linking
 		NSUserNotification *notification = [NSUserNotification new];
 		notification.title = result.succeeded?
-		NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
+			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
 		:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
 		notification.subtitle = [NSString stringWithFormat:@"%@, %@, %@",
 								 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
