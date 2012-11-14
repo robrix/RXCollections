@@ -12,6 +12,7 @@
 
 @property (copy, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) NSDate *startDate;
+@property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic) NSTimeInterval duration;
 @property (assign, nonatomic) NSUInteger testCaseCount;
 @property (assign, nonatomic) NSUInteger assertionCount;
