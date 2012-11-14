@@ -3,17 +3,17 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Cocoa/Cocoa.h>
-#import "L3OCUnitCompatibleEventFormatter.h"
+#import "L3OCUnitTestResultFormatter.h"
 #import "L3TestResult.h"
 #import "L3TestRunner.h"
 #import "L3TestSuite.h"
 
-@interface L3TestRunner () <L3EventFormatterDelegate>
+@interface L3TestRunner () <L3TestResultFormatterDelegate>
 
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
-@property (strong, nonatomic, readonly) id<L3EventFormatter> eventFormatter;
+@property (strong, nonatomic, readonly) id<L3TestResultFormatter> eventFormatter;
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
@@ -43,7 +43,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
 		
-		_eventFormatter = [L3OCUnitCompatibleEventFormatter new];
+		_eventFormatter = [L3OCUnitTestResultFormatter new];
 		_eventFormatter.delegate = self;
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
@@ -93,14 +93,14 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 
 
 #pragma mark -
-#pragma mark L3EventFormatterDelegate
+#pragma mark L3TestResultFormatterDelegate
 
--(void)formatter:(id<L3EventFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
 	if (string)
 		printf("%s\n", string.UTF8String);
 }
 
--(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
 	if ([NSUserNotification class]) { // weak linking
 		NSUserNotification *notification = [NSUserNotification new];
 		notification.title = testResult.succeeded?

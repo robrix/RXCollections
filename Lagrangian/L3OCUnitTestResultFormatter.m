@@ -1,12 +1,12 @@
-//  L3OCUnitCompatibleEventFormatter.m
+//  L3OCUnitTestResultFormatter.m
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3OCUnitCompatibleEventFormatter.h"
+#import "L3OCUnitTestResultFormatter.h"
 #import "Lagrangian.h"
 #import "L3TestResult.h"
 
-@interface L3OCUnitCompatibleEventFormatter ()
+@interface L3OCUnitTestResultFormatter ()
 
 -(void)pushTestResultWithTestSuite:(L3TestSuite *)testSuite date:(NSDate *)date;
 -(void)pushTestResultWithTestCase:(L3TestCase *)testCase date:(NSDate *)date;
@@ -20,19 +20,19 @@
 
 @end
 
-@l3_suite("OCUnit-compatible event formatters", L3OCUnitCompatibleEventFormatter) <L3EventFormatterDelegate>
+@l3_suite("OCUnit-compatible event formatters", L3OCUnitTestResultFormatter) <L3TestResultFormatterDelegate>
 
-@property L3OCUnitCompatibleEventFormatter *formatter;
+@property L3OCUnitTestResultFormatter *formatter;
 @property NSString *formattedString;
 
 @end
 
-@implementation L3OCUnitCompatibleEventFormatter
+@implementation L3OCUnitTestResultFormatter
 
 @synthesize delegate = _delegate;
 
 @l3_set_up {
-	test.formatter = [L3OCUnitCompatibleEventFormatter new];
+	test.formatter = [L3OCUnitTestResultFormatter new];
 	test.formatter.delegate = test;
 }
 
@@ -235,13 +235,13 @@ static void dummyFunction(L3TestState *test, L3TestCase *_case);
 
 @end
 
-@l3_suite_implementation (L3OCUnitCompatibleEventFormatter)
+@l3_suite_implementation (L3OCUnitTestResultFormatter)
 
--(void)formatter:(id<L3EventFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatEventWithResultString:(NSString *)string {
 	self.formattedString = string;
 }
 
--(void)formatter:(id<L3EventFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFinishFormattingEventsWithFinalTestResult:(L3TestResult *)testResult {
 	
 }
 
