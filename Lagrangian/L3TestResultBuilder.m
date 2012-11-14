@@ -52,14 +52,16 @@
 
 @l3_test("push a result when starting suites") {
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
-	L3TestResult *testResult = [test.builder testStartEventWithTest:suite date:[NSDate date]];
-	l3_assert([test.builder testResultStack].objects, l3_equals(@[testResult]));
+	NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-10];
+	[test.builder testStartEventWithTest:suite date:date];
+	L3TestResult *testResult = [test.builder testResultStack].topObject;
+	l3_assert(testResult.name, l3_equals(_case.name));
+	l3_assert(testResult.startDate, l3_equals(date));
 }
 
--(L3TestResult *)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+-(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
 	L3TestResult *testResult = [L3TestResult testResultWithName:test.name startDate:date];
 	[self.testResultStack pushObject:testResult];
-	return testResult;
 }
 
 
@@ -75,7 +77,8 @@
 	NSDate *now = [NSDate date];
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
 	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
-	L3TestResult *testResult = [test.builder testEndEventWithTest:suite date:now];
+	L3TestResult *testResult = test.builder.testResultStack.topObject;
+	[test.builder testEndEventWithTest:suite date:now];
 	l3_assert(testResult.endDate, l3_equals(now));
 }
 
@@ -86,26 +89,23 @@
 	l3_assert(test.builtResult, l3_equals(testResult));
 }
 
--(L3TestResult *)testEndEventWithTest:(L3TestSuite *)testSuite date:(NSDate *)date {
+-(void)testEndEventWithTest:(L3TestSuite *)testSuite date:(NSDate *)date {
 	L3TestResult *testResult = [self.testResultStack popObject];
 	testResult.endDate = date;
 	[self.delegate testResultBuilder:self didCompleteTestResult:testResult];
-	return testResult;
 }
 
 
 #pragma mark -
 #pragma mark Assertion events
 
--(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	self.currentTestResult.assertionCount += 1;
-	return nil;
 }
 
--(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	self.currentTestResult.assertionCount += 1;
 	self.currentTestResult.assertionFailureCount += 1;
-	return nil;
 }
 
 

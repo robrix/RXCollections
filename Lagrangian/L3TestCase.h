@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
 #import "L3Test.h"
-#import "L3EventAlgebra.h"
+#import "L3EventObserver.h"
 
 @class L3AssertionReference;
 @class L3TestSuite;
@@ -16,8 +16,8 @@
 
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
-@property (weak, nonatomic, readonly) id<L3EventAlgebra> eventAlgebra;
+@property (weak, nonatomic, readonly) id<L3EventObserver> eventObserver;
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion eventAlgebra:(id<L3EventAlgebra>)eventAlgebra;
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion eventObserver:(id<L3EventObserver>)eventObserver;
 
 @end

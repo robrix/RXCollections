@@ -13,7 +13,7 @@
 	^bool{ \
 		id subject_ = l3_to_object(subject); \
 		L3Pattern pattern_ = l3_to_pattern(pattern); \
-		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventAlgebra:_case.eventAlgebra]; \
+		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventObserver:_case.eventObserver]; \
 	}()
 
 #define l3_not(...)					(^bool(id x){ return !l3_to_pattern(__VA_ARGS__)(x); })

@@ -38,12 +38,9 @@
 - patterns to match exceptions?
 - test the assertion patterns
 - output warning lines for test cases without any assertions
-- are the event classes and the factory still necessary at all? we can just spit events out into the formatter
-- is the event sink necessary at all?
 - split formatting out from test result building
 - multiplexer algebra which sends events to each of its child algebras
 	- use that to send events to both the formatter and the test result builder
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?
-- reduce the event algebra to -testStartEventWithTest:date:/-testEndEventWithTest:date:, both taking id<L3Test>
-- the event algebra protocol methods do not need to return objects
-	- it is therefore not a real algebra; rename it to L3EventObserver
+- formatters should watch test results and not events
+- move string cardinalizing/pluralizing into a category or class

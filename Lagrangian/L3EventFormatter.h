@@ -2,11 +2,11 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3EventAlgebra.h"
+#import "L3EventObserver.h"
 
 @protocol L3EventFormatterDelegate;
 
-@protocol L3EventFormatter <L3EventAlgebra>
+@protocol L3EventFormatter <L3EventObserver>
 
 @property (weak, nonatomic) id<L3EventFormatterDelegate> delegate;
 

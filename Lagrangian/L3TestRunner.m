@@ -76,7 +76,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	
 	@autoreleasepool {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:nil eventAlgebra:_eventFormatter];
+			[test runInContext:nil eventObserver:_eventFormatter];
 			[self.queue addOperationWithBlock:^{
 				if (_shouldRunAutomatically) {
 					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");

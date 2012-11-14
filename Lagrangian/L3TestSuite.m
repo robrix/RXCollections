@@ -16,7 +16,7 @@
 
 @end
 
-@l3_suite("Test suites", L3TestSuite) <L3EventAlgebra>
+@l3_suite("Test suites", L3TestSuite) <L3EventObserver>
 @property NSMutableArray *events;
 @end
 
@@ -87,7 +87,7 @@
 
 @l3_test("generate test start events when starting to run") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventAlgebra:test];
+	[testSuite runInContext:nil eventObserver:test];
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
 		NSDictionary *event = test.events[0];
 		l3_assert(event[@"name"], l3_equals(testSuite.name));
@@ -97,18 +97,18 @@
 
 @l3_test("generate test end events when done running") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventAlgebra:test];
+	[testSuite runInContext:nil eventObserver:test];
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventAlgebra:(id<L3EventAlgebra>)eventAlgebra {
-	[eventAlgebra testStartEventWithTest:self date:[NSDate date]];
+-(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
+	[eventObserver testStartEventWithTest:self date:[NSDate date]];
 	for (id<L3Test> test in self.tests) {
-		[test runInContext:self eventAlgebra:eventAlgebra];
+		[test runInContext:self eventObserver:eventObserver];
 	}
-	[eventAlgebra testEndEventWithTest:self date:[NSDate date]];
+	[eventObserver testEndEventWithTest:self date:[NSDate date]];
 }
 
 
@@ -120,24 +120,20 @@
 
 @l3_suite_implementation (L3TestSuite)
 
--(id)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+-(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
 	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"start" }];
-	return nil;
 }
 
--(id)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
+-(void)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
 	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
-	return nil;
 }
 
--(id)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
-	return nil;
 }
 
--(id)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
 	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
-	return nil;
 }
 
 @end
