@@ -92,6 +92,7 @@
 		D426E49716528701001C9105 /* L3Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Stack.m; sourceTree = "<group>"; };
 		D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3FunctionalUtilities.h; sourceTree = "<group>"; };
 		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
+		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D457D677165094F100340DAC /* L3AssertionReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3AssertionReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
@@ -254,6 +255,7 @@
 				D4AC43121648B5D300C0A25B /* Lagrangian.dylib */,
 				D4A5B2C1164B4FAF00338EB4 /* lagrangian */,
 				D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */,
+				D43D8B721654C27000E6DE07 /* Lagrangian.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,6 +351,20 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D43D8B711654C27000E6DE07 /* Lagrangian */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lagrangian;
+			productName = Lagrangian;
+			productReference = D43D8B721654C27000E6DE07 /* Lagrangian.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		D4A5B2C0164B4FAF00338EB4 /* lagrangian */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */;
@@ -426,6 +442,7 @@
 				D4AC43111648B5D300C0A25B /* Lagrangian */,
 				D4A5B2C0164B4FAF00338EB4 /* lagrangian */,
 				D4BC3A7A164D54FB003AD167 /* Lagrangian Test App */,
+				D43D8B711654C27000E6DE07 /* Lagrangian */,
 			);
 		};
 /* End PBXProject section */
@@ -523,6 +540,33 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D43D8B741654C27000E6DE07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D43D8B751654C27000E6DE07 /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Test;
+		};
+		D43D8B761654C27000E6DE07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		D4A5B2CD164B4FAF00338EB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -706,6 +750,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D43D8B741654C27000E6DE07 /* Debug */,
+				D43D8B751654C27000E6DE07 /* Test */,
+				D43D8B761654C27000E6DE07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
