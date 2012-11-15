@@ -56,14 +56,21 @@
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {}
 
-@l3_test("format assertion failures with their file, line, source, actual value, and expectation") {
+@l3_test("format assertion failures with their file, line, subject, subject source, and pattern source") {
 	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
+	test.result.parent = test.compositeResult;
 	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithFailedAssertionReference:assertionReference];
-	l3_assert(test.formattedString, @"/foo/bar/file.m:42: error: 'x' was 'y' but should have matched 'src'");
+	l3_assert(test.formattedString, l3_equals([NSString stringWithFormat:@"/foo/bar/file.m:42: error: -[%1$@ %1$@] : 'x' was 'y' but should have matched 'src'", [test.formatter formatTestName:_case.name]]));
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
-	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: '%@' was '%@' but should have matched '%@'", assertionReference.file, assertionReference.line, assertionReference.subjectSource, assertionReference.subject, assertionReference.patternSource];
+	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : '%@' was '%@' but should have matched '%@'",
+						   assertionReference.file,
+						   assertionReference.line,
+						   [self methodNameForTestResult:result],
+						   assertionReference.subjectSource,
+						   assertionReference.subject,
+						   assertionReference.patternSource];
 	[self.delegate formatter:self didFormatResult:formatted];
 }
 
