@@ -6,8 +6,20 @@
 
 @interface L3TestState : NSObject
 
+#pragma mark -
+#pragma mark Test state
+
 // subscripting support for arbitrary object state
 -(id)objectForKeyedSubscript:(NSString *)key;
 -(void)setObject:(id)object forKeyedSubscript:(NSString *)key;
+
+#pragma mark -
+#pragma mark Asynchrony
+
+-(void)deferCompletion;
+@property (assign, nonatomic, readonly, getter = isDeferred) bool deferred;
+-(void)complete;
+-(bool)wait;
+-(bool)waitWithTimeout:(NSTimeInterval)interval;
 
 @end

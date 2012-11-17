@@ -6,6 +6,9 @@
 #import "L3Types.h"
 #import "L3AssertionReference.h"
 
+#pragma mark -
+#pragma mark Assertions
+
 #define l3_assertionReference(_subject, _subjectSource, _patternSource) \
 	[L3AssertionReference assertionReferenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" _subjectSource subject:_subject patternSource:@"" _patternSource]
 
@@ -16,6 +19,10 @@
 		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventObserver:_case.eventObserver]; \
 	}()
 
+
+#pragma mark -
+#pragma mark Equality patterns
+
 #define l3_not(...) \
 	(^bool(id x){ return !l3_to_pattern(__VA_ARGS__)(x); })
 
@@ -24,8 +31,16 @@
 #define l3_equals(...)					(__VA_ARGS__)
 #define l3_equalsWithEpsilon(x, y)		l3_to_pattern_f(x, y)
 
+
+#pragma mark -
+#pragma mark Classification patterns
+
 #define l3_isKindOfClass(class) \
 	(^bool(id x){ return [x isKindOfClass:class]; })
+
+
+#pragma mark -
+#pragma mark Comparison patterns
 
 #define l3_ordered(object, ordering) \
 	(^bool(id x){ return [x compare:l3_to_object(object)] == ordering; })
@@ -37,3 +52,23 @@
 #define l3_lessThan(object)			l3_ordered(object, NSOrderedAscending)
 #define l3_lessThanOrEqualTo(object) \
 	l3_ordered_or_same(object, NSOrderedAscending)
+
+
+#pragma mark -
+#pragma mark Asynchrony
+
+// there is no race condition between waiting and completing a test, but if you are not waiting explicitly, you must defer the test for it to succeed
+
+// l3_defer() is used to say that a test may complete after the test case returns
+#define l3_defer()						[test deferCompletion]
+
+// l3_wait is used to explicitly wait until the completion signal has been received, with a default timeout of five seconds
+#define l3_wait()						[test wait]
+
+// l3_wait_with_timeout allows you to specify the timeout explicitly
+#define l3_wait_with_timeout(x)			[test waitWithTimeout:x]
+
+// l3_complete signals the completion of the asynchronous portion of the test
+#define l3_complete()					[test complete]
+
+#define l3_did_not_timeout()			l3_equals(YES)

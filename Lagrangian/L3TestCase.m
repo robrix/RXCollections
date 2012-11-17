@@ -8,14 +8,6 @@
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
 
-@interface L3TestCase ()
-
-@property (copy, nonatomic, readwrite) NSString *name;
-
-@property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
-
-@end
-
 @l3_suite("Test cases", L3TestCase) <L3EventObserver>
 
 @property NSMutableArray *events;
@@ -26,6 +18,14 @@
 	test.events = [NSMutableArray new];
 }
 
+
+@interface L3TestCase ()
+
+@property (copy, nonatomic, readwrite) NSString *name;
+
+@property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
+
+@end
 
 @implementation L3TestCase
 
@@ -90,6 +90,10 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	self.function(state, self);
 	
+	// fixme: signal a failure at the test line if timeout occurs
+	if (state.isDeferred)
+		[state wait];
+	
 	if (context.tearDownFunction)
 		context.tearDownFunction(state, self);
 	
@@ -132,7 +136,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertionReference eventObserver:(id<L3EventObserver>)eventObserver {
-	// assertion start event
+	// fixme: assertion start event
 	bool matched = pattern(object);
 	if (matched)
 		[eventObserver assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
@@ -142,6 +146,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 @end
+
 
 @l3_suite_implementation (L3TestCase)
 
