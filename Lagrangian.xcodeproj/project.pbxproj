@@ -17,6 +17,8 @@
 		D426E49916528701001C9105 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
 		D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; };
 		D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
+		D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; };
+		D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = D43D8DA516575E9A00E6DE07 /* L3Collection.m */; };
 		D457D679165094F100340DAC /* L3AssertionReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3AssertionReference.h */; };
 		D457D67A165094F100340DAC /* L3AssertionReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3AssertionReference.m */; };
 		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; };
@@ -93,6 +95,8 @@
 		D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3FunctionalUtilities.h; sourceTree = "<group>"; };
 		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
 		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43D8DA416575E9A00E6DE07 /* L3Collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Collection.h; sourceTree = "<group>"; };
+		D43D8DA516575E9A00E6DE07 /* L3Collection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Collection.m; sourceTree = "<group>"; };
 		D457D677165094F100340DAC /* L3AssertionReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3AssertionReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3AssertionReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3AssertionReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 				D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */,
 				D4B152B21653969E002858C3 /* L3StringInflections.h */,
 				D4B152B31653969E002858C3 /* L3StringInflections.m */,
+				D43D8DA416575E9A00E6DE07 /* L3Collection.h */,
+				D43D8DA516575E9A00E6DE07 /* L3Collection.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				D426E49816528701001C9105 /* L3Stack.h in Headers */,
 				D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */,
 				D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */,
+				D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +492,7 @@
 				D426E49916528701001C9105 /* L3Stack.m in Sources */,
 				D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */,
 				D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */,
+				D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,6 +766,7 @@
 				D43D8B761654C27000E6DE07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */ = {
 			isa = XCConfigurationList;
