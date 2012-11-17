@@ -83,21 +83,17 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 -(void)runTest:(id<L3Test>)test {
 	NSParameterAssert(test != nil);
 	
-	@autoreleasepool {
-		[self.queue addOperationWithBlock:^{
-			[test runInContext:nil eventObserver:_testResultBuilder];
-			[self.queue addOperationWithBlock:^{
-				if (self.shouldRunAutomatically) {
-					system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
-					
-					if ([NSApplication class])
-						[[NSApplication sharedApplication] terminate:nil];
-					else
-						exit(0);
-				}
-			}];
-		}];
-	}
+	[self.queue addOperationWithBlock:^{
+		[test runInContext:nil eventObserver:_testResultBuilder];
+		if (self.shouldRunAutomatically) {
+			system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
+			
+			if ([NSApplication class])
+				[[NSApplication sharedApplication] terminate:nil];
+			else
+				exit(0);
+		}
+	}];
 }
 
 

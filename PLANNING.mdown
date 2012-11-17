@@ -15,10 +15,6 @@
 - ui to run test suites and show their results in debug builds
 - some way to send test results to another process (maybe running on a different machine)
 - test that release builds really don’t have the test methods, classes, etc compiled in (dead code stripped)
-- integrate with Xcode
-	- it should run L3 as part of the test scheme!
-	- it should show our test results among the logs and highlight failed assertions in the editor
-	- just like OCUnit, only better
 - asynchronous tests
 - test context should include the queue
 - some way for test suites to indicate that they need to be run on the main queue
@@ -28,7 +24,6 @@
 - can tests be defined in headers? is that sensible at all?
 - how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like a lot of fun.)
 - what are the remaining obstacles to using L3 to test in “real” projects?
-	- Xcode integration
 	- some assurance that it does not affect release builds
 - exception handling
 - patterns to match exceptions?
