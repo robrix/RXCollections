@@ -7,15 +7,6 @@
 #import "L3TestState.h"
 #import "Lagrangian.h"
 
-@interface L3TestSuite () <L3TestContext>
-
-@property (copy, nonatomic, readwrite) NSString *name;
-
-@property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
-@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
-
-@end
-
 @l3_suite("Test suites", L3TestSuite) <L3EventObserver>
 @property NSMutableArray *events;
 @end
@@ -23,6 +14,17 @@
 @l3_set_up {
 	test.events = [NSMutableArray new];
 }
+
+@interface L3TestSuite () <L3TestContext>
+
+@property (copy, nonatomic, readwrite) NSString *name;
+
+@property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
+
+@property (strong, nonatomic, readonly) NSOperationQueue *queue;
+
+@end
 
 @implementation L3TestSuite
 
@@ -50,6 +52,9 @@
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
 		_stateClass = [L3TestState class];
+		
+		_queue = [NSOperationQueue new];
+		_queue.maxConcurrentOperationCount = 1;
 	}
 	return self;
 }
@@ -104,11 +109,24 @@
 }
 
 -(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
-	[eventObserver testStartEventWithTest:self date:[NSDate date]];
+	self.queue.suspended = YES;
+	
+	[self.queue addOperationWithBlock:^{
+		[eventObserver testStartEventWithTest:self date:[NSDate date]];
+	}];
+	
 	for (id<L3Test> test in self.tests) {
-		[test runInContext:self eventObserver:eventObserver];
+		[self.queue addOperationWithBlock:^{
+			[test runInContext:self eventObserver:eventObserver];
+		}];
 	}
-	[eventObserver testEndEventWithTest:self date:[NSDate date]];
+	
+	[self.queue addOperationWithBlock:^{
+		[eventObserver testEndEventWithTest:self date:[NSDate date]];
+	}];
+	self.queue.suspended = NO;
+	
+	[self.queue waitUntilAllOperationsAreFinished];
 }
 
 
