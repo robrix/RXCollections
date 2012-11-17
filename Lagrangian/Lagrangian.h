@@ -59,7 +59,7 @@
 	__attribute__((constructor)) static void l3_identifier(test_suite_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
 			L3TestSuite *suite = l3_identifier(test_suite_builder_, __LINE__)(); \
-			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:suite]; \
+			[[L3TestSuite defaultSuite] addTest:suite]; \
 			l3_current_suite = suite; \
 		} \
 	} \
