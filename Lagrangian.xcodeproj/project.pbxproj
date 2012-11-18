@@ -84,7 +84,6 @@
 		D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3PreprocessorUtilities.h; sourceTree = "<group>"; };
 		D40DE670164F18AF0033DE88 /* L3Assertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Assertions.h; sourceTree = "<group>"; };
 		D40DE69716501CA00033DE88 /* L3Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
-		D40DE699165028AC0033DE88 /* L3TestContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestContext.h; sourceTree = "<group>"; };
 		D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3OCUnitTestResultFormatter.h; sourceTree = "<group>"; };
 		D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3OCUnitTestResultFormatter.m; sourceTree = "<group>"; };
 		D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestResultFormatter.h; sourceTree = "<group>"; };
@@ -179,7 +178,6 @@
 				D40DE660164E26030033DE88 /* L3TestState.h */,
 				D40DE661164E26030033DE88 /* L3TestState.m */,
 				D40DE69716501CA00033DE88 /* L3Test.h */,
-				D40DE699165028AC0033DE88 /* L3TestContext.h */,
 				D426E48F16527B70001C9105 /* Test results */,
 			);
 			name = Tests;

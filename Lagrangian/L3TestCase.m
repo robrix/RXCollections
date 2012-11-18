@@ -3,7 +3,6 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3TestCase.h"
-#import "L3TestContext.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
@@ -61,7 +60,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 @l3_test("generate test start events when starting to run") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventObserver:test];
+	[testCase runInSuite:nil eventObserver:test];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
 		NSDictionary *event = test.events[0];
@@ -72,21 +71,21 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 @l3_test("generate test end events when done running") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventObserver:test];
+	[testCase runInSuite:nil eventObserver:test];
 	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u));
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(@"name"));
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
-	L3TestState *state = [context.stateClass new];
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
+	L3TestState *state = [suite.stateClass new];
 	self.eventObserver = eventObserver;
 	
 	[eventObserver testStartEventWithTest:self date:[NSDate date]];
 	
-	if (context.setUpFunction)
-		context.setUpFunction(state, self);
+	if (suite.setUpFunction)
+		suite.setUpFunction(state, self);
 	
 	self.function(state, self);
 	
@@ -94,8 +93,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (state.isDeferred)
 		[state wait];
 	
-	if (context.tearDownFunction)
-		context.tearDownFunction(state, self);
+	if (suite.tearDownFunction)
+		suite.tearDownFunction(state, self);
 	
 	[eventObserver testEndEventWithTest:self date:[NSDate date]];
 	

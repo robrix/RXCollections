@@ -3,9 +3,9 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3TestContext.h"
 
 @protocol L3EventObserver;
+@class L3TestSuite;
 
 @protocol L3Test <NSObject>
 
@@ -13,6 +13,6 @@
 
 @property (nonatomic, readonly, getter = isComposite) bool composite;
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver;
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver;
 
 @end

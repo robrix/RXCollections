@@ -15,7 +15,7 @@
 	test.events = [NSMutableArray new];
 }
 
-@interface L3TestSuite () <L3TestContext>
+@interface L3TestSuite ()
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
@@ -92,7 +92,7 @@
 
 @l3_test("generate test start events when starting to run") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventObserver:test];
+	[testSuite runInSuite:nil eventObserver:test];
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
 		NSDictionary *event = test.events[0];
 		l3_assert(event[@"name"], l3_equals(testSuite.name));
@@ -102,13 +102,13 @@
 
 @l3_test("generate test end events when done running") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventObserver:test];
+	[testSuite runInSuite:nil eventObserver:test];
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
 	self.queue.suspended = YES;
 	
 	[self.queue addOperationWithBlock:^{
@@ -117,7 +117,7 @@
 	
 	for (id<L3Test> test in self.tests) {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:self eventObserver:eventObserver];
+			[test runInSuite:self eventObserver:eventObserver];
 		}];
 	}
 	
