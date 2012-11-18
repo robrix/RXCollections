@@ -45,11 +45,18 @@
 }
 
 @l3_test("steps can be performed individually") {
-	
+	[_case performStep:test.suite.steps[@"Create a step"] withState:test];
+	l3_assert([test[@"step"] name], l3_equals(@"Create a step"));
+}
+
+
+@l3_step("Create a step indirectly") {
+	[_case performStep:test.suite.steps[@"Create a step"] withState:test];
 }
 
 @l3_test("steps can perform other steps") {
-	
+	[_case performStep:test.suite.steps[@"Create a step indirectly"] withState:test];
+	l3_assert([test[@"step"] name], @"Create a step");
 }
 
 

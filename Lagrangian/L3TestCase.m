@@ -56,6 +56,17 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 #pragma mark -
+#pragma mark Steps
+
+-(void)performStep:(L3TestStep *)step withState:(L3TestState *)state {
+	NSParameterAssert(step != nil);
+	NSParameterAssert(state != nil);
+	
+	step.function(state, self, step);
+}
+
+
+#pragma mark -
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {
