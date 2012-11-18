@@ -24,6 +24,8 @@
 
 @property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
 
+@property (assign, nonatomic, readwrite) NSUInteger failedAssertionCount;
+
 @end
 
 @implementation L3TestCase
@@ -58,11 +60,15 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark -
 #pragma mark Steps
 
--(void)performStep:(L3TestStep *)step withState:(L3TestState *)state {
+-(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state {
 	NSParameterAssert(step != nil);
 	NSParameterAssert(state != nil);
 	
+	NSUInteger previousFailedAssertionCount = self.failedAssertionCount;
+	
 	step.function(state, self, step);
+	
+	return previousFailedAssertionCount == self.failedAssertionCount;
 }
 
 
@@ -152,6 +158,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 		[eventObserver assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
 	else
 		[eventObserver assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
+	
+	self.failedAssertionCount += !matched;
 	return matched;
 }
 

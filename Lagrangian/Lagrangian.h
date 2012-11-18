@@ -162,6 +162,10 @@
 #endif
 
 
+#define l3_perform_step(str) \
+	[_case performStep:test.suite.steps[@"" str] withState:test]
+
+
 #pragma mark -
 #pragma mark State types
 

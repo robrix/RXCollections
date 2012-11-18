@@ -6,6 +6,8 @@
 
 @l3_suite("Lagrangian");
 
+static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
+
 
 @l3_test("set up functions are used to define state to be available during each test") {
 	l3_assert(test[@"case"], l3_equalTo(_case));
@@ -60,6 +62,22 @@
 }
 
 
+@l3_step("Passing assertions") {
+	l3_assert(YES, YES);
+}
+
+@l3_step("Failing assertions") {
+	l3_assert(NO, YES);
+}
+
+
+@l3_test("steps return the success/failure of their assertions (if any) when they are run") {
+	l3_assert(l3_perform_step("Passing assertions"), YES);
+	
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"failures" function:l3_dummy_test_case_function];
+	l3_assert([testCase performStep:test.suite.steps[@"Failing assertions"] withState:test], l3_equals(NO));
+}
+
 //@l3_tear_down {
 //	
 //}
@@ -80,3 +98,5 @@
 //@l3_benchmark {
 //	
 //}
+
+static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case) {}

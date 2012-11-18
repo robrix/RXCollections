@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark Steps
 
--(void)performStep:(L3TestStep *)step withState:(L3TestState *)state;
+-(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state;
 
 
 #pragma mark -
