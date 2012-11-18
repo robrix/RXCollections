@@ -25,6 +25,9 @@
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
+@property (copy, nonatomic, readonly) NSString *file;
+@property (assign, nonatomic, readonly) NSUInteger line;
+
 @property (nonatomic, readwrite, getter = isComposite) bool composite;
 
 @end
@@ -83,7 +86,7 @@
 }
 
 -(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	L3TestResult *testResult = [(test.isComposite? [L3CompositeTestResult class] : [L3TestResult class]) testResultWithName:test.name startDate:date];
+	L3TestResult *testResult = [(test.isComposite? [L3CompositeTestResult class] : [L3TestResult class]) testResultWithName:test.name file:test.file line:test.line startDate:date];
 	testResult.parent = self.currentTestResult;
 	[self.testResultStack pushObject:testResult];
 	[self.delegate testResultBuilder:self testResultDidStart:testResult];
@@ -91,7 +94,7 @@
 
 
 @l3_test("pop a result when ending tests") {
-	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeIntervalSinceNow:-10]];
+	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeIntervalSinceNow:-10]];
 	[[test.builder testResultStack] pushObject:testResult];
 	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
 	[test.builder testEndEventWithTest:suite date:[NSDate date]];
@@ -100,14 +103,14 @@
 
 @l3_test("set returned results’ end dates when ending tests") {
 	NSDate *now = [NSDate date];
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
 	L3TestResult *testResult = test.builder.testResultStack.topObject;
 	[test.builder testEndEventWithTest:test date:now];
 	l3_assert(testResult.endDate, l3_equals(now));
 }
 
 @l3_test("notify their delegates when ending tests") {
-	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name startDate:[NSDate dateWithTimeInterval:-10 sinceDate:[NSDate date]]];
+	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:[NSDate date]]];
 	[test.builder.testResultStack pushObject:testResult];
 	[test.builder testEndEventWithTest:_case date:[NSDate date]];
 	l3_assert(test.builtResult, l3_equals(testResult));
@@ -131,7 +134,7 @@
 }
 
 @l3_test("increment the current test result’s assertion count when assertions succeed") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionSuccessWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
@@ -150,14 +153,14 @@
 }
 
 @l3_test("increment the current test result’s assertion count when assertions fail") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
 }
 
 @l3_test("increment the current test result’s assertion failure count when assertions fail") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionFailureCount, l3_equals(1));

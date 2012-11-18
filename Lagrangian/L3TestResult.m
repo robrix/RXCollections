@@ -11,8 +11,8 @@
 @end
 
 @l3_set_up {
-	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
-	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
+	test.result = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
 }
 
 
@@ -21,11 +21,13 @@
 
 @interface L3AbstractTestResult ()
 
--(instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate;
+-(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate;
 
 @property (weak, nonatomic) id<L3TestResult> parent;
 
 @property (copy, nonatomic, readonly) NSString *name;
+@property (copy, nonatomic, readonly) NSString *file;
+@property (assign, nonatomic, readonly) NSUInteger line;
 @property (strong, nonatomic, readonly) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic) NSTimeInterval totalDuration;
@@ -37,15 +39,17 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)testResultWithName:(NSString *)name startDate:(NSDate *)startDate {
-	return [[self alloc] initWithName:name startDate:startDate];
++(id<L3TestResult>)testResultWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate {
+	return [[self alloc] initWithName:name file:file line:line startDate:startDate];
 }
 
--(instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate {
+-(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate {
 	NSParameterAssert(name != nil);
 	NSParameterAssert(startDate != nil);
 	if ((self = [super init])) {
 		_name = name;
+		_file = file;
+		_line = line;
 		_startDate = startDate;
 	}
 	return self;
@@ -160,8 +164,8 @@
 #pragma mark -
 #pragma mark Constructors
 
--(instancetype)initWithName:(NSString *)name startDate:(NSDate *)startDate {
-	if ((self = [super initWithName:name startDate:startDate])) {
+-(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate {
+	if ((self = [super initWithName:name file:file line:line startDate:startDate])) {
 		_mutableTestResults = [NSMutableArray new];
 	}
 	return self;
@@ -180,10 +184,10 @@
 #pragma mark Recursive properties
 
 @l3_test("composite results sum their children’s durations") {
-	L3TestResult *child = [L3TestResult testResultWithName:@"child" startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
+	L3TestResult *child = [L3TestResult testResultWithName:@"child" file:@"" __FILE__ line:__LINE__ startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
 	child.endDate = [NSDate date];
 	[test.compositeResult addTestResult:child];
-	child = [L3TestResult testResultWithName:@"child" startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
+	child = [L3TestResult testResultWithName:@"child" file:@"" __FILE__ line:__LINE__ startDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
 	child.endDate = [NSDate date];
 	[test.compositeResult addTestResult:child];
 	l3_assert(test.compositeResult.duration, l3_equalsWithEpsilon(2.0, 0.0001));

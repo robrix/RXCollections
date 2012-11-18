@@ -31,8 +31,8 @@
 	test.formatter = [L3OCUnitTestResultFormatter new];
 	test.formatter.delegate = test;
 	
-	test.result = [L3TestResult testResultWithName:_case.name startDate:[NSDate date]];
-	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name startDate:[NSDate date]];
+	test.result = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
 }
 
 
@@ -103,6 +103,11 @@
 	l3_assert([test.formattedString rangeOfString:@"(5.000 seconds)"].length > 0, @l3_is(YES));
 }
 
+@l3_test("format test case endings with a warning if the case performed no assertions (either directly or indirectly, via steps)") {
+	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
+	l3_assert([test.formattedString componentsSeparatedByString:@"\n"][0], l3_equals([NSString stringWithFormat:@"%@:%lu: note: -[%@ %@] : test case '%@' performed no assertions", _case.file, _case.line, nil, [test.formatter formatTestName:_case.name], _case.name]));
+}
+
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
 	NSString *formatted = nil;
 	if (result.isComposite) {
@@ -117,6 +122,15 @@
 	} else {
 		bool success = result.assertionFailureCount == 0;
 		formatted = [NSString stringWithFormat:@"Test Case '%@' %@ (%.3f seconds).\n", [self methodNameForTestResult:result], success? @"passed" : @"failed", result.duration];
+		if (result.assertionCount == 0)
+		{
+			NSString *note = [NSString stringWithFormat:@"%@:%lu: note: %@ : test case '%@' performed no assertions\n",
+								 result.file,
+								 result.line,
+								 [self methodNameForTestResult:result],
+								 result.name];
+			formatted = [note stringByAppendingString:formatted];
+		}
 	}
 	[self.delegate formatter:self didFormatResult:formatted];
 }
@@ -142,8 +156,8 @@
 }
 
 @l3_test("format faux method names from suite and test case names") {
-	L3TestResult *suiteResult = [L3CompositeTestResult testResultWithName:@"suite of tests!" startDate:[NSDate distantPast]];
-	L3TestResult *caseResult = [L3TestResult testResultWithName:@"test of suites!" startDate:[NSDate date]];
+	L3TestResult *suiteResult = [L3CompositeTestResult testResultWithName:@"suite of tests!" file:@"" __FILE__ line:__LINE__ startDate:[NSDate distantPast]];
+	L3TestResult *caseResult = [L3TestResult testResultWithName:@"test of suites!" file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]];
 	[suiteResult addTestResult:caseResult];
 	caseResult.parent = suiteResult;
 	l3_assert([test.formatter methodNameForTestResult:caseResult], @"-[suite_of_tests_ test_of_suites_]");

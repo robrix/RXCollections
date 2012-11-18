@@ -6,13 +6,17 @@
 
 @protocol L3TestResult <NSObject>
 
-+(id<L3TestResult>)testResultWithName:(NSString *)name startDate:(NSDate *)startDate;
++(id<L3TestResult>)testResultWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate;
 
 @property (assign, nonatomic, readonly, getter = isComposite) bool composite;
 
 @property (weak, nonatomic) id<L3TestResult> parent;
 
 @property (copy, nonatomic, readonly) NSString *name;
+@property (copy, nonatomic, readwrite) NSString *file;
+@property (assign, nonatomic, readonly) NSUInteger line;
+
+
 @property (strong, nonatomic, readonly) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic, readonly) NSTimeInterval totalDuration; // span between startDate and endDate
