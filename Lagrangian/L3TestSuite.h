@@ -8,6 +8,9 @@
 
 @class L3TestCase, L3TestStep;
 
+extern NSString * const L3TestSuiteSetUpStepName;
+extern NSString * const L3TestSuiteTearDownStepName;
+
 @interface L3TestSuite : NSObject <L3Test>
 
 #pragma mark -
@@ -36,9 +39,6 @@
 
 #pragma mark -
 #pragma mark Steps
-
-@property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
-@property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;
 
 -(void)addStep:(L3TestStep *)step;
 

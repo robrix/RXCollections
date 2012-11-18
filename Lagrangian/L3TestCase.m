@@ -101,8 +101,9 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	[eventObserver testStartEventWithTest:self date:[NSDate date]];
 	
-	if (suite.setUpFunction)
-		suite.setUpFunction(state, self);
+	L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
+	if (setUp)
+		[self performStep:setUp withState:state];
 	
 	self.function(state, self);
 	
@@ -110,8 +111,9 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (state.isDeferred)
 		[state wait];
 	
-	if (suite.tearDownFunction)
-		suite.tearDownFunction(state, self);
+	L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
+	if (tearDown)
+		[self performStep:tearDown withState:state];
 	
 	[eventObserver testEndEventWithTest:self date:[NSDate date]];
 	

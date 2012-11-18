@@ -1,6 +1,4 @@
-- config macro to remove the prefix
-- multiple setUp/tearDown blocks per suite
-- setUp/tearDown functions are test steps
+- config macro to remove the prefix?
 - differential-prototypal suite inheritance?
 - algebra/visitor protocol for test suites & cases
 - documentation generation
@@ -14,8 +12,6 @@
 - ui to run test suites and show their results in debug builds
 - some way to send test results to another process (maybe running on a different machine)
 - test that release builds really don’t have the test methods, classes, etc compiled in (dead code stripped)
-- asynchronous tests
-- test context should include the queue
 - some way for test suites to indicate that they need to be run on the main queue
 - some way for test suites to indicate that they can be concurrent (I am thinking of this as dispatch_async to a private concurrent dispatch_queue_t where “normal” test invocations are dispatch_barrier_async)
 - mess around with multiple suites per file; does it make any sense? is it useful?
@@ -24,8 +20,12 @@
 - how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like a lot of fun.)
 - what are the remaining obstacles to using L3 to test in “real” projects?
 	- some assurance that it does not affect release builds
+	- fix the test suite implementation category warnings
 - exception handling
 - patterns to match exceptions?
 - test the assertion patterns
 - output warning lines for test cases without any assertions
+- test cases should take an assertion reference relating to their line for warnings like the above
+- test cases should automatically log errors when waiting post-test times out
+- assertion references should be renamed to source references
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?

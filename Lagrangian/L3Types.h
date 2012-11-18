@@ -11,8 +11,6 @@
 
 typedef void(*L3TestCaseFunction)(L3TestState *, L3TestCase *);
 typedef void(*L3TestStepFunction)(L3TestState *, L3TestCase *, L3TestStep *);
-typedef L3TestCaseFunction L3TestCaseSetUpFunction;
-typedef L3TestCaseFunction L3TestCaseTearDownFunction;
 
 
 #pragma mark -

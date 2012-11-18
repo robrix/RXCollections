@@ -15,6 +15,11 @@
 	test.events = [NSMutableArray new];
 }
 
+
+NSString * const L3TestSuiteSetUpStepName = @"set up";
+NSString * const L3TestSuiteTearDownStepName = @"tear down";
+
+
 @interface L3TestSuite ()
 
 @property (copy, nonatomic, readwrite) NSString *name;
