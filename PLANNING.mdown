@@ -26,5 +26,4 @@
 - test the assertion patterns
 - output warning lines for test cases without any assertions
 - output warning lines for test suites without any cases or steps?
-- test cases should automatically log errors when waiting post-test times out
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?

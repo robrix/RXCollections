@@ -98,6 +98,21 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
+static void asynchronousTest(L3TestState *test, L3TestCase *_case);
+static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
+	test.timeout = 0;
+	l3_defer();
+}
+
+@l3_test("generate failures when asynchronous tests time out") {
+	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"case" file:@"file.m" line:42 function:asynchronousTest];
+	[testCase runInSuite:suite eventObserver:test];
+	NSDictionary *event = test.events[test.events.count - 2];
+	l3_assert(event[@"type"], l3_equals(@"failure"));
+	l3_assert([event[@"sourceReference"] subject], l3_equals(testCase));
+}
+
 -(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
 	L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite];
 	self.eventObserver = eventObserver;
@@ -110,9 +125,10 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	self.function(state, self);
 	
-	// fixme: signal a failure at the test line if timeout occurs
 	if (state.isDeferred)
-		[state wait];
+	{
+		[self assertThat:l3_to_object([state wait]) matches:l3_to_pattern(YES) sourceReference:[self sourceReferenceForCaseEvents] eventObserver:eventObserver];
+	}
 	
 	L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
 	if (tearDown)
@@ -201,7 +217,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 -(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
-	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
+	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"failure" }];
 }
 
 @end
