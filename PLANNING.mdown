@@ -4,6 +4,8 @@
 - documentation generation
 	- thinking this would use a visitor over tests to generate docs for them
 - running in an app should run only that app’s tests, not L3’s own as well, by default
+- test runner tool for running tests on bundles and libraries
+- iOS compatibility
 - the runner needs some idea of scope for tests
 	- such that we can say “only this suite,” “only this case,” or more interesting patterns—“only suites matching this regexp with cases matching that one” or “only suites defined in this bundle”
 	- maybe like paths: bundle/suite/suite/case. main/**/foo would run any case named “foo” in any suite defined in the main bundle (this sounds a little like xpath)
@@ -19,9 +21,6 @@
 	- declaring common test steps in a suite in another file sounds more useful
 - can tests be defined in headers? is that sensible at all?
 - how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like a lot of fun.)
-- what are the remaining obstacles to using L3 to test in “real” projects?
-	- some assurance that it does not affect release builds
-	- fix the test suite implementation category warnings
 - exception handling
 - patterns to match exceptions?
 - test the assertion patterns
