@@ -9,6 +9,12 @@
 static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 
 
+@l3_test("suites record the file and line number where they were defined") {
+	l3_assert(test.suite.file.lastPathComponent, l3_equals(@"Lagrangian.m"));
+	l3_assert(test.suite.line, l3_equals(7));
+}
+
+
 @l3_test("set up functions are used to define state to be available during each test") {
 	l3_assert(test[@"case"], l3_equalTo(_case));
 }

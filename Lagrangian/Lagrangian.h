@@ -68,7 +68,7 @@
 		static L3TestSuite *suite = nil; \
 		static dispatch_once_t onceToken; \
 		dispatch_once(&onceToken, ^{ \
-			suite = [L3TestSuite testSuiteWithName:@"" str]; \
+			suite = [L3TestSuite testSuiteWithName:@"" str file:@"" __FILE__ line:__LINE__]; \
 			l3_cond(l3_count(__VA_ARGS__), suite.stateClass = NSClassFromString(@"" l3_string(l3_state_class(__VA_ARGS__))), {});\
 		}); \
 		return suite; \

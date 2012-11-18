@@ -48,14 +48,21 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 }
 
 
-+(instancetype)testSuiteWithName:(NSString *)name {
-	return [[self alloc] initWithName:name];
++(instancetype)testSuiteWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line {
+	return [[self alloc] initWithName:name file:file line:line];
 }
 
--(instancetype)initWithName:(NSString *)name {
++(instancetype)testSuiteWithName:(NSString *)name {
+	return [[self alloc] initWithName:name file:nil line:0];
+}
+
+-(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line {
 	NSParameterAssert(name != nil);
 	if ((self = [super init])) {
 		_name = [name copy];
+		
+		_file = [file copy];
+		_line = line;
 		
 		_stateClass = [L3TestState class];
 		

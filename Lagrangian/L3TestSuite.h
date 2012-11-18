@@ -18,7 +18,15 @@ extern NSString * const L3TestSuiteTearDownStepName;
 
 +(instancetype)defaultSuite;
 
++(instancetype)testSuiteWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line;
 +(instancetype)testSuiteWithName:(NSString *)name;
+
+
+#pragma mark -
+#pragma mark Source reference
+
+@property (copy, nonatomic, readonly) NSString *file;
+@property (assign, nonatomic, readonly) NSUInteger line;
 
 
 #pragma mark -
