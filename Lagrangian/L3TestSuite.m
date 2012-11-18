@@ -22,6 +22,8 @@
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableSteps;
+
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
 @end
@@ -49,9 +51,13 @@
 	NSParameterAssert(name != nil);
 	if ((self = [super init])) {
 		_name = [name copy];
+		
+		_stateClass = [L3TestState class];
+		
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
-		_stateClass = [L3TestState class];
+		
+		_mutableSteps = [NSMutableDictionary new];
 		
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
@@ -84,6 +90,22 @@
 -(void)setStateClass:(Class)stateClass {
 	NSAssert(stateClass != nil, @"No state class found for suite ‘%@’. Did you forget to add a @l3_suite_implementation for this suite? Did you add one but give it the wrong name?", self.name);
 	_stateClass = stateClass;
+}
+
+
+#pragma mark -
+#pragma mark Steps
+
+-(void)addStep:(L3TestStep *)step {
+	NSParameterAssert(step != nil);
+	NSParameterAssert([self.steps objectForKey:step.name] == nil);
+	
+	[self.mutableSteps setObject:step forKey:step.name];
+}
+
+
+-(NSDictionary *)steps {
+	return self.mutableSteps;
 }
 
 

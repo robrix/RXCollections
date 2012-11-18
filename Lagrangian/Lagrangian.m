@@ -30,6 +30,29 @@
 	l3_assert(test.suite, l3_isKindOfClass([L3TestSuite class]));
 	l3_assert(test.suite.name, l3_equals(@"Lagrangian"));
 }
+
+
+@l3_step("Create a step") {
+	test[@"step"] = step;
+}
+
+@l3_test("steps are not run automatically") {
+	l3_assert(test[@"step"], l3_equals(nil));
+}
+
+@l3_test("steps are reified and collected in the suite") {
+	l3_assert(test.suite.steps[@"Create a step"], l3_not(nil));
+}
+
+@l3_test("steps can be performed individually") {
+	
+}
+
+@l3_test("steps can perform other steps") {
+	
+}
+
+
 //@l3_tear_down {
 //	
 //}

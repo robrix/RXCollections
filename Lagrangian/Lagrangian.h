@@ -9,6 +9,7 @@
 #import "L3TestCase.h"
 #import "L3TestRunner.h"
 #import "L3TestState.h"
+#import "L3TestStep.h"
 #import "L3TestSuite.h"
 
 #pragma mark -
@@ -110,6 +111,25 @@
 	\
 	static void l3_identifier(set_up_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case)
 
+#define l3_step(str) \
+	class L3TestStep; \
+	\
+	static L3TestStep *l3_identifier(test_step_builder_, __LINE__)(); \
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step); \
+	\
+	__attribute__((constructor)) static void l3_identifier(test_step_loader, __COUNTER__)() { \
+		@autoreleasepool { \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addStep:l3_identifier(test_step_builder_, __LINE__)()]; \
+		} \
+	} \
+	\
+	static L3TestStep *l3_identifier(test_step_builder_, __LINE__)() { \
+		return [L3TestStep stepWithName:@"" str function:l3_identifier(test_step_impl_, __LINE__)]; \
+	} \
+	\
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step)
+	
+
 #define l3_test(str) \
 	class L3TestSuite, L3TestCase; \
 	\
@@ -118,7 +138,7 @@
 	\
 	__attribute__((constructor)) static void l3_identifier(test_case_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:l3_identifier(test_case_builder_, __LINE__)(nil)]; \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:l3_identifier(test_case_builder_, __LINE__)()]; \
 		} \
 	} \
 	static L3TestCase *l3_identifier(test_case_builder_, __LINE__)() { \
