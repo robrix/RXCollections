@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern const NSTimeInterval L3TestStateDefaultTimeout;
+
 @class L3TestSuite;
 
 @interface L3TestState : NSObject
@@ -25,6 +27,7 @@
 
 -(void)deferCompletion;
 @property (assign, nonatomic, readonly, getter = isDeferred) bool deferred;
+@property (assign, nonatomic) NSTimeInterval timeout;
 -(void)complete;
 -(bool)wait;
 -(bool)waitWithTimeout:(NSTimeInterval)interval;

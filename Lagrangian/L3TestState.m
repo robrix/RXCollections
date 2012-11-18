@@ -7,6 +7,8 @@
 
 @l3_suite("Test state");
 
+const NSTimeInterval L3TestStateDefaultTimeout = 5.;
+
 @interface L3TestState ()
 
 @property (nonatomic, readonly) NSMutableDictionary *contents;
@@ -27,6 +29,8 @@
 		_contents = [NSMutableDictionary new];
 		_completionSemaphore = dispatch_semaphore_create(0);
 		_suite = suite;
+		
+		_timeout = L3TestStateDefaultTimeout;
 	}
 	return self;
 }
@@ -77,7 +81,7 @@
 }
 
 -(bool)wait {
-	return [self waitWithTimeout:5.];
+	return [self waitWithTimeout:self.timeout];
 }
 
 -(bool)waitWithTimeout:(NSTimeInterval)interval {
