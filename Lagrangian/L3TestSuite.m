@@ -24,6 +24,9 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
+@property (copy, nonatomic, readwrite) NSString *file;
+@property (assign, nonatomic, readwrite) NSUInteger line;
+
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 

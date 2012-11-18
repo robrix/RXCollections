@@ -23,13 +23,6 @@ extern NSString * const L3TestSuiteTearDownStepName;
 
 
 #pragma mark -
-#pragma mark Source reference
-
-@property (copy, nonatomic, readonly) NSString *file;
-@property (assign, nonatomic, readonly) NSUInteger line;
-
-
-#pragma mark -
 #pragma mark State
 
 @property (strong, nonatomic) Class stateClass;

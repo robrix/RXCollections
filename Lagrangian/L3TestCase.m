@@ -23,6 +23,9 @@
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
+@property (copy, nonatomic, readwrite) NSString *file;
+@property (assign, nonatomic, readwrite) NSUInteger line;
+
 @property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
 
 @property (assign, nonatomic, readwrite) NSUInteger failedAssertionCount;

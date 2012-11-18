@@ -17,9 +17,6 @@
 
 +(instancetype)testCaseWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line function:(L3TestCaseFunction)function;
 
-@property (copy, nonatomic, readonly) NSString *file;
-@property (assign, nonatomic, readonly) NSUInteger line;
-
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
 @property (weak, nonatomic, readonly) id<L3EventObserver> eventObserver;
