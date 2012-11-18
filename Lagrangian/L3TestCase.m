@@ -2,6 +2,7 @@
 //  Created by Rob Rix on 2012-11-08.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
+#import "L3SourceReference.h"
 #import "L3TestCase.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
@@ -130,6 +131,21 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 #pragma mark -
 #pragma mark Assertions
+
+@l3_test("create source references for events applying to the case as a whole") {
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"test case" file:@"file.m" line:42 function:test_function];
+	L3SourceReference *reference = [testCase sourceReferenceForCaseEvents];
+	l3_assert(reference.file, l3_equals(@"file.m"));
+	l3_assert(reference.line, l3_equals(42));
+	l3_assert(reference.subject, l3_equals(testCase));
+	l3_assert(reference.subjectSource, l3_equals(@"test case"));
+	l3_assert(reference.patternSource, l3_equals(nil));
+}
+
+-(L3SourceReference *)sourceReferenceForCaseEvents {
+	return [L3SourceReference referenceWithFile:self.file line:self.line subjectSource:self.name subject:self patternSource:nil];
+}
+
 
 @l3_test("return true for passing assertions") {
 	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];

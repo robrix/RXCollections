@@ -34,6 +34,8 @@
 #pragma mark -
 #pragma mark Assertions
 
+-(L3SourceReference *)sourceReferenceForCaseEvents;
+
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern sourceReference:(L3SourceReference *)assertion eventObserver:(id<L3EventObserver>)eventObserver;
 
 @end
