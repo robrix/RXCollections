@@ -7,7 +7,7 @@
 #import "L3Test.h"
 #import "L3EventObserver.h"
 
-@class L3AssertionReference;
+@class L3SourceReference;
 @class L3TestSuite;
 
 @interface L3TestCase : NSObject <L3Test>
@@ -31,6 +31,6 @@
 #pragma mark -
 #pragma mark Assertions
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertion eventObserver:(id<L3EventObserver>)eventObserver;
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern sourceReference:(L3SourceReference *)assertion eventObserver:(id<L3EventObserver>)eventObserver;
 
 @end

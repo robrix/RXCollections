@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3AssertionReference.h"
+#import "L3SourceReference.h"
 #import "L3Assertions.h"
 #import "L3PreprocessorUtilities.h"
 #import "L3TestCase.h"

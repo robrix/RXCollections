@@ -113,12 +113,12 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	[_eventFormatter testResultBuilder:builder testResultDidStart:result];
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {
-	[_eventFormatter testResultBuilder:builder testResult:result didChangeWithSuccessfulAssertionReference:assertionReference];
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidSucceedWithSourceReference:(L3SourceReference *)sourceReference {
+	[_eventFormatter testResultBuilder:builder testResult:result assertionDidSucceedWithSourceReference:sourceReference];
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
-	[_eventFormatter testResultBuilder:builder testResult:result didChangeWithFailedAssertionReference:assertionReference];
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
+	[_eventFormatter testResultBuilder:builder testResult:result assertionDidFailWithSourceReference:sourceReference];
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {

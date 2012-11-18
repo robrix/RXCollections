@@ -1,15 +1,15 @@
-//  L3AssertionReference.m
+//  L3SourceReference.m
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3AssertionReference.h"
+#import "L3SourceReference.h"
 
-@implementation L3AssertionReference
+@implementation L3SourceReference
 
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)assertionReferenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
++(instancetype)referenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
 	return [[self alloc] initWithFile:file line:line subjectSource:subjectSource subject:subject patternSource:patternSource];
 }
 

@@ -4,19 +4,19 @@
 
 #import <Foundation/Foundation.h>
 #import "L3Types.h"
-#import "L3AssertionReference.h"
+#import "L3SourceReference.h"
 
 #pragma mark -
 #pragma mark Assertions
 
-#define l3_assertionReference(_subject, _subjectSource, _patternSource) \
-	[L3AssertionReference assertionReferenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" _subjectSource subject:_subject patternSource:@"" _patternSource]
+#define l3_sourceReference(_subject, _subjectSource, _patternSource) \
+	[L3SourceReference referenceWithFile:@"" __FILE__ line:__LINE__ subjectSource:@"" _subjectSource subject:_subject patternSource:@"" _patternSource]
 
 #define l3_assert(subject, pattern) \
 	^bool{ \
 		id subject_ = l3_to_object(subject); \
 		L3Pattern pattern_ = l3_to_pattern(pattern); \
-		return [_case assertThat:subject_ matches:pattern_ assertionReference:l3_assertionReference(subject_, #subject, #pattern) eventObserver:_case.eventObserver]; \
+		return [_case assertThat:subject_ matches:pattern_ sourceReference:l3_sourceReference(subject_, #subject, #pattern) eventObserver:_case.eventObserver]; \
 	}()
 
 

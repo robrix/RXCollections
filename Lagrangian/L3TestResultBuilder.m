@@ -19,9 +19,9 @@
 @l3_suite("Test result builders", L3TestResultBuilder) <L3Test, L3TestResultBuilderDelegate>
 
 @property L3TestResultBuilder *builder;
-@property L3AssertionReference *assertionReference;
+@property L3SourceReference *sourceReference;
 @property L3TestResult *builtResult;
-@property L3AssertionReference *builtAssertionReference;
+@property L3SourceReference *builtSourceReference;
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
@@ -35,7 +35,7 @@
 	test.builder = [L3TestResultBuilder new];
 	test.builder.delegate = test;
 	test.name = _case.name;
-	test.assertionReference = l3_assertionReference(@"subject", @"subjectSource", @"patternSource");
+	test.sourceReference = l3_sourceReference(@"subject", @"subjectSource", @"patternSource");
 }
 
 
@@ -125,49 +125,49 @@
 #pragma mark Assertion events
 
 @l3_test("notify their delegates of result changes when assertions succeed") {
-	[test.builder assertionSuccessWithAssertionReference:test.assertionReference date:[NSDate date]];
+	[test.builder assertionSuccessWithSourceReference:test.sourceReference date:[NSDate date]];
 	
-	l3_assert(test.builtAssertionReference, l3_equals(test.assertionReference));
+	l3_assert(test.builtSourceReference, l3_equals(test.sourceReference));
 }
 
 @l3_test("increment the current test result’s assertion count when assertions succeed") {
 	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
-	[test.builder assertionSuccessWithAssertionReference:test.assertionReference date:[NSDate date]];
+	[test.builder assertionSuccessWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
 }
 
--(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
 	self.currentTestResult.assertionCount += 1;
 	
-	[self.delegate testResultBuilder:self testResult:self.currentTestResult didChangeWithSuccessfulAssertionReference:assertionReference];
+	[self.delegate testResultBuilder:self testResult:self.currentTestResult assertionDidSucceedWithSourceReference:sourceReference];
 }
 
 @l3_test("notify their delegates of result changes when assertions fail") {
-	[test.builder assertionFailureWithAssertionReference:test.assertionReference date:[NSDate date]];
+	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
-	l3_assert(test.builtAssertionReference, l3_equals(test.assertionReference));
+	l3_assert(test.builtSourceReference, l3_equals(test.sourceReference));
 }
 
 @l3_test("increment the current test result’s assertion count when assertions fail") {
 	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
-	[test.builder assertionFailureWithAssertionReference:test.assertionReference date:[NSDate date]];
+	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
 }
 
 @l3_test("increment the current test result’s assertion failure count when assertions fail") {
 	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name startDate:[NSDate date]]];
-	[test.builder assertionFailureWithAssertionReference:test.assertionReference date:[NSDate date]];
+	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionFailureCount, l3_equals(1));
 }
 
--(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
+-(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
 	self.currentTestResult.assertionCount += 1;
 	self.currentTestResult.assertionFailureCount += 1;
 	
-	[self.delegate testResultBuilder:self testResult:self.currentTestResult didChangeWithFailedAssertionReference:assertionReference];
+	[self.delegate testResultBuilder:self testResult:self.currentTestResult assertionDidFailWithSourceReference:sourceReference];
 }
 
 
@@ -189,14 +189,14 @@
 	self.builtResult = result;
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidSucceedWithSourceReference:(L3SourceReference *)sourceReference {
 	self.builtResult = result;
-	self.builtAssertionReference = assertionReference;
+	self.builtSourceReference = sourceReference;
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
 	self.builtResult = result;
-	self.builtAssertionReference = assertionReference;
+	self.builtSourceReference = sourceReference;
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {

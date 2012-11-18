@@ -130,36 +130,36 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Assertions
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } assertionReference:l3_assertionReference(@"a", @"a", @".") eventObserver:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } assertionReference:l3_assertionReference(@"a", @"a", @"!") eventObserver:nil];
+	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } sourceReference:l3_sourceReference(@"a", @"a", @"!") eventObserver:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
-	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @".");
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } assertionReference:assertionReference eventObserver:test];
+	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @".");
+	[_case assertThat:@"a" matches:^bool(id x) { return YES; } sourceReference:sourceReference eventObserver:test];
 	
-	l3_assert(test.events.lastObject[@"assertionReference"], l3_equals(assertionReference));
+	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
-	L3AssertionReference *assertionReference = l3_assertionReference(@"a", @"a", @"!");
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } assertionReference:assertionReference eventObserver:test];
+	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @"!");
+	[_case assertThat:@"a" matches:^bool(id x) { return NO; } sourceReference:sourceReference eventObserver:test];
 	
-	l3_assert(test.events.lastObject[@"assertionReference"], l3_equals(assertionReference));
+	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }
 
--(bool)assertThat:(id)object matches:(L3Pattern)pattern assertionReference:(L3AssertionReference *)assertionReference eventObserver:(id<L3EventObserver>)eventObserver {
+-(bool)assertThat:(id)object matches:(L3Pattern)pattern sourceReference:(L3SourceReference *)sourceReference eventObserver:(id<L3EventObserver>)eventObserver {
 	// fixme: assertion start event
 	bool matched = pattern(object);
 	if (matched)
-		[eventObserver assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
+		[eventObserver assertionSuccessWithSourceReference:sourceReference date:[NSDate date]];
 	else
-		[eventObserver assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
+		[eventObserver assertionFailureWithSourceReference:sourceReference date:[NSDate date]];
 	
 	self.failedAssertionCount += !matched;
 	return matched;
@@ -178,12 +178,12 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
 }
 
--(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+-(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
+	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
 }
 
--(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+-(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
+	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
 }
 
 @end

@@ -173,12 +173,12 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
 }
 
--(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+-(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
+	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
 }
 
--(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date {
-	[self.events addObject:@{ @"assertionReference": assertionReference, @"date": date, @"type": @"success" }];
+-(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
+	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
 }
 
 @end

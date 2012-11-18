@@ -50,27 +50,27 @@
 }
 
 @l3_test("do not format assertion successes") {
-	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithSuccessfulAssertionReference:l3_assertionReference(@"a", @"a", @"b")];
+	[test.formatter testResultBuilder:nil testResult:test.result assertionDidSucceedWithSourceReference:l3_sourceReference(@"a", @"a", @"b")];
 	l3_assert(test.formattedString, l3_is(nil));
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithSuccessfulAssertionReference:(L3AssertionReference *)assertionReference {}
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidSucceedWithSourceReference:(L3SourceReference *)sourceReference {}
 
 @l3_test("format assertion failures with their file, line, subject, subject source, and pattern source") {
-	L3AssertionReference *assertionReference = [L3AssertionReference assertionReferenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
+	L3SourceReference *sourceReference = [L3SourceReference referenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
 	test.result.parent = test.compositeResult;
-	[test.formatter testResultBuilder:nil testResult:test.result didChangeWithFailedAssertionReference:assertionReference];
+	[test.formatter testResultBuilder:nil testResult:test.result assertionDidFailWithSourceReference:sourceReference];
 	l3_assert(test.formattedString, l3_equals([NSString stringWithFormat:@"/foo/bar/file.m:42: error: -[%1$@ %1$@] : 'x' was 'y' but should have matched 'src'", [test.formatter formatTestName:_case.name]]));
 }
 
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result didChangeWithFailedAssertionReference:(L3AssertionReference *)assertionReference {
+-(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
 	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : '%@' was '%@' but should have matched '%@'",
-						   assertionReference.file,
-						   assertionReference.line,
+						   sourceReference.file,
+						   sourceReference.line,
 						   [self methodNameForTestResult:result],
-						   assertionReference.subjectSource,
-						   assertionReference.subject,
-						   assertionReference.patternSource];
+						   sourceReference.subjectSource,
+						   sourceReference.subject,
+						   sourceReference.patternSource];
 	[self.delegate formatter:self didFormatResult:formatted];
 }
 

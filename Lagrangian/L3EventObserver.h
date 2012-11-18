@@ -6,14 +6,14 @@
 
 @protocol L3Test;
 
-@class L3AssertionReference;
+@class L3SourceReference;
 
 @protocol L3EventObserver <NSObject>
 
 -(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date;
 -(void)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date;
 
--(void)assertionFailureWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
--(void)assertionSuccessWithAssertionReference:(L3AssertionReference *)assertionReference date:(NSDate *)date;
+-(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date;
+-(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date;
 
 @end
