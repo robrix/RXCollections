@@ -419,6 +419,7 @@
 				D4BC3A77164D54FB003AD167 /* Sources */,
 				D4BC3A78164D54FB003AD167 /* Frameworks */,
 				D4BC3A79164D54FB003AD167 /* Resources */,
+				D431EA74165965ED0033BCC8 /* Include test communicator XPC service */,
 			);
 			buildRules = (
 			);
@@ -471,6 +472,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D431EA74165965ED0033BCC8 /* Include test communicator XPC service */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Include test communicator XPC service";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    echo \"note: Release build; not including test XPC service\"\nelse\n    echo \"note: Test-compatible build; including test XPC service\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D4A5B2BD164B4FAF00338EB4 /* Sources */ = {

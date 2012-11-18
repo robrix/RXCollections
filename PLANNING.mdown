@@ -11,6 +11,7 @@
 - ui to show test results in test builds
 - ui to run test suites and show their results in debug builds
 - some way to send test results to another process (maybe running on a different machine)
+	- network protocol serializing L3TestResult instances into JSON to send across the wire
 - test that release builds really don’t have the test methods, classes, etc compiled in (dead code stripped)
 - some way for test suites to indicate that they need to be run on the main queue
 - some way for test suites to indicate that they can be concurrent (I am thinking of this as dispatch_async to a private concurrent dispatch_queue_t where “normal” test invocations are dispatch_barrier_async)
@@ -24,6 +25,4 @@
 - exception handling
 - patterns to match exceptions?
 - test the assertion patterns
-- output warning lines for test cases without any assertions
-- output warning lines for test suites without any cases or steps?
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?
