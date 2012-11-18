@@ -1,8 +1,7 @@
 - config macro to remove the prefix
-- test steps that can be run at test cases’ discretion
 - multiple setUp/tearDown blocks per suite
+- setUp/tearDown functions are test steps
 - differential-prototypal suite inheritance?
-- composable contexts (inheriting setUp/tearDown/stateClass/steps from parent context)?
 - algebra/visitor protocol for test suites & cases
 - documentation generation
 	- thinking this would use a visitor over tests to generate docs for them

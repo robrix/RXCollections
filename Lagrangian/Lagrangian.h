@@ -151,10 +151,13 @@
 #define l3_set_up \
 	l3_test("")
 
+#define l3_step(str) \
+	l3_test("")
+
 #define l3_test(str) \
 	class NSObject; \
 	__attribute__((unused)) \
-	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestSuite *suite, L3TestCase *testCase)
+	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestCase *_case, L3TestStep *step)
 
 #endif
 
