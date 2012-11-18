@@ -4,7 +4,7 @@
 
 #import "Lagrangian.h"
 
-@l3_suite("Lagrangian tests");
+@l3_suite("Lagrangian");
 
 
 @l3_test("set up functions are used to define state to be available during each test") {
@@ -25,6 +25,11 @@
 }
 
 
+@l3_test("tests have a reference to their suite via their state") {
+	l3_assert(test.suite, l3_not(nil));
+	l3_assert(test.suite, l3_isKindOfClass([L3TestSuite class]));
+	l3_assert(test.suite.name, l3_equals(@"Lagrangian"));
+}
 //@l3_tear_down {
 //	
 //}

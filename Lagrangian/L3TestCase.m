@@ -79,7 +79,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 -(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
-	L3TestState *state = [suite.stateClass new];
+	L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite];
 	self.eventObserver = eventObserver;
 	
 	[eventObserver testStartEventWithTest:self date:[NSDate date]];

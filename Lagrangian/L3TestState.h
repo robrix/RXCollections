@@ -4,7 +4,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class L3TestSuite;
+
 @interface L3TestState : NSObject
+
+-(instancetype)initWithSuite:(L3TestSuite *)suite;
+
+@property (strong, nonatomic, readonly) L3TestSuite *suite;
 
 #pragma mark -
 #pragma mark Test state
