@@ -3,7 +3,6 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import "L3TestCase.h"
-#import "L3TestContext.h"
 #import "L3TestState.h"
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
@@ -24,6 +23,8 @@
 @property (copy, nonatomic, readwrite) NSString *name;
 
 @property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
+
+@property (assign, nonatomic, readwrite) NSUInteger failedAssertionCount;
 
 @end
 
@@ -57,11 +58,26 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 #pragma mark -
+#pragma mark Steps
+
+-(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state {
+	NSParameterAssert(step != nil);
+	NSParameterAssert(state != nil);
+	
+	NSUInteger previousFailedAssertionCount = self.failedAssertionCount;
+	
+	step.function(state, self, step);
+	
+	return previousFailedAssertionCount == self.failedAssertionCount;
+}
+
+
+#pragma mark -
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventObserver:test];
+	[testCase runInSuite:nil eventObserver:test];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
 		NSDictionary *event = test.events[0];
@@ -72,21 +88,22 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 @l3_test("generate test end events when done running") {
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
-	[testCase runInContext:nil eventObserver:test];
+	[testCase runInSuite:nil eventObserver:test];
 	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u));
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(@"name"));
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
-	L3TestState *state = [context.stateClass new];
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
+	L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite];
 	self.eventObserver = eventObserver;
 	
 	[eventObserver testStartEventWithTest:self date:[NSDate date]];
 	
-	if (context.setUpFunction)
-		context.setUpFunction(state, self);
+	L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
+	if (setUp)
+		[self performStep:setUp withState:state];
 	
 	self.function(state, self);
 	
@@ -94,8 +111,9 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	if (state.isDeferred)
 		[state wait];
 	
-	if (context.tearDownFunction)
-		context.tearDownFunction(state, self);
+	L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
+	if (tearDown)
+		[self performStep:tearDown withState:state];
 	
 	[eventObserver testEndEventWithTest:self date:[NSDate date]];
 	
@@ -142,6 +160,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 		[eventObserver assertionSuccessWithAssertionReference:assertionReference date:[NSDate date]];
 	else
 		[eventObserver assertionFailureWithAssertionReference:assertionReference date:[NSDate date]];
+	
+	self.failedAssertionCount += !matched;
 	return matched;
 }
 

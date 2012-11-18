@@ -15,12 +15,19 @@
 	test.events = [NSMutableArray new];
 }
 
-@interface L3TestSuite () <L3TestContext>
+
+NSString * const L3TestSuiteSetUpStepName = @"set up";
+NSString * const L3TestSuiteTearDownStepName = @"tear down";
+
+
+@interface L3TestSuite ()
 
 @property (copy, nonatomic, readwrite) NSString *name;
 
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
+
+@property (strong, nonatomic, readonly) NSMutableDictionary *mutableSteps;
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
@@ -49,9 +56,13 @@
 	NSParameterAssert(name != nil);
 	if ((self = [super init])) {
 		_name = [name copy];
+		
+		_stateClass = [L3TestState class];
+		
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
-		_stateClass = [L3TestState class];
+		
+		_mutableSteps = [NSMutableDictionary new];
 		
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
@@ -88,11 +99,27 @@
 
 
 #pragma mark -
+#pragma mark Steps
+
+-(void)addStep:(L3TestStep *)step {
+	NSParameterAssert(step != nil);
+	NSParameterAssert([self.steps objectForKey:step.name] == nil);
+	
+	[self.mutableSteps setObject:step forKey:step.name];
+}
+
+
+-(NSDictionary *)steps {
+	return self.mutableSteps;
+}
+
+
+#pragma mark -
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventObserver:test];
+	[testSuite runInSuite:nil eventObserver:test];
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
 		NSDictionary *event = test.events[0];
 		l3_assert(event[@"name"], l3_equals(testSuite.name));
@@ -102,13 +129,13 @@
 
 @l3_test("generate test end events when done running") {
 	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInContext:nil eventObserver:test];
+	[testSuite runInSuite:nil eventObserver:test];
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
 	self.queue.suspended = YES;
 	
 	[self.queue addOperationWithBlock:^{
@@ -117,7 +144,7 @@
 	
 	for (id<L3Test> test in self.tests) {
 		[self.queue addOperationWithBlock:^{
-			[test runInContext:self eventObserver:eventObserver];
+			[test runInSuite:self eventObserver:eventObserver];
 		}];
 	}
 	

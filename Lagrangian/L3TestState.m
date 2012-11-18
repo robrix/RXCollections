@@ -22,10 +22,11 @@
 #pragma mark -
 #pragma mark Constructors
 
--(instancetype)init {
+-(instancetype)initWithSuite:(L3TestSuite *)suite {
 	if((self = [super init])) {
 		_contents = [NSMutableDictionary new];
 		_completionSemaphore = dispatch_semaphore_create(0);
+		_suite = suite;
 	}
 	return self;
 }

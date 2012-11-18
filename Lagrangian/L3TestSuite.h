@@ -6,23 +6,42 @@
 #import "L3Types.h"
 #import "L3Test.h"
 
-@class L3TestCase;
+@class L3TestCase, L3TestStep;
+
+extern NSString * const L3TestSuiteSetUpStepName;
+extern NSString * const L3TestSuiteTearDownStepName;
 
 @interface L3TestSuite : NSObject <L3Test>
+
+#pragma mark -
+#pragma mark Constructors
 
 +(instancetype)defaultSuite;
 
 +(instancetype)testSuiteWithName:(NSString *)name;
 
+
+#pragma mark -
+#pragma mark State
+
 @property (strong, nonatomic) Class stateClass;
 
-@property (assign, nonatomic) L3TestCaseSetUpFunction setUpFunction;
-@property (assign, nonatomic) L3TestCaseTearDownFunction tearDownFunction;
 
-// must be unique by name within this collection
+#pragma mark -
+#pragma mark Tests
+
+// must be unique by name within this suite
 -(void)addTest:(id<L3Test>)test;
 
 @property (copy, nonatomic, readonly) NSArray *tests;
 @property (copy, nonatomic, readonly) NSDictionary *testsByName;
+
+
+#pragma mark -
+#pragma mark Steps
+
+-(void)addStep:(L3TestStep *)step;
+
+@property (copy, nonatomic, readonly) NSDictionary *steps;
 
 @end

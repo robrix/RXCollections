@@ -84,7 +84,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	NSParameterAssert(test != nil);
 	
 	[self.queue addOperationWithBlock:^{
-		[test runInContext:nil eventObserver:_testResultBuilder];
+		[test runInSuite:nil eventObserver:_testResultBuilder];
 		if (self.shouldRunAutomatically) {
 			system("/usr/bin/osascript -e 'tell application\"Xcode\" to activate'");
 			

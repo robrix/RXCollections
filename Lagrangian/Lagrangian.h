@@ -9,6 +9,7 @@
 #import "L3TestCase.h"
 #import "L3TestRunner.h"
 #import "L3TestState.h"
+#import "L3TestStep.h"
 #import "L3TestSuite.h"
 
 #pragma mark -
@@ -97,33 +98,36 @@
 
 #if L3_DEBUG
 
-#define l3_set_up \
-	class L3TestSuite, L3TestCase; \
+#define l3_step(str) \
+	class L3TestStep; \
 	\
-	static void l3_identifier(set_up_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case); \
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step); \
 	\
-	__attribute__((constructor)) static void l3_identifier(set_up_loader_, __COUNTER__)() { \
+	__attribute__((constructor)) static void l3_identifier(test_step_loader, __COUNTER__)() { \
 		@autoreleasepool { \
-			l3_current_suite.setUpFunction = l3_identifier(set_up_, __LINE__); \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addStep:[L3TestStep stepWithName:@"" str function:l3_identifier(test_step_impl_, __LINE__)]]; \
 		} \
 	} \
 	\
-	static void l3_identifier(set_up_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case)
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step)
+
+#define l3_set_up \
+	l3_step("set up")
+
+#define l3_tear_down \
+	l3_step("tear down")
 
 #define l3_test(str) \
 	class L3TestSuite, L3TestCase; \
 	\
 	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *testCase); \
-	static L3TestCase *l3_identifier(test_case_builder_, __LINE__)(); \
 	\
 	__attribute__((constructor)) static void l3_identifier(test_case_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:l3_identifier(test_case_builder_, __LINE__)(nil)]; \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:[L3TestCase testCaseWithName:@"" str function:l3_identifier(test_case_impl_, __LINE__)]]; \
 		} \
 	} \
-	static L3TestCase *l3_identifier(test_case_builder_, __LINE__)() { \
-		return [L3TestCase testCaseWithName:@"" str function:l3_identifier(test_case_impl_, __LINE__)]; \
-	} \
+	\
 	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case)
 
 #else
@@ -131,12 +135,19 @@
 #define l3_set_up \
 	l3_test("")
 
+#define l3_step(str) \
+	l3_test("")
+
 #define l3_test(str) \
 	class NSObject; \
 	__attribute__((unused)) \
-	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestSuite *suite, L3TestCase *testCase)
+	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestCase *_case, L3TestStep *step)
 
 #endif
+
+
+#define l3_perform_step(str) \
+	[_case performStep:test.suite.steps[@"" str] withState:test]
 
 
 #pragma mark -

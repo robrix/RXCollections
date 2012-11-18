@@ -182,7 +182,7 @@
 
 @l3_suite_implementation(L3TestResultBuilder)
 
--(void)runInContext:(id<L3TestContext>)context eventObserver:(id<L3EventObserver>)eventObserver {}
+-(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {}
 
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
