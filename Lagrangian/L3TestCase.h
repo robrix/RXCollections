@@ -15,7 +15,10 @@
 #pragma mark -
 #pragma mark Constructors
 
-+(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function;
++(instancetype)testCaseWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line function:(L3TestCaseFunction)function;
+
+@property (copy, nonatomic, readonly) NSString *file;
+@property (assign, nonatomic, readonly) NSUInteger line;
 
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 

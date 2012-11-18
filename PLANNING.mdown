@@ -25,7 +25,6 @@
 - patterns to match exceptions?
 - test the assertion patterns
 - output warning lines for test cases without any assertions
-- test cases should take an assertion reference relating to their line for warnings like the above
+- test cases should take a source reference relating to their line for warnings like the above
 - test cases should automatically log errors when waiting post-test times out
-- assertion references should be renamed to source references
 - optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?

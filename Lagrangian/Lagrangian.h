@@ -124,7 +124,7 @@
 	\
 	__attribute__((constructor)) static void l3_identifier(test_case_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:[L3TestCase testCaseWithName:@"" str function:l3_identifier(test_case_impl_, __LINE__)]]; \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:[L3TestCase testCaseWithName:@"" str file:@"" __FILE__ line:__LINE__ function:l3_identifier(test_case_impl_, __LINE__)]]; \
 		} \
 	} \
 	\

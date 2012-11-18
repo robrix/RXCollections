@@ -36,21 +36,23 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark Constructors
 
 @l3_test("correlate names with functions") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"test case name" function:test_function];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"test case name" file:@"" __FILE__ line:__LINE__ function:test_function];
 	l3_assert(testCase.name, l3_equalTo(@"test case name"));
 	__typeof__(nil) object = nil;
 	l3_assert(testCase.function, l3_not(object));
 }
 
-+(instancetype)testCaseWithName:(NSString *)name function:(L3TestCaseFunction)function {
-	return [[self alloc] initWithName:name function:function];
++(instancetype)testCaseWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line function:(L3TestCaseFunction)function {
+	return [[self alloc] initWithName:name file:file line:line function:function];
 }
 
--(instancetype)initWithName:(NSString *)name function:(L3TestCaseFunction)function {
+-(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line function:(L3TestCaseFunction)function {
 	NSParameterAssert(name != nil);
 	NSParameterAssert(function != nil);
 	if((self = [super init])) {
 		_name = [name copy];
+		_file = [file copy];
+		_line = line;
 		_function = function;
 	}
 	return self;
@@ -76,7 +78,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
 	[testCase runInSuite:nil eventObserver:test];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
@@ -87,7 +89,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 @l3_test("generate test end events when done running") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" function:test_function];
+	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
 	[testCase runInSuite:nil eventObserver:test];
 	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u));
 	NSDictionary *event = test.events.lastObject;
