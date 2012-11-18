@@ -84,13 +84,23 @@
 
 #else
 
+#define l3_ignored_class(identifier) \
+	l3_paste(l3_state_class(identifier), _ignored_class)
+
 #define l3_suite(str, ...) \
-	l3_cond(l3_count(__VA_ARGS__), interface L3TestState (l3_state_class(__VA_ARGS__)) \
-@end \
-@interface L3TestState (l3_paste(l3_state_class(__VA_ARGS__), _ignored)), class NSObject)
+	l3_cond(l3_count(__VA_ARGS__), class NSObject; \
+	@class l3_ignored_class(__VA_ARGS__); \
+	@interface l3_ignored_class(__VA_ARGS__) : L3TestState \
+	@end \
+	@implementation l3_ignored_class(__VA_ARGS__) \
+	@end \
+	@interface l3_ignored_class(__VA_ARGS__) (l3_state_class(__VA_ARGS__)) \
+	@end \
+	@interface L3TestState (l3_paste(l3_state_class(__VA_ARGS__), _ignored)), class NSObject)
 
 #define l3_suite_implementation(identifier) \
-	implementation L3TestState (l3_state_class(identifier))
+	class NSObject; \
+	@implementation l3_ignored_class(identifier) (l3_state_class(identifier))
 
 #endif
 
