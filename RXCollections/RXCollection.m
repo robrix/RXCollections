@@ -8,7 +8,7 @@ RXCollectionMapBlock RXCollectionIdentityBlock = ^(id x) { return x; };
 
 @implementation NSObject (RXCollection)
 
-+(NSMutableArray *)rx_emptyMutableCollection {
++(id<RXMutableCollection>)rx_emptyMutableCollection {
 	return [NSMutableArray array];
 }
 
@@ -74,7 +74,7 @@ RXCollectionMapBlock RXCollectionIdentityBlock = ^(id x) { return x; };
 
 @implementation NSSet (RXCollectionEmpty)
 
-+(instancetype)rx_emptyMutableCollection {
++(id<RXMutableCollection>)rx_emptyMutableCollection {
 	return [NSMutableSet set];
 }
 
