@@ -1,10 +1,14 @@
 //  RXCollectionSetTests.m
 //  Created by Rob Rix on 11-11-20.
-//  Copyright (c) 2011 Monochrome Industries. All rights reserved.
+//  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXAssertions.h"
 #import "RXCollection.h"
 #import "RXCollectionSetTests.h"
+
+@interface RXCollectionSetTests ()
+@property (readonly) NSSet *fixture;
+@end
 
 @implementation RXCollectionSetTests
 
@@ -14,23 +18,23 @@
 
 
 -(void)testMappingWithTheIdentityFunctionReturnsAnEqualSet {
-	RXAssertEquals([NSSet rx_setByMappingCollection:self.fixture withBlock:^(id each) {
+	RXAssertEquals([self.fixture rx_mapWithBlock:^(id each) {
 		return each;
 	}], self.fixture);
 }
 
 -(void)testMappingWithAConstantFunctionReturnsASetContainingThatConstant {
-	RXAssertEquals([NSSet rx_setByMappingCollection:self.fixture withBlock:^(id each) { return @"Bandit"; }], [NSSet setWithObject:@"Bandit"]);
+	RXAssertEquals([self.fixture rx_mapWithBlock:^(id each) { return @"Bandit"; }], [NSSet setWithObject:@"Bandit"]);
 }
 
 
 -(void)testFilteringReturnsASetIncludingObjectsForWhichTheBlockReturnsTrue {
-	RXAssertEquals([NSSet rx_setByFilteringCollection:self.fixture withBlock:^(id each) { return [each hasPrefix:@"M"]; }], ([NSSet setWithObjects:@"Maggie", @"Max", nil]));
+	RXAssertEquals([self.fixture rx_filterWithBlock:^(id each) { return [each hasPrefix:@"M"]; }], ([NSSet setWithObjects:@"Maggie", @"Max", nil]));
 }
 
 
 -(void)testFoldingWithAnInitialValueReturnsTheResultOfCallingTheBlockWithTheInitialOrPreviousResultAndEachElement {
-	RXAssertEquals([self.fixture rx_foldInitialValue:@"" withBlock:^(id memo, id each) {
+	RXAssertEquals([self.fixture rx_foldInitialValue:@"" block:^(id memo, id each) {
 		return [memo compare:each] == NSOrderedDescending?
 			memo
 		:	each;

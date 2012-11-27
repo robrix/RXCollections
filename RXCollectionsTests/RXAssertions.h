@@ -1,6 +1,6 @@
 // RXAssertions.h
-// Created by Rob Rix on 2011-08-20
-// Copyright 2011 Decimus Software, Inc.
+// Created by Rob Rix on 2011-08-20.
+// Copyright 2012 Rob Rix. All rights reserved.
 
 #import <SenTestingKit/SenTestingKit.h>
 
