@@ -1,6 +1,6 @@
 //  RXCollectionArrayTests.m
 //  Created by Rob Rix on 11-11-20.
-//  Copyright (c) 2011 Monochrome Industries. All rights reserved.
+//  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXAssertions.h"
 #import "RXCollection.h"
