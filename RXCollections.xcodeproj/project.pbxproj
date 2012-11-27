@@ -210,8 +210,9 @@
 		D49E8F83147978C8004490EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = RX;
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Monochrome Industries";
+				ORGANIZATIONNAME = "Rob Rix";
 			};
 			buildConfigurationList = D49E8F86147978C8004490EA /* Build configuration list for PBXProject "RXCollections" */;
 			compatibilityVersion = "Xcode 3.2";
