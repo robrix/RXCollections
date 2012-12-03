@@ -7,7 +7,7 @@
 #import "L3TestState.h"
 #import "Lagrangian.h"
 
-@l3_suite("Test suites", L3TestSuite) <L3EventObserver>
+@l3_suite_interface(L3TestSuite, "Test suites") <L3EventObserver>
 @property NSMutableArray *events;
 @end
 

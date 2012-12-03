@@ -5,7 +5,7 @@
 #import "L3TestResult.h"
 #import "Lagrangian.h"
 
-@l3_suite("Test results", L3TestResult)
+@l3_suite_interface(L3TestResult, "Test results")
 @property L3TestResult *result;
 @property L3CompositeTestResult *compositeResult;
 @end

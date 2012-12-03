@@ -16,7 +16,7 @@
 
 @end
 
-@l3_suite("Test result builders", L3TestResultBuilder) <L3Test, L3TestResultBuilderDelegate>
+@l3_suite_interface(L3TestResultBuilder, "Test result builders") <L3Test, L3TestResultBuilderDelegate>
 
 @property L3TestResultBuilder *builder;
 @property L3SourceReference *sourceReference;

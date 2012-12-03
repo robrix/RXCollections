@@ -12,8 +12,7 @@
 #import "L3TestStep.h"
 #import "L3TestSuite.h"
 
-#pragma mark -
-#pragma mark Configuration macros
+#pragma mark - Configuration macros
 
 // L3_TESTS implies L3_DEBUG
 #if L3_TESTS
@@ -32,30 +31,59 @@
 #endif
 
 
-#pragma mark -
-#pragma mark Test suites
-
-#if L3_DEBUG
+#pragma mark - Test suites
 
 /*
- l3_suite is intended to be used like so:
+ l3_suite_interface is intended to be used like so:
  
- @l3_suite("Suite name", identifier)
+ @l3_suite_interface(identifier, "Suite name")
  @property id propertyDeclarations;
  …
  @end
  
- to declare the state that your tests require.
+ or
  
- You can also use it like this:
+ @l3_suite_interface(identifier)
+ @property id propertyDeclarations;
+ …
+ @end
+ 
+ (which uses the identifier for the suite name as well) to declare the state that your tests require. In this usage, a subclass of L3TestState is defined, and your test cases are passed instances of it; this means that they can use its properties with strong typing:
+ 
+ @l3_test("tests defined in a l3_suite_interface suite can access its properties directly") {
+	test.propertyDeclarations = @"function correctly";
+ }
+ 
+ You will also need to define the implementation, whether or not you need to implement any methods within it:
+ 
+ @l3_suite_implementation(identifier)
+ @end
+ 
+ Remember to use the same identifier as you passed to l3_suite_interface; it is convenient and recommended to use the name of the class you are testing.
+ 
+ 
+ Alternatively, you can use l3_suite to define a suite without declaring any state.
  
  @l3_suite("Suite name");
  
  Note the semicolon. In this usage, it declares the suite, but does not declare any state; your tests are passed standard L3TestState instances.
  */
 
-#define l3_suite(str, ...) \
-	class L3TestSuite; \
+#define l3_suite(str) \
+	class NSObject; \
+	\
+	l3_suite_setup(str)
+
+#define l3_suite_interface(identifier, ...) \
+	class NSObject; \
+	\
+	l3_cond(l3_count(__VA_ARGS__), l3_suite_interface_implementation(identifier, __VA_ARGS__), l3_suite_interface_implementation(identifier, #identifier))\
+
+
+#if L3_DEBUG // test or debug build
+
+#define l3_suite_setup(str, ...) \
+	@class L3TestSuite; \
 	static L3TestSuite *l3_identifier(test_suite_builder_, __LINE__)(); \
 	__attribute__((constructor)) static void l3_identifier(test_suite_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
@@ -76,27 +104,32 @@
 	\
 	@class l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState); \
 	static l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState) *l3_state_class_variable; \
+
+#define l3_suite_interface_implementation(identifier, str) \
+	l3_suite_setup(str, identifier) \
 	\
-	l3_cond(l3_count(__VA_ARGS__), @interface l3_state_class(__VA_ARGS__) : L3TestState, @class NSObject) 
+	@interface l3_state_class(identifier) : L3TestState
 
 #define l3_suite_implementation(identifier) \
 	implementation l3_state_class(identifier)
 
-#else
+#else // release build
 
 #define l3_ignored_class(identifier) \
 	l3_paste(l3_state_class(identifier), _ignored_class)
 
-#define l3_suite(str, ...) \
-	l3_cond(l3_count(__VA_ARGS__), class NSObject; \
-	@class l3_ignored_class(__VA_ARGS__); \
-	@interface l3_ignored_class(__VA_ARGS__) : L3TestState \
+#define l3_suite_setup(str) \
+	@class NSObject
+
+#define l3_suite_interface_implementation(identifier, str) \
+	@class l3_ignored_class(identifier); \
+	@interface l3_ignored_class(identifier) : L3TestState \
 	@end \
-	@implementation l3_ignored_class(__VA_ARGS__) \
+	@implementation l3_ignored_class(identifier) \
 	@end \
-	@interface l3_ignored_class(__VA_ARGS__) (l3_state_class(__VA_ARGS__)) \
+	@interface l3_ignored_class(identifier) (l3_state_class(identifier)) \
 	@end \
-	@interface L3TestState (l3_paste(l3_state_class(__VA_ARGS__), _ignored)), class NSObject)
+	@interface L3TestState (l3_paste(l3_state_class(identifier), _ignored))
 
 #define l3_suite_implementation(identifier) \
 	class NSObject; \
@@ -105,10 +138,9 @@
 #endif
 
 
-#pragma mark -
-#pragma mark Test cases
+#pragma mark - Test cases
 
-#if L3_DEBUG
+#if L3_DEBUG // test or debug build
 
 #define l3_step(str) \
 	class L3TestStep; \
@@ -162,8 +194,7 @@
 	[_case performStep:test.suite.steps[@"" str] withState:test]
 
 
-#pragma mark -
-#pragma mark State types
+#pragma mark - State types
 
 #define l3_type_of_state_class			l3_type_of_state_class_implementation(l3_state_class_variable)
 #define l3_type_of_state_class_implementation(x) \
@@ -172,10 +203,10 @@
 #define l3_state_class(identifier)		l3_paste(l3_domain, l3_paste(identifier, TestState))
 
 
-#pragma mark -
-#pragma mark Test state
+#pragma mark - Test state
 
 #define l3_current_suite				l3_paste(l3_domain, current_suite)
+
 
 #if L3_DEBUG
 

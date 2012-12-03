@@ -5,7 +5,7 @@
 #import "L3TAAppDelegate.h"
 #import "Lagrangian.h"
 
-@l3_suite("App delegate", L3TAAppDelegate)
+@l3_suite_interface(L3TAAppDelegate, "App delegate")
 @property L3TAAppDelegate *appDelegate;
 @end
 

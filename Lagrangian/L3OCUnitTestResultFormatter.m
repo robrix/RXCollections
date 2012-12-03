@@ -14,7 +14,7 @@
 
 @end
 
-@l3_suite("OCUnit-compatible event formatters", L3OCUnitTestResultFormatter) <L3TestResultFormatterDelegate>
+@l3_suite_interface(L3OCUnitTestResultFormatter, "OCUnit-compatible event formatters") <L3TestResultFormatterDelegate>
 
 @property L3OCUnitTestResultFormatter *formatter;
 @property NSString *formattedString;
