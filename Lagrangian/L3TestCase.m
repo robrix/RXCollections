@@ -36,7 +36,6 @@
 
 static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
-#pragma mark -
 #pragma mark Constructors
 
 @l3_test("correlate names with functions") {
@@ -63,7 +62,6 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 
-#pragma mark -
 #pragma mark Steps
 
 -(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state {
@@ -78,7 +76,6 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 }
 
 
-#pragma mark -
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {
@@ -148,7 +145,6 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 }
 
 
-#pragma mark -
 #pragma mark Assertions
 
 @l3_test("create source references for events applying to the case as a whole") {

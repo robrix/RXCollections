@@ -6,7 +6,6 @@
 #import "L3Types.h"
 #import "L3SourceReference.h"
 
-#pragma mark -
 #pragma mark Assertions
 
 #define l3_sourceReference(_subject, _subjectSource, _patternSource) \
@@ -20,7 +19,6 @@
 	}()
 
 
-#pragma mark -
 #pragma mark Equality patterns
 
 #define l3_not(...) \
@@ -32,14 +30,12 @@
 #define l3_equalsWithEpsilon(x, y)		l3_to_pattern_f(x, y)
 
 
-#pragma mark -
 #pragma mark Classification patterns
 
 #define l3_isKindOfClass(class) \
 	(^bool(id x){ return [x isKindOfClass:class]; })
 
 
-#pragma mark -
 #pragma mark Comparison patterns
 
 #define l3_ordered(object, ordering) \
@@ -54,7 +50,6 @@
 	l3_ordered_or_same(object, NSOrderedAscending)
 
 
-#pragma mark -
 #pragma mark Asynchrony
 
 // there is no race condition between waiting and completing a test, but if you are not waiting explicitly, you must defer the test for it to succeed

@@ -13,7 +13,6 @@ extern NSString * const L3TestSuiteTearDownStepName;
 
 @interface L3TestSuite : NSObject <L3Test>
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)defaultSuite;
@@ -22,13 +21,11 @@ extern NSString * const L3TestSuiteTearDownStepName;
 +(instancetype)testSuiteWithName:(NSString *)name;
 
 
-#pragma mark -
 #pragma mark State
 
 @property (strong, nonatomic) Class stateClass;
 
 
-#pragma mark -
 #pragma mark Tests
 
 // must be unique by name within this suite
@@ -38,7 +35,6 @@ extern NSString * const L3TestSuiteTearDownStepName;
 @property (copy, nonatomic, readonly) NSDictionary *testsByName;
 
 
-#pragma mark -
 #pragma mark Steps
 
 -(void)addStep:(L3TestStep *)step;

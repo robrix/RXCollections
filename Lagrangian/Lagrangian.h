@@ -12,7 +12,7 @@
 #import "L3TestStep.h"
 #import "L3TestSuite.h"
 
-#pragma mark - Configuration macros
+#pragma mark Configuration macros
 
 // L3_TESTS implies L3_DEBUG
 #if L3_TESTS
@@ -31,7 +31,7 @@
 #endif
 
 
-#pragma mark - Test suites
+#pragma mark Test suites
 
 /*
  l3_suite_interface is intended to be used like so:
@@ -138,7 +138,7 @@
 #endif
 
 
-#pragma mark - Test cases
+#pragma mark Test cases
 
 #if L3_DEBUG // test or debug build
 
@@ -194,7 +194,7 @@
 	[_case performStep:test.suite.steps[@"" str] withState:test]
 
 
-#pragma mark - State types
+#pragma mark State types
 
 #define l3_type_of_state_class			l3_type_of_state_class_implementation(l3_state_class_variable)
 #define l3_type_of_state_class_implementation(x) \
@@ -203,7 +203,7 @@
 #define l3_state_class(identifier)		l3_paste(l3_domain, l3_paste(identifier, TestState))
 
 
-#pragma mark - Test state
+#pragma mark Test state
 
 #define l3_current_suite				l3_paste(l3_domain, current_suite)
 

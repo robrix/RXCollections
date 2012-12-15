@@ -21,7 +21,6 @@ const NSTimeInterval L3TestStateDefaultTimeout = 5.;
 
 @implementation L3TestState
 
-#pragma mark -
 #pragma mark Constructors
 
 -(instancetype)initWithSuite:(L3TestSuite *)suite {
@@ -36,7 +35,6 @@ const NSTimeInterval L3TestStateDefaultTimeout = 5.;
 }
 
 
-#pragma mark -
 #pragma mark Test state
 
 -(id)objectForKeyedSubscript:(NSString *)key {
@@ -51,7 +49,6 @@ const NSTimeInterval L3TestStateDefaultTimeout = 5.;
 }
 
 
-#pragma mark -
 #pragma mark Asynchrony
 
 @l3_test("can explicitly wait for asynchronous results to complete") {

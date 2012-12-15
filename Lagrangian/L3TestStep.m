@@ -6,7 +6,6 @@
 
 @implementation L3TestStep
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)stepWithName:(NSString *)name function:(L3TestStepFunction)function {

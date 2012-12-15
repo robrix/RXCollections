@@ -4,7 +4,6 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark -
 #pragma mark Let
 
 typedef id(^L3UnaryLetBlock)(id);
@@ -27,14 +26,12 @@ __attribute__((overloadable)) static inline id l3_let(id x, id y, id z, L3Ternar
 }
 
 
-#pragma mark -
 #pragma mark Fold
 
 typedef id (^L3FoldBlock)(id accumulation, id element);
 id L3Fold(id<NSFastEnumeration> collection, id initialAccumulation, L3FoldBlock block);
 
 
-#pragma mark -
 #pragma mark Map
 
 typedef id(^L3MapBlock)(id element);

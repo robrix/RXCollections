@@ -38,7 +38,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 
 @implementation L3TestSuite
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)defaultSuite {
@@ -81,7 +80,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 }
 
 
-#pragma mark -
 #pragma mark Tests
 
 -(void)addTest:(id<L3Test>)test {
@@ -108,7 +106,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 }
 
 
-#pragma mark -
 #pragma mark Steps
 
 -(void)addStep:(L3TestStep *)step {
@@ -124,7 +121,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 }
 
 
-#pragma mark -
 #pragma mark L3Test
 
 @l3_test("generate test start events when starting to run") {

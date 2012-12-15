@@ -19,7 +19,6 @@
 	test[@"stack"] = [L3Stack new];
 }
 
-#pragma mark -
 #pragma mark Constructors
 
 @l3_test("are initialized with an empty array of objects") {
@@ -34,7 +33,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Public methods
 
 @l3_test("push objects by adding them to the end of their arrays") {

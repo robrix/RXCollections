@@ -6,7 +6,6 @@
 
 @implementation L3SourceReference
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)referenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
@@ -25,7 +24,6 @@
 }
 
 
-#pragma mark -
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {

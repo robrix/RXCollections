@@ -2,7 +2,6 @@
 //  Created by Rob Rix on 2012-11-10.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#pragma mark -
 #pragma mark Macro utilities
 
 #define l3_domain						com_antitypical_lagrangian_
@@ -14,7 +13,6 @@
 #define l3_string(x)					l3_string_implementation(x)
 #define l3_string_implementation(x)		#x
 
-#pragma mark -
 #pragma mark bool
 
 #define l3_bool(x)						l3_bool_implementation(x)
@@ -53,7 +51,6 @@
 #define l3_bool_31						1
 
 
-#pragma mark -
 #pragma mark Variadic folding
 
 #define l3_fold(f, ...) \
@@ -95,7 +92,6 @@
 #define l3_fold_32(f, each, ...)		l3_fold_1(f, each) l3_fold_31(f, __VA_ARGS__)
 
 
-#pragma mark -
 #pragma mark Conditional macro expansion
 
 #define l3_cond(cond, then, else)		l3_cond_implementation(cond, then, else)
@@ -105,8 +101,7 @@
 #define l3_cond_1(x, y)					x
 
 
-#pragma mark -
-#pragma mark - Variadic counting
+#pragma mark Variadic counting
 
 #define l3_count(...) \
 	l3_count_implementation(_0, ## __VA_ARGS__, l3_reverse_ordinals())

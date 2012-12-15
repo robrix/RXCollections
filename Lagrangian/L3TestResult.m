@@ -36,7 +36,6 @@
 
 @implementation L3AbstractTestResult
 
-#pragma mark -
 #pragma mark Constructors
 
 +(id<L3TestResult>)testResultWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate {
@@ -56,7 +55,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Total duration
 
 -(NSTimeInterval)totalDuration {
@@ -64,7 +62,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Success/failure
 
 @l3_test("succeed when no exceptions or assertion failures occurred") {
@@ -90,7 +87,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Composition
 
 -(NSArray *)testResults {
@@ -110,7 +106,6 @@
 
 @implementation L3TestResult
 
-#pragma mark -
 #pragma mark Properties
 
 -(bool)isComposite {
@@ -138,7 +133,6 @@
 @synthesize exceptionCount = _exceptionCount;
 
 
-#pragma mark -
 #pragma mark Inherited properties
 
 @dynamic parent;
@@ -161,7 +155,6 @@
 
 @implementation L3CompositeTestResult
 
-#pragma mark -
 #pragma mark Constructors
 
 -(instancetype)initWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line startDate:(NSDate *)startDate {
@@ -172,7 +165,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Properties
 
 -(bool)isComposite {
@@ -180,7 +172,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Recursive properties
 
 @l3_test("composite results sum their children’s durations") {
@@ -221,7 +212,6 @@
 -(void)setExceptionCount:(NSUInteger)exceptionCount {}
 
 
-#pragma mark -
 #pragma mark Inherited properties
 
 @dynamic parent;
@@ -233,7 +223,6 @@
 @dynamic failed;
 
 
-#pragma mark -
 #pragma mark Composite
 
 -(NSArray *)testResults {

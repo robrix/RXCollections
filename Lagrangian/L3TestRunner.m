@@ -28,7 +28,6 @@
 
 @implementation L3TestRunner
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)runner {
@@ -77,7 +76,6 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 }
 
 
-#pragma mark -
 #pragma mark Running
 
 -(void)runTest:(id<L3Test>)test {
@@ -97,7 +95,6 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 }
 
 
-#pragma mark -
 #pragma mark L3TestResultFormatterDelegate
 
 -(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
@@ -106,7 +103,6 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 }
 
 
-#pragma mark -
 #pragma mark L3TestResultBuilderDelegate
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {

@@ -42,7 +42,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Constructors
 
 @l3_test("are initialized with an empty stack") {
@@ -57,10 +56,8 @@
 }
 
 
-#pragma mark -
 #pragma mark Event algebra
 
-#pragma mark -
 #pragma mark Test events
 
 @l3_test("push a result when starting tests") {
@@ -124,7 +121,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Assertion events
 
 @l3_test("notify their delegates of result changes when assertions succeed") {
@@ -174,7 +170,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Current results
 
 -(L3TestResult *)currentTestResult {

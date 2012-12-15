@@ -36,7 +36,6 @@
 }
 
 
-#pragma mark -
 #pragma mark L3TestResultBuilderDelegate
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
@@ -136,7 +135,6 @@
 }
 
 
-#pragma mark -
 #pragma mark String formatting
 
 @l3_test("format test names by replacing nonalphanumeric characters with underscores") {

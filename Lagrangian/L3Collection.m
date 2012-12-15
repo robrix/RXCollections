@@ -4,7 +4,6 @@
 
 #import "L3Collection.h"
 
-#pragma mark -
 #pragma mark Arrays
 
 @implementation NSArray (L3Collection)
@@ -29,7 +28,6 @@
 @end
 
 
-#pragma mark -
 #pragma mark Sets
 
 @implementation NSSet (L3Collection)
@@ -54,7 +52,6 @@
 @end
 
 
-#pragma mark -
 #pragma mark Dictionaries
 
 @implementation NSDictionary (L3Collection)

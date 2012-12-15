@@ -11,20 +11,17 @@
 
 @property (copy, nonatomic, readonly) NSString *name;
 
-#pragma mark -
 #pragma mark Source reference
 
 @property (copy, nonatomic, readonly) NSString *file;
 @property (assign, nonatomic, readonly) NSUInteger line;
 
 
-#pragma mark -
 #pragma mark Test composition
 
 @property (nonatomic, readonly, getter = isComposite) bool composite;
 
 
-#pragma mark -
 #pragma mark Running
 
 -(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver;

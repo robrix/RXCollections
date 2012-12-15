@@ -12,7 +12,6 @@
 
 @interface L3TestCase : NSObject <L3Test>
 
-#pragma mark -
 #pragma mark Constructors
 
 +(instancetype)testCaseWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line function:(L3TestCaseFunction)function;
@@ -22,13 +21,11 @@
 @property (weak, nonatomic, readonly) id<L3EventObserver> eventObserver;
 
 
-#pragma mark -
 #pragma mark Steps
 
 -(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state;
 
 
-#pragma mark -
 #pragma mark Assertions
 
 -(L3SourceReference *)sourceReferenceForCaseEvents;

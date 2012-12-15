@@ -14,7 +14,6 @@ extern const NSTimeInterval L3TestStateDefaultTimeout;
 
 @property (strong, nonatomic, readonly) L3TestSuite *suite;
 
-#pragma mark -
 #pragma mark Test state
 
 // subscripting support for arbitrary object state
@@ -22,7 +21,6 @@ extern const NSTimeInterval L3TestStateDefaultTimeout;
 -(void)setObject:(id)object forKeyedSubscript:(NSString *)key;
 
 
-#pragma mark -
 #pragma mark Asynchrony
 
 -(void)deferCompletion;

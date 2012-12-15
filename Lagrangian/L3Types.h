@@ -6,20 +6,17 @@
 
 @class L3TestCase, L3TestState, L3TestStep;
 
-#pragma mark -
 #pragma mark Test functions
 
 typedef void(*L3TestCaseFunction)(L3TestState *, L3TestCase *);
 typedef void(*L3TestStepFunction)(L3TestState *, L3TestCase *, L3TestStep *);
 
 
-#pragma mark -
 #pragma mark Assert patterns
 
 typedef bool(^L3Pattern)(id);
 
 
-#pragma mark -
 #pragma mark Object conversion
 
 #import "L3PreprocessorUtilities.h"
@@ -42,7 +39,6 @@ __attribute__((overloadable)) static inline id l3_to_object(id x) { return x; }
 __attribute__((overloadable)) static inline id l3_to_object(void *x) { return [NSValue valueWithPointer:0]; }
 
 
-#pragma mark -
 #pragma mark Pattern conversion
 
 #define l3_to_pattern(x) \
