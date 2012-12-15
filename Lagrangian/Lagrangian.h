@@ -82,16 +82,8 @@
 
 #if L3_DEBUG // test or debug build
 
-#define l3_suite_setup(str, ...) \
-	@class L3TestSuite; \
+#define l3_suite_builder(str, ...) \
 	static L3TestSuite *l3_identifier(test_suite_builder_, __LINE__)(); \
-	__attribute__((constructor)) static void l3_identifier(test_suite_loader_, __COUNTER__)() { \
-		@autoreleasepool { \
-			L3TestSuite *suite = l3_identifier(test_suite_builder_, __LINE__)(); \
-			[[L3TestSuite defaultSuite] addTest:suite]; \
-			l3_current_suite = suite; \
-		} \
-	} \
 	static L3TestSuite *l3_identifier(test_suite_builder_, __LINE__)() { \
 		static L3TestSuite *suite = nil; \
 		static dispatch_once_t onceToken; \
@@ -100,7 +92,20 @@
 			l3_cond(l3_count(__VA_ARGS__), suite.stateClass = NSClassFromString(@"" l3_string(l3_state_class(__VA_ARGS__))), {});\
 		}); \
 		return suite; \
-	} \
+	}
+
+#define l3_suite_loader() \
+	__attribute__((constructor)) static void l3_identifier(test_suite_loader_, __COUNTER__)() { \
+		@autoreleasepool { \
+			L3TestSuite *suite = l3_identifier(test_suite_builder_, __LINE__)(); \
+			[[L3TestSuite defaultSuite] addTest:suite]; \
+			l3_current_suite = suite; \
+		} \
+	}
+
+#define l3_suite_setup(str, ...) \
+	l3_suite_builder(str, __VA_ARGS__) \
+	l3_suite_loader() \
 	\
 	@class l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState); \
 	static l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState) *l3_state_class_variable; \
@@ -112,6 +117,7 @@
 
 #define l3_suite_implementation(identifier) \
 	implementation l3_state_class(identifier)
+
 
 #else // release build
 
