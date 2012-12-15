@@ -6,6 +6,7 @@
 #import "L3TestSuite.h"
 #import "L3TestState.h"
 #import "Lagrangian.h"
+#import <dlfcn.h>
 
 @l3_suite_interface(L3TestSuite, "Test suites") <L3EventObserver>
 @property NSMutableArray *events;
@@ -188,3 +189,15 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 }
 
 @end
+
+
+NSString *L3MachOImagePathForAddress(void *address) {
+	NSString *imagePath = nil;
+	
+	Dl_info info = {};
+	if (dladdr(address, &info)) {
+		imagePath = @(info.dli_fname);
+	}
+	
+	return imagePath;
+}

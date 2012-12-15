@@ -11,6 +11,9 @@
 extern NSString * const L3TestSuiteSetUpStepName;
 extern NSString * const L3TestSuiteTearDownStepName;
 
+extern NSString *L3MachOImagePathForAddress(void *address);
+
+
 @interface L3TestSuite : NSObject <L3Test>
 
 #pragma mark Constructors
@@ -19,6 +22,11 @@ extern NSString * const L3TestSuiteTearDownStepName;
 
 +(instancetype)testSuiteWithName:(NSString *)name file:(NSString *)file line:(NSUInteger)line;
 +(instancetype)testSuiteWithName:(NSString *)name;
+
+
+#pragma mark Mach-O image path
+
+@property (strong, nonatomic) NSString *imagePath;
 
 
 #pragma mark State
