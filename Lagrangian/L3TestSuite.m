@@ -8,12 +8,12 @@
 #import "Lagrangian.h"
 #import <dlfcn.h>
 
-@l3_suite_interface(L3TestSuite, "Test suites") <L3EventObserver>
-@property NSMutableArray *events;
+@l3_suite_interface (L3TestSuite) <L3TestVisitor>
+@property NSMutableArray *visitedTests;
 @end
 
 @l3_set_up {
-	test.events = [NSMutableArray new];
+	test.visitedTests = [NSMutableArray new];
 }
 
 
@@ -32,8 +32,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
 
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableSteps;
-
-@property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
 @end
 
@@ -73,9 +71,6 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 		_mutableTestsByName = [NSMutableDictionary new];
 		
 		_mutableSteps = [NSMutableDictionary new];
-		
-		_queue = [NSOperationQueue new];
-		_queue.maxConcurrentOperationCount = 1;
 	}
 	return self;
 }
@@ -102,7 +97,7 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 
 
 -(void)setStateClass:(Class)stateClass {
-	NSAssert(stateClass != nil, @"No state class found for suite ‘%@’. Did you forget to add a @l3_suite_implementation for this suite? Did you add one but give it the wrong name?", self.name);
+	NSAssert(stateClass != nil, @"No state class found for suite ‘%@’. Did you forget to add a @l3_suite_implementation for this suite? Did you add one but give it the wrong identifier?", self.name);
 	_stateClass = stateClass;
 }
 
@@ -124,68 +119,47 @@ NSString * const L3TestSuiteTearDownStepName = @"tear down";
 
 #pragma mark L3Test
 
-@l3_test("generate test start events when starting to run") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInSuite:nil eventObserver:test];
-	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
-		NSDictionary *event = test.events[0];
-		l3_assert(event[@"name"], l3_equals(testSuite.name));
-		l3_assert(event[@"type"], l3_equals(@"start"));
-	}
-}
-
-@l3_test("generate test end events when done running") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	[testSuite runInSuite:nil eventObserver:test];
-	NSDictionary *event = test.events.lastObject;
-	l3_assert(event[@"name"], l3_equals(testSuite.name));
-	l3_assert(event[@"type"], l3_equals(@"end"));
-}
-
--(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
-	self.queue.suspended = YES;
-	
-	[self.queue addOperationWithBlock:^{
-		[eventObserver testStartEventWithTest:self date:[NSDate date]];
-	}];
-	
-	for (id<L3Test> test in self.tests) {
-		[self.queue addOperationWithBlock:^{
-			[test runInSuite:self eventObserver:eventObserver];
-		}];
-	}
-	
-	[self.queue addOperationWithBlock:^{
-		[eventObserver testEndEventWithTest:self date:[NSDate date]];
-	}];
-	self.queue.suspended = NO;
-	
-	[self.queue waitUntilAllOperationsAreFinished];
-}
-
-
 -(bool)isComposite {
 	return YES;
 }
 
+
+#pragma mark Visitors
+
+@l3_test("visits its child tests lazily") {
+	L3TestSuite *parent = [L3TestSuite testSuiteWithName:@"parent"];
+	L3TestSuite *child = [L3TestSuite testSuiteWithName:@"child"];
+	[parent addTest:child];
+	[parent acceptVisitor:test];
+	l3_assert(test.visitedTests, l3_equals(@[parent, child]));
+}
+
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor inTestSuite:(L3TestSuite *)parentSuite {
+	[visitor testSuite:self inTestSuite:parentSuite withChildren:^{
+		for (id<L3Test> test in self.tests) {
+			[test acceptVisitor:visitor inTestSuite:self];
+		}
+	}];
+	
+}
+
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor {
+	[self acceptVisitor:visitor inTestSuite:nil];
+}
+
 @end
+
 
 @l3_suite_implementation (L3TestSuite)
 
--(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"start" }];
+-(void)testCase:(L3TestCase *)testCase inTestSuite:(L3TestSuite *)suite {
+	[self.visitedTests addObject:testCase];
 }
 
--(void)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
-}
-
--(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
-	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
-}
-
--(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
-	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
+-(void)testSuite:(L3TestSuite *)testSuite inTestSuite:(L3TestSuite *)suite withChildren:(void (^)())block {
+	[self.visitedTests addObject:testSuite];
+	
+	block();
 }
 
 @end

@@ -180,7 +180,8 @@
 
 @l3_suite_implementation(L3TestResultBuilder)
 
--(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {}
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor inTestSuite:(L3TestSuite *)parentSuite {}
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor {}
 
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
