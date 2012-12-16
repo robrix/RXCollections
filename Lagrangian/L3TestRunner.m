@@ -28,7 +28,7 @@
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
-@property (strong, nonatomic, readonly) NSPredicate *testSuitePredicate;
+@property (strong, nonatomic) NSPredicate *testSuitePredicate;
 
 @property (strong, nonatomic, readonly) id<L3Test> test;
 
@@ -86,10 +86,6 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		
 		_queue = [NSOperationQueue new]; // should this actually be the main queue?
 		_queue.maxConcurrentOperationCount = 1;
-		
-		_testSuitePredicate = [NSPredicate predicateWithBlock:^BOOL(L3TestSuite *evaluatedObject, NSDictionary *bindings) {
-			return YES;
-		}];
 		
 		_test = [L3TestSuite defaultSuite];
 	}
@@ -274,6 +270,18 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));
 	l3_assert(event[@"type"], l3_equals(@"end"));
+}
+
+@l3_test("filters test suites with a predicate") {
+	test.runner.testSuitePredicate = [NSPredicate predicateWithBlock:^BOOL(L3TestSuite *evaluatedObject, NSDictionary *bindings) {
+		return NO;
+	}];
+	
+	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
+	
+	[test.runner testSuite:suite inTestSuite:nil withChildren:^{}];
+	
+	l3_assert(test.events, l3_equals(@[]));
 }
 
 -(void)testSuite:(L3TestSuite *)testSuite inTestSuite:(L3TestSuite *)suite withChildren:(void(^)())block {
