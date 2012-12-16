@@ -10,4 +10,7 @@
 
 +(instancetype)runner;
 
+-(void)run; // starts running asynchronously
+-(void)waitForTestsToComplete;
+
 @end

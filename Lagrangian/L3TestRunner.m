@@ -66,6 +66,8 @@
 static void __attribute__((constructor)) L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
 	[runner self]; // silences a warning
+	
+	// fixme: this decision needs to be made elsewhere
 #if L3_RUN_TESTS_ON_LAUNCH
 	[runner runAtLaunch];
 #endif
@@ -101,13 +103,21 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 			
 			self.didRunAutomatically = YES;
 			
-			[self runTest:self.test];
+			[self run];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 		}];
 	} else {
-		[self runTest:self.test];
+		[self run];
 	}
+}
+
+-(void)run {
+	[self runTest:self.test];
+}
+
+-(void)waitForTestsToComplete {
+	[self.queue waitUntilAllOperationsAreFinished];
 }
 
 -(void)runTest:(id<L3Test>)test {
@@ -177,7 +187,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	[test.runner testCase:testCase inTestSuite:nil];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
 		NSDictionary *event = test.events[0];
@@ -191,7 +201,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	[test.runner testCase:testCase inTestSuite:nil];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1));
 	NSDictionary *event = test.events.lastObject;
@@ -211,7 +221,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testCase:testCase inTestSuite:suite];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(2))) {
 		NSDictionary *event = test.events[test.events.count - 2];
@@ -251,7 +261,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
 		NSDictionary *event = test.events[0];
@@ -265,7 +275,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));
