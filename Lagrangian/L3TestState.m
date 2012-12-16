@@ -23,11 +23,13 @@ const NSTimeInterval L3TestStateDefaultTimeout = 5.;
 
 #pragma mark Constructors
 
--(instancetype)initWithSuite:(L3TestSuite *)suite {
+-(instancetype)initWithSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
 	if((self = [super init])) {
 		_contents = [NSMutableDictionary new];
 		_completionSemaphore = dispatch_semaphore_create(0);
+		
 		_suite = suite;
+		_eventObserver = eventObserver;
 		
 		_timeout = L3TestStateDefaultTimeout;
 	}

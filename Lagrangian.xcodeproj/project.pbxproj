@@ -113,6 +113,7 @@
 		D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestCase.h; sourceTree = "<group>"; };
 		D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCase.m; sourceTree = "<group>"; };
 		D4A5B2D6164BF15400338EB4 /* L3Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Types.h; sourceTree = "<group>"; };
+		D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestVisitor.h; sourceTree = "<group>"; };
 		D4AC43121648B5D300C0A25B /* Lagrangian.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Lagrangian.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4AC43151648B5D300C0A25B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D4AC43181648B5D300C0A25B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -184,6 +185,7 @@
 				D40DE660164E26030033DE88 /* L3TestState.h */,
 				D40DE661164E26030033DE88 /* L3TestState.m */,
 				D40DE69716501CA00033DE88 /* L3Test.h */,
+				D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */,
 				D426E48F16527B70001C9105 /* Test results */,
 			);
 			name = Tests;

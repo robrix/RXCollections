@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2012-11-10.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import "L3EventObserver.h"
 
 extern const NSTimeInterval L3TestStateDefaultTimeout;
 
@@ -10,9 +10,10 @@ extern const NSTimeInterval L3TestStateDefaultTimeout;
 
 @interface L3TestState : NSObject
 
--(instancetype)initWithSuite:(L3TestSuite *)suite;
+-(instancetype)initWithSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver;
 
 @property (strong, nonatomic, readonly) L3TestSuite *suite;
+@property (strong, nonatomic, readonly) id<L3EventObserver> eventObserver;
 
 #pragma mark Test state
 

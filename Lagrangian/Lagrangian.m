@@ -94,8 +94,10 @@ static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 @l3_test("steps return the success/failure of their assertions (if any) when they are run") {
 	l3_assert(l3_perform_step("Passing assertions"), YES);
 	
+	L3TestState *state = [[L3TestState alloc] initWithSuite:test.suite eventObserver:nil];
+	
 	L3TestCase *testCase = [L3TestCase testCaseWithName:@"failures" file:@"" __FILE__ line:__LINE__ function:l3_dummy_test_case_function];
-	l3_assert([testCase performStep:test.suite.steps[@"Failing assertions"] withState:test], l3_equals(NO));
+	l3_assert([testCase performStep:test.suite.steps[@"Failing assertions"] withState:state], l3_equals(NO));
 }
 
 //@l3_tear_down {

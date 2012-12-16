@@ -78,68 +78,6 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 #pragma mark L3Test
 
-@l3_test("generate test start events when starting to run") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
-	[testCase runInSuite:nil eventObserver:test];
-	
-	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u))) {
-		NSDictionary *event = test.events[0];
-		l3_assert(event[@"name"], l3_equals(@"name"));
-		l3_assert(event[@"type"], l3_equals(@"start"));
-	}
-}
-
-@l3_test("generate test end events when done running") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
-	[testCase runInSuite:nil eventObserver:test];
-	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1u));
-	NSDictionary *event = test.events.lastObject;
-	l3_assert(event[@"name"], l3_equals(@"name"));
-	l3_assert(event[@"type"], l3_equals(@"end"));
-}
-
-static void asynchronousTest(L3TestState *test, L3TestCase *_case);
-static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
-	test.timeout = 0;
-	l3_defer();
-}
-
-@l3_test("generate failures when asynchronous tests time out") {
-	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"case" file:@"file.m" line:42 function:asynchronousTest];
-	[testCase runInSuite:suite eventObserver:test];
-	NSDictionary *event = test.events[test.events.count - 2];
-	l3_assert(event[@"type"], l3_equals(@"failure"));
-	l3_assert([event[@"sourceReference"] subject], l3_equals(testCase));
-}
-
--(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
-	L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite];
-	self.eventObserver = eventObserver;
-	
-	[eventObserver testStartEventWithTest:self date:[NSDate date]];
-	
-	L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
-	if (setUp)
-		[self performStep:setUp withState:state];
-	
-	self.function(state, self);
-	
-	if (state.isDeferred)
-	{
-		[self assertThat:l3_to_object([state wait]) matches:l3_to_pattern(YES) sourceReference:[self sourceReferenceForCaseEvents] eventObserver:eventObserver];
-	}
-	
-	L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
-	if (tearDown)
-		[self performStep:tearDown withState:state];
-	
-	[eventObserver testEndEventWithTest:self date:[NSDate date]];
-	
-	self.eventObserver = nil;
-}
-
-
 -(bool)isComposite {
 	return NO;
 }
@@ -196,6 +134,17 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	self.failedAssertionCount += !matched;
 	return matched;
+}
+
+
+#pragma mark Visitors
+
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor inTestSuite:(L3TestSuite *)parentSuite {
+	[visitor testCase:self inTestSuite:parentSuite];
+}
+
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor {
+	[self acceptVisitor:visitor inTestSuite:nil];
 }
 
 @end

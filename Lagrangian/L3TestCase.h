@@ -18,8 +18,6 @@
 
 @property (assign, nonatomic, readonly) L3TestCaseFunction function;
 
-@property (weak, nonatomic, readonly) id<L3EventObserver> eventObserver;
-
 
 #pragma mark Steps
 
@@ -28,7 +26,7 @@
 
 #pragma mark Assertions
 
--(L3SourceReference *)sourceReferenceForCaseEvents;
+@property (strong, nonatomic, readonly) L3SourceReference *sourceReferenceForCaseEvents;
 
 -(bool)assertThat:(id)object matches:(L3Pattern)pattern sourceReference:(L3SourceReference *)assertion eventObserver:(id<L3EventObserver>)eventObserver;
 

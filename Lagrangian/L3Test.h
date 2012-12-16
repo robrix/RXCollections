@@ -2,14 +2,15 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import "L3EventObserver.h"
+#import "L3TestVisitor.h"
 
-@protocol L3EventObserver;
 @class L3TestSuite;
 
 @protocol L3Test <NSObject>
 
 @property (copy, nonatomic, readonly) NSString *name;
+
 
 #pragma mark Source reference
 
@@ -22,8 +23,10 @@
 @property (nonatomic, readonly, getter = isComposite) bool composite;
 
 
-#pragma mark Running
+#pragma mark Visiting
 
--(void)runInSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver;
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor inTestSuite:(L3TestSuite *)parentSuite;
+// assumes nil parent
+-(void)acceptVisitor:(id<L3TestVisitor>)visitor;
 
 @end

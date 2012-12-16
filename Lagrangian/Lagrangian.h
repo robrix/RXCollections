@@ -14,9 +14,13 @@
 
 #pragma mark Configuration macros
 
-// L3_TESTS implies L3_DEBUG
 #if L3_TESTS
+// L3_TESTS implies L3_DEBUG
 #define L3_DEBUG 1
+
+// L3_TESTS implies the tests should be run on launch
+#define L3_RUN_TESTS_ON_LAUNCH 1
+
 #endif
 
 // DEBUG=1 implies L3_DEBUG
