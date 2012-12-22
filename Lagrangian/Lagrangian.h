@@ -97,7 +97,7 @@
 		dispatch_once(&onceToken, ^{ \
 			suite = [L3TestSuite testSuiteWithName:@"" str file:@"" __FILE__ line:__LINE__]; \
 			l3_cond(l3_count(__VA_ARGS__), suite.stateClass = NSClassFromString(@"" l3_string(l3_state_class(__VA_ARGS__))), {});\
-			if (L3MachOImagePathForAddress) \
+			if (L3MachOImagePathForAddress != NULL) \
 				suite.imagePath = L3MachOImagePathForAddress(l3_suite_builder_function); \
 		}); \
 		return suite; \

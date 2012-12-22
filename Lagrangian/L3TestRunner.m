@@ -66,7 +66,7 @@
 static void __attribute__((constructor)) L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
 	[runner self]; // silences a warning
-	
+		
 	// fixme: this decision needs to be made elsewhere
 #if L3_RUN_TESTS_ON_LAUNCH
 	[runner runAtLaunch];

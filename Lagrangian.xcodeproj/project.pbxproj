@@ -29,9 +29,10 @@
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
 		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
 		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
-		D4A5B2D1164B4FC100338EB4 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; };
+		D4A5B2D1164B4FC100338EB4 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
 		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
+		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
 		D4AC43161648B5D300C0A25B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43151648B5D300C0A25B /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
 		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; };
@@ -46,6 +47,7 @@
 		D4BC3A8C164D54FB003AD167 /* L3TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */; };
 		D4BC3A8F164D54FB003AD167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A8D164D54FB003AD167 /* MainMenu.xib */; };
 		D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
 		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
 		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
 /* End PBXBuildFile section */
@@ -135,6 +137,8 @@
 		D4BC3A8A164D54FB003AD167 /* L3TAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TAAppDelegate.h; sourceTree = "<group>"; };
 		D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = L3TAAppDelegate.m; sourceTree = "<group>"; };
 		D4BC3A8E164D54FB003AD167 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = L3TRDynamicLibrary.h; path = Lagrangian/L3TRDynamicLibrary.h; sourceTree = SOURCE_ROOT; };
+		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
 		D4E394C31650C2BC00C72FBD /* L3TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResult.h; sourceTree = "<group>"; };
 		D4E394C41650C2BC00C72FBD /* L3TestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,6 +240,8 @@
 			children = (
 				D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */,
 				D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */,
+				D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */,
+				D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */,
 				D4A5B2C8164B4FAF00338EB4 /* Supporting Files */,
 			);
 			name = "Test Runner";
@@ -359,6 +365,7 @@
 				D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */,
 				D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */,
 				D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */,
+				D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +506,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */,
+				D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
