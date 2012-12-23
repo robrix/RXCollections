@@ -55,7 +55,9 @@
 }
 
 +(bool)isRunningInApplication {
-	return ([NSApplication class] != nil) && ([NSBundle mainBundle].bundleIdentifier != nil);
+	return
+		([NSApplication class] != nil)
+	&&	[[NSBundle mainBundle].bundlePath.pathExtension isEqualToString:@"app"];
 }
 
 
