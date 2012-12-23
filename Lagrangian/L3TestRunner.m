@@ -65,12 +65,10 @@
 
 static void __attribute__((constructor)) L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
-	[runner self]; // silences a warning
-		
-	// fixme: this decision needs to be made elsewhere
-#if L3_RUN_TESTS_ON_LAUNCH
-	[runner runAtLaunch];
-#endif
+	
+	if ([[NSProcessInfo processInfo].environment[@"L3_RUN_TESTS_ON_LAUNCH"] boolValue]) {
+		[runner runAtLaunch];
+	}
 }
 
 -(instancetype)init {
@@ -98,7 +96,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
-	if ([NSApplication class]) {
+	if (([NSApplication class] != nil) && ([NSBundle mainBundle].bundleIdentifier != nil)) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
 			self.didRunAutomatically = YES;
@@ -109,6 +107,8 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		}];
 	} else {
 		[self run];
+		
+		[self waitForTestsToComplete];
 	}
 }
 
