@@ -587,7 +587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -596,7 +596,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Test;
@@ -605,7 +605,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian Test App.app/Contents/MacOS/Lagrangian Test App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
