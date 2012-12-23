@@ -50,8 +50,6 @@ NSString * const L3TRLagrangianLibraryPathArgumentName = @"lagrangian-library-pa
 NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_LIBRARY_PATH";
 NSString * const L3RunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
 
-extern char **environ;
-
 #define L3TRTry(x) \
 	(^{ \
 		NSError *error = nil; \
@@ -65,9 +63,10 @@ int main(int argc, const char *argv[]) {
 	int result = EXIT_SUCCESS;
 	@autoreleasepool {
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSProcessInfo *processInfo = [NSProcessInfo processInfo];
 		
 		[defaults registerDefaults:@{
-		 L3TRLagrangianLibraryPathArgumentName: @"Lagrangian.dylib"
+		 L3TRLagrangianLibraryPathArgumentName: [[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.dylib"]
 		 }];
 		
 		L3TRTry([L3TRDynamicLibrary openLibraryAtPath:[defaults stringForKey:L3TRLagrangianLibraryPathArgumentName] error:&error]);
@@ -84,14 +83,19 @@ int main(int argc, const char *argv[]) {
 			
 			[runner waitForTestsToComplete];
 		} else if (command) {
-			NSDictionary *environment = [NSProcessInfo processInfo].environment;
+			NSTask *task = [NSTask new];
 			
-			NSString *dynamicLibraryPath = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
+			task.launchPath = command; // fixme: this should probably include args or something
 			
-			setenv(L3TRDynamicLibraryPathEnvironmentVariableName.UTF8String, dynamicLibraryPath.UTF8String, YES);
-			setenv(L3RunTestsOnLaunchEnvironmentVariableName.UTF8String, "YES", YES);
+			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
-			execve(command.fileSystemRepresentation, (char *const[]){ NULL }, environ);
+			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
+			environment[L3RunTestsOnLaunchEnvironmentVariableName] = @"YES";
+			
+			task.environment = environment;
+			
+			[task launch];
+			[task waitUntilExit];
 		}
 	}
 	return result;

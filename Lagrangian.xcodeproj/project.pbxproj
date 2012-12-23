@@ -116,6 +116,7 @@
 		D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCase.m; sourceTree = "<group>"; };
 		D4A5B2D6164BF15400338EB4 /* L3Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Types.h; sourceTree = "<group>"; };
 		D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestVisitor.h; sourceTree = "<group>"; };
+		D4AA625D1687C0FB0028C574 /* lagrangian-tool-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lagrangian-tool-Info.plist"; path = "Lagrangian/lagrangian-tool-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4AC43121648B5D300C0A25B /* Lagrangian.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Lagrangian.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4AC43151648B5D300C0A25B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D4AC43181648B5D300C0A25B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -243,6 +244,7 @@
 				D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */,
 				D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */,
 				D4A5B2C8164B4FAF00338EB4 /* Supporting Files */,
+				D4AA625D1687C0FB0028C574 /* lagrangian-tool-Info.plist */,
 			);
 			name = "Test Runner";
 			path = lagrangian;
@@ -615,6 +617,13 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -624,6 +633,13 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -774,6 +790,13 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Test;
