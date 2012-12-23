@@ -32,8 +32,6 @@
 
 @property (strong, nonatomic, readonly) id<L3Test> test;
 
-@property (assign, nonatomic) bool didRunAutomatically;
-
 -(void)runAtLaunch;
 
 @end
@@ -52,6 +50,15 @@
 
 @implementation L3TestRunner
 
++(bool)shouldRunTestsAtLaunch {
+	return [[NSProcessInfo processInfo].environment[@"L3_RUN_TESTS_ON_LAUNCH"] boolValue];
+}
+
++(bool)isRunningInApplication {
+	return ([NSApplication class] != nil) && ([NSBundle mainBundle].bundleIdentifier != nil);
+}
+
+
 #pragma mark Constructors
 
 +(instancetype)runner {
@@ -66,7 +73,7 @@
 static void __attribute__((constructor)) L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
 	
-	if ([[NSProcessInfo processInfo].environment[@"L3_RUN_TESTS_ON_LAUNCH"] boolValue]) {
+	if ([L3TestRunner shouldRunTestsAtLaunch]) {
 		[runner runAtLaunch];
 	}
 }
@@ -84,7 +91,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		
 		_eventObserver = _testResultBuilder;
 		
-		_queue = [NSOperationQueue new]; // should this actually be the main queue?
+		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
 		
 		_test = [L3TestSuite defaultSuite];
@@ -96,10 +103,8 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
-	if (([NSApplication class] != nil) && ([NSBundle mainBundle].bundleIdentifier != nil)) {
+	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
-			
-			self.didRunAutomatically = YES;
 			
 			[self run];
 			
@@ -130,8 +135,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark L3TestResultFormatterDelegate
 
 -(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
-	if (string)
-		printf("%s\n", string.UTF8String);
+	if (string) {
+		fprintf(stdout, "%s\n", string.UTF8String);
+		fflush(stdout);
+	}
 }
 
 
@@ -152,28 +159,29 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
 	[self.testResultFormatter testResultBuilder:builder testResultDidFinish:result];
 	
-	if (result.parent == nil && self.didRunAutomatically) {
+	if (result.parent == nil && [self.class shouldRunTestsAtLaunch]) {
 		if([NSUserNotification class]) { // weak linking
-			NSUserNotification *notification = [NSUserNotification new];
-			notification.title = result.succeeded?
-			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
-			:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
-			notification.subtitle = [NSString stringWithFormat:@"%@, %@, %@",
-									 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
-									 [L3StringInflections cardinalizeNoun:@"assertion" count:result.assertionCount],
-									 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount]];
-			[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+			[self.queue addOperationWithBlock:^{
+				NSUserNotification *notification = [NSUserNotification new];
+				notification.title = result.succeeded?
+				NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
+				:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
+				notification.subtitle = [NSString stringWithFormat:@"%@, %@, %@",
+										 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
+										 [L3StringInflections cardinalizeNoun:@"assertion" count:result.assertionCount],
+										 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount]];
+				[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+			}];
 		}
 		
 		[self.queue addOperationWithBlock:^{
 			system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
 			
-			if ([NSApplication class])
+			if ([self.class isRunningInApplication])
 				[[NSApplication sharedApplication] terminate:nil];
 			else
 				exit(0);
 		}];
-		
 	}
 }
 
