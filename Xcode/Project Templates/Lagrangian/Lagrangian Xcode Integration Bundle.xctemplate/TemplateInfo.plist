@@ -12,14 +12,14 @@
 	</array> -->
 	
 	<key>Description</key>
-	<string>This target exists to convince Xcode to running Lagrangian’s tests.</string>
+	<string>This target exists to convince Xcode to running Lagrangian’s tests. You only need one of these per project, and you don’t need to add any sources or resources to it.</string>
 	<key>Concrete</key>
 	<true/>
 	
 	<key>SortOrder</key>
 	<integer>1</integer>
 	
-	<key>Options</key>
+	<!-- <key>Options</key>
 	<array>
 		<dict>
 			<key>Identifier</key>
@@ -37,7 +37,7 @@
 			<key>Type</key>
 			<string>text</string>
 		</dict>
-	</array>
+	</array> -->
 	
 	<key>TargetOnly</key>
 	<true/>
@@ -53,11 +53,12 @@
 			<key>SharedSettings</key>
 			<dict>
 				<key>PRODUCT_NAME</key>
-				<string>$(TARGET_NAME)</string>
+				<string>Lagrangian</string>
 				<key>WRAPPER_EXTENSION</key>
 				<string>octest</string>
 				<key>TEST_HOST</key>
-				<string>$(BUILT_PRODUCTS_DIR)/___VARIABLE_testHost___.app/Contents/MacOS/___VARIABLE_testHost___</string>
+				<string>$(BUILT_PRODUCTS_DIR)/lagrangian</string>
+				<!-- This expects lagrangian and its test runner to be built alongside the tests. A better solution would be to find a standard location for it and use that instead; perhaps in /usr/local/bin via Homebrew? -->
 			</dict>
 		</dict>
 	</array>
