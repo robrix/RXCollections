@@ -38,12 +38,6 @@
 		D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
 		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
 		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
-		D4BC3A83164D54FB003AD167 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A81164D54FB003AD167 /* InfoPlist.strings */; };
-		D4BC3A85164D54FB003AD167 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A84164D54FB003AD167 /* main.m */; };
-		D4BC3A89164D54FB003AD167 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A87164D54FB003AD167 /* Credits.rtf */; };
-		D4BC3A8C164D54FB003AD167 /* L3TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */; };
-		D4BC3A8F164D54FB003AD167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A8D164D54FB003AD167 /* MainMenu.xib */; };
-		D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
 		D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43181648B5D300C0A25B /* AppKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
@@ -53,13 +47,6 @@
 
 /* Begin PBXContainerItemProxy section */
 		D4A5B2CF164B4FBA00338EB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4AC43091648B5D300C0A25B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D4AC43111648B5D300C0A25B;
-			remoteInfo = Lagrangian;
-		};
-		D4BC3A94164D552A003AD167 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4AC43091648B5D300C0A25B /* Project object */;
 			proxyType = 1;
@@ -126,15 +113,6 @@
 		D4B21CB8168924A500D5986E /* L3Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Configuration.h; sourceTree = "<group>"; };
 		D4BC3A5D164D483E003AD167 /* L3TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestRunner.h; sourceTree = "<group>"; };
 		D4BC3A5E164D483E003AD167 /* L3TestRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestRunner.m; sourceTree = "<group>"; };
-		D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lagrangian Test App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4BC3A80164D54FB003AD167 /* Lagrangian Test App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lagrangian Test App-Info.plist"; sourceTree = "<group>"; };
-		D4BC3A82164D54FB003AD167 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D4BC3A84164D54FB003AD167 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D4BC3A86164D54FB003AD167 /* Lagrangian Test App-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lagrangian Test App-Prefix.pch"; sourceTree = "<group>"; };
-		D4BC3A88164D54FB003AD167 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		D4BC3A8A164D54FB003AD167 /* L3TAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TAAppDelegate.h; sourceTree = "<group>"; };
-		D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = L3TAAppDelegate.m; sourceTree = "<group>"; };
-		D4BC3A8E164D54FB003AD167 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = L3TRDynamicLibrary.h; path = Lagrangian/L3TRDynamicLibrary.h; sourceTree = SOURCE_ROOT; };
 		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
 		D4E394C31650C2BC00C72FBD /* L3TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResult.h; sourceTree = "<group>"; };
@@ -157,14 +135,6 @@
 			files = (
 				D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */,
 				D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D4BC3A78164D54FB003AD167 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +229,6 @@
 			children = (
 				D4AC431B1648B5D300C0A25B /* Library */,
 				D4A5B2C5164B4FAF00338EB4 /* Test Runner */,
-				D4BC3A7E164D54FB003AD167 /* Lagrangian Test App */,
 				D4AC43141648B5D300C0A25B /* Frameworks */,
 				D4AC43131648B5D300C0A25B /* Products */,
 			);
@@ -270,7 +239,6 @@
 			children = (
 				D4AC43121648B5D300C0A25B /* Lagrangian.dylib */,
 				D4A5B2C1164B4FAF00338EB4 /* lagrangian */,
-				D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */,
 				D43D8B721654C27000E6DE07 /* Lagrangian.octest */,
 			);
 			name = Products;
@@ -305,29 +273,6 @@
 			isa = PBXGroup;
 			children = (
 				D4AC431D1648B5D300C0A25B /* Lagrangian-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D4BC3A7E164D54FB003AD167 /* Lagrangian Test App */ = {
-			isa = PBXGroup;
-			children = (
-				D4BC3A8A164D54FB003AD167 /* L3TAAppDelegate.h */,
-				D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */,
-				D4BC3A8D164D54FB003AD167 /* MainMenu.xib */,
-				D4BC3A7F164D54FB003AD167 /* Supporting Files */,
-			);
-			path = "Lagrangian Test App";
-			sourceTree = "<group>";
-		};
-		D4BC3A7F164D54FB003AD167 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D4BC3A80164D54FB003AD167 /* Lagrangian Test App-Info.plist */,
-				D4BC3A81164D54FB003AD167 /* InfoPlist.strings */,
-				D4BC3A84164D54FB003AD167 /* main.m */,
-				D4BC3A86164D54FB003AD167 /* Lagrangian Test App-Prefix.pch */,
-				D4BC3A87164D54FB003AD167 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -409,25 +354,6 @@
 			productReference = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
-		D4BC3A7A164D54FB003AD167 /* Lagrangian Test App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D4BC3A90164D54FB003AD167 /* Build configuration list for PBXNativeTarget "Lagrangian Test App" */;
-			buildPhases = (
-				D4BC3A77164D54FB003AD167 /* Sources */,
-				D4BC3A78164D54FB003AD167 /* Frameworks */,
-				D4BC3A79164D54FB003AD167 /* Resources */,
-				D431EA74165965ED0033BCC8 /* Include test communicator XPC service */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D4BC3A95164D552A003AD167 /* PBXTargetDependency */,
-			);
-			name = "Lagrangian Test App";
-			productName = "Lagrangian Test App";
-			productReference = D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -451,42 +377,10 @@
 			targets = (
 				D4AC43111648B5D300C0A25B /* Lagrangian */,
 				D4A5B2C0164B4FAF00338EB4 /* lagrangian */,
-				D4BC3A7A164D54FB003AD167 /* Lagrangian Test App */,
 				D43D8B711654C27000E6DE07 /* Lagrangian */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		D4BC3A79164D54FB003AD167 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4BC3A83164D54FB003AD167 /* InfoPlist.strings in Resources */,
-				D4BC3A89164D54FB003AD167 /* Credits.rtf in Resources */,
-				D4BC3A8F164D54FB003AD167 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D431EA74165965ED0033BCC8 /* Include test communicator XPC service */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Include test communicator XPC service";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    echo \"note: Release build; not including test XPC service\"\nelse\n    echo \"note: Test-compatible build; including test XPC service\"\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D4A5B2BD164B4FAF00338EB4 /* Sources */ = {
@@ -519,15 +413,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D4BC3A77164D54FB003AD167 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D4BC3A85164D54FB003AD167 /* main.m in Sources */,
-				D4BC3A8C164D54FB003AD167 /* L3TAAppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -536,39 +421,7 @@
 			target = D4AC43111648B5D300C0A25B /* Lagrangian */;
 			targetProxy = D4A5B2CF164B4FBA00338EB4 /* PBXContainerItemProxy */;
 		};
-		D4BC3A95164D552A003AD167 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D4AC43111648B5D300C0A25B /* Lagrangian */;
-			targetProxy = D4BC3A94164D552A003AD167 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		D4BC3A81164D54FB003AD167 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D4BC3A82164D54FB003AD167 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		D4BC3A87164D54FB003AD167 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D4BC3A88164D54FB003AD167 /* en */,
-			);
-			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		D4BC3A8D164D54FB003AD167 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D4BC3A8E164D54FB003AD167 /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D43D8B741654C27000E6DE07 /* Debug */ = {
@@ -696,30 +549,6 @@
 			};
 			name = Release;
 		};
-		D4BC3A91164D54FB003AD167 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian Test App/Lagrangian Test App-Prefix.pch";
-				INFOPLIST_FILE = "Lagrangian Test App/Lagrangian Test App-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		D4BC3A92164D54FB003AD167 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian Test App/Lagrangian Test App-Prefix.pch";
-				INFOPLIST_FILE = "Lagrangian Test App/Lagrangian Test App-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -755,15 +584,6 @@
 			buildConfigurations = (
 				D4AC43241648B5D300C0A25B /* Debug */,
 				D4AC43251648B5D300C0A25B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D4BC3A90164D54FB003AD167 /* Build configuration list for PBXNativeTarget "Lagrangian Test App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D4BC3A91164D54FB003AD167 /* Debug */,
-				D4BC3A92164D54FB003AD167 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
