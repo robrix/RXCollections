@@ -1,27 +1,49 @@
-- config macro to remove the prefix?
+# Planning
+
+This document is an overall todo/fixme list for the project.
+
+## Major goals
+
+- @l3_benchmark
+- @l3_invariant
+- @l3_precondition
+- @l3_postcondition
+- document generation (as a visitor?)
+- iOS support (how will this work? Xcode-style bundle injection?)
+- assertions to test exceptions
+- handling of exceptions (as unexpected failures)
+- a better entry point for debugging failed assertions (analogous to objc_exception_throw, perhaps l3_assertion_fail)
+- tests concurrent with one another
+- tests run only on the main thread
+- in debug builds, when enabled, add some way to list and trigger test suites and individual cases
+
+## Configuration
+
+- a configuration macro to remove the prefixes on definition names, e.g. l3_assert
+
+## Tags
+
+- tags for tests:
+
+	@l3_test("use of tags", @tag, @other_tag) { … }
+
+- use tags to define suites
+- include a tag for the Mach-O image (by name?) by default
+
+## Test runners
+
+- don’t pass predicate formats in an env var, that’s insane
+- switch back to Xcode by means of the tool, and only do that if running from Xcode in the first place (inspect parent process stack?)
+
+## Open questions
+
+- should @l3_test, @l3_suite, etc, drop the @?
+- how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like fun!)
 - differential-prototypal suite inheritance?
-- algebra/visitor protocol for test suites & cases
-- documentation generation
-	- thinking this would use a visitor over tests to generate docs for them
-- running in an app should run only that app’s tests, not L3’s own as well, by default
-- test runner tool for running tests on bundles and libraries
-- iOS compatibility
-- the runner needs some idea of scope for tests
-	- such that we can say “only this suite,” “only this case,” or more interesting patterns—“only suites matching this regexp with cases matching that one” or “only suites defined in this bundle”
-	- maybe like paths: bundle/suite/suite/case. main/**/foo would run any case named “foo” in any suite defined in the main bundle (this sounds a little like xpath)
-	- how do we tell what Mach-O binary a given test suite/case came from? if we can figure that out we can compare it against -[NSBundle mainBundle], I think
-- ui to show test results in test builds
-- ui to run test suites and show their results in debug builds
-- some way to send test results to another process (maybe running on a different machine)
-	- network protocol serializing L3TestResult instances into JSON to send across the wire
-- test that release builds really don’t have the test methods, classes, etc compiled in (dead code stripped)
-- some way for test suites to indicate that they need to be run on the main queue
-- some way for test suites to indicate that they can be concurrent (I am thinking of this as dispatch_async to a private concurrent dispatch_queue_t where “normal” test invocations are dispatch_barrier_async)
 - mess around with multiple suites per file; does it make any sense? is it useful?
 	- declaring common test steps in a suite in another file sounds more useful
 - can tests be defined in headers? is that sensible at all?
-- how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like a lot of fun.)
-- exception handling
-- patterns to match exceptions?
+
+## Fixmes
+
 - test the assertion patterns
-- optionally break into the debugger on assertion failure? or just have people add a breakpoint on assertion failures?
