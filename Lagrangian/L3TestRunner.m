@@ -11,6 +11,9 @@
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
 
+NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
+NSString * const L3TestRunnerSuitePredicate = @"L3_SUITE_PREDICATE";
+
 @l3_suite_interface (L3TestRunner) <L3EventObserver>
 @property L3TestRunner *runner;
 @property NSMutableArray *events;

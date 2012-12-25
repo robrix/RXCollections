@@ -5,6 +5,9 @@
 #import <Foundation/Foundation.h>
 #import "L3Configuration.h"
 
+extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
+extern NSString * const L3TestRunnerSuitePredicate;
+
 @class L3TestSuite;
 
 #if L3_DEBUG

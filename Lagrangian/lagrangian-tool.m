@@ -48,7 +48,6 @@ static NSString *L3TRPathListByAddingPath(NSString *list, NSString *path) {
 NSString * const L3TRLagrangianLibraryPathArgumentName = @"lagrangian-library-path";
 
 NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_LIBRARY_PATH";
-NSString * const L3RunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
 
 #define L3TRTry(x) \
 	(^{ \
@@ -71,7 +70,9 @@ int main(int argc, const char *argv[]) {
 		 L3TRLagrangianLibraryPathArgumentName: [[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.dylib"]
 		 }];
 		
-		L3TRTry([L3TRDynamicLibrary openLibraryAtPath:[defaults stringForKey:L3TRLagrangianLibraryPathArgumentName] error:&error]);
+		L3TRDynamicLibrary *lagrangianLibrary = L3TRTry([L3TRDynamicLibrary openLibraryAtPath:[defaults stringForKey:L3TRLagrangianLibraryPathArgumentName] error:&error]);
+		
+		NSString *L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerRunTestsOnLaunchEnvironmentVariableName" error:&error]);
 		
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
@@ -92,7 +93,7 @@ int main(int argc, const char *argv[]) {
 			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
 			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
-			environment[L3RunTestsOnLaunchEnvironmentVariableName] = @"YES";
+			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
 			
 			task.environment = environment;
 			
