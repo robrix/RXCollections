@@ -8,13 +8,24 @@ This document is an overall todo/fixme list for the project.
 - @l3_invariant
 - @l3_precondition
 - @l3_postcondition
-- document generation (as a visitor?)
+
+- documentation generation (as a visitor?)
+
 - iOS support (how will this work? Xcode-style bundle injection?)
+	- for apps
+	- for static libraries
+	- for static frameworks
+- ship as a static framework for iOS
+
+- ship as a framework for OS X
+
 - assertions to test exceptions
 - handling of exceptions (as unexpected failures)
 - a better entry point for debugging failed assertions (analogous to objc_exception_throw, perhaps l3_assertion_fail)
+
 - tests concurrent with one another
 - tests run only on the main thread
+
 - in debug builds, when enabled, add some way to list and trigger test suites and individual cases
 
 ## Configuration
@@ -38,6 +49,7 @@ This document is an overall todo/fixme list for the project.
 ## Open questions
 
 - should @l3_test, @l3_suite, etc, drop the @?
+	- @jspahrsummers uses @ only when it feels like something should be a language feature.
 - how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like fun!)
 - differential-prototypal suite inheritance?
 - mess around with multiple suites per file; does it make any sense? is it useful?
