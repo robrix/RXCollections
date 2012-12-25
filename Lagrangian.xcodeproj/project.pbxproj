@@ -127,6 +127,7 @@
 		D4AC431F1648B5D300C0A25B /* Lagrangian.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lagrangian.m; sourceTree = "<group>"; };
 		D4B152B21653969E002858C3 /* L3StringInflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3StringInflections.h; sourceTree = "<group>"; };
 		D4B152B31653969E002858C3 /* L3StringInflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3StringInflections.m; sourceTree = "<group>"; };
+		D4B21CB8168924A500D5986E /* L3Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Configuration.h; sourceTree = "<group>"; };
 		D4BC3A5D164D483E003AD167 /* L3TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestRunner.h; sourceTree = "<group>"; };
 		D4BC3A5E164D483E003AD167 /* L3TestRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestRunner.m; sourceTree = "<group>"; };
 		D4BC3A7B164D54FB003AD167 /* Lagrangian Test App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lagrangian Test App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,6 +307,7 @@
 				D426E495165286F3001C9105 /* Utilities */,
 				D4AC431E1648B5D300C0A25B /* Lagrangian.h */,
 				D4AC431F1648B5D300C0A25B /* Lagrangian.m */,
+				D4B21CB8168924A500D5986E /* L3Configuration.h */,
 				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
 				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
 				D40DE69616501B000033DE88 /* Tests */,
@@ -594,15 +596,6 @@
 			};
 			name = Debug;
 		};
-		D43D8B751654C27000E6DE07 /* Test */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Test;
-		};
 		D43D8B761654C27000E6DE07 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -743,76 +736,6 @@
 			};
 			name = Release;
 		};
-		D4BC3A96164D5614003AD167 /* Test */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"L3_TESTS=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-			};
-			name = Test;
-		};
-		D4BC3A97164D5614003AD167 /* Test */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Test;
-		};
-		D4BC3A98164D5614003AD167 /* Test */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
-				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"$(INFOPLIST_FILE)",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Test;
-		};
-		D4BC3A99164D5614003AD167 /* Test */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian Test App/Lagrangian Test App-Prefix.pch";
-				INFOPLIST_FILE = "Lagrangian Test App/Lagrangian Test App-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Test;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -820,7 +743,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D43D8B741654C27000E6DE07 /* Debug */,
-				D43D8B751654C27000E6DE07 /* Test */,
 				D43D8B761654C27000E6DE07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -830,7 +752,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4A5B2CD164B4FAF00338EB4 /* Debug */,
-				D4BC3A98164D5614003AD167 /* Test */,
 				D4A5B2CE164B4FAF00338EB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -840,7 +761,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4AC43211648B5D300C0A25B /* Debug */,
-				D4BC3A96164D5614003AD167 /* Test */,
 				D4AC43221648B5D300C0A25B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -850,7 +770,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4AC43241648B5D300C0A25B /* Debug */,
-				D4BC3A97164D5614003AD167 /* Test */,
 				D4AC43251648B5D300C0A25B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -860,7 +779,6 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4BC3A91164D54FB003AD167 /* Debug */,
-				D4BC3A99164D5614003AD167 /* Test */,
 				D4BC3A92164D54FB003AD167 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

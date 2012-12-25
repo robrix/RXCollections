@@ -3,6 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "L3Configuration.h"
 #import "L3SourceReference.h"
 #import "L3Assertions.h"
 #import "L3PreprocessorUtilities.h"
@@ -11,29 +12,6 @@
 #import "L3TestState.h"
 #import "L3TestStep.h"
 #import "L3TestSuite.h"
-
-#pragma mark Configuration macros
-
-#if L3_TESTS
-// L3_TESTS implies L3_DEBUG
-#define L3_DEBUG 1
-
-// L3_TESTS implies the tests should be run on launch
-#define L3_RUN_TESTS_ON_LAUNCH 1
-
-#endif
-
-// DEBUG=1 implies L3_DEBUG
-#if DEBUG
-#define L3_DEBUG 1
-#endif
-
-#if L3_DEBUG
-#endif
-
-#if L3_RUN_TESTS_ON_LAUNCH
-#endif
-
 
 #pragma mark Test suites
 
@@ -84,7 +62,7 @@
 	l3_cond(l3_count(__VA_ARGS__), l3_suite_interface_implementation(identifier, __VA_ARGS__), l3_suite_interface_implementation(identifier, #identifier))\
 
 
-#if L3_DEBUG // test or debug build
+#if L3_INCLUDE_TESTS // debug build
 
 #define l3_suite_builder_function \
 	l3_identifier(test_suite_builder_, __LINE__)
@@ -155,7 +133,7 @@
 
 #pragma mark Test cases
 
-#if L3_DEBUG // test or debug build
+#if L3_INCLUDE_TESTS // debug build
 
 #define l3_step(str) \
 	class L3TestStep; \
@@ -223,7 +201,7 @@
 #define l3_current_suite				l3_paste(l3_domain, current_suite)
 
 
-#if L3_DEBUG
+#if L3_INCLUDE_TESTS
 
 static L3TestSuite *l3_current_suite = nil;
 
