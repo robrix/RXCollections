@@ -62,6 +62,8 @@ NSString * const L3RunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_L
 int main(int argc, const char *argv[]) {
 	int result = EXIT_SUCCESS;
 	@autoreleasepool {
+		l3_main(argc, argv);
+		
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		NSProcessInfo *processInfo = [NSProcessInfo processInfo];
 		
