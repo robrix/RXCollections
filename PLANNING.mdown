@@ -44,7 +44,7 @@ This document is an overall todo/fixme list for the project.
 ## Test runners
 
 - don’t pass predicate formats in an env var, that’s insane
-- switch back to Xcode by means of the tool, and only do that if running from Xcode in the first place (inspect parent process stack?)
+- switch back to Xcode by means of the tool (not L3TestRunner), and only do that if running from Xcode in the first place (inspect parent process stack?)
 
 ## Open questions
 
@@ -59,3 +59,4 @@ This document is an overall todo/fixme list for the project.
 ## Fixmes
 
 - test the assertion patterns
+- exit() with EXIT_SUCCESS or EXIT_FAILURE depending on whether the tests succeed or fail
