@@ -83,6 +83,8 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
+			// fixme: set a suite predicate
+			
 			[runner run];
 			
 			[runner waitForTestsToComplete];
