@@ -8,6 +8,9 @@
 
 @interface L3TestRunner : NSObject
 
++(bool)shouldRunTestsAtLaunch;
++(bool)isRunningInApplication;
+
 +(instancetype)runner;
 
 -(void)run; // starts running asynchronously

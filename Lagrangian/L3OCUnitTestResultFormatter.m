@@ -45,7 +45,7 @@
 	} else {
 		formatted = [NSString stringWithFormat:@"Test Case '%@' started.", [self methodNameForTestResult:result]];
 	}
-	[self.delegate formatter:self didFormatResult:formatted];
+	[self.delegate formatter:self didFormatResult:result asString:formatted];
 }
 
 @l3_test("do not format assertion successes") {
@@ -70,7 +70,7 @@
 						   sourceReference.subjectSource,
 						   sourceReference.subject,
 						   sourceReference.patternSource];
-	[self.delegate formatter:self didFormatResult:formatted];
+	[self.delegate formatter:self didFormatResult:result asString:formatted];
 }
 
 @l3_test("format test suite end events with the sums of the test cases, failures, and durations they encompassed") {
@@ -131,7 +131,7 @@
 			formatted = [note stringByAppendingString:formatted];
 		}
 	}
-	[self.delegate formatter:self didFormatResult:formatted];
+	[self.delegate formatter:self didFormatResult:result asString:formatted];
 }
 
 
@@ -169,7 +169,7 @@
 
 @l3_suite_implementation (L3OCUnitTestResultFormatter)
 
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(L3TestResult *)result asString:(NSString *)string {
 	self.formattedString = string;
 }
 
