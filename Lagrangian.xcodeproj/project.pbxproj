@@ -33,20 +33,19 @@
 		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
 		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
 		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
-		D4AC43161648B5D300C0A25B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43151648B5D300C0A25B /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
 		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; };
 		D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
 		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
 		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
-		D4BC3A62164D4CB9003AD167 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC431A1648B5D300C0A25B /* Foundation.framework */; };
-		D4BC3A7D164D54FB003AD167 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43151648B5D300C0A25B /* Cocoa.framework */; };
 		D4BC3A83164D54FB003AD167 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A81164D54FB003AD167 /* InfoPlist.strings */; };
 		D4BC3A85164D54FB003AD167 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A84164D54FB003AD167 /* main.m */; };
 		D4BC3A89164D54FB003AD167 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A87164D54FB003AD167 /* Credits.rtf */; };
 		D4BC3A8C164D54FB003AD167 /* L3TAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A8B164D54FB003AD167 /* L3TAAppDelegate.m */; };
 		D4BC3A8F164D54FB003AD167 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4BC3A8D164D54FB003AD167 /* MainMenu.xib */; };
 		D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
+		D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43181648B5D300C0A25B /* AppKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
 		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
 		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
@@ -118,10 +117,7 @@
 		D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestVisitor.h; sourceTree = "<group>"; };
 		D4AA625D1687C0FB0028C574 /* lagrangian-tool-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lagrangian-tool-Info.plist"; path = "Lagrangian/lagrangian-tool-Info.plist"; sourceTree = SOURCE_ROOT; };
 		D4AC43121648B5D300C0A25B /* Lagrangian.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Lagrangian.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4AC43151648B5D300C0A25B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D4AC43181648B5D300C0A25B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		D4AC43191648B5D300C0A25B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D4AC431A1648B5D300C0A25B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4AC431D1648B5D300C0A25B /* Lagrangian-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lagrangian-Prefix.pch"; sourceTree = "<group>"; };
 		D4AC431E1648B5D300C0A25B /* Lagrangian.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lagrangian.h; sourceTree = "<group>"; };
 		D4AC431F1648B5D300C0A25B /* Lagrangian.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lagrangian.m; sourceTree = "<group>"; };
@@ -159,8 +155,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4BC3A62164D4CB9003AD167 /* Foundation.framework in Frameworks */,
-				D4AC43161648B5D300C0A25B /* Cocoa.framework in Frameworks */,
+				D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */,
+				D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,7 +165,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4BC3A93164D551C003AD167 /* Lagrangian.dylib in Frameworks */,
-				D4BC3A7D164D54FB003AD167 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,21 +279,10 @@
 		D4AC43141648B5D300C0A25B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4AC43151648B5D300C0A25B /* Cocoa.framework */,
 				D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */,
-				D4AC43171648B5D300C0A25B /* Other Frameworks */,
+				D4AC43181648B5D300C0A25B /* AppKit.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D4AC43171648B5D300C0A25B /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D4AC43181648B5D300C0A25B /* AppKit.framework */,
-				D4AC43191648B5D300C0A25B /* CoreData.framework */,
-				D4AC431A1648B5D300C0A25B /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		D4AC431B1648B5D300C0A25B /* Library */ = {
