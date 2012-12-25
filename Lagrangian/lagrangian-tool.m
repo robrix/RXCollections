@@ -73,6 +73,7 @@ int main(int argc, const char *argv[]) {
 		L3TRDynamicLibrary *lagrangianLibrary = L3TRTry([L3TRDynamicLibrary openLibraryAtPath:[defaults stringForKey:L3TRLagrangianLibraryPathArgumentName] error:&error]);
 		
 		NSString *L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerRunTestsOnLaunchEnvironmentVariableName" error:&error]);
+		NSString *L3TestRunnerSuitePredicateEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerSuitePredicateEnvironmentVariableName" error:&error]);
 		
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
@@ -94,6 +95,8 @@ int main(int argc, const char *argv[]) {
 			
 			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
 			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
+			// fixme: there’s no possible way that passing the predicate format as the literal body of an environment variable could ever go wrong
+			environment[L3TestRunnerSuitePredicateEnvironmentVariableName] = [NSString stringWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", command.lastPathComponent];
 			
 			task.environment = environment;
 			

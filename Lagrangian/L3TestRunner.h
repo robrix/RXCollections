@@ -6,7 +6,7 @@
 #import "L3Configuration.h"
 
 extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
-extern NSString * const L3TestRunnerSuitePredicate;
+extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
 @class L3TestSuite;
 
