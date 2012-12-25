@@ -11,6 +11,9 @@
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
 
+NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
+NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_PREDICATE";
+
 @l3_suite_interface (L3TestRunner) <L3EventObserver>
 @property L3TestRunner *runner;
 @property NSMutableArray *events;
@@ -51,13 +54,20 @@
 @implementation L3TestRunner
 
 +(bool)shouldRunTestsAtLaunch {
-	return [[NSProcessInfo processInfo].environment[@"L3_RUN_TESTS_ON_LAUNCH"] boolValue];
+	return [[NSProcessInfo processInfo].environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] boolValue];
 }
 
 +(bool)isRunningInApplication {
 	return
 		([NSApplication class] != nil)
 	&&	[[NSBundle mainBundle].bundlePath.pathExtension isEqualToString:@"app"];
+}
+
++(NSPredicate *)defaultPredicate {
+	NSString *environmentPredicate = [NSProcessInfo processInfo].environment[L3TestRunnerSuitePredicateEnvironmentVariableName];
+	return environmentPredicate?
+		[NSPredicate predicateWithFormat:environmentPredicate]
+	:	nil;
 }
 
 
@@ -97,6 +107,8 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_queue.maxConcurrentOperationCount = 1;
 		
 		_test = [L3TestSuite defaultSuite];
+		
+		_testSuitePredicate = [self.class defaultPredicate];
 	}
 	return self;
 }
@@ -115,6 +127,15 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	} else {
 		[self.queue addOperationWithBlock:^{
 			[self run];
+			
+			[self.queue addOperationWithBlock:^{
+				system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
+				
+				if ([self.class isRunningInApplication])
+					[[NSApplication sharedApplication] terminate:nil];
+				else
+					exit(0);
+			}];
 		}];
 	}
 }
@@ -140,17 +161,6 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 	if (string) {
 		fprintf(stdout, "%s\n", string.UTF8String);
 		fflush(stdout);
-	}
-	
-	if (result.parent == nil && result.endDate != nil && [self.class shouldRunTestsAtLaunch]) {
-		[self.queue addOperationWithBlock:^{
-			system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
-			
-			if ([self.class isRunningInApplication])
-				[[NSApplication sharedApplication] terminate:nil];
-			else
-				exit(0);
-		}];
 	}
 }
 
