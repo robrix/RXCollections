@@ -3,11 +3,34 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
+#import "L3Configuration.h"
 
 @class L3TestSuite;
 
+#if L3_DEBUG
+
+#define l3_main(argc, argv) \
+	do { \
+		if ([NSClassFromString(@"L3TestRunner") shouldRunTestsAtLaunch]) { \
+			dispatch_main(); \
+		} \
+	} while(0)
+
+#else
+
+#define l3_main(argc, argv) \
+	do {} while(0)
+
+#endif
+
 @interface L3TestRunner : NSObject
 
++(bool)shouldRunTestsAtLaunch;
++(bool)isRunningInApplication;
+
 +(instancetype)runner;
+
+-(void)run; // starts running asynchronously
+-(void)waitForTestsToComplete;
 
 @end

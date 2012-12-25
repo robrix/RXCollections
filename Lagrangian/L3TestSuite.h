@@ -11,7 +11,7 @@
 extern NSString * const L3TestSuiteSetUpStepName;
 extern NSString * const L3TestSuiteTearDownStepName;
 
-extern NSString *L3MachOImagePathForAddress(void *address);
+extern NSString *L3MachOImagePathForAddress(void *address) __attribute__((weak_import));
 
 
 @interface L3TestSuite : NSObject <L3Test>

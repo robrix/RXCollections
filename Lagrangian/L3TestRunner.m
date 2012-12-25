@@ -17,7 +17,7 @@
 @end
 
 
-@interface L3TestRunner () <L3TestResultBuilderDelegate, L3TestResultFormatterDelegate, L3TestVisitor>
+@interface L3TestRunner () <L3TestResultFormatterDelegate, L3TestVisitor>
 
 @property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
 @property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
@@ -31,8 +31,6 @@
 @property (strong, nonatomic) NSPredicate *testSuitePredicate;
 
 @property (strong, nonatomic, readonly) id<L3Test> test;
-
-@property (assign, nonatomic) bool didRunAutomatically;
 
 -(void)runAtLaunch;
 
@@ -52,6 +50,17 @@
 
 @implementation L3TestRunner
 
++(bool)shouldRunTestsAtLaunch {
+	return [[NSProcessInfo processInfo].environment[@"L3_RUN_TESTS_ON_LAUNCH"] boolValue];
+}
+
++(bool)isRunningInApplication {
+	return
+		([NSApplication class] != nil)
+	&&	[[NSBundle mainBundle].bundlePath.pathExtension isEqualToString:@"app"];
+}
+
+
 #pragma mark Constructors
 
 +(instancetype)runner {
@@ -65,10 +74,10 @@
 
 static void __attribute__((constructor)) L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
-	[runner self]; // silences a warning
-#if L3_RUN_TESTS_ON_LAUNCH
-	[runner runAtLaunch];
-#endif
+	
+	if ([L3TestRunner shouldRunTestsAtLaunch]) {
+		[runner runAtLaunch];
+	}
 }
 
 -(instancetype)init {
@@ -76,15 +85,15 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		_mutableTests = [NSMutableArray new];
 		_mutableTestsByName = [NSMutableDictionary new];
 		
-		_testResultBuilder = [L3TestResultBuilder new];
-		_testResultBuilder.delegate = self;
-		
 		_testResultFormatter = [L3OCUnitTestResultFormatter new];
 		_testResultFormatter.delegate = self;
 		
+		_testResultBuilder = [L3TestResultBuilder new];
+		_testResultBuilder.delegate = _testResultFormatter;
+		
 		_eventObserver = _testResultBuilder;
 		
-		_queue = [NSOperationQueue new]; // should this actually be the main queue?
+		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
 		
 		_test = [L3TestSuite defaultSuite];
@@ -96,18 +105,26 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
-	if ([NSApplication class]) {
+	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
-			self.didRunAutomatically = YES;
-			
-			[self runTest:self.test];
+			[self run];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 		}];
 	} else {
-		[self runTest:self.test];
+		[self.queue addOperationWithBlock:^{
+			[self run];
+		}];
 	}
+}
+
+-(void)run {
+	[self runTest:self.test];
+}
+
+-(void)waitForTestsToComplete {
+	[self.queue waitUntilAllOperationsAreFinished];
 }
 
 -(void)runTest:(id<L3Test>)test {
@@ -119,51 +136,21 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 
 #pragma mark L3TestResultFormatterDelegate
 
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string {
-	if (string)
-		printf("%s\n", string.UTF8String);
-}
-
-
-#pragma mark L3TestResultBuilderDelegate
-
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidStart:(L3TestResult *)result {
-	[self.testResultFormatter testResultBuilder:builder testResultDidStart:result];
-}
-
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidSucceedWithSourceReference:(L3SourceReference *)sourceReference {
-	[self.testResultFormatter testResultBuilder:builder testResult:result assertionDidSucceedWithSourceReference:sourceReference];
-}
-
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
-	[self.testResultFormatter testResultBuilder:builder testResult:result assertionDidFailWithSourceReference:sourceReference];
-}
-
--(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
-	[self.testResultFormatter testResultBuilder:builder testResultDidFinish:result];
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(L3TestResult *)result asString:(NSString *)string {
+	if (string) {
+		fprintf(stdout, "%s\n", string.UTF8String);
+		fflush(stdout);
+	}
 	
-	if (result.parent == nil && self.didRunAutomatically) {
-		if([NSUserNotification class]) { // weak linking
-			NSUserNotification *notification = [NSUserNotification new];
-			notification.title = result.succeeded?
-			NSLocalizedString(@"Tests passed", @"The title of user notifications shown when all tests passed.")
-			:	NSLocalizedString(@"Tests failed", @"The title of user notifications shown when one or more tests failed.");
-			notification.subtitle = [NSString stringWithFormat:@"%@, %@, %@",
-									 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
-									 [L3StringInflections cardinalizeNoun:@"assertion" count:result.assertionCount],
-									 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount]];
-			[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-		}
-		
+	if (result.parent == nil && result.endDate != nil && [self.class shouldRunTestsAtLaunch]) {
 		[self.queue addOperationWithBlock:^{
 			system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
 			
-			if ([NSApplication class])
+			if ([self.class isRunningInApplication])
 				[[NSApplication sharedApplication] terminate:nil];
 			else
 				exit(0);
 		}];
-		
 	}
 }
 
@@ -177,7 +164,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	[test.runner testCase:testCase inTestSuite:nil];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
 		NSDictionary *event = test.events[0];
@@ -191,7 +178,7 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	
 	[test.runner testCase:testCase inTestSuite:nil];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1));
 	NSDictionary *event = test.events.lastObject;
@@ -211,7 +198,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testCase:testCase inTestSuite:suite];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(2))) {
 		NSDictionary *event = test.events[test.events.count - 2];
@@ -251,7 +238,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
 		NSDictionary *event = test.events[0];
@@ -265,7 +252,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
-	[test.runner.queue waitUntilAllOperationsAreFinished];
+	[test.runner waitForTestsToComplete];
 	
 	NSDictionary *event = test.events.lastObject;
 	l3_assert(event[@"name"], l3_equals(testSuite.name));

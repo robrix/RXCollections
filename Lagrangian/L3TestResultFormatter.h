@@ -16,6 +16,6 @@
 
 @protocol L3TestResultFormatterDelegate <NSObject>
 
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(NSString *)string;
+-(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(L3TestResult *)result asString:(NSString *)string;
 
 @end
