@@ -16,7 +16,7 @@
 		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
 		D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC61479ACEE004490EA /* RXAssertions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */; };
+		D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +45,7 @@
 		D49E8FB91479790E004490EA /* RXCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollection.m; sourceTree = "<group>"; };
 		D49E8FC51479ACEE004490EA /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
 		D49E8FC61479ACEE004490EA /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
-		D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionArrayTests.m; sourceTree = "<group>"; };
+		D49E8FC91479B440004490EA /* RXCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +132,7 @@
 			children = (
 				D49E8FC51479ACEE004490EA /* RXAssertions.h */,
 				D49E8FC61479ACEE004490EA /* RXAssertions.m */,
-				D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */,
+				D49E8FC91479B440004490EA /* RXCollectionTests.m */,
 				D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */,
 				D49E8FA8147978C9004490EA /* Supporting Files */,
 			);
@@ -267,7 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */,
-				D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */,
+				D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */,
 				D4974400169EAC7200FB17D5 /* RXCollectionObjectTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

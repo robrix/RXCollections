@@ -5,11 +5,11 @@
 #import "RXAssertions.h"
 #import "RXCollection.h"
 
-@interface RXCollectionArrayTests : SenTestCase
+@interface RXCollectionTests : SenTestCase
 @property (readonly) NSArray *fixture;
 @end
 
-@implementation RXCollectionArrayTests
+@implementation RXCollectionTests
 
 -(NSArray *)fixture {
 	return @[@"Pixel", @"Kiwi", @"Maggie", @"Max"];
