@@ -1,31 +1,38 @@
-#RXCollections
+# RXCollections
 
-`map`, `filter`, `fold`, and `detect` for Cocoa collections, with as little chaff as possible.
+Folds, maps, filters, and detects for Cocoa collections (including your own), with as little chaff as possible.
 
 In short:
 
 	#import "RXCollections.h"
 	
 	…
+	RXMap(people, nil, ^(Pal *each) { return each.phoneNumber; });
 	
-	[people rx_mapWithBlock:^(id each) { return [each phoneNumber]; }];
+	RXFilter(ungulates, nil, ^(id<Ungulate> each) { return each.stomachCount == 4; });
 	
-	[ungulates rx_filterWithBlock:^(id each) { return [each stomachCount] == 4; }];
+	RXFold(chunksOfText, @"", ^(NSString *full, NSString *each) { return [full stringByAppendingString:each]; });
 	
-	[stringsToConcatenate rx_foldInitialValue:@"" withBlock:^(id memo, id each) { return [memo stringByAppendingString:each]; }];
-	
-	[collection rx_detectWithBlock:^(id each) { return [[each name] isEqualToString:@"Richard Feynman"]; }];
+	RXDetect(scientists, ^(Scientist *each) { return [each.name isEqualToString:@"Richard Feynman"]; });
 
-##Collections that can be created
+## Collections that can be created
 
-Currently, RXCollections will create sets when mapping or filtering sets, or arrays when mapping or filtering anything else. Your collections can map/filter to other types by implementing `+rx_emptyMutableCollection`. One-off maps and filters into other collections can be done with the `…IntoCollection:` variants.
+Maps and filters take a second argument, a collection into which to place their results. This can be a set or an array currently, and if you pass nil, `RXMap` and `RXFilter` will build a collection of the same type as the collection being mapped or filtered.
 
-##Collections that can be traversed
+## Collections that can be traversed
 
-Anything that conforms to the NSFastEnumeration protocol can be traversed. This includes arrays, sets, dictionaries, enumerators, and any third-party classes which conform to the protocol.
+`RXFold` and `RXDetect` can traverse anything conforming to `NSFastEnumeration` (which includes, among other things, `NSEnumerator` and `NSManagedObjectModel`). `RXMap` and `RXFilter`’s extra logic for building a collection of the same type as their subject requires these collections to conform to the `RXCollection` protocol.
 
-##Notes
+## Notes
 
-More documentation is available in `RXCollections.h`.
+- More documentation is available in `RXCollections.h`.
 
-The included Xcode target compiles a static archive, but there’s no real need to use it; you can just link `RXCollections.m` in directly and `#import "RXCollections.h"`. I would recommend this approach, as static archives are a pain.
+- The included Xcode target compiles a static archive, but there’s no real need to use it; you can just link `RXCollections.m` in directly and `#import "RXCollections.h"`. This approach may reduce the barrier to use.
+
+- All Objective-C objects descending from `NSObject` now conform to `NSFastEnumeration`, simply returning themselves if they do not otherwise implement it. This is to be considered experimental and likely unwise.
+
+## Future
+
+- Pairs, for constructing dictionaries (among other things).
+
+- [Zip](http://en.wikipedia.org/wiki/Convolution_(computer_science)).
