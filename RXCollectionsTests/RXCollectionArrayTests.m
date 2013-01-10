@@ -4,50 +4,49 @@
 
 #import "RXAssertions.h"
 #import "RXCollection.h"
-#import "RXCollectionArrayTests.h"
 
-@interface RXCollectionArrayTests ()
+@interface RXCollectionArrayTests : SenTestCase
 @property (readonly) NSArray *fixture;
 @end
 
 @implementation RXCollectionArrayTests
 
 -(NSArray *)fixture {
-	return [NSArray arrayWithObjects:@"Pixel", @"Kiwi", @"Maggie", @"Max", nil];
+	return @[@"Pixel", @"Kiwi", @"Maggie", @"Max"];
 }
 
 
--(void)testMappingWithTheIdentityFunctionReturnsAnEqualArray {
-	RXAssertEquals([self.fixture rx_mapWithBlock:RXCollectionIdentityBlock], self.fixture);
-}
-
--(void)testMappingWithAConstantFunctionReturnsAnArrayContainingNOfThatConstant {
-	RXAssertEquals([self.fixture rx_mapWithBlock:^(id each) { return @"Bandit"; }], ([NSArray arrayWithObjects:@"Bandit", @"Bandit", @"Bandit", @"Bandit", nil]));
+-(void)testMappingAppliesAFunctionToEachValueAndBuildsACollection {
+	RXAssertEquals(RXMap(self.fixture, nil, ^id(id each) {
+		return [@"Bandit:" stringByAppendingString:each];
+	}), (@[@"Bandit:Pixel", @"Bandit:Kiwi", @"Bandit:Maggie", @"Bandit:Max"]));
 }
 
 
 -(void)testFilteringReturnsAnArrayIncludingObjectsForWhichTheBlockReturnsTrue {
-	RXAssertEquals([self.fixture rx_filterWithBlock:^(id each) { return [each hasPrefix:@"M"]; }], ([NSArray arrayWithObjects:@"Maggie", @"Max", nil]));
+	RXAssertEquals(RXFilter(self.fixture, nil, ^bool(id each) {
+		return [each hasPrefix:@"M"];
+	}), (@[@"Maggie", @"Max"]));
 }
 
 
 -(void)testFoldingWithAnInitialValueReturnsTheResultOfCallingTheBlockWithTheInitialOrPreviousResultAndEachElement {
-	RXAssertEquals([self.fixture rx_foldInitialValue:@"" block:^(id memo, id each) {
+	RXAssertEquals(RXFold(self.fixture, @"", ^id(id memo, id each) {
 		return [memo stringByAppendingString:each];
-	}], @"PixelKiwiMaggieMax");
+	}), @"PixelKiwiMaggieMax");
 }
 
 -(void)testFoldingWithoutAnInitialValueReturnsTheResultOfCallingTheBlockWithNilOrThePreviousResultAndEachElement {
-	RXAssertEquals([self.fixture rx_foldWithBlock:^(id memo, id each) {
+	RXAssertEquals(RXFold(self.fixture, nil, ^id(id memo, id each) {
 		return [each stringByAppendingString:memo ?: @""];
-	}], @"MaxMaggieKiwiPixel");
+	}), @"MaxMaggieKiwiPixel");
 }
 
 
 -(void)testDetectingReturnsTheFirstEncounteredObjectForWhichTheBlockReturnsTrue {
-	RXAssertEquals([self.fixture rx_detectWithBlock:^(id each) {
+	RXAssertEquals(RXDetect(self.fixture, ^bool(id each) {
 		return [each hasPrefix:@"M"];
-	}], @"Maggie");
+	}), @"Maggie");
 }
 
 
