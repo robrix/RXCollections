@@ -22,8 +22,8 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 
 id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination, RXMapBlock block) {
 	destination = destination ?: [collection rx_emptyCollection];
-	return RXFold(collection, nil, ^id(id previous, id each) {
-		return [destination rx_append:block(each)];
+	return RXFold(collection, destination, ^id(id previous, id each) {
+		return [previous rx_append:block(each)];
 	});
 }
 
@@ -47,7 +47,7 @@ id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destinat
 // fixme; this still iterates every element in the collection; it should short-circuit break and return
 id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	return RXFold(collection, nil, ^id(id memo, id each) {
-		return memo ?: each;
+		return memo ?: (block(each)? each : nil);
 	});
 }
 
@@ -81,7 +81,9 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 -(instancetype)rx_append:(id)element {
-	return [self arrayByAddingObject:element];
+	return element?
+		[self arrayByAddingObject:element]
+	:	self;
 }
 
 @end
@@ -108,7 +110,9 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 -(instancetype)rx_append:(id)element {
-	return [self setByAddingObject:element];
+	return element?
+		[self setByAddingObject:element]
+	:	self;
 }
 
 @end
