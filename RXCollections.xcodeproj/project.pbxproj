@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4974400169EAC7200FB17D5 /* RXCollectionObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */; };
 		D49E8F90147978C8004490EA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8F147978C8004490EA /* Cocoa.framework */; };
 		D49E8FA2147978C8004490EA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8FA1147978C8004490EA /* SenTestingKit.framework */; };
 		D49E8FA3147978C8004490EA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8F147978C8004490EA /* Cocoa.framework */; };
@@ -14,10 +15,8 @@
 		D49E8FAC147978C9004490EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D49E8FAA147978C9004490EA /* InfoPlist.strings */; };
 		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
-		D49E8FC21479A489004490EA /* RXCollectionSetTests.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FC01479A489004490EA /* RXCollectionSetTests.h */; };
-		D49E8FC41479A491004490EA /* RXCollectionSetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC11479A489004490EA /* RXCollectionSetTests.m */; };
 		D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC61479ACEE004490EA /* RXAssertions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */; };
+		D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionObjectTests.m; sourceTree = "<group>"; };
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F8F147978C8004490EA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D49E8F92147978C8004490EA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -43,12 +43,9 @@
 		D49E8FAB147978C9004490EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D49E8FB81479790E004490EA /* RXCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollection.h; sourceTree = "<group>"; };
 		D49E8FB91479790E004490EA /* RXCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollection.m; sourceTree = "<group>"; };
-		D49E8FC01479A489004490EA /* RXCollectionSetTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollectionSetTests.h; sourceTree = "<group>"; };
-		D49E8FC11479A489004490EA /* RXCollectionSetTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionSetTests.m; sourceTree = "<group>"; };
 		D49E8FC51479ACEE004490EA /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
 		D49E8FC61479ACEE004490EA /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
-		D49E8FC81479B440004490EA /* RXCollectionArrayTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollectionArrayTests.h; sourceTree = "<group>"; };
-		D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionArrayTests.m; sourceTree = "<group>"; };
+		D49E8FC91479B440004490EA /* RXCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,10 +132,8 @@
 			children = (
 				D49E8FC51479ACEE004490EA /* RXAssertions.h */,
 				D49E8FC61479ACEE004490EA /* RXAssertions.m */,
-				D49E8FC81479B440004490EA /* RXCollectionArrayTests.h */,
-				D49E8FC91479B440004490EA /* RXCollectionArrayTests.m */,
-				D49E8FC01479A489004490EA /* RXCollectionSetTests.h */,
-				D49E8FC11479A489004490EA /* RXCollectionSetTests.m */,
+				D49E8FC91479B440004490EA /* RXCollectionTests.m */,
+				D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */,
 				D49E8FA8147978C9004490EA /* Supporting Files */,
 			);
 			path = RXCollectionsTests;
@@ -161,7 +156,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49E8FBA1479790E004490EA /* RXCollection.h in Headers */,
-				D49E8FC21479A489004490EA /* RXCollectionSetTests.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +266,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FC41479A491004490EA /* RXCollectionSetTests.m in Sources */,
 				D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */,
-				D49E8FCA1479B441004490EA /* RXCollectionArrayTests.m in Sources */,
+				D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */,
+				D4974400169EAC7200FB17D5 /* RXCollectionObjectTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
