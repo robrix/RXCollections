@@ -13,6 +13,8 @@
 #import "L3TestStep.h"
 #import "L3TestSuite.h"
 
+#import "RXCount.h"
+
 #pragma mark Test suites
 
 /*
@@ -59,7 +61,7 @@
 #define l3_suite_interface(identifier, ...) \
 	class NSObject; \
 	\
-	l3_cond(l3_count(__VA_ARGS__), l3_suite_interface_implementation(identifier, __VA_ARGS__), l3_suite_interface_implementation(identifier, #identifier))\
+	l3_cond(rx_count(__VA_ARGS__), l3_suite_interface_implementation(identifier, __VA_ARGS__), l3_suite_interface_implementation(identifier, #identifier))\
 
 
 #if L3_INCLUDE_TESTS // debug build
@@ -74,7 +76,7 @@
 		static dispatch_once_t onceToken; \
 		dispatch_once(&onceToken, ^{ \
 			suite = [L3TestSuite testSuiteWithName:@"" str file:@"" __FILE__ line:__LINE__]; \
-			l3_cond(l3_count(__VA_ARGS__), suite.stateClass = NSClassFromString(@"" l3_string(l3_state_class(__VA_ARGS__))), {});\
+			l3_cond(rx_count(__VA_ARGS__), suite.stateClass = NSClassFromString(@"" l3_string(l3_state_class(__VA_ARGS__))), {});\
 			if (L3MachOImagePathForAddress != NULL) \
 				suite.imagePath = L3MachOImagePathForAddress(l3_suite_builder_function); \
 		}); \
@@ -94,8 +96,8 @@
 	l3_suite_builder(str, __VA_ARGS__) \
 	l3_suite_loader() \
 	\
-	@class l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState); \
-	static l3_cond(l3_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState) *l3_state_class_variable; \
+	@class l3_cond(rx_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState); \
+	static l3_cond(rx_count(__VA_ARGS__), l3_state_class(__VA_ARGS__), L3TestState) *l3_state_class_variable; \
 
 #define l3_suite_interface_implementation(identifier, str) \
 	l3_suite_setup(str, identifier) \
@@ -109,7 +111,7 @@
 #else // release build
 
 #define l3_ignored_class(identifier) \
-	l3_paste(l3_state_class(identifier), _ignored_class)
+	rx_paste(l3_state_class(identifier), _ignored_class)
 
 #define l3_suite_setup(str) \
 	@class NSObject
@@ -122,7 +124,7 @@
 	@end \
 	@interface l3_ignored_class(identifier) (l3_state_class(identifier)) \
 	@end \
-	@interface L3TestState (l3_paste(l3_state_class(identifier), _ignored))
+	@interface L3TestState (rx_paste(l3_state_class(identifier), _ignored))
 
 #define l3_suite_implementation(identifier) \
 	class NSObject; \
@@ -192,13 +194,13 @@
 #define l3_type_of_state_class			l3_type_of_state_class_implementation(l3_state_class_variable)
 #define l3_type_of_state_class_implementation(x) \
 	__typeof__(x)
-#define l3_state_class_variable			l3_paste(l3_domain, state_class_variable)
-#define l3_state_class(identifier)		l3_paste(l3_domain, l3_paste(identifier, TestState))
+#define l3_state_class_variable			rx_paste(l3_domain, state_class_variable)
+#define l3_state_class(identifier)		rx_paste(l3_domain, rx_paste(identifier, TestState))
 
 
 #pragma mark Test state
 
-#define l3_current_suite				l3_paste(l3_domain, current_suite)
+#define l3_current_suite				rx_paste(l3_domain, current_suite)
 
 
 #if L3_INCLUDE_TESTS

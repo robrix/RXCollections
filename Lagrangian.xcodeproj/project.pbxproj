@@ -11,6 +11,13 @@
 		D40DE663164E26030033DE88 /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
 		D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; };
 		D40DE69E165037BA0033DE88 /* L3OCUnitTestResultFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */; };
+		D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; };
+		D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; };
+		D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; };
+		D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; };
+		D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; };
+		D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; };
+		D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */; };
 		D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; };
 		D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
 		D426E49816528701001C9105 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; };
@@ -77,6 +84,13 @@
 		D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3OCUnitTestResultFormatter.h; sourceTree = "<group>"; };
 		D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3OCUnitTestResultFormatter.m; sourceTree = "<group>"; };
 		D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestResultFormatter.h; sourceTree = "<group>"; };
+		D4223BE216A0A95E00AE32D5 /* _RXFold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXFold.h; sourceTree = "<group>"; };
+		D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXInterpolation.h; sourceTree = "<group>"; };
+		D4223BE516A0A95E00AE32D5 /* RXCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCount.h; sourceTree = "<group>"; };
+		D4223BE616A0A95E00AE32D5 /* RXFold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXFold.h; sourceTree = "<group>"; };
+		D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXInterpolation.h; sourceTree = "<group>"; };
+		D4223BE816A0A95E00AE32D5 /* RXPaste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXPaste.h; sourceTree = "<group>"; };
+		D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPreprocessingTests.m; sourceTree = "<group>"; };
 		D426E49116527B8D001C9105 /* L3TestResultBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResultBuilder.h; sourceTree = "<group>"; };
 		D426E49216527B8D001C9105 /* L3TestResultBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResultBuilder.m; sourceTree = "<group>"; };
 		D426E49616528701001C9105 /* L3Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Stack.h; sourceTree = "<group>"; };
@@ -162,6 +176,29 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
+		D4223BDE16A0A94B00AE32D5 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				D4223BE016A0A95E00AE32D5 /* RXPreprocessing */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		D4223BE016A0A95E00AE32D5 /* RXPreprocessing */ = {
+			isa = PBXGroup;
+			children = (
+				D4223BE216A0A95E00AE32D5 /* _RXFold.h */,
+				D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */,
+				D4223BE516A0A95E00AE32D5 /* RXCount.h */,
+				D4223BE616A0A95E00AE32D5 /* RXFold.h */,
+				D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */,
+				D4223BE816A0A95E00AE32D5 /* RXPaste.h */,
+				D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */,
+			);
+			name = RXPreprocessing;
+			path = External/RXPreprocessing;
+			sourceTree = "<group>";
+		};
 		D426E48F16527B70001C9105 /* Test results */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +266,7 @@
 			children = (
 				D4AC431B1648B5D300C0A25B /* Library */,
 				D4A5B2C5164B4FAF00338EB4 /* Test Runner */,
+				D4223BDE16A0A94B00AE32D5 /* External */,
 				D4AC43141648B5D300C0A25B /* Frameworks */,
 				D4AC43131648B5D300C0A25B /* Products */,
 			);
@@ -299,6 +337,12 @@
 				D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */,
 				D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */,
 				D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */,
+				D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */,
+				D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */,
+				D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */,
+				D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */,
+				D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */,
+				D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +454,7 @@
 				D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */,
 				D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */,
 				D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */,
+				D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

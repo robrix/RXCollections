@@ -20,15 +20,17 @@ typedef bool(^L3Pattern)(id);
 #pragma mark Object conversion
 
 #import "L3PreprocessorUtilities.h"
+#import "RXFold.h"
 
 // start off by assuming all conversions to be unavailable (is this necessary?)
 static inline id l3_to_object(...) __attribute__((overloadable, unavailable));
 
-#define l3_define_to_object_by_boxing_with_type(type) \
-	__attribute__((overloadable)) static inline id l3_to_object(type x) { return @(x); };
+#define l3_define_to_object_by_boxing_with_type(memo, type) \
+	__attribute__((overloadable)) static inline id l3_to_object(type x) { return @(x); }; \
+	memo
 
 // box these types automatically
-l3_fold(l3_define_to_object_by_boxing_with_type,
+rx_fold(l3_define_to_object_by_boxing_with_type, ,
 		uint64_t, uint32_t, uint16_t, uint8_t,
 		int64_t, int32_t, int16_t, int8_t,
 		unsigned long, signed long,
@@ -47,12 +49,13 @@ __attribute__((overloadable)) static inline id l3_to_object(void *x) { return [N
 
 static inline L3Pattern l3_to_pattern_f(...) __attribute__((overloadable, unavailable));
 
-#define l3_define_to_pattern_by_equality_with_type(type) \
+#define l3_define_to_pattern_by_equality_with_type(memo, type) \
 	__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(type x) { \
 		return ^bool(id y){ return [y isEqual:l3_to_object(x)]; }; \
-	}
+	} \
+	memo
 
-l3_fold(l3_define_to_pattern_by_equality_with_type,
+rx_fold(l3_define_to_pattern_by_equality_with_type, ,
 		uint64_t, uint32_t, uint16_t, uint8_t,
 		int64_t, int32_t, int16_t, int8_t,
 		unsigned long, signed long,
