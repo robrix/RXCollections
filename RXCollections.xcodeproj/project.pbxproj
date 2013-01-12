@@ -68,7 +68,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionObjectTests.m; sourceTree = "<group>"; };
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F8F147978C8004490EA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D49E8F92147978C8004490EA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -76,13 +75,8 @@
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
 		D49E8FA1147978C8004490EA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		D49E8FA9147978C9004490EA /* RXCollectionsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RXCollectionsTests-Info.plist"; sourceTree = "<group>"; };
-		D49E8FAB147978C9004490EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D49E8FB81479790E004490EA /* RXCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollection.h; sourceTree = "<group>"; };
 		D49E8FB91479790E004490EA /* RXCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollection.m; sourceTree = "<group>"; };
-		D49E8FC51479ACEE004490EA /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
-		D49E8FC61479ACEE004490EA /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
-		D49E8FC91479B440004490EA /* RXCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionTests.m; sourceTree = "<group>"; };
 		D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXRecursiveEnumerator.h; sourceTree = "<group>"; };
 		D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXRecursiveEnumerator.m; sourceTree = "<group>"; };
 		D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lagrangian.xcodeproj; path = External/Lagrangian/Lagrangian.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -119,7 +113,6 @@
 			children = (
 				D49E8F95147978C8004490EA /* RXCollections */,
 				D4B62B2816A1175F00E42C84 /* External */,
-				D49E8FA7147978C9004490EA /* RXCollectionsTests */,
 				D49E8F8E147978C8004490EA /* Frameworks */,
 				D49E8F8D147978C8004490EA /* Products */,
 			);
@@ -173,27 +166,6 @@
 				D4B62BB816A1609D00E42C84 /* RXCollections-Info.plist */,
 				D4B62BB516A1609300E42C84 /* InfoPlist.strings */,
 				D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D49E8FA7147978C9004490EA /* RXCollectionsTests */ = {
-			isa = PBXGroup;
-			children = (
-				D49E8FC51479ACEE004490EA /* RXAssertions.h */,
-				D49E8FC61479ACEE004490EA /* RXAssertions.m */,
-				D49E8FC91479B440004490EA /* RXCollectionTests.m */,
-				D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */,
-				D49E8FA8147978C9004490EA /* Supporting Files */,
-			);
-			path = RXCollectionsTests;
-			sourceTree = "<group>";
-		};
-		D49E8FA8147978C9004490EA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D49E8FA9147978C9004490EA /* RXCollectionsTests-Info.plist */,
-				D49E8FAA147978C9004490EA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -413,14 +385,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D49E8FAA147978C9004490EA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D49E8FAB147978C9004490EA /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		D4B62BB516A1609300E42C84 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
