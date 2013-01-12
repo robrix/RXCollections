@@ -56,9 +56,10 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 
 @implementation NSObject (RXCollection)
 
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id [])buffer count:(NSUInteger)len {
-	state->itemsPtr = &self;
-	state->mutationsPtr = (unsigned long *)self;
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	buffer[0] = self;
+	state->itemsPtr = buffer;
+	state->mutationsPtr = &state->extra[0];
 	return !state->state++;
 }
 
