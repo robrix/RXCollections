@@ -45,7 +45,7 @@ static NSString *L3TRPathListByAddingPath(NSString *list, NSString *path) {
 	:	path;
 }
 
-NSString * const L3TRLagrangianLibraryPathArgumentName = @"lagrangian-library-path";
+NSString * const L3TRLagrangianFrameworkPathArgumentName = @"lagrangian-framework-path";
 
 NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_LIBRARY_PATH";
 
@@ -67,19 +67,17 @@ int main(int argc, const char *argv[]) {
 		NSProcessInfo *processInfo = [NSProcessInfo processInfo];
 		
 		[defaults registerDefaults:@{
-		 L3TRLagrangianLibraryPathArgumentName: [[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.dylib"]
+		 L3TRLagrangianFrameworkPathArgumentName: [[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.framework"]
 		 }];
 		
-		L3TRDynamicLibrary *lagrangianLibrary = L3TRTry([L3TRDynamicLibrary openLibraryAtPath:[defaults stringForKey:L3TRLagrangianLibraryPathArgumentName] error:&error]);
-		
-		NSString *L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerRunTestsOnLaunchEnvironmentVariableName" error:&error]);
-		NSString *L3TestRunnerSuitePredicateEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerSuitePredicateEnvironmentVariableName" error:&error]);
+		if (!NSClassFromString(@"L3TestRunner")) {
+			NSBundle *frameworkBundle = [NSBundle bundleWithPath:[defaults stringForKey:L3TRLagrangianFrameworkPathArgumentName]];
+			L3TRTry([frameworkBundle loadAndReturnError:&error]);
+		}
 		
 		NSString *frameworkPath = [defaults stringForKey:@"framework"];
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
-		
-		NSString *predicateFormat = @"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)";
 		
 		if (frameworkPath) {
 			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
@@ -87,7 +85,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, frameworkPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -97,7 +95,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, libraryPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -110,9 +108,9 @@ int main(int argc, const char *argv[]) {
 			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
 			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
-			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
+			environment[@"L3_RUN_TESTS_ON_LAUNCH"] = @"YES";
 			// fixme: there’s no possible way that passing the predicate format as the literal body of an environment variable could ever go wrong
-			environment[L3TestRunnerSuitePredicateEnvironmentVariableName] = [NSString stringWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] '%@')", command.lastPathComponent];
+			environment[@"L3_SUITE_PREDICATE"] = [NSString stringWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] '%@')", command.lastPathComponent];
 			
 			task.environment = environment;
 			

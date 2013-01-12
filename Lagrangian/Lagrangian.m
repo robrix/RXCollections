@@ -17,7 +17,8 @@ static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 }
 
 @l3_test("suites refer to the mach-o image path that defined them") {
-	l3_assert(test.suite.imagePath.lastPathComponent, l3_equals(@"Lagrangian.dylib"));
+	NSSet *images = [NSSet setWithObjects:@"Lagrangian.dylib", @"Lagrangian", nil];
+	l3_assert([images containsObject:test.suite.imagePath.lastPathComponent], l3_equals(YES));
 }
 
 
