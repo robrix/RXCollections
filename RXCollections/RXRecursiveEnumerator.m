@@ -1,10 +1,6 @@
-//
 //  RXRecursiveEnumerator.m
-//  View Streamer
-//
 //  Created by Rob Rix on 2013-01-11.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
-//
 
 #import "RXRecursiveEnumerator.h"
 

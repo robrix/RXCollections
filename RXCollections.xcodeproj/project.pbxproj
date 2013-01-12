@@ -7,27 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4974400169EAC7200FB17D5 /* RXCollectionObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49743FF169EAC7200FB17D5 /* RXCollectionObjectTests.m */; };
-		D49E8F90147978C8004490EA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8F147978C8004490EA /* Cocoa.framework */; };
-		D49E8FA2147978C8004490EA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8FA1147978C8004490EA /* SenTestingKit.framework */; };
-		D49E8FA3147978C8004490EA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8F147978C8004490EA /* Cocoa.framework */; };
-		D49E8FA6147978C9004490EA /* libRXCollections.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F8C147978C8004490EA /* libRXCollections.a */; };
-		D49E8FAC147978C9004490EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D49E8FAA147978C9004490EA /* InfoPlist.strings */; };
 		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
-		D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC61479ACEE004490EA /* RXAssertions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionTests.m */; };
 		D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; };
 		D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
+		D4B62B9E16A15E2200E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
+		D4B62BB716A1609300E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62BB516A1609300E42C84 /* InfoPlist.strings */; };
+		D4B62BBA16A160DA00E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
+		D4B62BBB16A160E000E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4B62BBE16A160F200E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4B62BBF16A1611300E42C84 /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
+		D4B62BC016A1611300E42C84 /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
+		D4B62BC116A1611C00E42C84 /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D49E8FA4147978C9004490EA /* PBXContainerItemProxy */ = {
+		D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D49E8F83147978C8004490EA /* Project object */;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D4AC43121648B5D300C0A25B;
+			remoteInfo = Lagrangian;
+		};
+		D4B62B3716A1177B00E42C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D4A5B2C1164B4FAF00338EB4;
+			remoteInfo = lagrangian;
+		};
+		D4B62B3916A1177B00E42C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D43D8B721654C27000E6DE07;
+			remoteInfo = Lagrangian;
+		};
+		D4B62B9B16A15DF700E42C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D4B62B4C16A1581700E42C84;
+			remoteInfo = "Lagrangian (Mac OS X framework)";
+		};
+		D4B62B9F16A15E2800E42C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D49E8F8B147978C8004490EA;
-			remoteInfo = RXCollections;
+			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
+			remoteInfo = "Lagrangian (Mac OS X framework)";
+		};
+		D4B62BBC16A160ED00E42C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
+			remoteInfo = "Lagrangian (Mac OS X framework)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -39,7 +75,6 @@
 		D49E8F93147978C8004490EA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
-		D49E8FA0147978C8004490EA /* RXCollectionsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RXCollectionsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8FA1147978C8004490EA /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D49E8FA9147978C9004490EA /* RXCollectionsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RXCollectionsTests-Info.plist"; sourceTree = "<group>"; };
 		D49E8FAB147978C9004490EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -50,6 +85,11 @@
 		D49E8FC91479B440004490EA /* RXCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionTests.m; sourceTree = "<group>"; };
 		D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXRecursiveEnumerator.h; sourceTree = "<group>"; };
 		D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXRecursiveEnumerator.m; sourceTree = "<group>"; };
+		D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lagrangian.xcodeproj; path = External/Lagrangian/Lagrangian.xcodeproj; sourceTree = SOURCE_ROOT; };
+		D4B62B3F16A117B200E42C84 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4B62BA616A15F7000E42C84 /* RXCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RXCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4B62BB616A1609300E42C84 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D4B62BB816A1609D00E42C84 /* RXCollections-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RXCollections-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,17 +97,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8F90147978C8004490EA /* Cocoa.framework in Frameworks */,
+				D4B62BBB16A160E000E42C84 /* Lagrangian.framework in Frameworks */,
+				D4B62B9E16A15E2200E42C84 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D49E8F9C147978C8004490EA /* Frameworks */ = {
+		D4B62BA216A15F7000E42C84 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FA2147978C8004490EA /* SenTestingKit.framework in Frameworks */,
-				D49E8FA3147978C8004490EA /* Cocoa.framework in Frameworks */,
-				D49E8FA6147978C9004490EA /* libRXCollections.a in Frameworks */,
+				D4B62BBE16A160F200E42C84 /* Lagrangian.framework in Frameworks */,
+				D4B62BBA16A160DA00E42C84 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				D49E8F95147978C8004490EA /* RXCollections */,
+				D4B62B2816A1175F00E42C84 /* External */,
 				D49E8FA7147978C9004490EA /* RXCollectionsTests */,
 				D49E8F8E147978C8004490EA /* Frameworks */,
 				D49E8F8D147978C8004490EA /* Products */,
@@ -88,7 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				D49E8F8C147978C8004490EA /* libRXCollections.a */,
-				D49E8FA0147978C8004490EA /* RXCollectionsTests.octest */,
+				D4B62B3F16A117B200E42C84 /* Lagrangian.octest */,
+				D4B62BA616A15F7000E42C84 /* RXCollections.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,6 +170,8 @@
 		D49E8F96147978C8004490EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D4B62BB816A1609D00E42C84 /* RXCollections-Info.plist */,
+				D4B62BB516A1609300E42C84 /* InfoPlist.strings */,
 				D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -154,6 +198,34 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D4B62B2816A1175F00E42C84 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				D4B62B2A16A1176600E42C84 /* Lagrangian */,
+			);
+			name = External;
+			path = RXCollections;
+			sourceTree = "<group>";
+		};
+		D4B62B2A16A1176600E42C84 /* Lagrangian */ = {
+			isa = PBXGroup;
+			children = (
+				D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */,
+			);
+			name = Lagrangian;
+			sourceTree = "<group>";
+		};
+		D4B62B2C16A1177A00E42C84 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */,
+				D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */,
+				D4B62B3816A1177B00E42C84 /* lagrangian */,
+				D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -166,12 +238,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D4B62BA316A15F7000E42C84 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62BC116A1611C00E42C84 /* RXCollection.h in Headers */,
+				D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D49E8F8B147978C8004490EA /* RXCollections */ = {
+		D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections" */;
+			buildConfigurationList = D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X static library)" */;
 			buildPhases = (
 				D49E8F88147978C8004490EA /* Sources */,
 				D49E8F89147978C8004490EA /* Frameworks */,
@@ -180,30 +261,45 @@
 			buildRules = (
 			);
 			dependencies = (
+				D4B62BA016A15E2800E42C84 /* PBXTargetDependency */,
 			);
-			name = RXCollections;
+			name = "RXCollections (Mac OS X static library)";
 			productName = RXCollections;
 			productReference = D49E8F8C147978C8004490EA /* libRXCollections.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		D49E8F9F147978C8004490EA /* RXCollectionsTests */ = {
+		D4B62B3E16A117B200E42C84 /* RXCollections */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D49E8FB5147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollectionsTests" */;
+			buildConfigurationList = D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */;
 			buildPhases = (
-				D49E8F9B147978C8004490EA /* Sources */,
-				D49E8F9C147978C8004490EA /* Frameworks */,
-				D49E8F9D147978C8004490EA /* Resources */,
-				D49E8F9E147978C8004490EA /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D49E8FA5147978C9004490EA /* PBXTargetDependency */,
 			);
-			name = RXCollectionsTests;
-			productName = RXCollectionsTests;
-			productReference = D49E8FA0147978C8004490EA /* RXCollectionsTests.octest */;
+			name = RXCollections;
+			productName = RXCollections;
+			productReference = D4B62B3F16A117B200E42C84 /* Lagrangian.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		D4B62BA516A15F7000E42C84 /* RXCollections (Mac OS X framework) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4B62BB216A15F7000E42C84 /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X framework)" */;
+			buildPhases = (
+				D4B62BA116A15F7000E42C84 /* Sources */,
+				D4B62BA216A15F7000E42C84 /* Frameworks */,
+				D4B62BA316A15F7000E42C84 /* Headers */,
+				D4B62BA416A15F7000E42C84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4B62BBD16A160ED00E42C84 /* PBXTargetDependency */,
+			);
+			name = "RXCollections (Mac OS X framework)";
+			productName = "RXCollections (Framework)";
+			productReference = D4B62BA616A15F7000E42C84 /* RXCollections.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -225,40 +321,62 @@
 			mainGroup = D49E8F81147978C8004490EA;
 			productRefGroup = D49E8F8D147978C8004490EA /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D4B62B2C16A1177A00E42C84 /* Products */;
+					ProjectRef = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				D49E8F8B147978C8004490EA /* RXCollections */,
-				D49E8F9F147978C8004490EA /* RXCollectionsTests */,
+				D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */,
+				D4B62BA516A15F7000E42C84 /* RXCollections (Mac OS X framework) */,
+				D4B62B3E16A117B200E42C84 /* RXCollections */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = Lagrangian.dylib;
+			remoteRef = D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4B62B3816A1177B00E42C84 /* lagrangian */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = lagrangian;
+			remoteRef = D4B62B3716A1177B00E42C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Lagrangian.octest;
+			remoteRef = D4B62B3916A1177B00E42C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Lagrangian.framework;
+			remoteRef = D4B62B9B16A15DF700E42C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
-		D49E8F9D147978C8004490EA /* Resources */ = {
+		D4B62BA416A15F7000E42C84 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FAC147978C9004490EA /* InfoPlist.strings in Resources */,
+				D4B62BB716A1609300E42C84 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		D49E8F9E147978C8004490EA /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D49E8F88147978C8004490EA /* Sources */ = {
@@ -270,23 +388,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D49E8F9B147978C8004490EA /* Sources */ = {
+		D4B62BA116A15F7000E42C84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */,
-				D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */,
-				D4974400169EAC7200FB17D5 /* RXCollectionObjectTests.m in Sources */,
+				D4B62BBF16A1611300E42C84 /* RXCollection.m in Sources */,
+				D4B62BC016A1611300E42C84 /* RXRecursiveEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D49E8FA5147978C9004490EA /* PBXTargetDependency */ = {
+		D4B62BA016A15E2800E42C84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D49E8F8B147978C8004490EA /* RXCollections */;
-			targetProxy = D49E8FA4147978C9004490EA /* PBXContainerItemProxy */;
+			name = "Lagrangian (Mac OS X framework)";
+			targetProxy = D4B62B9F16A15E2800E42C84 /* PBXContainerItemProxy */;
+		};
+		D4B62BBD16A160ED00E42C84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Lagrangian (Mac OS X framework)";
+			targetProxy = D4B62BBC16A160ED00E42C84 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -295,6 +417,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				D49E8FAB147978C9004490EA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D4B62BB516A1609300E42C84 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4B62BB616A1609300E42C84 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -358,7 +488,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RXCollections;
 			};
 			name = Debug;
 		};
@@ -369,35 +499,69 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RXCollections;
 			};
 			name = Release;
 		};
-		D49E8FB6147978C9004490EA /* Debug */ = {
+		D4B62B4116A117B200E42C84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
-				INFOPLIST_FILE = "RXCollectionsTests/RXCollectionsTests-Info.plist";
-				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Lagrangian;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
-		D49E8FB7147978C9004490EA /* Release */ = {
+		D4B62B4216A117B200E42C84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = Lagrangian;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		D4B62BB316A15F7000E42C84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
-				INFOPLIST_FILE = "RXCollectionsTests/RXCollectionsTests-Info.plist";
-				OTHER_LDFLAGS = "-all_load";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = RXCollections;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		D4B62BB416A15F7000E42C84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = RXCollections;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -413,7 +577,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections" */ = {
+		D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X static library)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D49E8FB3147978C9004490EA /* Debug */,
@@ -422,14 +586,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D49E8FB5147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollectionsTests" */ = {
+		D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D49E8FB6147978C9004490EA /* Debug */,
-				D49E8FB7147978C9004490EA /* Release */,
+				D4B62B4116A117B200E42C84 /* Debug */,
+				D4B62B4216A117B200E42C84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D4B62BB216A15F7000E42C84 /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4B62BB316A15F7000E42C84 /* Debug */,
+				D4B62BB416A15F7000E42C84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

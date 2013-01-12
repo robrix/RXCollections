@@ -4,7 +4,18 @@
 
 #import "RXCollection.h"
 
+#import <Lagrangian/Lagrangian.h>
+
+@l3_suite("RXFold");
+
 #pragma mark Folds
+
+@l3_test("produces a result by recursively enumerating the collection") {
+	NSString *result = RXFold((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", ^(NSString * memo, NSString * each) {
+		return [memo stringByAppendingString:each];
+	});
+	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
+}
 
 id RXFold(id<NSFastEnumeration> collection, id initial, RXFoldBlock block) {
 	for (id each in collection) {
