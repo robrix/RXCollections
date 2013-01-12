@@ -79,15 +79,13 @@ int main(int argc, const char *argv[]) {
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
 		
-		NSString *predicateFormat = @"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)";
-		
 		if (frameworkPath) {
 			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
 			L3TRTry([frameworkBundle loadAndReturnError:&error]);
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, frameworkPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -97,7 +95,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, libraryPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
 			
 			[runner run];
 			
