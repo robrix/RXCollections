@@ -36,7 +36,6 @@
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
 		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
 		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
-		D4A5B2D1164B4FC100338EB4 /* Lagrangian.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
 		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
 		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
@@ -88,6 +87,7 @@
 		D4B62B8A16A15A1900E42C84 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B8B16A15A1900E42C84 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4D16A1581700E42C84 /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */; };
 		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
 		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
 		D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
@@ -96,16 +96,6 @@
 		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
 		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		D4A5B2CF164B4FBA00338EB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4AC43091648B5D300C0A25B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D4AC43111648B5D300C0A25B;
-			remoteInfo = Lagrangian;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D4A5B2BF164B4FAF00338EB4 /* CopyFiles */ = {
@@ -190,7 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4A5B2D1164B4FC100338EB4 /* Lagrangian.dylib in Frameworks */,
+				D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */,
 				D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,7 +484,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D4A5B2D0164B4FBA00338EB4 /* PBXTargetDependency */,
 			);
 			name = lagrangian;
 			productName = lagrangian;
@@ -630,14 +619,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D4A5B2D0164B4FBA00338EB4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D4AC43111648B5D300C0A25B /* Lagrangian (Mac OS X dynamic library) */;
-			targetProxy = D4A5B2CF164B4FBA00338EB4 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D4B62B5616A1581700E42C84 /* InfoPlist.strings */ = {
@@ -852,6 +833,7 @@
 				D4B62B5E16A1581700E42C84 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
