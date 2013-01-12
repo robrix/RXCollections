@@ -85,7 +85,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			// fixme: set a suite predicate
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", frameworkPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -95,7 +95,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			// fixme: set a suite predicate
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", libraryPath.lastPathComponent];
 			
 			[runner run];
 			
