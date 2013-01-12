@@ -75,10 +75,22 @@ int main(int argc, const char *argv[]) {
 		NSString *L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerRunTestsOnLaunchEnvironmentVariableName" error:&error]);
 		NSString *L3TestRunnerSuitePredicateEnvironmentVariableName = (__bridge NSString *)*(void **)L3TRTry([lagrangianLibrary loadSymbolWithName:@"L3TestRunnerSuitePredicateEnvironmentVariableName" error:&error]);
 		
+		NSString *frameworkPath = [defaults stringForKey:@"framework"];
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
 		
-		if (libraryPath) {
+		if (frameworkPath) {
+			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
+			L3TRTry([frameworkBundle loadAndReturnError:&error]);
+			
+			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
+			
+			// fixme: set a suite predicate
+			
+			[runner run];
+			
+			[runner waitForTestsToComplete];
+		} else if (libraryPath) {
 			L3TRTry([L3TRDynamicLibrary openLibraryAtPath:libraryPath error:&error]);
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];

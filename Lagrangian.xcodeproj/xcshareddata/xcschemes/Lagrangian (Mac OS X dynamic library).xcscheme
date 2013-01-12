@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4AC43111648B5D300C0A25B"
                BuildableName = "Lagrangian.dylib"
-               BlueprintName = "Lagrangian"
+               BlueprintName = "Lagrangian (Mac OS X dynamic library)"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
