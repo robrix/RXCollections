@@ -17,6 +17,8 @@
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
 		D49E8FC71479ACEE004490EA /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC61479ACEE004490EA /* RXAssertions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D49E8FCA1479B441004490EA /* RXCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FC91479B440004490EA /* RXCollectionTests.m */; };
+		D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; };
+		D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		D49E8FC51479ACEE004490EA /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
 		D49E8FC61479ACEE004490EA /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
 		D49E8FC91479B440004490EA /* RXCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollectionTests.m; sourceTree = "<group>"; };
+		D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXRecursiveEnumerator.h; sourceTree = "<group>"; };
+		D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXRecursiveEnumerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +116,11 @@
 		D49E8F95147978C8004490EA /* RXCollections */ = {
 			isa = PBXGroup;
 			children = (
-				D49E8F96147978C8004490EA /* Supporting Files */,
 				D49E8FB81479790E004490EA /* RXCollection.h */,
 				D49E8FB91479790E004490EA /* RXCollection.m */,
+				D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */,
+				D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */,
+				D49E8F96147978C8004490EA /* Supporting Files */,
 			);
 			path = RXCollections;
 			sourceTree = "<group>";
@@ -156,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49E8FBA1479790E004490EA /* RXCollection.h in Headers */,
+				D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D49E8FBB1479790E004490EA /* RXCollection.m in Sources */,
+				D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
