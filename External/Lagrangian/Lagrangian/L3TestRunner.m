@@ -31,8 +31,6 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 
 @property (strong, nonatomic, readonly) NSOperationQueue *queue;
 
-@property (strong, nonatomic) NSPredicate *testSuitePredicate;
-
 @property (strong, nonatomic, readonly) id<L3Test> test;
 
 -(void)runAtLaunch;
