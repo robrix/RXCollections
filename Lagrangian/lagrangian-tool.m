@@ -79,13 +79,15 @@ int main(int argc, const char *argv[]) {
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
 		
+		NSString *predicateFormat = @"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)";
+		
 		if (frameworkPath) {
 			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
 			L3TRTry([frameworkBundle loadAndReturnError:&error]);
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", frameworkPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, frameworkPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -95,7 +97,7 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", libraryPath.lastPathComponent];
+			runner.testSuitePredicate = [NSPredicate predicateWithFormat:predicateFormat, libraryPath.lastPathComponent];
 			
 			[runner run];
 			
@@ -110,7 +112,7 @@ int main(int argc, const char *argv[]) {
 			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
 			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
 			// fixme: there’s no possible way that passing the predicate format as the literal body of an environment variable could ever go wrong
-			environment[L3TestRunnerSuitePredicateEnvironmentVariableName] = [NSString stringWithFormat:@"imagePath = NULL || imagePath.lastPathComponent = '%@'", command.lastPathComponent];
+			environment[L3TestRunnerSuitePredicateEnvironmentVariableName] = [NSString stringWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] '%@')", command.lastPathComponent];
 			
 			task.environment = environment;
 			

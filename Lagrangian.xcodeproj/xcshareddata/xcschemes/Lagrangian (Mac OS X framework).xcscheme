@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4B62B4B16A1581700E42C84"
-               BuildableName = "Lagrangian.framework.framework"
+               BuildableName = "Lagrangian.framework"
                BlueprintName = "Lagrangian (Mac OS X framework)"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4B62B4B16A1581700E42C84"
-            BuildableName = "Lagrangian.framework.framework"
+            BuildableName = "Lagrangian.framework"
             BlueprintName = "Lagrangian (Mac OS X framework)"
             ReferencedContainer = "container:Lagrangian.xcodeproj">
          </BuildableReference>
