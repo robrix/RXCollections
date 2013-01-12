@@ -33,6 +33,8 @@ extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
 +(instancetype)runner;
 
+@property (strong, nonatomic) NSPredicate *testSuitePredicate;
+
 -(void)run; // starts running asynchronously
 -(void)waitForTestsToComplete;
 
