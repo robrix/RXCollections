@@ -1,0 +1,62 @@
+# Planning
+
+This document is an overall todo/fixme list for the project.
+
+## Major goals
+
+- @l3_benchmark
+- @l3_invariant
+- @l3_precondition
+- @l3_postcondition
+
+- documentation generation (as a visitor?)
+
+- iOS support (how will this work? Xcode-style bundle injection?)
+	- for apps
+	- for static libraries
+	- for static frameworks
+- ship as a static framework for iOS
+
+- ship as a framework for OS X
+
+- assertions to test exceptions
+- handling of exceptions (as unexpected failures)
+- a better entry point for debugging failed assertions (analogous to objc_exception_throw, perhaps l3_assertion_fail)
+
+- tests concurrent with one another
+- tests run only on the main thread
+
+- in debug builds, when enabled, add some way to list and trigger test suites and individual cases
+
+## Configuration
+
+- a configuration macro to remove the prefixes on definition names, e.g. l3_assert
+
+## Tags
+
+- tags for tests:
+
+	@l3_test("use of tags", @tag, @other_tag) { … }
+
+- use tags to define suites
+- include a tag for the Mach-O image (by name?) by default
+
+## Test runners
+
+- don’t pass predicate formats in an env var, that’s insane
+- switch back to Xcode by means of the tool (not L3TestRunner), and only do that if running from Xcode in the first place (inspect parent process stack?)
+
+## Open questions
+
+- should @l3_test, @l3_suite, etc, drop the @?
+	- @jspahrsummers uses @ only when it feels like something should be a language feature.
+- how do preconditions, postconditions, and invariants work? predicates which are matched before/after/both for invocations of a given method? how? dynamic subclass + override during tests? (that sounds like fun!)
+- differential-prototypal suite inheritance?
+- mess around with multiple suites per file; does it make any sense? is it useful?
+	- declaring common test steps in a suite in another file sounds more useful
+- can tests be defined in headers? is that sensible at all?
+
+## Fixmes
+
+- test the assertion patterns
+- exit() with EXIT_SUCCESS or EXIT_FAILURE depending on whether the tests succeed or fail
