@@ -12,6 +12,10 @@
 @property (nonatomic, strong, readonly) id left;
 @property (nonatomic, strong, readonly) id right;
 
+@property (nonatomic, copy, readonly) NSArray *elements;
+
+-(bool)isEqualToPair:(RXPair *)pair;
+
 @end
 
 

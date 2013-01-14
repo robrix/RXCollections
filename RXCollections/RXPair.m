@@ -19,6 +19,23 @@
 }
 
 
+-(NSArray *)elements {
+	return @[self.left, self.right];
+}
+
+
+-(bool)isEqualToPair:(RXPair *)pair {
+	return
+		[pair isKindOfClass:self.class]
+	&&	[self.left isEqual:pair.left]
+	&&	[self.right isEqual:pair.right];
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToPair:object];
+}
+
+
 -(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
