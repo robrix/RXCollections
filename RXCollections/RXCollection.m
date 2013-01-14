@@ -230,7 +230,7 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	l3_assert(appended[@"x"], @"y");
 }
 
--(instancetype)rx_append:(id)element {
+-(instancetype)rx_append:(id<RXKeyValuePair>)element {
 	NSDictionary *dictionary = nil;
 	if ([element respondsToSelector:@selector(key)] && [element respondsToSelector:@selector(value)]) {
 		id<RXKeyValuePair> pair = element;
@@ -249,7 +249,7 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	return [NSMutableDictionary dictionary];
 }
 
--(instancetype)rx_append:(id)element {
+-(instancetype)rx_append:(id<RXKeyValuePair>)element {
 	NSMutableDictionary *dictionary = nil;
 	if ([element respondsToSelector:@selector(key)] && [element respondsToSelector:@selector(value)]) {
 		id<RXKeyValuePair> pair = element;

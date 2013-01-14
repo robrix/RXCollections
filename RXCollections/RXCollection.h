@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <RXCollections/RXPair.h>
+
 #pragma mark Folds
 
 typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
@@ -95,6 +97,9 @@ extern id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block);
 
 
 @interface NSDictionary (RXCollection) <RXCollection>
+
+-(instancetype)rx_append:(id<RXKeyValuePair>)element;
+
 @end
 
 
