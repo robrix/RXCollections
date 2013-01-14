@@ -19,15 +19,29 @@
 @end
 
 
-@protocol RXDictionaryPair <NSObject>
+@protocol RXKeyValuePair <NSObject>
 
 @property (nonatomic, copy, readonly) id<NSCopying> key;
 @property (nonatomic, strong, readonly) id value;
 
 @end
 
-@interface RXPair (RXPairNSDictionaryConvenience) <RXDictionaryPair>
+@interface RXPair (RXKeyValuePair) <RXKeyValuePair>
 
 +(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value;
+
+@end
+
+
+@protocol RXLinkedListNode <NSObject>
+
+@property (nonatomic, strong, readonly) id first;
+@property (nonatomic, strong, readonly) id rest;
+
+@end
+
+@interface RXPair (RXLinkedListNode) <RXLinkedListNode>
+
++(instancetype)pairWithFirst:(id)first rest:(id)rest;
 
 @end

@@ -43,7 +43,7 @@
 @end
 
 
-@implementation RXPair (RXPairNSDictionaryConvenience)
+@implementation RXPair (RXKeyValuePair)
 
 +(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value {
 	return [[self alloc] initWithLeft:key right:value];
@@ -55,6 +55,24 @@
 }
 
 -(id)value {
+	return self.right;
+}
+
+@end
+
+
+@implementation RXPair (RXLinkedListNode)
+
++(instancetype)pairWithFirst:(id)first rest:(id)rest {
+	return [self pairWithLeft:first right:rest];
+}
+
+
+-(id)first {
+	return self.left;
+}
+
+-(id)rest {
 	return self.right;
 }
 
