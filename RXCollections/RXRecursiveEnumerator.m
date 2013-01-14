@@ -3,11 +3,15 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXRecursiveEnumerator.h"
+#import "RXCollection.h"
+#import "RXPair.h"
 
-@interface RXRecursiveEnumerator ()
+#import <Lagrangian/Lagrangian.h>
 
-@property (nonatomic, strong, readonly) NSMutableArray *flattened;
-@end
+
+@l3_suite("RXRecursiveEnumerator");
+
+static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, id target, NSString *keyPath);
 
 @implementation RXRecursiveEnumerator
 
@@ -24,16 +28,29 @@
 }
 
 
+@l3_test("accumulates the contents of homogeneous trees in depth-first order") {
+	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
+	NSMutableArray *flattened = [NSMutableArray new];
+	RXAccumulateRecursiveContentsOfTarget(flattened, tree, @"elements");
+	l3_assert(flattened, l3_equals(@[tree, tree.left, [tree.left left], [tree.left right], [[tree.left right] left], [[tree.left right] right], tree.right]));
+}
+
 static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, id target, NSString *keyPath) {
 	[accumulator addObject:target];
 	if ([target respondsToSelector:NSSelectorFromString(keyPath)]) {
 		for (id element in [target valueForKeyPath:keyPath]) {
 			RXAccumulateRecursiveContentsOfTarget(accumulator, element, keyPath);
-			
 		}
 	}
 }
 
+
+@l3_test("recursively enumerates trees in depth-first order") {
+	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
+	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"elements"], @"", ^(NSString *memo, id each) {
+		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
+	}), @"xyzw");
+}
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSMutableArray *flattened = nil;
