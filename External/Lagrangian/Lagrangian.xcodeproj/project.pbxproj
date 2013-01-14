@@ -1,0 +1,841 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D40DE662164E26030033DE88 /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; };
+		D40DE663164E26030033DE88 /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
+		D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; };
+		D40DE69E165037BA0033DE88 /* L3OCUnitTestResultFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */; };
+		D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; };
+		D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; };
+		D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; };
+		D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; };
+		D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; };
+		D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; };
+		D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */; };
+		D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; };
+		D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
+		D426E49816528701001C9105 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; };
+		D426E49916528701001C9105 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
+		D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; };
+		D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
+		D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E9DC165874F40033BCC8 /* L3TestStep.h */; };
+		D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = D431E9DD165874F40033BCC8 /* L3TestStep.m */; };
+		D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; };
+		D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = D43D8DA516575E9A00E6DE07 /* L3Collection.m */; };
+		D457D679165094F100340DAC /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; };
+		D457D67A165094F100340DAC /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
+		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; };
+		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; };
+		D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
+		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
+		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
+		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
+		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
+		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
+		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
+		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
+		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; };
+		D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
+		D4B62B5816A1581700E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62B5616A1581700E42C84 /* InfoPlist.strings */; };
+		D4B62B6116A159FA00E42C84 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
+		D4B62B6216A159FA00E42C84 /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
+		D4B62B6316A159FA00E42C84 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
+		D4B62B6416A159FA00E42C84 /* L3Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = D43D8DA516575E9A00E6DE07 /* L3Collection.m */; };
+		D4B62B6516A159FA00E42C84 /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
+		D4B62B6616A159FA00E42C84 /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
+		D4B62B6716A159FA00E42C84 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
+		D4B62B6816A159FA00E42C84 /* L3TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = D431E9DD165874F40033BCC8 /* L3TestStep.m */; };
+		D4B62B6916A159FA00E42C84 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
+		D4B62B6A16A159FA00E42C84 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
+		D4B62B6B16A159FA00E42C84 /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
+		D4B62B6C16A159FA00E42C84 /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
+		D4B62B6D16A159FA00E42C84 /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
+		D4B62B6E16A159FA00E42C84 /* L3OCUnitTestResultFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */; };
+		D4B62B6F16A15A0400E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B5216A1581700E42C84 /* Foundation.framework */; };
+		D4B62B7016A15A1900E42C84 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7116A15A1900E42C84 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7216A15A1900E42C84 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7316A15A1900E42C84 /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7416A15A1900E42C84 /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7516A15A1900E42C84 /* L3Configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B21CB8168924A500D5986E /* L3Configuration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7616A15A1900E42C84 /* L3Types.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D6164BF15400338EB4 /* L3Types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7716A15A1900E42C84 /* L3PreprocessorUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7816A15A1900E42C84 /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7916A15A1900E42C84 /* L3Assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE670164F18AF0033DE88 /* L3Assertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7A16A15A1900E42C84 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7B16A15A1900E42C84 /* L3TestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E9DC165874F40033BCC8 /* L3TestStep.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7C16A15A1900E42C84 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7D16A15A1900E42C84 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7E16A15A1900E42C84 /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B7F16A15A1900E42C84 /* L3Test.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69716501CA00033DE88 /* L3Test.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8016A15A1900E42C84 /* L3TestVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8116A15A1900E42C84 /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8216A15A1900E42C84 /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8316A15A1900E42C84 /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8416A15A1900E42C84 /* L3TestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8516A15A1900E42C84 /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8616A15A1900E42C84 /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8716A15A1900E42C84 /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8816A15A1900E42C84 /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8916A15A1900E42C84 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8A16A15A1900E42C84 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8B16A15A1900E42C84 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4D16A1581700E42C84 /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */; };
+		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
+		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
+		D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
+		D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43181648B5D300C0A25B /* AppKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
+		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
+		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D4A5B2BF164B4FAF00338EB4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D40DE660164E26030033DE88 /* L3TestState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestState.h; sourceTree = "<group>"; };
+		D40DE661164E26030033DE88 /* L3TestState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestState.m; sourceTree = "<group>"; };
+		D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3PreprocessorUtilities.h; sourceTree = "<group>"; };
+		D40DE670164F18AF0033DE88 /* L3Assertions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Assertions.h; sourceTree = "<group>"; };
+		D40DE69716501CA00033DE88 /* L3Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
+		D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3OCUnitTestResultFormatter.h; sourceTree = "<group>"; };
+		D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3OCUnitTestResultFormatter.m; sourceTree = "<group>"; };
+		D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestResultFormatter.h; sourceTree = "<group>"; };
+		D4223BE216A0A95E00AE32D5 /* _RXFold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXFold.h; sourceTree = "<group>"; };
+		D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RXInterpolation.h; sourceTree = "<group>"; };
+		D4223BE516A0A95E00AE32D5 /* RXCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCount.h; sourceTree = "<group>"; };
+		D4223BE616A0A95E00AE32D5 /* RXFold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXFold.h; sourceTree = "<group>"; };
+		D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXInterpolation.h; sourceTree = "<group>"; };
+		D4223BE816A0A95E00AE32D5 /* RXPaste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXPaste.h; sourceTree = "<group>"; };
+		D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPreprocessingTests.m; sourceTree = "<group>"; };
+		D426E49116527B8D001C9105 /* L3TestResultBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResultBuilder.h; sourceTree = "<group>"; };
+		D426E49216527B8D001C9105 /* L3TestResultBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResultBuilder.m; sourceTree = "<group>"; };
+		D426E49616528701001C9105 /* L3Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Stack.h; sourceTree = "<group>"; };
+		D426E49716528701001C9105 /* L3Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Stack.m; sourceTree = "<group>"; };
+		D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3FunctionalUtilities.h; sourceTree = "<group>"; };
+		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
+		D431E9DC165874F40033BCC8 /* L3TestStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestStep.h; sourceTree = "<group>"; };
+		D431E9DD165874F40033BCC8 /* L3TestStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestStep.m; sourceTree = "<group>"; };
+		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43D8DA416575E9A00E6DE07 /* L3Collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Collection.h; sourceTree = "<group>"; };
+		D43D8DA516575E9A00E6DE07 /* L3Collection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Collection.m; sourceTree = "<group>"; };
+		D457D677165094F100340DAC /* L3SourceReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3SourceReference.h; sourceTree = "<group>"; };
+		D457D678165094F100340DAC /* L3SourceReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3SourceReference.m; sourceTree = "<group>"; };
+		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
+		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
+		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
+		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "lagrangian-tool.m"; sourceTree = "<group>"; };
+		D4A5B2C9164B4FAF00338EB4 /* lagrangian-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "lagrangian-Prefix.pch"; sourceTree = "<group>"; };
+		D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = lagrangian.1; sourceTree = "<group>"; };
+		D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestCase.h; sourceTree = "<group>"; };
+		D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestCase.m; sourceTree = "<group>"; };
+		D4A5B2D6164BF15400338EB4 /* L3Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Types.h; sourceTree = "<group>"; };
+		D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3TestVisitor.h; sourceTree = "<group>"; };
+		D4AA625D1687C0FB0028C574 /* lagrangian-tool-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "lagrangian-tool-Info.plist"; path = "Lagrangian/lagrangian-tool-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D4AC43121648B5D300C0A25B /* Lagrangian.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = Lagrangian.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4AC43181648B5D300C0A25B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D4AC431D1648B5D300C0A25B /* Lagrangian-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lagrangian-Prefix.pch"; sourceTree = "<group>"; };
+		D4AC431E1648B5D300C0A25B /* Lagrangian.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lagrangian.h; sourceTree = "<group>"; };
+		D4AC431F1648B5D300C0A25B /* Lagrangian.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lagrangian.m; sourceTree = "<group>"; };
+		D4B152B21653969E002858C3 /* L3StringInflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3StringInflections.h; sourceTree = "<group>"; };
+		D4B152B31653969E002858C3 /* L3StringInflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3StringInflections.m; sourceTree = "<group>"; };
+		D4B21CB8168924A500D5986E /* L3Configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Configuration.h; sourceTree = "<group>"; };
+		D4B62B4C16A1581700E42C84 /* Lagrangian.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lagrangian.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4B62B4D16A1581700E42C84 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D4B62B5016A1581700E42C84 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D4B62B5116A1581700E42C84 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D4B62B5216A1581700E42C84 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D4B62B5516A1581700E42C84 /* Lagrangian-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lagrangian-Info.plist"; sourceTree = "<group>"; };
+		D4B62B5716A1581700E42C84 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D4BC3A5D164D483E003AD167 /* L3TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestRunner.h; sourceTree = "<group>"; };
+		D4BC3A5E164D483E003AD167 /* L3TestRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestRunner.m; sourceTree = "<group>"; };
+		D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = L3TRDynamicLibrary.h; path = Lagrangian/L3TRDynamicLibrary.h; sourceTree = SOURCE_ROOT; };
+		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
+		D4E394C31650C2BC00C72FBD /* L3TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResult.h; sourceTree = "<group>"; };
+		D4E394C41650C2BC00C72FBD /* L3TestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResult.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D4A5B2BE164B4FAF00338EB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */,
+				D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4AC430F1648B5D300C0A25B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */,
+				D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4B62B4816A1581700E42C84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */,
+				D4B62B6F16A15A0400E42C84 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D40DE69616501B000033DE88 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D457D68D1650AD9900340DAC /* Assertions */,
+				D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */,
+				D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */,
+				D431E9DC165874F40033BCC8 /* L3TestStep.h */,
+				D431E9DD165874F40033BCC8 /* L3TestStep.m */,
+				D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */,
+				D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */,
+				D4BC3A5D164D483E003AD167 /* L3TestRunner.h */,
+				D4BC3A5E164D483E003AD167 /* L3TestRunner.m */,
+				D40DE660164E26030033DE88 /* L3TestState.h */,
+				D40DE661164E26030033DE88 /* L3TestState.m */,
+				D40DE69716501CA00033DE88 /* L3Test.h */,
+				D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */,
+				D426E48F16527B70001C9105 /* Test results */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		D4223BDE16A0A94B00AE32D5 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				D4223BE016A0A95E00AE32D5 /* RXPreprocessing */,
+			);
+			name = External;
+			sourceTree = "<group>";
+		};
+		D4223BE016A0A95E00AE32D5 /* RXPreprocessing */ = {
+			isa = PBXGroup;
+			children = (
+				D4223BE216A0A95E00AE32D5 /* _RXFold.h */,
+				D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */,
+				D4223BE516A0A95E00AE32D5 /* RXCount.h */,
+				D4223BE616A0A95E00AE32D5 /* RXFold.h */,
+				D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */,
+				D4223BE816A0A95E00AE32D5 /* RXPaste.h */,
+				D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */,
+			);
+			name = RXPreprocessing;
+			path = External/RXPreprocessing;
+			sourceTree = "<group>";
+		};
+		D426E48F16527B70001C9105 /* Test results */ = {
+			isa = PBXGroup;
+			children = (
+				D457D67B165097CA00340DAC /* L3EventObserver.h */,
+				D4E394C31650C2BC00C72FBD /* L3TestResult.h */,
+				D4E394C41650C2BC00C72FBD /* L3TestResult.m */,
+				D426E49116527B8D001C9105 /* L3TestResultBuilder.h */,
+				D426E49216527B8D001C9105 /* L3TestResultBuilder.m */,
+				D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */,
+				D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */,
+				D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */,
+			);
+			name = "Test results";
+			sourceTree = "<group>";
+		};
+		D426E495165286F3001C9105 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D426E49616528701001C9105 /* L3Stack.h */,
+				D426E49716528701001C9105 /* L3Stack.m */,
+				D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */,
+				D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */,
+				D4B152B21653969E002858C3 /* L3StringInflections.h */,
+				D4B152B31653969E002858C3 /* L3StringInflections.m */,
+				D43D8DA416575E9A00E6DE07 /* L3Collection.h */,
+				D43D8DA516575E9A00E6DE07 /* L3Collection.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		D457D68D1650AD9900340DAC /* Assertions */ = {
+			isa = PBXGroup;
+			children = (
+				D457D677165094F100340DAC /* L3SourceReference.h */,
+				D457D678165094F100340DAC /* L3SourceReference.m */,
+				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
+			);
+			name = Assertions;
+			sourceTree = "<group>";
+		};
+		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
+			isa = PBXGroup;
+			children = (
+				D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */,
+				D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */,
+				D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */,
+				D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */,
+				D4A5B2C8164B4FAF00338EB4 /* Supporting Files */,
+				D4AA625D1687C0FB0028C574 /* lagrangian-tool-Info.plist */,
+			);
+			name = "Test Runner";
+			path = lagrangian;
+			sourceTree = "<group>";
+		};
+		D4A5B2C8164B4FAF00338EB4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4A5B2C9164B4FAF00338EB4 /* lagrangian-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4AC43071648B5D300C0A25B = {
+			isa = PBXGroup;
+			children = (
+				D4AC431B1648B5D300C0A25B /* Library */,
+				D4B62B5316A1581700E42C84 /* Framework */,
+				D4A5B2C5164B4FAF00338EB4 /* Test Runner */,
+				D4223BDE16A0A94B00AE32D5 /* External */,
+				D4AC43141648B5D300C0A25B /* Frameworks */,
+				D4AC43131648B5D300C0A25B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D4AC43131648B5D300C0A25B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4AC43121648B5D300C0A25B /* Lagrangian.dylib */,
+				D4A5B2C1164B4FAF00338EB4 /* lagrangian */,
+				D43D8B721654C27000E6DE07 /* Lagrangian.octest */,
+				D4B62B4C16A1581700E42C84 /* Lagrangian.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4AC43141648B5D300C0A25B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */,
+				D4AC43181648B5D300C0A25B /* AppKit.framework */,
+				D4B62B4D16A1581700E42C84 /* Cocoa.framework */,
+				D4B62B4F16A1581700E42C84 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4AC431B1648B5D300C0A25B /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D426E495165286F3001C9105 /* Utilities */,
+				D4AC431E1648B5D300C0A25B /* Lagrangian.h */,
+				D4AC431F1648B5D300C0A25B /* Lagrangian.m */,
+				D4B21CB8168924A500D5986E /* L3Configuration.h */,
+				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
+				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
+				D40DE69616501B000033DE88 /* Tests */,
+				D4AC431C1648B5D300C0A25B /* Supporting Files */,
+			);
+			name = Library;
+			path = Lagrangian;
+			sourceTree = "<group>";
+		};
+		D4AC431C1648B5D300C0A25B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4AC431D1648B5D300C0A25B /* Lagrangian-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D4B62B4F16A1581700E42C84 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4B62B5016A1581700E42C84 /* AppKit.framework */,
+				D4B62B5116A1581700E42C84 /* CoreData.framework */,
+				D4B62B5216A1581700E42C84 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D4B62B5316A1581700E42C84 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				D4B62B5516A1581700E42C84 /* Lagrangian-Info.plist */,
+				D4B62B5616A1581700E42C84 /* InfoPlist.strings */,
+			);
+			name = Framework;
+			path = Lagrangian;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D4AC43101648B5D300C0A25B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */,
+				D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */,
+				D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */,
+				D40DE662164E26030033DE88 /* L3TestState.h in Headers */,
+				D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */,
+				D457D679165094F100340DAC /* L3SourceReference.h in Headers */,
+				D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */,
+				D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */,
+				D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */,
+				D426E49816528701001C9105 /* L3Stack.h in Headers */,
+				D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */,
+				D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */,
+				D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */,
+				D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */,
+				D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */,
+				D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */,
+				D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */,
+				D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */,
+				D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */,
+				D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */,
+				D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4B62B4916A1581700E42C84 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62B7016A15A1900E42C84 /* L3Stack.h in Headers */,
+				D4B62B7116A15A1900E42C84 /* L3FunctionalUtilities.h in Headers */,
+				D4B62B7216A15A1900E42C84 /* L3StringInflections.h in Headers */,
+				D4B62B7316A15A1900E42C84 /* L3Collection.h in Headers */,
+				D4B62B7416A15A1900E42C84 /* Lagrangian.h in Headers */,
+				D4B62B7516A15A1900E42C84 /* L3Configuration.h in Headers */,
+				D4B62B7616A15A1900E42C84 /* L3Types.h in Headers */,
+				D4B62B7716A15A1900E42C84 /* L3PreprocessorUtilities.h in Headers */,
+				D4B62B7816A15A1900E42C84 /* L3SourceReference.h in Headers */,
+				D4B62B7916A15A1900E42C84 /* L3Assertions.h in Headers */,
+				D4B62B7A16A15A1900E42C84 /* L3TestCase.h in Headers */,
+				D4B62B7B16A15A1900E42C84 /* L3TestStep.h in Headers */,
+				D4B62B7C16A15A1900E42C84 /* L3TestSuite.h in Headers */,
+				D4B62B7D16A15A1900E42C84 /* L3TestRunner.h in Headers */,
+				D4B62B7E16A15A1900E42C84 /* L3TestState.h in Headers */,
+				D4B62B7F16A15A1900E42C84 /* L3Test.h in Headers */,
+				D4B62B8016A15A1900E42C84 /* L3TestVisitor.h in Headers */,
+				D4B62B8116A15A1900E42C84 /* L3EventObserver.h in Headers */,
+				D4B62B8216A15A1900E42C84 /* L3TestResult.h in Headers */,
+				D4B62B8316A15A1900E42C84 /* L3TestResultBuilder.h in Headers */,
+				D4B62B8416A15A1900E42C84 /* L3TestResultFormatter.h in Headers */,
+				D4B62B8516A15A1900E42C84 /* L3OCUnitTestResultFormatter.h in Headers */,
+				D4B62B8616A15A1900E42C84 /* _RXFold.h in Headers */,
+				D4B62B8716A15A1900E42C84 /* _RXInterpolation.h in Headers */,
+				D4B62B8816A15A1900E42C84 /* RXCount.h in Headers */,
+				D4B62B8916A15A1900E42C84 /* RXFold.h in Headers */,
+				D4B62B8A16A15A1900E42C84 /* RXInterpolation.h in Headers */,
+				D4B62B8B16A15A1900E42C84 /* RXPaste.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D43D8B711654C27000E6DE07 /* Lagrangian */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Lagrangian;
+			productName = Lagrangian;
+			productReference = D43D8B721654C27000E6DE07 /* Lagrangian.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		D4A5B2C0164B4FAF00338EB4 /* lagrangian */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */;
+			buildPhases = (
+				D4A5B2BD164B4FAF00338EB4 /* Sources */,
+				D4A5B2BE164B4FAF00338EB4 /* Frameworks */,
+				D4A5B2BF164B4FAF00338EB4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = lagrangian;
+			productName = lagrangian;
+			productReference = D4A5B2C1164B4FAF00338EB4 /* lagrangian */;
+			productType = "com.apple.product-type.tool";
+		};
+		D4AC43111648B5D300C0A25B /* Lagrangian (Mac OS X dynamic library) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4AC43231648B5D300C0A25B /* Build configuration list for PBXNativeTarget "Lagrangian (Mac OS X dynamic library)" */;
+			buildPhases = (
+				D4AC430E1648B5D300C0A25B /* Sources */,
+				D4AC430F1648B5D300C0A25B /* Frameworks */,
+				D4AC43101648B5D300C0A25B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Lagrangian (Mac OS X dynamic library)";
+			productName = Lagrangian;
+			productReference = D4AC43121648B5D300C0A25B /* Lagrangian.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		D4B62B4B16A1581700E42C84 /* Lagrangian (Mac OS X framework) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4B62B5F16A1581700E42C84 /* Build configuration list for PBXNativeTarget "Lagrangian (Mac OS X framework)" */;
+			buildPhases = (
+				D4B62B4716A1581700E42C84 /* Sources */,
+				D4B62B4816A1581700E42C84 /* Frameworks */,
+				D4B62B4916A1581700E42C84 /* Headers */,
+				D4B62B4A16A1581700E42C84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Lagrangian (Mac OS X framework)";
+			productName = "Lagrangian (Framework)";
+			productReference = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D4AC43091648B5D300C0A25B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Rob Rix";
+			};
+			buildConfigurationList = D4AC430C1648B5D300C0A25B /* Build configuration list for PBXProject "Lagrangian" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D4AC43071648B5D300C0A25B;
+			productRefGroup = D4AC43131648B5D300C0A25B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4B62B4B16A1581700E42C84 /* Lagrangian (Mac OS X framework) */,
+				D4AC43111648B5D300C0A25B /* Lagrangian (Mac OS X dynamic library) */,
+				D4A5B2C0164B4FAF00338EB4 /* lagrangian */,
+				D43D8B711654C27000E6DE07 /* Lagrangian */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D4B62B4A16A1581700E42C84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62B5816A1581700E42C84 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D4A5B2BD164B4FAF00338EB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */,
+				D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4AC430E1648B5D300C0A25B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */,
+				D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */,
+				D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */,
+				D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */,
+				D40DE663164E26030033DE88 /* L3TestState.m in Sources */,
+				D40DE69E165037BA0033DE88 /* L3OCUnitTestResultFormatter.m in Sources */,
+				D457D67A165094F100340DAC /* L3SourceReference.m in Sources */,
+				D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */,
+				D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */,
+				D426E49916528701001C9105 /* L3Stack.m in Sources */,
+				D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */,
+				D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */,
+				D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */,
+				D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */,
+				D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4B62B4716A1581700E42C84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4B62B6116A159FA00E42C84 /* L3Stack.m in Sources */,
+				D4B62B6216A159FA00E42C84 /* L3FunctionalUtilities.m in Sources */,
+				D4B62B6316A159FA00E42C84 /* L3StringInflections.m in Sources */,
+				D4B62B6416A159FA00E42C84 /* L3Collection.m in Sources */,
+				D4B62B6516A159FA00E42C84 /* Lagrangian.m in Sources */,
+				D4B62B6616A159FA00E42C84 /* L3SourceReference.m in Sources */,
+				D4B62B6716A159FA00E42C84 /* L3TestCase.m in Sources */,
+				D4B62B6816A159FA00E42C84 /* L3TestStep.m in Sources */,
+				D4B62B6916A159FA00E42C84 /* L3TestSuite.m in Sources */,
+				D4B62B6A16A159FA00E42C84 /* L3TestRunner.m in Sources */,
+				D4B62B6B16A159FA00E42C84 /* L3TestState.m in Sources */,
+				D4B62B6C16A159FA00E42C84 /* L3TestResult.m in Sources */,
+				D4B62B6D16A159FA00E42C84 /* L3TestResultBuilder.m in Sources */,
+				D4B62B6E16A159FA00E42C84 /* L3OCUnitTestResultFormatter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D4B62B5616A1581700E42C84 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D4B62B5716A1581700E42C84 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D43D8B741654C27000E6DE07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D43D8B761654C27000E6DE07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		D4A5B2CD164B4FAF00338EB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D4A5B2CE164B4FAF00338EB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "lagrangian/lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/lagrangian-tool-Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__info_plist,
+					"$(INFOPLIST_FILE)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D4AC43211648B5D300C0A25B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D4AC43221648B5D300C0A25B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D4AC43241648B5D300C0A25B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
+				PRODUCT_NAME = Lagrangian;
+			};
+			name = Debug;
+		};
+		D4AC43251648B5D300C0A25B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
+				PRODUCT_NAME = Lagrangian;
+			};
+			name = Release;
+		};
+		D4B62B5D16A1581700E42C84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
+				PRODUCT_NAME = Lagrangian;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		D4B62B5E16A1581700E42C84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
+				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
+				PRODUCT_NAME = Lagrangian;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D43D8B741654C27000E6DE07 /* Debug */,
+				D43D8B761654C27000E6DE07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4A5B2CD164B4FAF00338EB4 /* Debug */,
+				D4A5B2CE164B4FAF00338EB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4AC430C1648B5D300C0A25B /* Build configuration list for PBXProject "Lagrangian" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4AC43211648B5D300C0A25B /* Debug */,
+				D4AC43221648B5D300C0A25B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4AC43231648B5D300C0A25B /* Build configuration list for PBXNativeTarget "Lagrangian (Mac OS X dynamic library)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4AC43241648B5D300C0A25B /* Debug */,
+				D4AC43251648B5D300C0A25B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4B62B5F16A1581700E42C84 /* Build configuration list for PBXNativeTarget "Lagrangian (Mac OS X framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4B62B5D16A1581700E42C84 /* Debug */,
+				D4B62B5E16A1581700E42C84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D4AC43091648B5D300C0A25B /* Project object */;
+}
