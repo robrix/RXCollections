@@ -3,6 +3,7 @@
 //  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXCollection.h"
+#import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -214,18 +215,30 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 @end
 
 
+@l3_suite("NSDictionary (RXCollection)");
+
 @implementation NSDictionary (RXCollection)
 
 -(id<RXCollection>)rx_emptyCollection {
 	return [NSDictionary dictionary];
 }
 
+@l3_test("appends pairs by returning a new dictionary with the pair added") {
+	NSDictionary *original = [NSDictionary dictionary];
+	NSDictionary *appended = [original rx_append:[RXPair pairWithKey:@"x" value:@"y"]];
+	l3_assert(appended, l3_not(original));
+	l3_assert(appended[@"x"], @"y");
+}
+
 -(instancetype)rx_append:(id)element {
-	// make a new dictionary
-	// interpret element as a pair?
-//	if (element)
-//		self[element.key] = element.value;
-	return self;
+	NSDictionary *dictionary = nil;
+	if ([element respondsToSelector:@selector(key)] && [element respondsToSelector:@selector(value)]) {
+		id<RXDictionaryPair> pair = element;
+		NSMutableDictionary *mutableDictionary = [self mutableCopy];
+		mutableDictionary[pair.key] = pair.value;
+		dictionary = mutableDictionary;
+	}
+	return dictionary;
 }
 
 @end
@@ -237,10 +250,13 @@ id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 -(instancetype)rx_append:(id)element {
-	// interpret element as a pair?
-//	if (element)
-//		self[element.key] = element.value;
-	return self;
+	NSMutableDictionary *dictionary = nil;
+	if ([element respondsToSelector:@selector(key)] && [element respondsToSelector:@selector(value)]) {
+		id<RXDictionaryPair> pair = element;
+		self[pair.key] = pair.value;
+		dictionary = self;
+	}
+	return dictionary;
 }
 
 @end
