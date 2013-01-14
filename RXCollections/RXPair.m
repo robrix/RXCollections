@@ -7,10 +7,20 @@
 @implementation RXPair
 
 +(instancetype)pairWithLeft:(id)left right:(id)right {
-	RXPair *pair = [self new];
-	pair.left = left;
-	pair.right = right;
-	return pair;
+	return [[self alloc] initWithLeft:left right:right];
+}
+
+-(instancetype)initWithLeft:(id)left right:(id)right {
+	if ((self = [super init])) {
+		_left = left;
+		_right = right;
+	}
+	return self;
+}
+
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
 }
 
 @end
@@ -19,10 +29,7 @@
 @implementation RXPair (RXPairNSDictionaryConvenience)
 
 +(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value {
-	RXPair *pair = [self new];
-	pair.key = key;
-	pair.value = value;
-	return pair;
+	return [[self alloc] initWithLeft:key right:value];
 }
 
 
@@ -30,18 +37,8 @@
 	return self.left;
 }
 
--(void)setKey:(id<NSCopying>)key {
-	// fixme: should this copy?
-	self.left = key;
-}
-
-
 -(id)value {
 	return self.right;
-}
-
--(void)setValue:(id)value {
-	self.right = value;
 }
 
 @end

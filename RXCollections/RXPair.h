@@ -4,12 +4,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RXPair : NSObject
+@interface RXPair : NSObject <NSCopying>
 
 +(instancetype)pairWithLeft:(id)left right:(id)right;
+-(instancetype)initWithLeft:(id)left right:(id)right;
 
-@property (nonatomic, strong) id left;
-@property (nonatomic, strong) id right;
+@property (nonatomic, strong, readonly) id left;
+@property (nonatomic, strong, readonly) id right;
 
 @end
 
@@ -21,14 +22,7 @@
 
 @end
 
-@protocol RXMutableDictionaryPair <RXDictionaryPair>
-
-@property (nonatomic, copy) id<NSCopying> key;
-@property (nonatomic, strong) id value;
-
-@end
-
-@interface RXPair (RXPairNSDictionaryConvenience) <RXMutableDictionaryPair>
+@interface RXPair (RXPairNSDictionaryConvenience) <RXDictionaryPair>
 
 +(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value;
 
