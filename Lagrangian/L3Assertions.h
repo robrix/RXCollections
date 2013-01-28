@@ -3,8 +3,8 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3Types.h"
-#import "L3SourceReference.h"
+#import <Lagrangian/L3Types.h>
+#import <Lagrangian/L3SourceReference.h>
 
 #pragma mark Assertions
 

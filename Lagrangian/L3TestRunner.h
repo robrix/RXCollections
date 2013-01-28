@@ -3,7 +3,7 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3Configuration.h"
+#import <Lagrangian/L3Configuration.h>
 
 extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
 extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;

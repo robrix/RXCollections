@@ -19,8 +19,8 @@ typedef bool(^L3Pattern)(id);
 
 #pragma mark Object conversion
 
-#import "L3PreprocessorUtilities.h"
-#import "RXFold.h"
+#import <Lagrangian/L3PreprocessorUtilities.h>
+#import <Lagrangian/RXFold.h>
 
 // start off by assuming all conversions to be unavailable (is this necessary?)
 static inline id l3_to_object(...) __attribute__((overloadable, unavailable));
