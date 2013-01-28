@@ -3,9 +3,9 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #import <Foundation/Foundation.h>
-#import "L3Types.h"
-#import "L3Test.h"
-#import "L3EventObserver.h"
+#import <Lagrangian/L3Types.h>
+#import <Lagrangian/L3Test.h>
+#import <Lagrangian/L3EventObserver.h>
 
 @class L3SourceReference;
 @class L3TestSuite;

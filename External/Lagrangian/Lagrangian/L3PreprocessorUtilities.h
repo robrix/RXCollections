@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2012-11-10.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "RXPaste.h"
+#import <Lagrangian/RXPaste.h>
 
 #pragma mark Macro utilities
 

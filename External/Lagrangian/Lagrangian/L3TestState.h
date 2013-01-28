@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2012-11-10.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3EventObserver.h"
+#import <Lagrangian/L3EventObserver.h>
 
 extern const NSTimeInterval L3TestStateDefaultTimeout;
 
