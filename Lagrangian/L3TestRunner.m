@@ -121,6 +121,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 			[self run];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
+			
+			[self.queue addOperationWithBlock:^{
+				[[NSApplication sharedApplication] terminate:nil];
+			}];
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{
