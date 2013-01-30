@@ -39,7 +39,12 @@ rx_fold(l3_define_to_object_by_boxing_with_type, ,
 		char *)
 __attribute__((overloadable)) static inline id l3_to_object(id x) { return x; }
 __attribute__((overloadable)) static inline id l3_to_object(void *x) { return [NSValue valueWithPointer:0]; }
+__attribute__((overloadable)) static inline id l3_to_object(NSRange r) { return [NSValue valueWithRange:r]; }
 
+// Core Graphics
+__attribute__((overloadable)) static inline id l3_to_object(CGPoint p) { return [NSValue valueWithPoint:p]; }
+__attribute__((overloadable)) static inline id l3_to_object(CGRect r) { return [NSValue valueWithRect:r]; }
+__attribute__((overloadable)) static inline id l3_to_object(CGSize s) { return [NSValue valueWithSize:s]; }
 
 #pragma mark Pattern conversion
 
@@ -72,3 +77,19 @@ __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(void *x) {
 // floating point comparisons with epsilon
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(double x, double epsilon) { return ^bool(id y){ return [y isKindOfClass:[NSNumber class]] && fabs(x - [y doubleValue]) < epsilon; }; }
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(float x, float epsilon) { return ^bool(id y){ return [y isKindOfClass:[NSNumber class]] && fabsf(x - [y doubleValue]) < epsilon; }; }
+
+// NSRange
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(NSRange r) {
+	return ^bool(id o){ return NSEqualRanges(r, [o rangeValue]); };
+}
+
+// Core Graphics
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGPoint p) {
+	return ^bool(id o) { return CGPointEqualToPoint(p, [o pointValue]); };
+}
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGRect r) {
+	return ^bool(id o) { return CGRectEqualToRect(r, [o rectValue]); };
+}
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGSize s) {
+	return ^bool(id o) { return CGSizeEqualToSize(s, [o sizeValue]); };
+}
