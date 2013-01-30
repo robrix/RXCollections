@@ -143,7 +143,7 @@
 
 -(NSString *)formatTestName:(NSString *)name {
 	NSMutableString *formatted = [name mutableCopy];
-	NSRange range = {0};
+	NSRange range;
 	NSMutableCharacterSet *disallowed = [NSMutableCharacterSet new];
 	[disallowed formUnionWithCharacterSet:[[NSCharacterSet alphanumericCharacterSet] invertedSet]];
 	[disallowed removeCharactersInString:@"_"];
