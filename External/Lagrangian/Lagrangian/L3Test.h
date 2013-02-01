@@ -2,8 +2,8 @@
 //  Created by Rob Rix on 2012-11-11.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3EventObserver.h"
-#import "L3TestVisitor.h"
+#import <Lagrangian/L3EventObserver.h>
+#import <Lagrangian/L3TestVisitor.h>
 
 @class L3TestSuite;
 

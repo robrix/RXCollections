@@ -62,10 +62,11 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 }
 
 +(NSPredicate *)defaultPredicate {
-	NSString *environmentPredicate = [NSProcessInfo processInfo].environment[L3TestRunnerSuitePredicateEnvironmentVariableName];
-	return environmentPredicate?
-		[NSPredicate predicateWithFormat:environmentPredicate]
-	:	nil;
+	NSString *environmentPredicateFormat = [NSProcessInfo processInfo].environment[L3TestRunnerSuitePredicateEnvironmentVariableName];
+	NSPredicate *applicationPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", [NSBundle mainBundle].bundlePath.lastPathComponent];
+	return
+		(environmentPredicateFormat? [NSPredicate predicateWithFormat:environmentPredicateFormat] : nil)
+	?:	(self.isRunningInApplication? applicationPredicate : nil);
 }
 
 
@@ -121,6 +122,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 			[self run];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
+			
+			[self.queue addOperationWithBlock:^{
+				[[NSApplication sharedApplication] terminate:nil];
+			}];
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{

@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2012-11-17.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
-#import "L3Types.h"
+#import <Lagrangian/L3Types.h>
 
 @interface L3TestStep : NSObject
 
