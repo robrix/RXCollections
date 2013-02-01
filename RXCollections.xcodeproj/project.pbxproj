@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; };
+		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
-		D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; };
+		D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
 		D4B62B9E16A15E2200E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
 		D4B62BB716A1609300E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62BB516A1609300E42C84 /* InfoPlist.strings */; };
@@ -20,7 +20,7 @@
 		D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62BD916A170DC00E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4B62BDA16A170E600E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
-		D4C8768C16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; };
+		D4C8768C16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8768D16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8768E16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
 		D4C8768F16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
@@ -53,13 +53,6 @@
 			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D4B62B4C16A1581700E42C84;
-			remoteInfo = "Lagrangian (Mac OS X framework)";
-		};
-		D4B62B9F16A15E2800E42C84 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
 			remoteInfo = "Lagrangian (Mac OS X framework)";
 		};
 		D4F1023616B61DCD00A14457 /* PBXContainerItemProxy */ = {
@@ -227,7 +220,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D4B62BA016A15E2800E42C84 /* PBXTargetDependency */,
 			);
 			name = "RXCollections (Mac OS X static library)";
 			productName = RXCollections;
@@ -368,11 +360,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D4B62BA016A15E2800E42C84 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Lagrangian (Mac OS X framework)";
-			targetProxy = D4B62B9F16A15E2800E42C84 /* PBXContainerItemProxy */;
-		};
 		D4F1023716B61DCD00A14457 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Lagrangian (Mac OS X framework)";
