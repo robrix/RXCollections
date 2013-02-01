@@ -504,7 +504,6 @@
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = RXCollections;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -525,7 +524,6 @@
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = RXCollections;
 				WRAPPER_EXTENSION = framework;
 			};
