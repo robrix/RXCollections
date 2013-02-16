@@ -5,17 +5,18 @@
 #import <Foundation/Foundation.h>
 
 #import <RXCollections/RXPair.h>
+#import <RXCollections/RXTraversal.h>
 
 #pragma mark Folds
 
 typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
 
 /**
- id RXFold(id<NSFastEnumeration> collection, id initial, RXFoldBlock block)
+ id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block)
  
  Folds a `collection` with `block`, using `initial` as the `memo` argument to block for the first element.
  */
-extern id RXFold(id<NSFastEnumeration> collection, id initial, RXFoldBlock block);
+extern id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block);
 
 
 #pragma mark Maps
@@ -35,12 +36,12 @@ extern RXMapBlock const RXIdentityMapBlock;
 extern id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination, RXMapBlock block);
 
 /**
- id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block)
+ id<RXTraversal> RXLazyMap(id<RXTraversal> collection, RXMapBlock block)
  
- Returns an enumeration which lazily maps the values in `collection` using `block`. `block` can return nil.
+ Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil.
  */
 
-extern id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block);
+extern id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block);
 
 
 #pragma mark Filters
@@ -59,17 +60,17 @@ extern RXFilterBlock const RXRejectFilterBlock;
 extern id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block);
 
 /**
- id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block)
+ id RXDetect(id<RXTraversal> collection, RXFilterBlock block)
  
  Returns the first element found in `collection` which is matched by `block`.
  */
 
-extern id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block);
+extern id RXDetect(id<RXTraversal> collection, RXFilterBlock block);
 
 
 #pragma mark Collections
 
-@protocol RXCollection <NSObject, NSFastEnumeration>
+@protocol RXCollection <NSObject, RXTraversal>
 
 /**
  -(id<RXCollection>)rx_emptyCollection

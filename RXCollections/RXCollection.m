@@ -3,7 +3,7 @@
 //  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXCollection.h"
-#import "RXLazyEnumeration.h"
+#import "RXMappingTraversal.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -19,7 +19,7 @@
 	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
 }
 
-id RXFold(id<NSFastEnumeration> collection, id initial, RXFoldBlock block) {
+id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block) {
 	for (id each in collection) {
 		initial = block(initial, each);
 	}
@@ -66,8 +66,8 @@ id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination
 
 #pragma mark Lazy maps
 
-id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
-	return [RXLazyEnumeration enumerationWithCollection:collection block:block];
+id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
+	return [RXMappingTraversal traversalWithEnumeration:collection block:block];
 }
 
 
@@ -124,7 +124,7 @@ id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destinat
 }
 
 // fixme; this iterates every element in the collection; it should short-circuit break and return
-id RXDetect(id<NSFastEnumeration> collection, RXFilterBlock block) {
+id RXDetect(id<RXTraversal> collection, RXFilterBlock block) {
 	return RXFold(collection, nil, ^id(id memo, id each) {
 		return memo ?: (block(each)? each : nil);
 	});
