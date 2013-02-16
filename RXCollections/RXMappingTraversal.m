@@ -18,9 +18,6 @@ typedef struct RXMappingTraversalState {
 
 @interface RXMappingTraversal ()
 
-@property (nonatomic, strong, readonly) id<NSFastEnumeration> enumeration;
-@property (nonatomic, copy, readonly) id(^block)(id);
-
 @property (nonatomic, strong) NSMutableDictionary *collectionStatesByEnumerationStateAddresses;
 
 @end
