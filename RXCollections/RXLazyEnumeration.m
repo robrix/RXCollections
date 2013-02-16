@@ -21,7 +21,7 @@ typedef struct RXLazyEnumerationState {
 @property (nonatomic, strong, readonly) id<NSFastEnumeration> collection;
 @property (nonatomic, copy, readonly) id(^block)(id);
 
-@property (nonatomic, assign) NSFastEnumerationState collectionState;
+@property (nonatomic, strong) NSMutableDictionary *collectionStatesByEnumerationStateAddresses;
 
 @end
 
@@ -38,6 +38,8 @@ typedef struct RXLazyEnumerationState {
 	if ((self = [super init])) {
 		_collection = collection;
 		_block = [block copy];
+		
+		_collectionStatesByEnumerationStateAddresses = [NSMutableDictionary new];
 	}
 	return self;
 }
@@ -70,30 +72,58 @@ typedef struct RXLazyEnumerationState {
 	l3_assert(uppercase, l3_is(@[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"]));
 }
 
+@l3_test("maps with reentrancy over collections of more items than the for(in) buffer") {
+	NSArray *alphabet = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
+	id<NSFastEnumeration> toUpper = [RXLazyEnumeration enumerationWithCollection:alphabet block:^(NSString * letter) {
+		return [letter uppercaseString];
+	}];
+	
+	NSMutableArray *combos = [NSMutableArray new];
+	for (NSString *first in toUpper) {
+		for (NSString *second in toUpper) {
+			[combos addObject:[first stringByAppendingString:second]];
+		}
+	}
+	
+	l3_assert(combos.count, alphabet.count * alphabet.count);
+}
+
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	RXLazyEnumerationState *state = (RXLazyEnumerationState *)fastEnumerationState;
+	id<NSCopying> key = @((uintptr_t)fastEnumerationState);
+	NSMutableData *collectionStateData = self.collectionStatesByEnumerationStateAddresses[key];
+	NSFastEnumerationState *collectionState = collectionStateData.mutableBytes ?: &(NSFastEnumerationState){};
+	
 	// throw out old state if we find ourselves in a new one; e.g. the for(in) around us hit a break; and we never returned 0
 	if (!state->hasEnumerated) {
 		state->hasEnumerated = YES;
 		state->mutationsPtr = &state->hasEnumerated;
-		self.collectionState = (NSFastEnumerationState){};
 	}
 	
 	__unsafe_unretained id objects[len];
 	// do the next enumeration of the source collection if we have already exhausted the previous enumeration's returned objects
 	if (state->countOfLastEnumeration == state->countConsumedOfLastEnumeration) {
-		state->countOfLastEnumeration = [self.collection countByEnumeratingWithState:&_collectionState objects:objects count:len];
+		state->countOfLastEnumeration = [self.collection countByEnumeratingWithState:collectionState objects:objects count:len];
 		state->countConsumedOfLastEnumeration = 0;
 	}
+	
 	unsigned long countConsumedOfCurrentEnumeration = MIN(len, state->countOfLastEnumeration - state->countConsumedOfLastEnumeration);
 	
-	state->itemsPtr = buffer;
-	for (NSUInteger i = 0; i < countConsumedOfCurrentEnumeration; i++) {
-		__autoreleasing id *mapped = (__autoreleasing id *)(void *)&state->itemsPtr[i];
-		*mapped = self.block(self.collectionState.itemsPtr[i + state->countConsumedOfLastEnumeration]);
+	// enumerate and map, or, if there is nothing to enumerate, flush the stored collection state
+	if (countConsumedOfCurrentEnumeration > 0) {
+		state->itemsPtr = buffer;
+		for (NSUInteger i = 0; i < countConsumedOfCurrentEnumeration; i++) {
+			__autoreleasing id *mapped = (__autoreleasing id *)(void *)&state->itemsPtr[i];
+			*mapped = self.block(collectionState->itemsPtr[i + state->countConsumedOfLastEnumeration]);
+		}
+		
+		state->countConsumedOfLastEnumeration += countConsumedOfCurrentEnumeration;
+		
+		if (!collectionStateData)
+			self.collectionStatesByEnumerationStateAddresses[key] = [NSMutableData dataWithBytes:collectionState length:sizeof *collectionState];
+	} else {
+		[self.collectionStatesByEnumerationStateAddresses removeObjectForKey:key];
 	}
-	
-	state->countConsumedOfLastEnumeration += countConsumedOfCurrentEnumeration;
 	
 	return countConsumedOfCurrentEnumeration;
 }
