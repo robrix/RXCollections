@@ -3,6 +3,7 @@
 //  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXCollection.h"
+#import "RXLazyEnumeration.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -60,6 +61,13 @@ id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination
 	return RXFold(collection, destination, ^id(id previous, id each) {
 		return [previous rx_append:block(each)];
 	});
+}
+
+
+#pragma mark Lazy maps
+
+id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
+	return [RXLazyEnumeration enumerationWithCollection:collection block:block];
 }
 
 

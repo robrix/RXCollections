@@ -34,6 +34,14 @@ extern RXMapBlock const RXIdentityMapBlock;
 
 extern id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination, RXMapBlock block);
 
+/**
+ id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block)
+ 
+ Returns an enumeration which lazily maps the values in `collection` using `block`. `block` can return nil.
+ */
+
+extern id<NSFastEnumeration> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block);
+
 
 #pragma mark Filters
 

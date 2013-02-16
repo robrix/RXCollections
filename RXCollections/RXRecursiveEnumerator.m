@@ -55,6 +55,7 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSMutableArray *flattened = nil;
 	if (state->state == 0) {
+		// fixme: this is not guaranteed to release the thing
 		state->mutationsPtr = (__bridge_retained void *)(flattened = [NSMutableArray new]);
 		RXAccumulateRecursiveContentsOfTarget(flattened, self.target, self.keyPath);
 	} else {
