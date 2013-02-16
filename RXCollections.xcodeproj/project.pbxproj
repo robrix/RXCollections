@@ -26,8 +26,8 @@
 		D4C8768D16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8768E16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
 		D4C8768F16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
-		D4E0D68C16C8BD6D00C5F2F1 /* RXLazyEnumeration.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXLazyEnumeration.m */; };
-		D4E0D68D16C8BD7000C5F2F1 /* RXLazyEnumeration.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXLazyEnumeration.m */; };
+		D4E0D68C16C8BD6D00C5F2F1 /* RXMappingTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXMappingTraversal.m */; };
+		D4E0D68D16C8BD7000C5F2F1 /* RXMappingTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXMappingTraversal.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +77,8 @@
 		D4B62BB816A1609D00E42C84 /* RXCollections-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RXCollections-Info.plist"; sourceTree = "<group>"; };
 		D4C8768A16A2172100208BE9 /* RXPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXPair.h; sourceTree = "<group>"; };
 		D4C8768B16A2172100208BE9 /* RXPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPair.m; sourceTree = "<group>"; };
-		D4E0D68616C8BC4300C5F2F1 /* RXLazyEnumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXLazyEnumeration.h; sourceTree = "<group>"; };
-		D4E0D68716C8BC4300C5F2F1 /* RXLazyEnumeration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXLazyEnumeration.m; sourceTree = "<group>"; };
+		D4E0D68616C8BC4300C5F2F1 /* RXMappingTraversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMappingTraversal.h; sourceTree = "<group>"; };
+		D4E0D68716C8BC4300C5F2F1 /* RXMappingTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMappingTraversal.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +136,8 @@
 			children = (
 				D49E8FB81479790E004490EA /* RXCollection.h */,
 				D49E8FB91479790E004490EA /* RXCollection.m */,
-				D4E0D68616C8BC4300C5F2F1 /* RXLazyEnumeration.h */,
-				D4E0D68716C8BC4300C5F2F1 /* RXLazyEnumeration.m */,
+				D4E0D68616C8BC4300C5F2F1 /* RXMappingTraversal.h */,
+				D4E0D68716C8BC4300C5F2F1 /* RXMappingTraversal.m */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
 				D4C8768B16A2172100208BE9 /* RXPair.m */,
 				D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */,
@@ -348,7 +348,7 @@
 				D49E8FBB1479790E004490EA /* RXCollection.m in Sources */,
 				D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */,
 				D4C8768E16A2172100208BE9 /* RXPair.m in Sources */,
-				D4E0D68D16C8BD7000C5F2F1 /* RXLazyEnumeration.m in Sources */,
+				D4E0D68D16C8BD7000C5F2F1 /* RXMappingTraversal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +359,7 @@
 				D4B62BBF16A1611300E42C84 /* RXCollection.m in Sources */,
 				D4B62BC016A1611300E42C84 /* RXRecursiveEnumerator.m in Sources */,
 				D4C8768F16A2172100208BE9 /* RXPair.m in Sources */,
-				D4E0D68C16C8BD6D00C5F2F1 /* RXLazyEnumeration.m in Sources */,
+				D4E0D68C16C8BD6D00C5F2F1 /* RXMappingTraversal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

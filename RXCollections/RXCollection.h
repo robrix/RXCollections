@@ -41,7 +41,7 @@ extern id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> dest
  Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil.
  */
 
-extern id<RXTraversal> RXLazyMap(id<RXTraversal> collection, RXMapBlock block);
+extern id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block);
 
 
 #pragma mark Filters

@@ -3,7 +3,7 @@
 //  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXCollection.h"
-#import "RXLazyEnumeration.h"
+#import "RXMappingTraversal.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -66,8 +66,8 @@ id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination
 
 #pragma mark Lazy maps
 
-id<RXTraversal> RXLazyMap(id<RXTraversal> collection, RXMapBlock block) {
-	return [RXLazyEnumeration enumerationWithCollection:collection block:block];
+id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
+	return [RXMappingTraversal traversalWithEnumeration:collection block:block];
 }
 
 

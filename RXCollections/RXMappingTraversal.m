@@ -1,42 +1,42 @@
-//  RXLazyEnumeration.m
+//  RXMappingTraversal.m
 //  Created by Rob Rix on 2013-02-11.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXLazyEnumeration.h"
+#import "RXMappingTraversal.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXLazyEnumeration");
+@l3_suite("RXMappingTraversal");
 
-typedef struct RXLazyEnumerationState {
+typedef struct RXMappingTraversalState {
 	unsigned long hasEnumerated;
 	__unsafe_unretained id *itemsPtr;
 	unsigned long *mutationsPtr;
 	unsigned long countOfLastEnumeration;
 	unsigned long countConsumedOfLastEnumeration;
-} RXLazyEnumerationState;
+} RXMappingTraversalState;
 
-@interface RXLazyEnumeration ()
+@interface RXMappingTraversal ()
 
-@property (nonatomic, strong, readonly) id<NSFastEnumeration> collection;
+@property (nonatomic, strong, readonly) id<NSFastEnumeration> enumeration;
 @property (nonatomic, copy, readonly) id(^block)(id);
 
 @property (nonatomic, strong) NSMutableDictionary *collectionStatesByEnumerationStateAddresses;
 
 @end
 
-@implementation RXLazyEnumeration
+@implementation RXMappingTraversal
 
-+(instancetype)enumerationWithCollection:(id<NSFastEnumeration>)collection block:(id(^)(id))block {
-	return [[self alloc] initWithCollection:collection block:block];
++(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block {
+	return [[self alloc] initWithCollection:enumeration block:block];
 }
 
--(instancetype)initWithCollection:(id<NSFastEnumeration>)collection block:(id(^)(id))block {
-	NSParameterAssert(collection != nil);
+-(instancetype)initWithCollection:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block {
+	NSParameterAssert(enumeration != nil);
 	NSParameterAssert(block != nil);
 	
 	if ((self = [super init])) {
-		_collection = collection;
+		_enumeration = enumeration;
 		_block = [block copy];
 		
 		_collectionStatesByEnumerationStateAddresses = [NSMutableDictionary new];
@@ -51,7 +51,7 @@ typedef struct RXLazyEnumerationState {
 	NSArray *adjectives = @[@"quick", @"pointed"];
 	NSMutableArray *adverbs = [NSMutableArray new];
 	
-	for (NSString *adverb in [RXLazyEnumeration enumerationWithCollection:adjectives block:^(NSString *adjective) {
+	for (NSString *adverb in [RXMappingTraversal traversalWithEnumeration:adjectives block:^(NSString *adjective) {
 		return [adjective stringByAppendingString:@"ly"];
 	}]) {
 		[adverbs addObject:adverb];
@@ -59,22 +59,9 @@ typedef struct RXLazyEnumerationState {
 	l3_assert(adverbs, l3_is(@[@"quickly", @"pointedly"]));
 }
 
-@l3_test("maps correctly over collections of more items than the for(in) buffer") {
-	NSArray *lowercase = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
-	
-	NSMutableArray *uppercase = [NSMutableArray new];
-	for (NSString *upper in [RXLazyEnumeration enumerationWithCollection:lowercase block:^(NSString *lower) {
-		return [lower uppercaseString];
-	}]) {
-		[uppercase addObject:upper];
-	}
-	
-	l3_assert(uppercase, l3_is(@[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"]));
-}
-
 @l3_test("maps with reentrancy over collections of more items than the for(in) buffer") {
 	NSArray *alphabet = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
-	id<NSFastEnumeration> toUpper = [RXLazyEnumeration enumerationWithCollection:alphabet block:^(NSString * letter) {
+	id<NSFastEnumeration> toUpper = [RXMappingTraversal traversalWithEnumeration:alphabet block:^(NSString * letter) {
 		return [letter uppercaseString];
 	}];
 	
@@ -89,7 +76,7 @@ typedef struct RXLazyEnumerationState {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXLazyEnumerationState *state = (RXLazyEnumerationState *)fastEnumerationState;
+	RXMappingTraversalState *state = (RXMappingTraversalState *)fastEnumerationState;
 	id<NSCopying> key = @((uintptr_t)fastEnumerationState);
 	NSMutableData *collectionStateData = self.collectionStatesByEnumerationStateAddresses[key];
 	NSFastEnumerationState *collectionState = collectionStateData.mutableBytes ?: &(NSFastEnumerationState){};
@@ -103,7 +90,7 @@ typedef struct RXLazyEnumerationState {
 	__unsafe_unretained id objects[len];
 	// do the next enumeration of the source collection if we have already exhausted the previous enumeration's returned objects
 	if (state->countOfLastEnumeration == state->countConsumedOfLastEnumeration) {
-		state->countOfLastEnumeration = [self.collection countByEnumeratingWithState:collectionState objects:objects count:len];
+		state->countOfLastEnumeration = [self.enumeration countByEnumeratingWithState:collectionState objects:objects count:len];
 		state->countConsumedOfLastEnumeration = 0;
 	}
 	
