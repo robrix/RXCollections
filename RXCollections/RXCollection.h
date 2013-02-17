@@ -38,7 +38,7 @@ extern id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> dest
 /**
  id<RXTraversal> RXLazyMap(id<RXTraversal> collection, RXMapBlock block)
  
- Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil.
+ Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil. Further details of the contract of the returned traversal are specified in the documentation for RXMappingTraversal.
  */
 
 extern id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block);
