@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
+		D4A8B3FF16D05F6400D96744 /* RXMappingTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXMappingTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4A8B40416D05F7000D96744 /* RXMappingTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXMappingTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,6 +199,7 @@
 				D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */,
 				D4C8768C16A2172100208BE9 /* RXPair.h in Headers */,
 				D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */,
+				D4A8B40416D05F7000D96744 /* RXMappingTraversal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +211,7 @@
 				D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */,
 				D4C8768D16A2172100208BE9 /* RXPair.h in Headers */,
 				D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */,
+				D4A8B3FF16D05F6400D96744 /* RXMappingTraversal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
