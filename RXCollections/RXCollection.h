@@ -19,6 +19,16 @@ typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the
 extern id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block);
 
 
+#pragma mark Constructors
+
+/**
+ NSArray *RXConstructArray(id<RXTraversal> traversal)
+ 
+ Constructs an array with the elements of the specified traversal, which must not be nil.
+ */
+extern NSArray *RXConstructArray(id<RXTraversal> traversal);
+
+
 #pragma mark Maps
 
 @protocol RXCollection;

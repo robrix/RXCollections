@@ -8,9 +8,9 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXFold");
-
 #pragma mark Folds
+
+@l3_suite("RXFold");
 
 @l3_test("produces a result by recursively enumerating the collection") {
 	NSString *result = RXFold((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", ^(NSString * memo, NSString * each) {
@@ -24,6 +24,22 @@ id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block) {
 		initial = block(initial, each);
 	}
 	return initial;
+}
+
+
+#pragma mark Constructors
+
+@l3_suite("RXConstructors");
+
+@l3_test("construct arrays by accumulating the elements of the traversal") {
+	l3_assert(RXConstructArray(RXLazyMap(@[@1, @2, @3], ^(id each) { return [each description]; })), l3_is(@[@"1", @"2", @"3"]));
+}
+
+NSArray *RXConstructArray(id<RXTraversal> traversal) {
+	return RXFold(traversal, [NSMutableArray array], ^(NSMutableArray *memo, id each) {
+		[memo addObject:each];
+		return memo;
+	});
 }
 
 
