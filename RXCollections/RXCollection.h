@@ -93,10 +93,6 @@ extern id RXDetect(id<RXTraversal> collection, RXFilterBlock block);
 
 #pragma mark Collection types
 
-@interface NSObject (RXCollection) <RXCollection>
-@end
-
-
 @interface NSArray (RXCollection) <RXCollection>
 @end
 

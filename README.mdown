@@ -29,10 +29,12 @@ Maps and filters take a second argument, a collection into which to place their 
 
 - The included Xcode target compiles a static archive, but there’s no real need to use it; you can just link `RXCollections.m` in directly and `#import "RXCollections.h"`. This approach may reduce the barrier to use.
 
-- All Objective-C objects descending from `NSObject` now conform to `NSFastEnumeration`, simply returning themselves if they do not otherwise implement it. This is to be considered experimental and likely unwise.
-
 ## Future
 
-- Pairs, for constructing dictionaries (among other things).
-
 - [Zip](http://en.wikipedia.org/wiki/Convolution_(computer_science)).
+
+- Explicit folds to construct sets, arrays, etc.
+
+- Lazy filters.
+
+- Only lazy maps/filters.

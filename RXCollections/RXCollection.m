@@ -135,36 +135,6 @@ id RXDetect(id<RXTraversal> collection, RXFilterBlock block) {
 
 @l3_suite("RXCollection");
 
-@implementation NSObject (RXCollection)
-
-@l3_test("implements fast enumeration over individual objects") {
-	NSMutableArray *enumerated = [NSMutableArray new];
-	id subject = [NSObject new];
-	for (id object in subject) {
-		[enumerated addObject:object];
-	}
-	l3_assert(enumerated, @[subject]);
-}
-
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	buffer[0] = self;
-	state->itemsPtr = buffer;
-	state->mutationsPtr = &state->extra[0];
-	return !state->state++;
-}
-
-
--(id<RXCollection>)rx_emptyCollection {
-	return self;
-}
-
--(instancetype)rx_append:(id)element {
-	return element;
-}
-
-@end
-
-
 @implementation NSArray (RXCollection)
 
 -(id<RXCollection>)rx_emptyCollection {
