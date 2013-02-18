@@ -119,6 +119,30 @@ RXFilterBlock const RXRejectFilterBlock = ^bool(id each) {
 	return NO;
 };
 
+@l3_test("accept nil filters accept nil") {
+	l3_assert(RXAcceptNilFilterBlock(nil), YES);
+}
+
+@l3_test("accept nil filters reject non-nil") {
+	l3_assert(RXAcceptNilFilterBlock([NSObject new]), NO);
+}
+
+RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each) {
+	return each == nil;
+};
+
+@l3_test("reject nil filters reject nil") {
+	l3_assert(RXRejectNilFilterBlock(nil), NO);
+}
+
+@l3_test("reject nil filters accept non-nil") {
+	l3_assert(RXRejectNilFilterBlock([NSObject new]), YES);
+}
+
+RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
+	return each != nil;
+};
+
 
 @l3_test("filters a collection with the piecewise results of its block") {
 	l3_assert(RXFilter(@[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"], nil, ^bool(id each) {

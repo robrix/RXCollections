@@ -65,8 +65,33 @@ extern id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock bl
 
 typedef bool (^RXFilterBlock)(id each);
 
+/**
+ RXFilterBlock const RXAcceptFilterBlock
+ 
+ A filter which accepts all objects.
+ */
 extern RXFilterBlock const RXAcceptFilterBlock;
+
+/**
+ RXFilterBlock const RXRejectFilterBlock
+ 
+ A filter which rejects all objects.
+ */
 extern RXFilterBlock const RXRejectFilterBlock;
+
+/**
+ RXFilterBlock const RXAcceptNilFilterBlock
+ 
+ A filter which accepts only nil.
+ */
+extern RXFilterBlock const RXAcceptNilFilterBlock;
+
+/**
+ RXFilterBlock const RXRejectNilFilterBlock
+ 
+ A filter which rejects only nil.
+ */
+extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
  id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block)
