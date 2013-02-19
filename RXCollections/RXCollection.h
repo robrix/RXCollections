@@ -98,7 +98,6 @@ extern RXFilterBlock const RXRejectNilFilterBlock;
  
  Populates `destination` (or, if that’s nil, a new collection of the same type as `collection`) with the elements of `collection` matched by `block`.
  */
-
 extern id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block);
 
 /**

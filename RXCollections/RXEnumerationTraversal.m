@@ -1,14 +1,14 @@
-//  RXMappingTraversal.m
+//  RXEnumerationTraversal.m
 //  Created by Rob Rix on 2013-02-11.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXMappingTraversal.h"
+#import "RXEnumerationTraversal.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXMappingTraversal");
+@l3_suite("RXEnumerationTraversal");
 
-typedef struct RXMappingTraversalState {
+typedef struct RXEnumerationTraversalState {
 	unsigned long iterationCount;
 	__unsafe_unretained id *items;
 	unsigned long *mutations;
@@ -16,9 +16,9 @@ typedef struct RXMappingTraversalState {
 	__unsafe_unretained id *internalObjects;
 	unsigned long internalObjectsCount;
 	unsigned long extra[2];
-} RXMappingTraversalState;
+} RXEnumerationTraversalState;
 
-@implementation RXMappingTraversal
+@implementation RXEnumerationTraversal
 
 +(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block {
 	return [[self alloc] initWithEnumeration:enumeration block:block];
@@ -42,7 +42,7 @@ typedef struct RXMappingTraversalState {
 	NSArray *adjectives = @[@"quick", @"pointed"];
 	NSMutableArray *adverbs = [NSMutableArray new];
 	
-	for (NSString *adverb in [RXMappingTraversal traversalWithEnumeration:adjectives block:^(NSString *adjective) {
+	for (NSString *adverb in [RXEnumerationTraversal traversalWithEnumeration:adjectives block:^(NSString *adjective) {
 		return [adjective stringByAppendingString:@"ly"];
 	}]) {
 		[adverbs addObject:adverb];
@@ -52,7 +52,7 @@ typedef struct RXMappingTraversalState {
 
 @l3_test("maps with reentrancy over collections of more items than the for(in) buffer") {
 	NSArray *alphabet = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
-	id<NSFastEnumeration> toUpper = [RXMappingTraversal traversalWithEnumeration:alphabet block:^(NSString *letter) {
+	id<NSFastEnumeration> toUpper = [RXEnumerationTraversal traversalWithEnumeration:alphabet block:^(NSString *letter) {
 		return [letter uppercaseString];
 	}];
 	
@@ -86,7 +86,7 @@ typedef struct RXMappingTraversalState {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])externalObjects count:(NSUInteger)externalObjectsCount {
-	RXMappingTraversalState *state = (RXMappingTraversalState *)fastEnumerationState;
+	RXEnumerationTraversalState *state = (RXEnumerationTraversalState *)fastEnumerationState;
 	
 	if (!state->internalState) {
 		// this allows the internal state to be persisted for the duration of the current enumeration, without having it extend past the end in the event of early termination (e.g. a break in a for(in) loop).
