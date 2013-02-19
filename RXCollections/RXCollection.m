@@ -6,7 +6,6 @@
 #import "RXEnumerationTraversal.h"
 #import "RXFilteringTraversalStrategy.h"
 #import "RXMappingTraversalStrategy.h"
-#import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -51,6 +50,17 @@ NSArray *RXConstructArray(id<NSFastEnumeration> enumeration) {
 NSSet *RXConstructSet(id<NSFastEnumeration> enumeration) {
 	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each) {
 		[memo addObject:each];
+		return memo;
+	});
+}
+
+@l3_test("construct dictionaries from enumerations of pairs") {
+	l3_assert(RXConstructDictionary(@[[RXPair pairWithKey:@1 value:@1], [RXPair pairWithKey:@2 value:@4], [RXPair pairWithKey:@3 value:@9]]), l3_is(@{@1: @1, @2: @4, @3: @9}));
+}
+
+NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
+	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each) {
+		[memo setObject:each.value forKey:each.key];
 		return memo;
 	});
 }

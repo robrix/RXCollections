@@ -36,6 +36,14 @@ extern NSArray *RXConstructArray(id<NSFastEnumeration> enumeration);
 extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
 
 
+/**
+ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration)
+ 
+ Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be nil, and must conform to RXKeyValuePair.
+ */
+extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
+
+
 #pragma mark Maps
 
 @protocol RXCollection;
