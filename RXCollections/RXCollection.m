@@ -4,6 +4,7 @@
 
 #import "RXCollection.h"
 #import "RXEnumerationTraversal.h"
+#import "RXFilteringTraversalStrategy.h"
 #import "RXMappingTraversalStrategy.h"
 #import "RXPair.h"
 
@@ -164,6 +165,18 @@ id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destinat
 	return RXMap(collection, destination, ^id(id each) {
 		return block(each)? each : nil;
 	});
+}
+
+
+@l3_test("produces a traversal of the elements of its enumeration which are matched by its block") {
+	NSArray *filtered = RXConstructArray(RXLazyFilter(@[@"Sanguinary", @"Inspirational", @"Susurrus"], ^bool(NSString *each) {
+		return [each hasPrefix:@"S"];
+	}));
+	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
+}
+
+id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
+	return [RXEnumerationTraversal traversalWithEnumeration:enumeration strategy:[RXFilteringTraversalStrategy strategyWithBlock:block]];
 }
 
 

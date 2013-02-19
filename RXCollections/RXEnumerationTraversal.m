@@ -4,6 +4,7 @@
 
 #import "RXEnumerationTraversal.h"
 #import "RXIdentityTraversalStrategy.h"
+#import "RXFilteringTraversalStrategy.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -18,6 +19,10 @@ typedef struct RXEnumerationTraversalState {
 	unsigned long internalObjectsCount;
 	unsigned long extra[2];
 } RXEnumerationTraversalState;
+
+@l3_set_up {
+	test[@"alphabet"] = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
+}
 
 @implementation RXEnumerationTraversal
 
@@ -40,7 +45,7 @@ typedef struct RXEnumerationTraversalState {
 #pragma mark RXTraversal
 
 @l3_test("maps with reentrancy over collections of more items than the for(in) buffer") {
-	NSArray *alphabet = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
+	NSArray *alphabet = test[@"alphabet"];
 	id<NSFastEnumeration> toUpper = [RXEnumerationTraversal traversalWithEnumeration:alphabet strategy:[RXIdentityTraversalStrategy new]];
 	
 	NSMutableArray *combos = [NSMutableArray new];
@@ -58,6 +63,19 @@ typedef struct RXEnumerationTraversalState {
 	}
 	
 	l3_assert(combos.count, alphabet.count * alphabet.count);
+}
+
+@l3_test("reapplies its strategy when it consumes but does not produce") {
+	NSFastEnumerationState state = {};
+	__block NSUInteger timesCalled = 0;
+	RXEnumerationTraversal *traversal = [RXEnumerationTraversal traversalWithEnumeration:test[@"alphabet"] strategy:[RXFilteringTraversalStrategy strategyWithBlock:^bool(id x) {
+		timesCalled++;
+		return NO;
+	}]];
+	__unsafe_unretained id objects[4] = {};
+	NSUInteger count = [traversal countByEnumeratingWithState:&state objects:objects count:sizeof objects / sizeof *objects];
+	l3_assert(count, 0);
+	l3_assert(timesCalled, 26);
 }
 
 @l3_test("sanity check: unsigned long is sufficient to store a pointer") {
@@ -92,16 +110,22 @@ typedef struct RXEnumerationTraversalState {
 	// counting the calls to this method may be useful for debugging.
 	state->iterationCount++;
 	
-	unsigned long count = [self.strategy countByEnumeratingObjects:state->internalObjects count:state->internalObjectsCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:externalObjectsCount];
-	
-	// adjust our references based on what we have 
-	state->internalObjects += count;
-	state->internalObjectsCount -= count;
+	NSUInteger consumedCount = state->internalObjectsCount;
+	NSUInteger producedCount = 0;
+	while (consumedCount > 0 && producedCount == 0) {
+		consumedCount = state->internalObjectsCount;
+		producedCount = externalObjectsCount;
+		[self.strategy enumerateObjects:state->internalObjects count:&consumedCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:&producedCount];
+		
+		// adjust the internal objects pointer and count based on how many internal objects we consumed
+		state->internalObjects += consumedCount;
+		state->internalObjectsCount -= consumedCount;
+	}
 	
 	// we always return results in the buffer given to us by the caller.
 	state->items = externalObjects;
 	
-	return count;
+	return producedCount;
 }
 
 @end

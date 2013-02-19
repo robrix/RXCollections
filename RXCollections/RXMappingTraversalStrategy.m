@@ -24,23 +24,25 @@
 
 #pragma mark RXEnumerationTraversalStrategy
 
-@l3_test("maps objects using its block") {
+@l3_test("copies objects mapped using its block") {
 	id internal[] = { @"rapid", @"deep", @"maximal" };
 	__autoreleasing id external[16] = {};
 	RXMappingTraversalStrategy *strategy = [RXMappingTraversalStrategy strategyWithBlock:^(NSString *each) {
 		return [each stringByAppendingString:@"ly"];
 	}];
-	NSUInteger count = [strategy countByEnumeratingObjects:(__unsafe_unretained id *)(__unsafe_unretained id **)internal count:sizeof internal / sizeof *internal intoObjects:external count:sizeof external / sizeof *external];
-	NSArray *actual = [NSArray arrayWithObjects:external count:count];
+	NSUInteger internalObjectsCount = sizeof internal / sizeof *internal;
+	NSUInteger externalObjectsCount = sizeof external / sizeof *external;
+	[strategy enumerateObjects:(__unsafe_unretained id *)(__unsafe_unretained id **)internal count:&internalObjectsCount intoObjects:external count:&externalObjectsCount];
+	NSArray *actual = [NSArray arrayWithObjects:external count:externalObjectsCount];
 	l3_assert(actual, l3_is(@[@"rapidly", @"deeply", @"maximally"]));
 }
 
--(NSUInteger)countByEnumeratingObjects:(in __unsafe_unretained id [])internalObjects count:(NSUInteger)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(NSUInteger)externalObjectsCount {
-	NSUInteger count = MIN(internalObjectsCount, externalObjectsCount);
+-(void)enumerateObjects:(in __unsafe_unretained id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
+	NSUInteger count = MIN(*internalObjectsCount, *externalObjectsCount);
 	for (NSUInteger i = 0; i < count; i++) {
 		externalObjects[i] = self.block(internalObjects[i]);
 	}
-	return count;
+	*internalObjectsCount = *externalObjectsCount = count;
 }
 
 @end

@@ -6,12 +6,12 @@
 
 @implementation RXIdentityTraversalStrategy
 
--(NSUInteger)countByEnumeratingObjects:(in __unsafe_unretained id [])internalObjects count:(NSUInteger)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(NSUInteger)externalObjectsCount {
-	NSUInteger count = MIN(internalObjectsCount, externalObjectsCount);
+-(void)enumerateObjects:(in __unsafe_unretained id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
+	NSUInteger count = MIN(*internalObjectsCount, *externalObjectsCount);
 	for (NSUInteger i = 0; i < count; i++) {
 		externalObjects[i] = internalObjects[i];
 	}
-	return count;
+	*internalObjectsCount = *externalObjectsCount = count;
 }
 
 @end

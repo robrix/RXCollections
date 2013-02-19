@@ -101,6 +101,13 @@ extern RXFilterBlock const RXRejectNilFilterBlock;
 extern id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block);
 
 /**
+ id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block)
+ 
+ Returns a traversal of the elements of `enumeration` which are matched by `block`.
+ */
+extern id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block);
+
+/**
  id RXDetect(id<RXTraversal> collection, RXFilterBlock block)
  
  Returns the first element found in `collection` which is matched by `block`.
