@@ -188,11 +188,13 @@ id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock bl
 	}), @"Belligerent");
 }
 
-// fixme; this iterates every element in the collection; it should short-circuit break and return
 id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block) {
-	return RXFold(collection, nil, ^id(id memo, id each) {
-		return memo ?: (block(each)? each : nil);
-	});
+	id needle = nil;
+	for (needle in collection) {
+		if (block(needle))
+			break;
+	}
+	return needle;
 }
 
 RXLinearSearchFunction const RXDetect = RXLinearSearch;
