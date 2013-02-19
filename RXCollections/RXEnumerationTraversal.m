@@ -3,6 +3,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXEnumerationTraversal.h"
+#import "RXIdentityTraversalStrategy.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -20,41 +21,27 @@ typedef struct RXEnumerationTraversalState {
 
 @implementation RXEnumerationTraversal
 
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block {
-	return [[self alloc] initWithEnumeration:enumeration block:block];
++(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration strategy:(id<RXEnumerationTraversalStrategy>)strategy; {
+	return [[self alloc] initWithEnumeration:enumeration strategy:strategy];
 }
 
--(instancetype)initWithEnumeration:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block {
+-(instancetype)initWithEnumeration:(id<NSFastEnumeration>)enumeration strategy:(id<RXEnumerationTraversalStrategy>)strategy {
 	NSParameterAssert(enumeration != nil);
-	NSParameterAssert(block != nil);
+	NSParameterAssert(strategy != nil);
 	
 	if ((self = [super init])) {
 		_enumeration = enumeration;
-		_block = [block copy];
+		_strategy = strategy;
 	}
 	return self;
 }
 
 
-#pragma mark NSFastEnumeration
-
-@l3_test("maps while it is enumerated") {
-	NSArray *adjectives = @[@"quick", @"pointed"];
-	NSMutableArray *adverbs = [NSMutableArray new];
-	
-	for (NSString *adverb in [RXEnumerationTraversal traversalWithEnumeration:adjectives block:^(NSString *adjective) {
-		return [adjective stringByAppendingString:@"ly"];
-	}]) {
-		[adverbs addObject:adverb];
-	}
-	l3_assert(adverbs, l3_is(@[@"quickly", @"pointedly"]));
-}
+#pragma mark RXTraversal
 
 @l3_test("maps with reentrancy over collections of more items than the for(in) buffer") {
 	NSArray *alphabet = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
-	id<NSFastEnumeration> toUpper = [RXEnumerationTraversal traversalWithEnumeration:alphabet block:^(NSString *letter) {
-		return [letter uppercaseString];
-	}];
+	id<NSFastEnumeration> toUpper = [RXEnumerationTraversal traversalWithEnumeration:alphabet strategy:[RXIdentityTraversalStrategy new]];
 	
 	NSMutableArray *combos = [NSMutableArray new];
 	// the following autorelease pools are convenient to test the correct handling of autoreleased temporaries; they are not particularly useful or interesting otherwise, and are certainly not necessary for use of the API
@@ -75,14 +62,6 @@ typedef struct RXEnumerationTraversalState {
 
 @l3_test("sanity check: unsigned long is sufficient to store a pointer") {
 	l3_assert(sizeof(unsigned long), sizeof(NSFastEnumerationState *));
-}
-
--(NSUInteger)countByEnumeratingObjects:(in __unsafe_unretained id [])internalObjects count:(NSUInteger)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(NSUInteger)externalObjectsCount {
-	NSUInteger count = MIN(internalObjectsCount, externalObjectsCount);
-	for (NSUInteger i = 0; i < count; i++) {
-		externalObjects[i] = self.block(internalObjects[i]);
-	}
-	return count;
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])externalObjects count:(NSUInteger)externalObjectsCount {
@@ -113,7 +92,7 @@ typedef struct RXEnumerationTraversalState {
 	// counting the calls to this method may be useful for debugging.
 	state->iterationCount++;
 	
-	unsigned long count = [self countByEnumeratingObjects:state->internalObjects count:state->internalObjectsCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:externalObjectsCount];
+	unsigned long count = [self.strategy countByEnumeratingObjects:state->internalObjects count:state->internalObjectsCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:externalObjectsCount];
 	
 	// adjust our references based on what we have 
 	state->internalObjects += count;

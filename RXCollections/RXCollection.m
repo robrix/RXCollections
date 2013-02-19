@@ -4,6 +4,7 @@
 
 #import "RXCollection.h"
 #import "RXEnumerationTraversal.h"
+#import "RXMappingTraversalStrategy.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -94,7 +95,7 @@ id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination
 #pragma mark Lazy maps
 
 id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
-	return [RXEnumerationTraversal traversalWithEnumeration:collection block:block];
+	return [RXEnumerationTraversal traversalWithEnumeration:collection strategy:[RXMappingTraversalStrategy strategyWithBlock:block]];
 }
 
 

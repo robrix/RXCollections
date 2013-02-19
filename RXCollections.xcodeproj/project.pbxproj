@@ -34,6 +34,10 @@
 		D4E8CC2916D3BB50002D6C0A /* RXMappingTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */; };
 		D4E8CC2A16D3BB58002D6C0A /* RXMappingTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */; };
 		D4E8CC2B16D3BB59002D6C0A /* RXMappingTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4E8CC2E16D3C275002D6C0A /* RXIdentityTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4E8CC2F16D3C275002D6C0A /* RXIdentityTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4E8CC3016D3C28B002D6C0A /* RXIdentityTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */; };
+		D4E8CC3116D3C28C002D6C0A /* RXIdentityTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +91,8 @@
 		D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXEnumerationTraversal.m; sourceTree = "<group>"; };
 		D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMappingTraversalStrategy.h; sourceTree = "<group>"; };
 		D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMappingTraversalStrategy.m; sourceTree = "<group>"; };
+		D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXIdentityTraversalStrategy.h; sourceTree = "<group>"; };
+		D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXIdentityTraversalStrategy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,8 @@
 				D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */,
 				D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */,
 				D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */,
+				D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */,
+				D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
 				D4C8768B16A2172100208BE9 /* RXPair.m */,
 				D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */,
@@ -209,6 +217,7 @@
 				D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */,
 				D4A8B40416D05F7000D96744 /* RXEnumerationTraversal.h in Headers */,
 				D4E8CC2A16D3BB58002D6C0A /* RXMappingTraversalStrategy.h in Headers */,
+				D4E8CC2F16D3C275002D6C0A /* RXIdentityTraversalStrategy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +231,7 @@
 				D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */,
 				D4A8B3FF16D05F6400D96744 /* RXEnumerationTraversal.h in Headers */,
 				D4E8CC2B16D3BB59002D6C0A /* RXMappingTraversalStrategy.h in Headers */,
+				D4E8CC2E16D3C275002D6C0A /* RXIdentityTraversalStrategy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +374,7 @@
 				D4C8768E16A2172100208BE9 /* RXPair.m in Sources */,
 				D4E0D68D16C8BD7000C5F2F1 /* RXEnumerationTraversal.m in Sources */,
 				D4E8CC2916D3BB50002D6C0A /* RXMappingTraversalStrategy.m in Sources */,
+				D4E8CC3116D3C28C002D6C0A /* RXIdentityTraversalStrategy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +387,7 @@
 				D4C8768F16A2172100208BE9 /* RXPair.m in Sources */,
 				D4E0D68C16C8BD6D00C5F2F1 /* RXEnumerationTraversal.m in Sources */,
 				D4E8CC2816D3BB4F002D6C0A /* RXMappingTraversalStrategy.m in Sources */,
+				D4E8CC3016D3C28B002D6C0A /* RXIdentityTraversalStrategy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

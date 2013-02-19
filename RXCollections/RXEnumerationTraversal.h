@@ -22,16 +22,16 @@
 
 @interface RXEnumerationTraversal : NSObject <RXTraversal>
 
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration block:(id(^)(id))block;
++(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration strategy:(id<RXEnumerationTraversalStrategy>)strategy;
 
 @property (nonatomic, strong, readonly) id<NSFastEnumeration> enumeration;
-@property (nonatomic, copy, readonly) id(^block)(id);
+@property (nonatomic, strong, readonly) id<RXEnumerationTraversalStrategy> strategy;
 
 @end
 
 
 /**
- RXTraversalStrategy defines the means by which an enumeration traversal produces objects relating to its enumeration's objects.
+ RXEnumerationTraversalStrategy defines the means by which an enumeration traversal produces objects relating to its enumeration's objects.
  
  The enumeration's objects are provided in the `internalObjects` buffer, and their count is provided as `internalObjectsCount`.
  
