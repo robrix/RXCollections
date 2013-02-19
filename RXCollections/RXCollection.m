@@ -3,7 +3,9 @@
 //  Copyright (c) 2011 Rob Rix. All rights reserved.
 
 #import "RXCollection.h"
-#import "RXMappingTraversal.h"
+#import "RXEnumerationTraversal.h"
+#import "RXFilteringTraversalStrategy.h"
+#import "RXMappingTraversalStrategy.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -94,7 +96,7 @@ id<RXCollection> RXMap(id<RXCollection> collection, id<RXCollection> destination
 #pragma mark Lazy maps
 
 id<RXTraversal> RXLazyMap(id<NSFastEnumeration> collection, RXMapBlock block) {
-	return [RXMappingTraversal traversalWithEnumeration:collection block:block];
+	return [RXEnumerationTraversal traversalWithEnumeration:collection strategy:[RXMappingTraversalStrategy strategyWithBlock:block]];
 }
 
 
@@ -119,6 +121,30 @@ RXFilterBlock const RXRejectFilterBlock = ^bool(id each) {
 	return NO;
 };
 
+@l3_test("accept nil filters accept nil") {
+	l3_assert(RXAcceptNilFilterBlock(nil), YES);
+}
+
+@l3_test("accept nil filters reject non-nil") {
+	l3_assert(RXAcceptNilFilterBlock([NSObject new]), NO);
+}
+
+RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each) {
+	return each == nil;
+};
+
+@l3_test("reject nil filters reject nil") {
+	l3_assert(RXRejectNilFilterBlock(nil), NO);
+}
+
+@l3_test("reject nil filters accept non-nil") {
+	l3_assert(RXRejectNilFilterBlock([NSObject new]), YES);
+}
+
+RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
+	return each != nil;
+};
+
 
 @l3_test("filters a collection with the piecewise results of its block") {
 	l3_assert(RXFilter(@[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"], nil, ^bool(id each) {
@@ -139,6 +165,18 @@ id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destinat
 	return RXMap(collection, destination, ^id(id each) {
 		return block(each)? each : nil;
 	});
+}
+
+
+@l3_test("produces a traversal of the elements of its enumeration which are matched by its block") {
+	NSArray *filtered = RXConstructArray(RXLazyFilter(@[@"Sanguinary", @"Inspirational", @"Susurrus"], ^bool(NSString *each) {
+		return [each hasPrefix:@"S"];
+	}));
+	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
+}
+
+id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
+	return [RXEnumerationTraversal traversalWithEnumeration:enumeration strategy:[RXFilteringTraversalStrategy strategyWithBlock:block]];
 }
 
 
