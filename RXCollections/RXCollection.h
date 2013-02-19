@@ -108,12 +108,15 @@ extern id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> d
 extern id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
- id RXDetect(id<RXTraversal> collection, RXFilterBlock block)
+ id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block)
  
  Returns the first element found in `collection` which is matched by `block`.
+ 
+ RXDetect is a synonym for this function.
  */
-
-extern id RXDetect(id<RXTraversal> collection, RXFilterBlock block);
+extern id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block);
+typedef id (*RXLinearSearchFunction)(id<RXTraversal>, RXFilterBlock);
+extern RXLinearSearchFunction const RXDetect;
 
 
 #pragma mark Collections

@@ -180,20 +180,22 @@ id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock bl
 }
 
 
-@l3_suite("L3Detect");
+@l3_suite("RXLinearSearch");
 
 @l3_test("returns the first encountered object for which its block returns true") {
-	l3_assert(RXDetect(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each) {
+	l3_assert(RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each) {
 		return [each hasPrefix:@"B"];
 	}), @"Belligerent");
 }
 
 // fixme; this iterates every element in the collection; it should short-circuit break and return
-id RXDetect(id<RXTraversal> collection, RXFilterBlock block) {
+id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block) {
 	return RXFold(collection, nil, ^id(id memo, id each) {
 		return memo ?: (block(each)? each : nil);
 	});
 }
+
+RXLinearSearchFunction const RXDetect = RXLinearSearch;
 
 
 #pragma mark Collections
