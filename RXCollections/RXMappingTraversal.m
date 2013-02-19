@@ -13,8 +13,8 @@ typedef struct RXMappingTraversalState {
 	__unsafe_unretained id *items;
 	unsigned long *mutations;
 	NSFastEnumerationState *internalState;
-	__unsafe_unretained id *internalItems;
-	unsigned long internalItemsCount;
+	__unsafe_unretained id *internalObjects;
+	unsigned long internalObjectsCount;
 	unsigned long extra[2];
 } RXMappingTraversalState;
 
@@ -77,7 +77,15 @@ typedef struct RXMappingTraversalState {
 	l3_assert(sizeof(unsigned long), sizeof(NSFastEnumerationState *));
 }
 
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)bufferCount {
+-(NSUInteger)countByEnumeratingObjects:(in __unsafe_unretained id [])internalObjects count:(NSUInteger)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(NSUInteger)externalObjectsCount {
+	NSUInteger count = MIN(internalObjectsCount, externalObjectsCount);
+	for (NSUInteger i = 0; i < count; i++) {
+		externalObjects[i] = self.block(internalObjects[i]);
+	}
+	return count;
+}
+
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])externalObjects count:(NSUInteger)externalObjectsCount {
 	RXMappingTraversalState *state = (RXMappingTraversalState *)fastEnumerationState;
 	
 	if (!state->internalState) {
@@ -89,36 +97,30 @@ typedef struct RXMappingTraversalState {
 	}
 	NSFastEnumerationState *internalState = state->internalState;
 	
-	if (state->internalItemsCount == 0) {
+	if (state->internalObjectsCount == 0) {
 		// if we processed all the remaining objects on our last call, then we need to get the next batch
-		state->internalItemsCount = [self.enumeration countByEnumeratingWithState:internalState objects:buffer count:bufferCount];
+		state->internalObjectsCount = [self.enumeration countByEnumeratingWithState:internalState objects:externalObjects count:externalObjectsCount];
 		
 		// externalize the mutations of our internal enumeration, allowing for(in) (or other interested callers) to correctly assert that our internal enumeration has not changed while it is being iterated.
 		// additionally, for(in) requires that this be a valid pointer; it dereferences it without checking.
 		state->mutations = internalState->mutationsPtr;
 		
 		// our marker for iterating through the internal items
-		state->internalItems = internalState->itemsPtr;
+		state->internalObjects = internalState->itemsPtr;
 	}
 	
 	// for(in) requires that we store some non-zero value to this field.
 	// counting the calls to this method may be useful for debugging.
 	state->iterationCount++;
 	
-	unsigned long count = MIN(bufferCount, state->internalItemsCount);
-	
-	for (NSUInteger i = 0; i < count; i++) {
-		// autorelease the assigned mapped value so that we don't need to keep temporaries around internally
-		__autoreleasing id *mapped = (__autoreleasing id *)(void *)&buffer[i];
-		*mapped = self.block(state->internalItems[i]);
-	}
+	unsigned long count = [self countByEnumeratingObjects:state->internalObjects count:state->internalObjectsCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:externalObjectsCount];
 	
 	// adjust our references based on what we have 
-	state->internalItems += count;
-	state->internalItemsCount -= count;
+	state->internalObjects += count;
+	state->internalObjectsCount -= count;
 	
 	// we always return results in the buffer given to us by the caller.
-	state->items = buffer;
+	state->items = externalObjects;
 	
 	return count;
 }
