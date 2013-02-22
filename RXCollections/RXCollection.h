@@ -7,45 +7,6 @@
 #import <RXCollections/RXPair.h>
 #import <RXCollections/RXTraversal.h>
 
-#pragma mark Folds
-
-typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
-
-/**
- id RXFold(id<RXTraversal> collection, id initial, RXFoldBlock block)
- 
- Folds a `collection` with `block`, using `initial` as the `memo` argument to block for the first element.
- */
-extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block);
-
-
-#pragma mark Constructors
-
-/**
- NSArray *RXConstructArray(id<NSFastEnumeration> traversal)
- 
- Constructs an array with the elements of the specified enumeration. The enumeration's elements must not be nil.
- */
-extern NSArray *RXConstructArray(id<NSFastEnumeration> enumeration);
-
-/**
- NSSet *RXConstructSet(id<NSFastEnumeration>)
- 
- Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be nil.
- */
-extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
-
-
-/**
- NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration)
- 
- Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be nil, and must conform to RXKeyValuePair.
- */
-extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
-
-
-#pragma mark Collections
-
 @protocol RXCollection <NSObject, RXTraversal>
 
 /**

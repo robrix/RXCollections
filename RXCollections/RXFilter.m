@@ -5,6 +5,7 @@
 #import "RXFilter.h"
 #import "RXEnumerationTraversal.h"
 #import "RXFilteringTraversalStrategy.h"
+#import "RXFold.h"
 #import "RXMap.h"
 
 #import <Lagrangian/Lagrangian.h>

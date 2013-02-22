@@ -4,6 +4,7 @@
 
 #import "RXRecursiveEnumerator.h"
 #import "RXCollection.h"
+#import "RXFold.h"
 #import "RXPair.h"
 
 #import <Lagrangian/Lagrangian.h>
