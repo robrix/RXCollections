@@ -32,6 +32,10 @@
 		D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; };
 		D4CF2C0616D6FFFA005F5810 /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
 		D4CF2C0716D6FFFA005F5810 /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
+		D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; };
+		D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; };
+		D4CF2C6416D7160C005F5810 /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
+		D4CF2C6516D7160C005F5810 /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
 		D4E0D68C16C8BD6D00C5F2F1 /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
 		D4E0D68D16C8BD7000C5F2F1 /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
 		D4E8CC2916D3BB50002D6C0A /* RXMappingTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */; };
@@ -101,6 +105,8 @@
 		D4C8768B16A2172100208BE9 /* RXPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPair.m; sourceTree = "<group>"; };
 		D4CF2C0216D6FFFA005F5810 /* RXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXFilter.h; sourceTree = "<group>"; };
 		D4CF2C0316D6FFFA005F5810 /* RXFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXFilter.m; sourceTree = "<group>"; };
+		D4CF2C6016D7160C005F5810 /* RXMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMap.h; sourceTree = "<group>"; };
+		D4CF2C6116D7160C005F5810 /* RXMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMap.m; sourceTree = "<group>"; };
 		D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXEnumerationTraversal.h; sourceTree = "<group>"; };
 		D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXEnumerationTraversal.m; sourceTree = "<group>"; };
 		D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMappingTraversalStrategy.h; sourceTree = "<group>"; };
@@ -170,6 +176,8 @@
 				D49E8FB91479790E004490EA /* RXCollection.m */,
 				D4CF2C0216D6FFFA005F5810 /* RXFilter.h */,
 				D4CF2C0316D6FFFA005F5810 /* RXFilter.m */,
+				D4CF2C6016D7160C005F5810 /* RXMap.h */,
+				D4CF2C6116D7160C005F5810 /* RXMap.m */,
 				D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */,
 				D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */,
 				D4E8CC3816D3C338002D6C0A /* Traversal strategies */,
@@ -253,6 +261,7 @@
 				D4E8CC3416D3C332002D6C0A /* RXFilteringTraversalStrategy.h in Headers */,
 				D4E8CC3E16D3D3B4002D6C0A /* RXNullTraversalStrategy.h in Headers */,
 				D4CF2C0416D6FFFA005F5810 /* RXFilter.h in Headers */,
+				D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +279,7 @@
 				D4E8CC3916D3C57B002D6C0A /* RXMappingTraversalStrategy.h in Headers */,
 				D4E8CC3D16D3D3B3002D6C0A /* RXNullTraversalStrategy.h in Headers */,
 				D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */,
+				D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +426,7 @@
 				D4E8CC3616D3C332002D6C0A /* RXFilteringTraversalStrategy.m in Sources */,
 				D4E8CC4016D3D3B7002D6C0A /* RXNullTraversalStrategy.m in Sources */,
 				D4CF2C0616D6FFFA005F5810 /* RXFilter.m in Sources */,
+				D4CF2C6416D7160C005F5810 /* RXMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +443,7 @@
 				D4E8CC3A16D3C581002D6C0A /* RXMappingTraversalStrategy.m in Sources */,
 				D4E8CC3F16D3D3B6002D6C0A /* RXNullTraversalStrategy.m in Sources */,
 				D4CF2C0716D6FFFA005F5810 /* RXFilter.m in Sources */,
+				D4CF2C6516D7160C005F5810 /* RXMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
