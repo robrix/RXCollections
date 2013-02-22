@@ -3,7 +3,6 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXTraversal.h>
-#import <RXCollections/RXCollection.h>
 
 typedef bool (^RXFilterBlock)(id each);
 
@@ -36,18 +35,11 @@ extern RXFilterBlock const RXAcceptNilFilterBlock;
 extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
- id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block)
- 
- Populates `destination` (or, if that’s nil, a new collection of the same type as `collection`) with the elements of `collection` matched by `block`.
- */
-extern id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block);
-
-/**
- id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block)
+ id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block)
  
  Returns a traversal of the elements of `enumeration` which are matched by `block`.
  */
-extern id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block);
+extern id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
  id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block)
@@ -56,6 +48,6 @@ extern id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterB
  
  RXDetect is a synonym for this function.
  */
-extern id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block);
-typedef id (*RXLinearSearchFunction)(id<RXTraversal>, RXFilterBlock);
+extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
+typedef id (*RXLinearSearchFunction)(id<NSFastEnumeration>, RXFilterBlock);
 extern RXLinearSearchFunction const RXDetect;

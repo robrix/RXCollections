@@ -55,35 +55,19 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 
 
 @l3_test("filters a collection with the piecewise results of its block") {
-	l3_assert(RXFilter(@[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"], nil, ^bool(id each) {
+	l3_assert(RXConstructArray(RXFilter(@[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"], ^bool(id each) {
 		return [each hasPrefix:@"A"];
-	}), l3_equals(@[@"Ancestral", @"Azimuth"]));
+	})), l3_equals(@[@"Ancestral", @"Azimuth"]));
 }
-
-@l3_test("produces a collection of the same type as it enumerates when not given a destination") {
-	l3_assert(RXFilter([NSSet setWithObject:@"x"], nil, RXAcceptFilterBlock), l3_isKindOfClass([NSSet class]));
-}
-
-@l3_test("collects filtered results into the given destination") {
-	NSMutableSet *destination = [NSMutableSet setWithObject:@"Horological"];
-	l3_assert(RXFilter(@[@"Psychosocial"], destination, RXAcceptFilterBlock), l3_equals([NSSet setWithObjects:@"Horological", @"Psychosocial", nil]));
-}
-
-id<RXCollection> RXFilter(id<RXCollection> collection, id<RXCollection> destination, RXFilterBlock block) {
-	return RXMap(collection, destination, ^id(id each) {
-		return block(each)? each : nil;
-	});
-}
-
 
 @l3_test("produces a traversal of the elements of its enumeration which are matched by its block") {
-	NSArray *filtered = RXConstructArray(RXLazyFilter(@[@"Sanguinary", @"Inspirational", @"Susurrus"], ^bool(NSString *each) {
+	NSArray *filtered = RXConstructArray(RXFilter(@[@"Sanguinary", @"Inspirational", @"Susurrus"], ^bool(NSString *each) {
 		return [each hasPrefix:@"S"];
 	}));
 	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
 }
 
-id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
+id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
 	return [RXEnumerationTraversal traversalWithEnumeration:enumeration strategy:[RXFilteringTraversalStrategy strategyWithBlock:block]];
 }
 
@@ -96,7 +80,7 @@ id<RXTraversal> RXLazyFilter(id<NSFastEnumeration> enumeration, RXFilterBlock bl
 	}), @"Belligerent");
 }
 
-id RXLinearSearch(id<RXTraversal> collection, RXFilterBlock block) {
+id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	id needle = nil;
 	for (needle in collection) {
 		if (block(needle))

@@ -3,11 +3,12 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXEnumerationTraversal.h>
+#import <RXCollections/RXMap.h>
 
 @interface RXMappingTraversalStrategy : NSObject <RXEnumerationTraversalStrategy>
 
-+(instancetype)strategyWithBlock:(id(^)(id))block;
++(instancetype)strategyWithBlock:(RXMapBlock)block;
 
-@property (nonatomic, copy, readonly) id(^block)(id);
+@property (nonatomic, copy, readonly) RXMapBlock block;
 
 @end

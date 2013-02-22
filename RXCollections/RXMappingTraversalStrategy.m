@@ -10,11 +10,11 @@
 
 @implementation RXMappingTraversalStrategy
 
-+(instancetype)strategyWithBlock:(id(^)(id))block {
++(instancetype)strategyWithBlock:(RXMapBlock)block {
 	return [[self alloc] initWithBlock:block];
 }
 
--(instancetype)initWithBlock:(id(^)(id))block {
+-(instancetype)initWithBlock:(RXMapBlock)block {
 	if ((self = [super init])) {
 		_block = [block copy];
 	}

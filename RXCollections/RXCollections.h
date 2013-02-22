@@ -20,8 +20,3 @@
 #pragma mark Pairs
 
 #import <RXCollections/RXPair.h>
-
-
-#pragma mark Collection
-
-#import <RXCollections/RXCollection.h>

@@ -3,11 +3,12 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXEnumerationTraversal.h>
+#import <RXCollections/RXFilter.h>
 
 @interface RXFilteringTraversalStrategy : NSObject <RXEnumerationTraversalStrategy>
 
-+(instancetype)strategyWithBlock:(bool(^)(id))block;
++(instancetype)strategyWithBlock:(RXFilterBlock)block;
 
-@property (nonatomic, copy, readonly) bool(^block)(id);
+@property (nonatomic, copy, readonly) RXFilterBlock block;
 
 @end

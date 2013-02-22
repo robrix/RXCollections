@@ -3,7 +3,6 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXRecursiveEnumerator.h"
-#import "RXCollection.h"
 #import "RXFold.h"
 #import "RXPair.h"
 

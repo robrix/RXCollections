@@ -10,11 +10,11 @@
 
 @implementation RXFilteringTraversalStrategy
 
-+(instancetype)strategyWithBlock:(bool(^)(id))block {
++(instancetype)strategyWithBlock:(RXFilterBlock)block {
 	return [[self alloc] initWithBlock:block];
 }
 
--(instancetype)initWithBlock:(bool(^)(id))block {
+-(instancetype)initWithBlock:(RXFilterBlock)block {
 	if ((self = [super init])) {
 		_block = [block copy];
 	}

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D49E8FBA1479790E004490EA /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D49E8FBB1479790E004490EA /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
 		D4A8B3FF16D05F6400D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A8B40416D05F7000D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -18,9 +16,7 @@
 		D4B62B9E16A15E2200E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
 		D4B62BB716A1609300E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62BB516A1609300E42C84 /* InfoPlist.strings */; };
 		D4B62BBB16A160E000E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D4B62BBF16A1611300E42C84 /* RXCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D49E8FB91479790E004490EA /* RXCollection.m */; };
 		D4B62BC016A1611300E42C84 /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
-		D4B62BC116A1611C00E42C84 /* RXCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = D49E8FB81479790E004490EA /* RXCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62BD916A170DC00E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4B62BDA16A170E600E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
@@ -97,8 +93,6 @@
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
-		D49E8FB81479790E004490EA /* RXCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollection.h; sourceTree = "<group>"; };
-		D49E8FB91479790E004490EA /* RXCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCollection.m; sourceTree = "<group>"; };
 		D4AA920516CFD8D9006F3655 /* RXTraversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXTraversal.h; sourceTree = "<group>"; };
 		D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXRecursiveEnumerator.h; sourceTree = "<group>"; };
 		D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXRecursiveEnumerator.m; sourceTree = "<group>"; };
@@ -181,8 +175,6 @@
 		D49E8F95147978C8004490EA /* RXCollections */ = {
 			isa = PBXGroup;
 			children = (
-				D49E8FB81479790E004490EA /* RXCollection.h */,
-				D49E8FB91479790E004490EA /* RXCollection.m */,
 				D4CF2C0216D6FFFA005F5810 /* RXFilter.h */,
 				D4CF2C0316D6FFFA005F5810 /* RXFilter.m */,
 				D4CF2C6616D718B0005F5810 /* RXFold.h */,
@@ -263,7 +255,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FBA1479790E004490EA /* RXCollection.h in Headers */,
 				D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */,
 				D4C8768C16A2172100208BE9 /* RXPair.h in Headers */,
 				D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */,
@@ -283,7 +274,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4B62BC116A1611C00E42C84 /* RXCollection.h in Headers */,
 				D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */,
 				D4C8768D16A2172100208BE9 /* RXPair.h in Headers */,
 				D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */,
@@ -433,7 +423,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D49E8FBB1479790E004490EA /* RXCollection.m in Sources */,
 				D4B62B1F16A113C600E42C84 /* RXRecursiveEnumerator.m in Sources */,
 				D4C8768E16A2172100208BE9 /* RXPair.m in Sources */,
 				D4E0D68D16C8BD7000C5F2F1 /* RXEnumerationTraversal.m in Sources */,
@@ -451,7 +440,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4B62BBF16A1611300E42C84 /* RXCollection.m in Sources */,
 				D4B62BC016A1611300E42C84 /* RXRecursiveEnumerator.m in Sources */,
 				D4C8768F16A2172100208BE9 /* RXPair.m in Sources */,
 				D4E0D68C16C8BD6D00C5F2F1 /* RXEnumerationTraversal.m in Sources */,
