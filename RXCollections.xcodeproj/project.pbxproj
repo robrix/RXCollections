@@ -28,18 +28,20 @@
 		D4C8768D16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8768E16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
 		D4C8768F16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
-		D4CF2C0416D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; };
-		D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; };
+		D4CF2C0416D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4CF2C0616D6FFFA005F5810 /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
 		D4CF2C0716D6FFFA005F5810 /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
-		D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; };
-		D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; };
+		D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4CF2C6416D7160C005F5810 /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
 		D4CF2C6516D7160C005F5810 /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
-		D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; };
-		D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; };
+		D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4CF2C6A16D718B0005F5810 /* RXFold.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6716D718B0005F5810 /* RXFold.m */; };
 		D4CF2C6B16D718B0005F5810 /* RXFold.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6716D718B0005F5810 /* RXFold.m */; };
+		D4CF2C6D16D71996005F5810 /* RXCollections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6C16D71996005F5810 /* RXCollections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CF2C6E16D71996005F5810 /* RXCollections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6C16D71996005F5810 /* RXCollections.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E0D68C16C8BD6D00C5F2F1 /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
 		D4E0D68D16C8BD7000C5F2F1 /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
 		D4E8CC2916D3BB50002D6C0A /* RXMappingTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */; };
@@ -113,6 +115,7 @@
 		D4CF2C6116D7160C005F5810 /* RXMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMap.m; sourceTree = "<group>"; };
 		D4CF2C6616D718B0005F5810 /* RXFold.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXFold.h; sourceTree = "<group>"; };
 		D4CF2C6716D718B0005F5810 /* RXFold.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXFold.m; sourceTree = "<group>"; };
+		D4CF2C6C16D71996005F5810 /* RXCollections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXCollections.h; sourceTree = "<group>"; };
 		D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXEnumerationTraversal.h; sourceTree = "<group>"; };
 		D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXEnumerationTraversal.m; sourceTree = "<group>"; };
 		D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMappingTraversalStrategy.h; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				D4B62BB816A1609D00E42C84 /* RXCollections-Info.plist */,
 				D4B62BB516A1609300E42C84 /* InfoPlist.strings */,
 				D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */,
+				D4CF2C6C16D71996005F5810 /* RXCollections.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -271,6 +275,7 @@
 				D4CF2C0416D6FFFA005F5810 /* RXFilter.h in Headers */,
 				D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */,
 				D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */,
+				D4CF2C6D16D71996005F5810 /* RXCollections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +295,7 @@
 				D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */,
 				D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */,
 				D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */,
+				D4CF2C6E16D71996005F5810 /* RXCollections.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
