@@ -31,10 +31,12 @@ Maps and filters take a second argument, a collection into which to place their 
 
 ## Future
 
-- [Zip](http://en.wikipedia.org/wiki/Convolution_(computer_science)).
+- [Zip][]
 
 - Explicit folds to construct sets, arrays, etc.
 
 - Lazy filters.
 
 - Only lazy maps/filters.
+
+[Zip]: http://en.wikipedia.org/wiki/Convolution_(computer_science)
