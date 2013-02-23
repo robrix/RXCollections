@@ -2,7 +2,9 @@
 //  Created by Rob Rix on 2012-11-09.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
+#if !TARGET_OS_IPHONE
 #import <Cocoa/Cocoa.h>
+#endif
 #import "L3OCUnitTestResultFormatter.h"
 #import "L3StringInflections.h"
 #import "L3TestResult.h"
@@ -56,9 +58,13 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 }
 
 +(bool)isRunningInApplication {
+#if TARGET_OS_IPHONE
+	return YES;
+#else
 	return
 		([NSApplication class] != nil)
 	&&	[[NSBundle mainBundle].bundlePath.pathExtension isEqualToString:@"app"];
+#endif
 }
 
 +(NSPredicate *)defaultPredicate {
@@ -116,6 +122,8 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
+#if TARGET_OS_IPHONE
+#else
 	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
@@ -141,6 +149,7 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 			}];
 		}];
 	}
+#endif
 }
 
 -(void)run {
