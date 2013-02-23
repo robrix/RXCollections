@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D473F5AE16D8D4A9000FCD8D /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
+		D473F5AF16D8D4A9000FCD8D /* RXFold.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6716D718B0005F5810 /* RXFold.m */; };
+		D473F5B016D8D4A9000FCD8D /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
+		D473F5B116D8D4A9000FCD8D /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
+		D473F5B216D8D4A9000FCD8D /* RXMappingTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */; };
+		D473F5B316D8D4A9000FCD8D /* RXIdentityTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */; };
+		D473F5B416D8D4A9000FCD8D /* RXFilteringTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC3316D3C332002D6C0A /* RXFilteringTraversalStrategy.m */; };
+		D473F5B516D8D4A9000FCD8D /* RXNullTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC3C16D3D3AB002D6C0A /* RXNullTraversalStrategy.m */; };
+		D473F5B616D8D4A9000FCD8D /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
+		D473F5B716D8D4A9000FCD8D /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
+		D473F5B816D8D4B9000FCD8D /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5B916D8D4B9000FCD8D /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BA16D8D4B9000FCD8D /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BB16D8D4B9000FCD8D /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BC16D8D4B9000FCD8D /* RXMappingTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BD16D8D4B9000FCD8D /* RXIdentityTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BE16D8D4B9000FCD8D /* RXFilteringTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC3216D3C332002D6C0A /* RXFilteringTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5BF16D8D4B9000FCD8D /* RXNullTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC3B16D3D3AB002D6C0A /* RXNullTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5C016D8D4B9000FCD8D /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5C116D8D4B9000FCD8D /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5C216D8D4B9000FCD8D /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5C316D8D4B9000FCD8D /* RXCollections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6C16D71996005F5810 /* RXCollections.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A8B3FF16D05F6400D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A8B40416D05F7000D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +81,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D473F5AA16D8D42B000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D473F55216D8CB4C000FCD8D;
+			remoteInfo = "Lagrangian (iOS static framework)";
+		};
+		D473F5C516D8D50D000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D473F55116D8CB4C000FCD8D;
+			remoteInfo = "Lagrangian (iOS static framework)";
+		};
 		D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
@@ -90,6 +126,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D473F59B16D8D42B000FCD8D /* RXCollections.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RXCollections.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
@@ -123,6 +160,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D473F59516D8D42B000FCD8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F89147978C8004490EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -160,6 +204,7 @@
 				D49E8F8C147978C8004490EA /* libRXCollections.a */,
 				D4B62B3F16A117B200E42C84 /* Lagrangian.octest */,
 				D4B62BA616A15F7000E42C84 /* RXCollections.framework */,
+				D473F59B16D8D42B000FCD8D /* RXCollections.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,6 +272,7 @@
 			children = (
 				D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */,
 				D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */,
+				D473F5AB16D8D42B000FCD8D /* Lagrangian.framework */,
 				D4B62B3816A1177B00E42C84 /* lagrangian */,
 				D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */,
 			);
@@ -251,6 +297,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		D473F59616D8D42B000FCD8D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F5B816D8D4B9000FCD8D /* RXFilter.h in Headers */,
+				D473F5B916D8D4B9000FCD8D /* RXFold.h in Headers */,
+				D473F5BA16D8D4B9000FCD8D /* RXMap.h in Headers */,
+				D473F5BB16D8D4B9000FCD8D /* RXEnumerationTraversal.h in Headers */,
+				D473F5BC16D8D4B9000FCD8D /* RXMappingTraversalStrategy.h in Headers */,
+				D473F5BD16D8D4B9000FCD8D /* RXIdentityTraversalStrategy.h in Headers */,
+				D473F5BE16D8D4B9000FCD8D /* RXFilteringTraversalStrategy.h in Headers */,
+				D473F5BF16D8D4B9000FCD8D /* RXNullTraversalStrategy.h in Headers */,
+				D473F5C016D8D4B9000FCD8D /* RXPair.h in Headers */,
+				D473F5C116D8D4B9000FCD8D /* RXRecursiveEnumerator.h in Headers */,
+				D473F5C216D8D4B9000FCD8D /* RXTraversal.h in Headers */,
+				D473F5C316D8D4B9000FCD8D /* RXCollections.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F8A147978C8004490EA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +357,28 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D473F59A16D8D42B000FCD8D /* RXCollections (iOS static framework) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D473F5AC16D8D42B000FCD8D /* Build configuration list for PBXNativeTarget "RXCollections (iOS static framework)" */;
+			buildPhases = (
+				D473F59316D8D42B000FCD8D /* ShellScript */,
+				D473F59416D8D42B000FCD8D /* Sources */,
+				D473F59516D8D42B000FCD8D /* Frameworks */,
+				D473F59616D8D42B000FCD8D /* Headers */,
+				D473F59716D8D42B000FCD8D /* Resources */,
+				D473F59816D8D42B000FCD8D /* ShellScript */,
+				D473F59916D8D42B000FCD8D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D473F5C616D8D50D000FCD8D /* PBXTargetDependency */,
+			);
+			name = "RXCollections (iOS static framework)";
+			productName = "RXCollections (iOS static framework)";
+			productReference = D473F59B16D8D42B000FCD8D /* RXCollections.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
 		D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X static library)" */;
@@ -309,16 +396,16 @@
 			productReference = D49E8F8C147978C8004490EA /* libRXCollections.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		D4B62B3E16A117B200E42C84 /* RXCollections */ = {
+		D4B62B3E16A117B200E42C84 /* RXCollections tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */;
+			buildConfigurationList = D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections tests" */;
 			buildPhases = (
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = RXCollections;
+			name = "RXCollections tests";
 			productName = RXCollections;
 			productReference = D4B62B3F16A117B200E42C84 /* Lagrangian.octest */;
 			productType = "com.apple.product-type.bundle";
@@ -371,12 +458,20 @@
 			targets = (
 				D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */,
 				D4B62BA516A15F7000E42C84 /* RXCollections (Mac OS X framework) */,
-				D4B62B3E16A117B200E42C84 /* RXCollections */,
+				D473F59A16D8D42B000FCD8D /* RXCollections (iOS static framework) */,
+				D4B62B3E16A117B200E42C84 /* RXCollections tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D473F5AB16D8D42B000FCD8D /* Lagrangian.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Lagrangian.framework;
+			remoteRef = D473F5AA16D8D42B000FCD8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -394,7 +489,8 @@
 		D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = Lagrangian.octest;
+			name = Lagrangian.octest;
+			path = "Lagrangian tests.octest";
 			remoteRef = D4B62B3916A1177B00E42C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -408,6 +504,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D473F59716D8D42B000FCD8D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4B62BA416A15F7000E42C84 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,7 +521,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D473F59316D8D42B000FCD8D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n\tUFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version  from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && \\\n   [[ -f \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && \\\n   [[ ! \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Clean other platform if needed\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n\techo \"Platform \\\"$UFW_SDK_PLATFORM\\\" was cleaned recently. Cleaning \\\"$UFW_OTHER_PLATFORM\\\" as well\"\n\techo xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\n\txcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" clean\nfi\n\n\n# Make sure we are building from fresh binaries\n\nrm -rf \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nrm -rf \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D473F59816D8D42B000FCD8D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "HEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Versions/$FRAMEWORK_VERSION/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$(find $FRAMEWORK_HEADERS_DIR/. -not -type d 2> /dev/null | sed -e \"s@.*/@@g\")\n\nFIND_OPTS=\"\"\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n  if [ -n \"$FIND_OPTS\" ]; then\n    FIND_OPTS=\"$FIND_OPTS -o\"\n  fi\n  FIND_OPTS=\"$FIND_OPTS -name '$PUBLIC_HEADER'\"\ndone\n\nif [ -n \"$FIND_OPTS\" ]; then\n  for ORIG_HEADER in $(eval \"find $HEADERS_ROOT/. $FIND_OPTS\" 2> /dev/null | sed -e \"s@^$HEADERS_ROOT/./@@g\"); do\n    PUBLIC_HEADER=$(basename $ORIG_HEADER)\n    RELATIVE_PATH=$(dirname $ORIG_HEADER)\n    if [ -e $FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER ]; then\n      mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n      mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\n    fi\n  done\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D473F59916D8D42B000FCD8D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nset +u\nif [[ $UFW_MASTER_SCRIPT_RUNNING ]]\nthen\n    # Nothing for the slave script to do\n    exit 0\nfi\nset -u\nexport UFW_MASTER_SCRIPT_RUNNING=1\n\n\n# Functions\n\n## List files in the specified directory, storing to the specified array.\n#\n# @param $1 The path to list\n# @param $2 The name of the array to fill\n#\n##\nlist_files ()\n{\n    filelist=$(ls \"$1\")\n    while read line\n    do\n        eval \"$2[\\${#$2[*]}]=\\\"\\$line\\\"\"\n    done <<< \"$filelist\"\n}\n\n\n# Sanity check\n\nif [[ ! -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]]\nthen\n    echo \"Framework target \\\"${TARGET_NAME}\\\" had no source files to build from. Make sure your source files have the correct target membership\"\n    exit 1\nfi\n\n\n# Gather information\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\n    UFW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find platform name from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\n    UFW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\n    echo \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\n    exit 1\nfi\n\nif [[ \"$UFW_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\n    UFW_OTHER_PLATFORM=iphonesimulator\nelse\n    UFW_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$UFW_SDK_PLATFORM$ ]]\nthen\n    UFW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${UFW_OTHER_PLATFORM}\"\nelse\n    echo \"Could not find $UFW_SDK_PLATFORM in $BUILT_PRODUCTS_DIR\"\n    exit 1\nfi\n\n\n# Short-circuit if all binaries are up to date.\n# We already checked the other platform in the prerun script.\n\nif [[ -f \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" ]] && [[ -f \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]] && [[ ! \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -nt \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/${EXECUTABLE_PATH}\" ]]\nthen\n    exit 0\nfi\n\n\n# Make sure the other platform gets built\n\necho \"Build other platform\"\n\necho xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${UFW_OTHER_PLATFORM}${UFW_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" CONFIGURATION_TEMP_DIR=\"${PROJECT_TEMP_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\" $ACTION\n\n\n# Build the fat static library binary\n\necho \"Create universal static library\"\n\necho \"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\"$PLATFORM_DEVELOPER_BIN_DIR/libtool\" -static \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" \"${UFW_OTHER_BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\" -o \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\"\n\necho mv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\nmv \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}.temp\" \"${BUILT_PRODUCTS_DIR}/${EXECUTABLE_PATH}\"\n\n\n# Build framework structure\n\necho \"Build symlinks\"\n\necho ln -sfh A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\nln -sfh A \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Versions/Current\"\necho ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\nln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Headers\"\necho ln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\nln -sfh Versions/Current/Resources \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Resources\"\necho ln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\nln -sfh \"Versions/Current/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${EXECUTABLE_NAME}\"\n\n\n# Link to binary for unit tests\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework\"\nln -sfh \"../${WRAPPER_NAME}/${EXECUTABLE_NAME}\" \"${BUILT_PRODUCTS_DIR}/.fake_fw_testing.framework/.fake_fw_testing\"\n\n\n# Build embedded framework structure\n\necho \"Build Embedded Framework\"\n\necho rm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\nrm -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework\"\necho mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources\"\necho cp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\ncp -a \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/\"\n\ndeclare -a UFW_FILE_LIST\nlist_files \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" UFW_FILE_LIST\nfor filename in \"${UFW_FILE_LIST[@]}\"\ndo\n    if [[ \"${filename}\" != \"Info.plist\" ]] && [[ ! \"${filename}\" =~ .*\\.lproj$ ]]\n    then\n        echo ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n        ln -sfh \"../${WRAPPER_NAME}/Resources/${filename}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.embeddedframework/Resources/${filename}\"\n    fi\ndone\n\n\n# Replace other platform's framework with a copy of this one (so that both have the same universal binary)\n\necho \"Copy from $UFW_SDK_PLATFORM to $UFW_OTHER_PLATFORM\"\n\necho rm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\nrm -rf \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\necho cp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\ncp -a \"${BUILD_DIR}/${CONFIGURATION}-${UFW_SDK_PLATFORM}\" \"${BUILD_DIR}/${CONFIGURATION}-${UFW_OTHER_PLATFORM}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		D473F59416D8D42B000FCD8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F5AE16D8D4A9000FCD8D /* RXFilter.m in Sources */,
+				D473F5AF16D8D4A9000FCD8D /* RXFold.m in Sources */,
+				D473F5B016D8D4A9000FCD8D /* RXMap.m in Sources */,
+				D473F5B116D8D4A9000FCD8D /* RXEnumerationTraversal.m in Sources */,
+				D473F5B216D8D4A9000FCD8D /* RXMappingTraversalStrategy.m in Sources */,
+				D473F5B316D8D4A9000FCD8D /* RXIdentityTraversalStrategy.m in Sources */,
+				D473F5B416D8D4A9000FCD8D /* RXFilteringTraversalStrategy.m in Sources */,
+				D473F5B516D8D4A9000FCD8D /* RXNullTraversalStrategy.m in Sources */,
+				D473F5B616D8D4A9000FCD8D /* RXPair.m in Sources */,
+				D473F5B716D8D4A9000FCD8D /* RXRecursiveEnumerator.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F88147978C8004490EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +620,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D473F5C616D8D50D000FCD8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Lagrangian (iOS static framework)";
+			targetProxy = D473F5C516D8D50D000FCD8D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		D4B62BB516A1609300E42C84 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -467,6 +640,67 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D473F5A316D8D42B000FCD8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Lagrangian,
+				);
+				PRODUCT_NAME = RXCollections;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		D473F5A416D8D42B000FCD8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Lagrangian,
+				);
+				PRODUCT_NAME = RXCollections;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
 		D49E8FB0147978C9004490EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -607,6 +841,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D473F5AC16D8D42B000FCD8D /* Build configuration list for PBXNativeTarget "RXCollections (iOS static framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D473F5A316D8D42B000FCD8D /* Debug */,
+				D473F5A416D8D42B000FCD8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D49E8F86147978C8004490EA /* Build configuration list for PBXProject "RXCollections" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -625,7 +867,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */ = {
+		D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4B62B4116A117B200E42C84 /* Debug */,
