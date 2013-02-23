@@ -36,7 +36,7 @@
 }
 
 +(NSString *)cardinalizeNoun:(NSString *)noun count:(NSUInteger)count {
-	return [NSString stringWithFormat:@"%lu %@", count, [self pluralizeNoun:noun count:count]];
+	return [NSString stringWithFormat:@"%lu %@", (unsigned long)count, [self pluralizeNoun:noun count:count]];
 }
 
 @end
