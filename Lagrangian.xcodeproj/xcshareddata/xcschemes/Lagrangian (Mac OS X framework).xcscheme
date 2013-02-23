@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D43D8B711654C27000E6DE07"
-               BuildableName = "Lagrangian.octest"
-               BlueprintName = "Lagrangian"
+               BuildableName = "Lagrangian tests.octest"
+               BlueprintName = "Lagrangian tests"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D43D8B711654C27000E6DE07"
-               BuildableName = "Lagrangian.octest"
-               BlueprintName = "Lagrangian"
+               BuildableName = "Lagrangian tests.octest"
+               BlueprintName = "Lagrangian tests"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </TestableReference>
