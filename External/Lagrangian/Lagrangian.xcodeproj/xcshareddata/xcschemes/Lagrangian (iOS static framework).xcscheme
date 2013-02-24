@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D473F55116D8CB4C000FCD8D"
-               BuildableName = "Lagrangian.framework"
+               BlueprintIdentifier = "D473F5CB16DA713E000FCD8D"
+               BuildableName = "libLagrangian.a"
                BlueprintName = "Lagrangian (iOS static framework)"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
