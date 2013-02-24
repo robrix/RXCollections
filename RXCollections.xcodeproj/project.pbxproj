@@ -7,6 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D473F63716DA7E5E000FCD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
+		D473F64216DA81A9000FCD8D /* libLagrangian.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D473F5AB16D8D42B000FCD8D /* libLagrangian.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D473F64616DA81DD000FCD8D /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64716DA81DD000FCD8D /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6616D718B0005F5810 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64816DA81DD000FCD8D /* RXMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6016D7160C005F5810 /* RXMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64916DA81DD000FCD8D /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64A16DA81DD000FCD8D /* RXMappingTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2616D3BB2F002D6C0A /* RXMappingTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64B16DA81DD000FCD8D /* RXIdentityTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC2C16D3C268002D6C0A /* RXIdentityTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64C16DA81DD000FCD8D /* RXFilteringTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC3216D3C332002D6C0A /* RXFilteringTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64D16DA81DD000FCD8D /* RXNullTraversalStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E8CC3B16D3D3AB002D6C0A /* RXNullTraversalStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64E16DA81DD000FCD8D /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F64F16DA81DD000FCD8D /* RXRecursiveEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F65016DA81DD000FCD8D /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F65116DA81DD000FCD8D /* RXCollections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C6C16D71996005F5810 /* RXCollections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F65216DA81F3000FCD8D /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
+		D473F65316DA81F3000FCD8D /* RXFold.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6716D718B0005F5810 /* RXFold.m */; };
+		D473F65416DA81F3000FCD8D /* RXMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C6116D7160C005F5810 /* RXMap.m */; };
+		D473F65516DA81F3000FCD8D /* RXEnumerationTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */; };
+		D473F65616DA81F3000FCD8D /* RXMappingTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2716D3BB2F002D6C0A /* RXMappingTraversalStrategy.m */; };
+		D473F65716DA81F3000FCD8D /* RXIdentityTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC2D16D3C268002D6C0A /* RXIdentityTraversalStrategy.m */; };
+		D473F65816DA81F3000FCD8D /* RXFilteringTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC3316D3C332002D6C0A /* RXFilteringTraversalStrategy.m */; };
+		D473F65916DA81F3000FCD8D /* RXNullTraversalStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E8CC3C16D3D3AB002D6C0A /* RXNullTraversalStrategy.m */; };
+		D473F65A16DA81F3000FCD8D /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
+		D473F65B16DA81F3000FCD8D /* RXRecursiveEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */; };
 		D4A8B3FF16D05F6400D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A8B40416D05F7000D96744 /* RXEnumerationTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +83,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D473F5AA16D8D42B000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D473F55216D8CB4C000FCD8D;
+			remoteInfo = "Lagrangian (iOS static framework)";
+		};
+		D473F64316DA81B1000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D473F5CB16DA713E000FCD8D;
+			remoteInfo = "Lagrangian (iOS static framework)";
+		};
 		D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
@@ -89,7 +127,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D473F63416DA7E5D000FCD8D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D473F63616DA7E5D000FCD8D /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
@@ -123,6 +174,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D473F63316DA7E5D000FCD8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F64216DA81A9000FCD8D /* libLagrangian.a in Frameworks */,
+				D473F63716DA7E5E000FCD8D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F89147978C8004490EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -160,6 +220,7 @@
 				D49E8F8C147978C8004490EA /* libRXCollections.a */,
 				D4B62B3F16A117B200E42C84 /* Lagrangian.octest */,
 				D4B62BA616A15F7000E42C84 /* RXCollections.framework */,
+				D473F63616DA7E5D000FCD8D /* libRXCollections.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,6 +288,7 @@
 			children = (
 				D4B62B9C16A15DF700E42C84 /* Lagrangian.framework */,
 				D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */,
+				D473F5AB16D8D42B000FCD8D /* libLagrangian.a */,
 				D4B62B3816A1177B00E42C84 /* lagrangian */,
 				D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */,
 			);
@@ -251,6 +313,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		D473F64516DA81DB000FCD8D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F64616DA81DD000FCD8D /* RXFilter.h in Headers */,
+				D473F64716DA81DD000FCD8D /* RXFold.h in Headers */,
+				D473F64816DA81DD000FCD8D /* RXMap.h in Headers */,
+				D473F64916DA81DD000FCD8D /* RXEnumerationTraversal.h in Headers */,
+				D473F64A16DA81DD000FCD8D /* RXMappingTraversalStrategy.h in Headers */,
+				D473F64B16DA81DD000FCD8D /* RXIdentityTraversalStrategy.h in Headers */,
+				D473F64C16DA81DD000FCD8D /* RXFilteringTraversalStrategy.h in Headers */,
+				D473F64D16DA81DD000FCD8D /* RXNullTraversalStrategy.h in Headers */,
+				D473F64E16DA81DD000FCD8D /* RXPair.h in Headers */,
+				D473F64F16DA81DD000FCD8D /* RXRecursiveEnumerator.h in Headers */,
+				D473F65016DA81DD000FCD8D /* RXTraversal.h in Headers */,
+				D473F65116DA81DD000FCD8D /* RXCollections.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F8A147978C8004490EA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -292,6 +373,26 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		D473F63516DA7E5D000FCD8D /* RXCollections (iOS static framework) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D473F63F16DA7E5E000FCD8D /* Build configuration list for PBXNativeTarget "RXCollections (iOS static framework)" */;
+			buildPhases = (
+				D473F63216DA7E5D000FCD8D /* Sources */,
+				D473F63316DA7E5D000FCD8D /* Frameworks */,
+				D473F63416DA7E5D000FCD8D /* CopyFiles */,
+				D473F64516DA81DB000FCD8D /* Headers */,
+				D473F65C16DA8215000FCD8D /* Prepare Framework */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D473F64416DA81B1000FCD8D /* PBXTargetDependency */,
+			);
+			name = "RXCollections (iOS static framework)";
+			productName = "RXCollections (iOS static framework)";
+			productReference = D473F63616DA7E5D000FCD8D /* libRXCollections.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D49E8FB2147978C9004490EA /* Build configuration list for PBXNativeTarget "RXCollections (Mac OS X static library)" */;
@@ -309,16 +410,16 @@
 			productReference = D49E8F8C147978C8004490EA /* libRXCollections.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		D4B62B3E16A117B200E42C84 /* RXCollections */ = {
+		D4B62B3E16A117B200E42C84 /* RXCollections tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */;
+			buildConfigurationList = D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections tests" */;
 			buildPhases = (
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = RXCollections;
+			name = "RXCollections tests";
 			productName = RXCollections;
 			productReference = D4B62B3F16A117B200E42C84 /* Lagrangian.octest */;
 			productType = "com.apple.product-type.bundle";
@@ -371,12 +472,20 @@
 			targets = (
 				D49E8F8B147978C8004490EA /* RXCollections (Mac OS X static library) */,
 				D4B62BA516A15F7000E42C84 /* RXCollections (Mac OS X framework) */,
-				D4B62B3E16A117B200E42C84 /* RXCollections */,
+				D473F63516DA7E5D000FCD8D /* RXCollections (iOS static framework) */,
+				D4B62B3E16A117B200E42C84 /* RXCollections tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D473F5AB16D8D42B000FCD8D /* libLagrangian.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libLagrangian.a;
+			remoteRef = D473F5AA16D8D42B000FCD8D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -394,7 +503,8 @@
 		D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = Lagrangian.octest;
+			name = Lagrangian.octest;
+			path = "Lagrangian tests.octest";
 			remoteRef = D4B62B3916A1177B00E42C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -418,7 +528,41 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D473F65C16DA8215000FCD8D /* Prepare Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\ncp -a \"${BUILT_PRODUCTS_DIR}/lib${PRODUCT_NAME}.a\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/${PRODUCT_NAME}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		D473F63216DA7E5D000FCD8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F65216DA81F3000FCD8D /* RXFilter.m in Sources */,
+				D473F65316DA81F3000FCD8D /* RXFold.m in Sources */,
+				D473F65416DA81F3000FCD8D /* RXMap.m in Sources */,
+				D473F65516DA81F3000FCD8D /* RXEnumerationTraversal.m in Sources */,
+				D473F65616DA81F3000FCD8D /* RXMappingTraversalStrategy.m in Sources */,
+				D473F65716DA81F3000FCD8D /* RXIdentityTraversalStrategy.m in Sources */,
+				D473F65816DA81F3000FCD8D /* RXFilteringTraversalStrategy.m in Sources */,
+				D473F65916DA81F3000FCD8D /* RXNullTraversalStrategy.m in Sources */,
+				D473F65A16DA81F3000FCD8D /* RXPair.m in Sources */,
+				D473F65B16DA81F3000FCD8D /* RXRecursiveEnumerator.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D49E8F88147978C8004490EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +599,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D473F64416DA81B1000FCD8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Lagrangian (iOS static framework)";
+			targetProxy = D473F64316DA81B1000FCD8D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		D4B62BB516A1609300E42C84 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -467,6 +619,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D473F64016DA7E5E000FCD8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/RXCollections__iOS_static_framework_.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME) Headers";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		D473F64116DA7E5E000FCD8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/RXCollections__iOS_static_framework_.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME) Headers";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		D49E8FB0147978C9004490EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -532,7 +724,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RXCollections;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 			};
 			name = Debug;
 		};
@@ -542,7 +734,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = RXCollections;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 			};
 			name = Release;
 		};
@@ -579,7 +771,7 @@
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
-				PRODUCT_NAME = RXCollections;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -599,7 +791,7 @@
 				GCC_PREFIX_HEADER = "RXCollections/RXCollections-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "RXCollections/RXCollections-Info.plist";
-				PRODUCT_NAME = RXCollections;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -607,6 +799,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D473F63F16DA7E5E000FCD8D /* Build configuration list for PBXNativeTarget "RXCollections (iOS static framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D473F64016DA7E5E000FCD8D /* Debug */,
+				D473F64116DA7E5E000FCD8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D49E8F86147978C8004490EA /* Build configuration list for PBXProject "RXCollections" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -625,7 +826,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections" */ = {
+		D4B62B4016A117B200E42C84 /* Build configuration list for PBXNativeTarget "RXCollections tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4B62B4116A117B200E42C84 /* Debug */,

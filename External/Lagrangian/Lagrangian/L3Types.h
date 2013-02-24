@@ -4,6 +4,10 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
+
 @class L3TestCase, L3TestState, L3TestStep;
 
 #pragma mark Test functions
@@ -42,9 +46,15 @@ __attribute__((overloadable)) static inline id l3_to_object(void *x) { return [N
 __attribute__((overloadable)) static inline id l3_to_object(NSRange r) { return [NSValue valueWithRange:r]; }
 
 // Core Graphics
+#if TARGET_OS_IPHONE
+__attribute__((overloadable)) static inline id l3_to_object(CGPoint p) { return [NSValue valueWithCGPoint:p]; }
+__attribute__((overloadable)) static inline id l3_to_object(CGRect r) { return [NSValue valueWithCGRect:r]; }
+__attribute__((overloadable)) static inline id l3_to_object(CGSize s) { return [NSValue valueWithCGSize:s]; }
+#else
 __attribute__((overloadable)) static inline id l3_to_object(CGPoint p) { return [NSValue valueWithPoint:p]; }
 __attribute__((overloadable)) static inline id l3_to_object(CGRect r) { return [NSValue valueWithRect:r]; }
 __attribute__((overloadable)) static inline id l3_to_object(CGSize s) { return [NSValue valueWithSize:s]; }
+#endif
 
 #pragma mark Pattern conversion
 
@@ -84,6 +94,17 @@ __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(NSRange r)
 }
 
 // Core Graphics
+#if TARGET_OS_IPHONE
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGPoint p) {
+	return ^bool(id o) { return CGPointEqualToPoint(p, [o CGPointValue]); };
+}
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGRect r) {
+	return ^bool(id o) { return CGRectEqualToRect(r, [o CGRectValue]); };
+}
+__attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGSize s) {
+	return ^bool(id o) { return CGSizeEqualToSize(s, [o CGSizeValue]); };
+}
+#else
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGPoint p) {
 	return ^bool(id o) { return CGPointEqualToPoint(p, [o pointValue]); };
 }
@@ -93,3 +114,4 @@ __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGRect r) 
 __attribute__((overloadable)) static inline L3Pattern l3_to_pattern_f(CGSize s) {
 	return ^bool(id o) { return CGSizeEqualToSize(s, [o sizeValue]); };
 }
+#endif

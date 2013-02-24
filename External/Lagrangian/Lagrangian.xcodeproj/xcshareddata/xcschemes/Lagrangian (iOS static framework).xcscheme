@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D4AC43111648B5D300C0A25B"
-               BuildableName = "Lagrangian.dylib"
-               BlueprintName = "Lagrangian (Mac OS X dynamic library)"
+               BlueprintIdentifier = "D473F5CB16DA713E000FCD8D"
+               BuildableName = "libLagrangian.a"
+               BlueprintName = "Lagrangian (iOS static framework)"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -25,35 +25,10 @@
    <TestAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "NO"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D43D8B711654C27000E6DE07"
-               BuildableName = "Lagrangian tests.octest"
-               BlueprintName = "Lagrangian tests"
-               ReferencedContainer = "container:Lagrangian.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D4A5B2C0164B4FAF00338EB4"
-            BuildableName = "lagrangian"
-            BlueprintName = "lagrangian"
-            ReferencedContainer = "container:Lagrangian.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-library $(BUILT_PRODUCTS_DIR)/Lagrangian.dylib"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"

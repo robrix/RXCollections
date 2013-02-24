@@ -65,7 +65,7 @@
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
 	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : '%@' was '%@' but should have matched '%@'",
 						   sourceReference.file,
-						   sourceReference.line,
+						   (unsigned long)sourceReference.line,
 						   [self methodNameForTestResult:result],
 						   sourceReference.subjectSource,
 						   sourceReference.subject,
@@ -104,7 +104,7 @@
 
 @l3_test("format test case endings with a warning if the case performed no assertions (either directly or indirectly, via steps)") {
 	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
-	l3_assert([test.formattedString componentsSeparatedByString:@"\n"][0], l3_equals([NSString stringWithFormat:@"%@:%lu: note: -[%@ %@] : test case '%@' performed no assertions", _case.file, _case.line, nil, [test.formatter formatTestName:_case.name], _case.name]));
+	l3_assert([test.formattedString componentsSeparatedByString:@"\n"][0], l3_equals([NSString stringWithFormat:@"%@:%lu: note: -[%@ %@] : test case '%@' performed no assertions", _case.file, (unsigned long)_case.line, nil, [test.formatter formatTestName:_case.name], _case.name]));
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {
@@ -115,7 +115,7 @@
 					 result.endDate,
 					 [L3StringInflections cardinalizeNoun:@"test" count:result.testCaseCount],
 					 [L3StringInflections cardinalizeNoun:@"failure" count:result.assertionFailureCount],
-					 result.exceptionCount,
+					 (unsigned long)result.exceptionCount,
 					 result.duration,
 					 [result.endDate timeIntervalSinceDate:result.startDate]];
 	} else {
@@ -125,7 +125,7 @@
 		{
 			NSString *note = [NSString stringWithFormat:@"%@:%lu: note: %@ : test case '%@' performed no assertions\n",
 								 result.file,
-								 result.line,
+								 (unsigned long)result.line,
 								 [self methodNameForTestResult:result],
 								 result.name];
 			formatted = [note stringByAppendingString:formatted];
