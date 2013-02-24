@@ -174,6 +174,9 @@
 #define l3_set_up \
 	l3_test("")
 
+#define l3_tear_down \
+	l3_test("")
+
 #define l3_step(str) \
 	l3_test("")
 

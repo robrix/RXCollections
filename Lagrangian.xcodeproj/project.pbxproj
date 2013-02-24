@@ -7,40 +7,91 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D40DE662164E26030033DE88 /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; };
+		D40DE662164E26030033DE88 /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D40DE663164E26030033DE88 /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
-		D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; };
+		D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D40DE69E165037BA0033DE88 /* L3OCUnitTestResultFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */; };
-		D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; };
-		D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; };
-		D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; };
-		D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; };
-		D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; };
-		D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; };
+		D4223BEA16A0A95E00AE32D5 /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4223BEB16A0A95E00AE32D5 /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4223BEC16A0A95E00AE32D5 /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4223BE916A0A95E00AE32D5 /* RXPreprocessingTests.m */; };
-		D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; };
+		D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D426E49416527B8D001C9105 /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
-		D426E49816528701001C9105 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; };
+		D426E49816528701001C9105 /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D426E49916528701001C9105 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
-		D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; };
+		D426E4A0165294C1001C9105 /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D426E4A1165294C1001C9105 /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
-		D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E9DC165874F40033BCC8 /* L3TestStep.h */; };
+		D431E9DE165874F40033BCC8 /* L3TestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E9DC165874F40033BCC8 /* L3TestStep.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = D431E9DD165874F40033BCC8 /* L3TestStep.m */; };
-		D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; };
+		D43D8DA616575E9A00E6DE07 /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = D43D8DA516575E9A00E6DE07 /* L3Collection.m */; };
-		D457D679165094F100340DAC /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; };
+		D457D679165094F100340DAC /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D457D67A165094F100340DAC /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
-		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; };
-		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; };
+		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5CE16DA713E000FCD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D473F5CD16DA713E000FCD8D /* Foundation.framework */; };
+		D473F5D916DA71C6000FCD8D /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DA16DA71C6000FCD8D /* L3Configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B21CB8168924A500D5986E /* L3Configuration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DB16DA71C6000FCD8D /* L3Types.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D6164BF15400338EB4 /* L3Types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DC16DA71C6000FCD8D /* L3PreprocessorUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DD16DA71C6000FCD8D /* L3Assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE670164F18AF0033DE88 /* L3Assertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DE16DA71C6000FCD8D /* L3Test.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69716501CA00033DE88 /* L3Test.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5DF16DA71C6000FCD8D /* L3TestVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E016DA71C6000FCD8D /* L3TestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E216DA71ED000FCD8D /* L3Stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49616528701001C9105 /* L3Stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E316DA71ED000FCD8D /* L3FunctionalUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49E165294C1001C9105 /* L3FunctionalUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E416DA71ED000FCD8D /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E516DA71ED000FCD8D /* L3Collection.h in Headers */ = {isa = PBXBuildFile; fileRef = D43D8DA416575E9A00E6DE07 /* L3Collection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E616DA71ED000FCD8D /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E716DA71ED000FCD8D /* L3Configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B21CB8168924A500D5986E /* L3Configuration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E816DA71ED000FCD8D /* L3Types.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D6164BF15400338EB4 /* L3Types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5E916DA71ED000FCD8D /* L3PreprocessorUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5EA16DA71ED000FCD8D /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5EB16DA71ED000FCD8D /* L3Assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE670164F18AF0033DE88 /* L3Assertions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5EC16DA71ED000FCD8D /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5ED16DA71ED000FCD8D /* L3TestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = D431E9DC165874F40033BCC8 /* L3TestStep.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5EE16DA71ED000FCD8D /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5EF16DA71ED000FCD8D /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F016DA71ED000FCD8D /* L3TestState.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE660164E26030033DE88 /* L3TestState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F116DA71ED000FCD8D /* L3Test.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69716501CA00033DE88 /* L3Test.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F216DA71ED000FCD8D /* L3TestVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A98E5B167D2B1200CF5858 /* L3TestVisitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F316DA71ED000FCD8D /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F416DA71ED000FCD8D /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F516DA71ED000FCD8D /* L3TestResultBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D426E49116527B8D001C9105 /* L3TestResultBuilder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F616DA71ED000FCD8D /* L3TestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69F165037DB0033DE88 /* L3TestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F716DA71ED000FCD8D /* L3OCUnitTestResultFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = D40DE69B165037BA0033DE88 /* L3OCUnitTestResultFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F816DA71ED000FCD8D /* _RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE216A0A95E00AE32D5 /* _RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5F916DA71ED000FCD8D /* _RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE316A0A95E00AE32D5 /* _RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5FA16DA71ED000FCD8D /* RXCount.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE516A0A95E00AE32D5 /* RXCount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5FB16DA71ED000FCD8D /* RXFold.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE616A0A95E00AE32D5 /* RXFold.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5FC16DA71ED000FCD8D /* RXInterpolation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE716A0A95E00AE32D5 /* RXInterpolation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5FD16DA71ED000FCD8D /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D473F5FE16DA726F000FCD8D /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
+		D473F5FF16DA726F000FCD8D /* L3FunctionalUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */; };
+		D473F60016DA726F000FCD8D /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
+		D473F60116DA726F000FCD8D /* L3Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = D43D8DA516575E9A00E6DE07 /* L3Collection.m */; };
+		D473F60216DA726F000FCD8D /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
+		D473F60316DA726F000FCD8D /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
+		D473F60416DA726F000FCD8D /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
+		D473F60516DA726F000FCD8D /* L3TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = D431E9DD165874F40033BCC8 /* L3TestStep.m */; };
+		D473F60616DA726F000FCD8D /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
+		D473F60716DA726F000FCD8D /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
+		D473F60816DA726F000FCD8D /* L3TestState.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE661164E26030033DE88 /* L3TestState.m */; };
+		D473F60916DA726F000FCD8D /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
+		D473F60A16DA726F000FCD8D /* L3TestResultBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49216527B8D001C9105 /* L3TestResultBuilder.m */; };
+		D473F60B16DA726F000FCD8D /* L3OCUnitTestResultFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D40DE69C165037BA0033DE88 /* L3OCUnitTestResultFormatter.m */; };
+		D4A5B2BA164B4C3300338EB4 /* L3TestSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A5B2BB164B4C3300338EB4 /* L3TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */; };
 		D4A5B2C4164B4FAF00338EB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
 		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
 		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
-		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; };
+		D4A5B2D4164BEB2D00338EB4 /* L3TestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A5B2D2164BEB2D00338EB4 /* L3TestCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4A5B2D5164BEB2D00338EB4 /* L3TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2D3164BEB2D00338EB4 /* L3TestCase.m */; };
 		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
 		D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AC431F1648B5D300C0A25B /* Lagrangian.m */; };
-		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; };
+		D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B152B21653969E002858C3 /* L3StringInflections.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B152B51653969E002858C3 /* L3StringInflections.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B152B31653969E002858C3 /* L3StringInflections.m */; };
 		D4B62B5816A1581700E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62B5616A1581700E42C84 /* InfoPlist.strings */; };
 		D4B62B6116A159FA00E42C84 /* L3Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = D426E49716528701001C9105 /* L3Stack.m */; };
@@ -88,16 +139,25 @@
 		D4B62B8B16A15A1900E42C84 /* RXPaste.h in Headers */ = {isa = PBXBuildFile; fileRef = D4223BE816A0A95E00AE32D5 /* RXPaste.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4D16A1581700E42C84 /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */; };
-		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; };
+		D4BC3A5F164D483E003AD167 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4BC3A60164D483E003AD167 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
 		D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */; };
 		D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4AC43181648B5D300C0A25B /* AppKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
-		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; };
+		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D473F5CA16DA713E000FCD8D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4A5B2BF164B4FAF00338EB4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,12 +194,16 @@
 		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
 		D431E9DC165874F40033BCC8 /* L3TestStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestStep.h; sourceTree = "<group>"; };
 		D431E9DD165874F40033BCC8 /* L3TestStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestStep.m; sourceTree = "<group>"; };
-		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = Lagrangian.octest; path = "Lagrangian tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43D8DA416575E9A00E6DE07 /* L3Collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Collection.h; sourceTree = "<group>"; };
 		D43D8DA516575E9A00E6DE07 /* L3Collection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Collection.m; sourceTree = "<group>"; };
 		D457D677165094F100340DAC /* L3SourceReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3SourceReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3SourceReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3SourceReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
+		D473F56B16D8CC89000FCD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		D473F56E16D8CD03000FCD8D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		D473F5CC16DA713E000FCD8D /* libLagrangian.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLagrangian.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D473F5CD16DA713E000FCD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D4A5B2B8164B4C3300338EB4 /* L3TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestSuite.h; sourceTree = "<group>"; };
 		D4A5B2B9164B4C3300338EB4 /* L3TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestSuite.m; sourceTree = "<group>"; };
 		D4A5B2C1164B4FAF00338EB4 /* lagrangian */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lagrangian; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +240,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D473F5C916DA713E000FCD8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F5CE16DA713E000FCD8D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4A5B2BE164B4FAF00338EB4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -290,6 +362,24 @@
 			name = Assertions;
 			sourceTree = "<group>";
 		};
+		D473F57116D8CD17000FCD8D /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D473F56E16D8CD03000FCD8D /* CoreGraphics.framework */,
+				D473F56B16D8CC89000FCD8D /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		D473F57216D8CD21000FCD8D /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */,
+				D4AC43181648B5D300C0A25B /* AppKit.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
 		D4A5B2C5164B4FAF00338EB4 /* Test Runner */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +421,7 @@
 				D4A5B2C1164B4FAF00338EB4 /* lagrangian */,
 				D43D8B721654C27000E6DE07 /* Lagrangian.octest */,
 				D4B62B4C16A1581700E42C84 /* Lagrangian.framework */,
+				D473F5CC16DA713E000FCD8D /* libLagrangian.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,9 +429,10 @@
 		D4AC43141648B5D300C0A25B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4A5B2C3164B4FAF00338EB4 /* Foundation.framework */,
-				D4AC43181648B5D300C0A25B /* AppKit.framework */,
+				D473F57116D8CD17000FCD8D /* iOS */,
+				D473F57216D8CD21000FCD8D /* OS X */,
 				D4B62B4D16A1581700E42C84 /* Cocoa.framework */,
+				D473F5CD16DA713E000FCD8D /* Foundation.framework */,
 				D4B62B4F16A1581700E42C84 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -393,6 +485,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		D473F5E116DA71DF000FCD8D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F5E216DA71ED000FCD8D /* L3Stack.h in Headers */,
+				D473F5E316DA71ED000FCD8D /* L3FunctionalUtilities.h in Headers */,
+				D473F5E416DA71ED000FCD8D /* L3StringInflections.h in Headers */,
+				D473F5E516DA71ED000FCD8D /* L3Collection.h in Headers */,
+				D473F5E616DA71ED000FCD8D /* Lagrangian.h in Headers */,
+				D473F5E716DA71ED000FCD8D /* L3Configuration.h in Headers */,
+				D473F5E816DA71ED000FCD8D /* L3Types.h in Headers */,
+				D473F5E916DA71ED000FCD8D /* L3PreprocessorUtilities.h in Headers */,
+				D473F5EA16DA71ED000FCD8D /* L3SourceReference.h in Headers */,
+				D473F5EB16DA71ED000FCD8D /* L3Assertions.h in Headers */,
+				D473F5EC16DA71ED000FCD8D /* L3TestCase.h in Headers */,
+				D473F5ED16DA71ED000FCD8D /* L3TestStep.h in Headers */,
+				D473F5EE16DA71ED000FCD8D /* L3TestSuite.h in Headers */,
+				D473F5EF16DA71ED000FCD8D /* L3TestRunner.h in Headers */,
+				D473F5F016DA71ED000FCD8D /* L3TestState.h in Headers */,
+				D473F5F116DA71ED000FCD8D /* L3Test.h in Headers */,
+				D473F5F216DA71ED000FCD8D /* L3TestVisitor.h in Headers */,
+				D473F5F316DA71ED000FCD8D /* L3EventObserver.h in Headers */,
+				D473F5F416DA71ED000FCD8D /* L3TestResult.h in Headers */,
+				D473F5F516DA71ED000FCD8D /* L3TestResultBuilder.h in Headers */,
+				D473F5F616DA71ED000FCD8D /* L3TestResultFormatter.h in Headers */,
+				D473F5F716DA71ED000FCD8D /* L3OCUnitTestResultFormatter.h in Headers */,
+				D473F5F816DA71ED000FCD8D /* _RXFold.h in Headers */,
+				D473F5F916DA71ED000FCD8D /* _RXInterpolation.h in Headers */,
+				D473F5FA16DA71ED000FCD8D /* RXCount.h in Headers */,
+				D473F5FB16DA71ED000FCD8D /* RXFold.h in Headers */,
+				D473F5FC16DA71ED000FCD8D /* RXInterpolation.h in Headers */,
+				D473F5FD16DA71ED000FCD8D /* RXPaste.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4AC43101648B5D300C0A25B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,6 +545,14 @@
 				D4223BED16A0A95E00AE32D5 /* RXFold.h in Headers */,
 				D4223BEE16A0A95E00AE32D5 /* RXInterpolation.h in Headers */,
 				D4223BEF16A0A95E00AE32D5 /* RXPaste.h in Headers */,
+				D473F5D916DA71C6000FCD8D /* Lagrangian.h in Headers */,
+				D473F5DA16DA71C6000FCD8D /* L3Configuration.h in Headers */,
+				D473F5DB16DA71C6000FCD8D /* L3Types.h in Headers */,
+				D473F5DC16DA71C6000FCD8D /* L3PreprocessorUtilities.h in Headers */,
+				D473F5DD16DA71C6000FCD8D /* L3Assertions.h in Headers */,
+				D473F5DE16DA71C6000FCD8D /* L3Test.h in Headers */,
+				D473F5DF16DA71C6000FCD8D /* L3TestVisitor.h in Headers */,
+				D473F5E016DA71C6000FCD8D /* L3TestResultFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,19 +594,38 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D43D8B711654C27000E6DE07 /* Lagrangian */ = {
+		D43D8B711654C27000E6DE07 /* Lagrangian tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */;
+			buildConfigurationList = D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian tests" */;
 			buildPhases = (
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Lagrangian;
+			name = "Lagrangian tests";
 			productName = Lagrangian;
 			productReference = D43D8B721654C27000E6DE07 /* Lagrangian.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		D473F5CB16DA713E000FCD8D /* Lagrangian (iOS static framework) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D473F5D616DA713E000FCD8D /* Build configuration list for PBXNativeTarget "Lagrangian (iOS static framework)" */;
+			buildPhases = (
+				D473F5C816DA713E000FCD8D /* Sources */,
+				D473F5C916DA713E000FCD8D /* Frameworks */,
+				D473F5CA16DA713E000FCD8D /* CopyFiles */,
+				D473F5E116DA71DF000FCD8D /* Headers */,
+				D473F60C16DA72C1000FCD8D /* Prepare Framework */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Lagrangian (iOS static framework)";
+			productName = "Lagrangian (iOS static framework)";
+			productReference = D473F5CC16DA713E000FCD8D /* libLagrangian.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 		D4A5B2C0164B4FAF00338EB4 /* lagrangian */ = {
 			isa = PBXNativeTarget;
@@ -531,6 +685,7 @@
 		D4AC43091648B5D300C0A25B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = L3;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Rob Rix";
 			};
@@ -548,8 +703,9 @@
 			targets = (
 				D4B62B4B16A1581700E42C84 /* Lagrangian (Mac OS X framework) */,
 				D4AC43111648B5D300C0A25B /* Lagrangian (Mac OS X dynamic library) */,
+				D473F5CB16DA713E000FCD8D /* Lagrangian (iOS static framework) */,
 				D4A5B2C0164B4FAF00338EB4 /* lagrangian */,
-				D43D8B711654C27000E6DE07 /* Lagrangian */,
+				D43D8B711654C27000E6DE07 /* Lagrangian tests */,
 			);
 		};
 /* End PBXProject section */
@@ -565,7 +721,46 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D473F60C16DA72C1000FCD8D /* Prepare Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\ncp -a \"${BUILT_PRODUCTS_DIR}/lib${PRODUCT_NAME}.a\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/${PRODUCT_NAME}\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		D473F5C816DA713E000FCD8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D473F5FE16DA726F000FCD8D /* L3Stack.m in Sources */,
+				D473F5FF16DA726F000FCD8D /* L3FunctionalUtilities.m in Sources */,
+				D473F60016DA726F000FCD8D /* L3StringInflections.m in Sources */,
+				D473F60116DA726F000FCD8D /* L3Collection.m in Sources */,
+				D473F60216DA726F000FCD8D /* Lagrangian.m in Sources */,
+				D473F60316DA726F000FCD8D /* L3SourceReference.m in Sources */,
+				D473F60416DA726F000FCD8D /* L3TestCase.m in Sources */,
+				D473F60516DA726F000FCD8D /* L3TestStep.m in Sources */,
+				D473F60616DA726F000FCD8D /* L3TestSuite.m in Sources */,
+				D473F60716DA726F000FCD8D /* L3TestRunner.m in Sources */,
+				D473F60816DA726F000FCD8D /* L3TestState.m in Sources */,
+				D473F60916DA726F000FCD8D /* L3TestResult.m in Sources */,
+				D473F60A16DA726F000FCD8D /* L3TestResultBuilder.m in Sources */,
+				D473F60B16DA726F000FCD8D /* L3OCUnitTestResultFormatter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4A5B2BD164B4FAF00338EB4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -650,6 +845,47 @@
 			};
 			name = Release;
 		};
+		D473F5D716DA713E000FCD8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Lagrangian__iOS_static_framework_.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Lagrangian;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME) Headers";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		D473F5D816DA713E000FCD8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/Lagrangian__iOS_static_framework_.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = Lagrangian;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME) Headers";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		D4A5B2CD164B4FAF00338EB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -698,6 +934,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -728,6 +966,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -742,8 +982,6 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				PRODUCT_NAME = Lagrangian;
 			};
 			name = Debug;
@@ -753,8 +991,6 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				PRODUCT_NAME = Lagrangian;
 			};
 			name = Release;
@@ -765,8 +1001,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
 				PRODUCT_NAME = Lagrangian;
 				WRAPPER_EXTENSION = framework;
@@ -779,8 +1013,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Lagrangian/Lagrangian-Prefix.pch";
 				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
 				PRODUCT_NAME = Lagrangian;
 				WRAPPER_EXTENSION = framework;
@@ -790,7 +1022,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian" */ = {
+		D43D8B731654C27000E6DE07 /* Build configuration list for PBXNativeTarget "Lagrangian tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D43D8B741654C27000E6DE07 /* Debug */,
@@ -798,6 +1030,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D473F5D616DA713E000FCD8D /* Build configuration list for PBXNativeTarget "Lagrangian (iOS static framework)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D473F5D716DA713E000FCD8D /* Debug */,
+				D473F5D816DA713E000FCD8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */ = {
 			isa = XCConfigurationList;
