@@ -97,6 +97,20 @@
 			remoteGlobalIDString = D473F5CB16DA713E000FCD8D;
 			remoteInfo = "Lagrangian (iOS static framework)";
 		};
+		D473F66716DA87E8000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
+			remoteInfo = "Lagrangian (Mac OS X framework)";
+		};
+		D473F66B16DA8832000FCD8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
+			remoteInfo = "Lagrangian (Mac OS X framework)";
+		};
 		D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
@@ -404,6 +418,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D473F66C16DA8832000FCD8D /* PBXTargetDependency */,
 			);
 			name = "RXCollections (Mac OS X static library)";
 			productName = RXCollections;
@@ -436,6 +451,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D473F66816DA87E8000FCD8D /* PBXTargetDependency */,
 			);
 			name = "RXCollections (Mac OS X framework)";
 			productName = "RXCollections (Framework)";
@@ -604,6 +620,16 @@
 			isa = PBXTargetDependency;
 			name = "Lagrangian (iOS static framework)";
 			targetProxy = D473F64316DA81B1000FCD8D /* PBXContainerItemProxy */;
+		};
+		D473F66816DA87E8000FCD8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Lagrangian (Mac OS X framework)";
+			targetProxy = D473F66716DA87E8000FCD8D /* PBXContainerItemProxy */;
+		};
+		D473F66C16DA8832000FCD8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Lagrangian (Mac OS X framework)";
+			targetProxy = D473F66B16DA8832000FCD8D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
