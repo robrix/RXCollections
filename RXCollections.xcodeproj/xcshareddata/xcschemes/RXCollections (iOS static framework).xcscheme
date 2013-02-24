@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D473F59A16D8D42B000FCD8D"
-               BuildableName = "RXCollections (iOS static framework).framework"
+               BlueprintIdentifier = "D473F63516DA7E5D000FCD8D"
+               BuildableName = "libRXCollections.a"
                BlueprintName = "RXCollections (iOS static framework)"
                ReferencedContainer = "container:RXCollections.xcodeproj">
             </BuildableReference>
