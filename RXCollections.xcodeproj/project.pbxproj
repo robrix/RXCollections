@@ -226,6 +226,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D44C5B1216E3104A00A2A350 /* Traversals */ = {
+			isa = PBXGroup;
+			children = (
+				D4AA920516CFD8D9006F3655 /* RXTraversal.h */,
+				D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */,
+				D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */,
+				D4078DC016E124490005B4C8 /* RXRangeTraversal.h */,
+				D4078DC116E124490005B4C8 /* RXRangeTraversal.m */,
+				D4E8CC3816D3C338002D6C0A /* Traversal strategies */,
+			);
+			name = Traversals;
+			sourceTree = "<group>";
+		};
 		D49E8F81147978C8004490EA = {
 			isa = PBXGroup;
 			children = (
@@ -264,16 +277,11 @@
 				D4CF2C6716D718B0005F5810 /* RXFold.m */,
 				D4CF2C6016D7160C005F5810 /* RXMap.h */,
 				D4CF2C6116D7160C005F5810 /* RXMap.m */,
-				D4E0D68616C8BC4300C5F2F1 /* RXEnumerationTraversal.h */,
-				D4E0D68716C8BC4300C5F2F1 /* RXEnumerationTraversal.m */,
-				D4E8CC3816D3C338002D6C0A /* Traversal strategies */,
+				D44C5B1216E3104A00A2A350 /* Traversals */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
 				D4C8768B16A2172100208BE9 /* RXPair.m */,
-				D4078DC016E124490005B4C8 /* RXRangeTraversal.h */,
-				D4078DC116E124490005B4C8 /* RXRangeTraversal.m */,
 				D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */,
 				D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */,
-				D4AA920516CFD8D9006F3655 /* RXTraversal.h */,
 				D49E8F96147978C8004490EA /* Supporting Files */,
 			);
 			path = RXCollections;
