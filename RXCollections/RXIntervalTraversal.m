@@ -92,6 +92,10 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 	l3_assert(RXConstructArray([RXIntervalTraversal traversalWithInterval:RXIntervalMake(-M_PI, M_PI) count:3]), l3_is(@[@-M_PI, @0, @M_PI]));
 }
 
+@l3_test("saves its place so it can traverse more values than fit in the buffer") {
+	l3_assert(RXConstructArray([RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 1) count:32]).count, 32);
+}
+
 @l3_test("sanity check: unsigned long is sufficient to store NSUInteger") {
 	l3_assert(sizeof(unsigned long), sizeof(NSUInteger));
 }
@@ -104,7 +108,7 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 	RXIntervalTraversalState *state = (RXIntervalTraversalState *)fastEnumerationState;
 	
 	if (!state->iterationCount) {
-		state->mutations = &state->iterationCount;
+		state->mutations = &state->extra[0];
 		state->count = self.count;
 		state->from = self.interval.from;
 	}
