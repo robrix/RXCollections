@@ -37,6 +37,10 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 - Generators
 
+- Concatenation of traversals
+
+- Lazily constructed arrays
+
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 
 [Zip]: http://en.wikipedia.org/wiki/Convolution_(computer_science)
