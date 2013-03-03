@@ -35,6 +35,8 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 - Depth-first tree traversals with prefix/infix/postfix ordering
 
+- Generators
+
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 
 [Zip]: http://en.wikipedia.org/wiki/Convolution_(computer_science)
