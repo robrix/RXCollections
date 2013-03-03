@@ -13,6 +13,12 @@
 		D4078DC516E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
 		D4078DC616E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
 		D4078DC716E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
+		D44C5B1A16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
+		D44C5B1B16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
+		D44C5B1C16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
+		D44C5B1D16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */; };
+		D44C5B1E16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */; };
+		D44C5B1F16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */; };
 		D473F63716DA7E5E000FCD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E8F94147978C8004490EA /* Foundation.framework */; };
 		D473F64216DA81A9000FCD8D /* libLagrangian.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D473F5AB16D8D42B000FCD8D /* libLagrangian.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D473F64616DA81DD000FCD8D /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -162,6 +168,8 @@
 /* Begin PBXFileReference section */
 		D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXIntervalTraversal.h; sourceTree = "<group>"; };
 		D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXIntervalTraversal.m; sourceTree = "<group>"; };
+		D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXTraversalArray.h; sourceTree = "<group>"; };
+		D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTraversalArray.m; sourceTree = "<group>"; };
 		D473F63616DA7E5D000FCD8D /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -281,6 +289,8 @@
 				D4CF2C6116D7160C005F5810 /* RXMap.m */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
 				D4C8768B16A2172100208BE9 /* RXPair.m */,
+				D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */,
+				D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */,
 				D44C5B1216E3104A00A2A350 /* Traversals */,
 				D49E8F96147978C8004490EA /* Supporting Files */,
 			);
@@ -362,6 +372,7 @@
 				D473F65016DA81DD000FCD8D /* RXTraversal.h in Headers */,
 				D473F65116DA81DD000FCD8D /* RXCollections.h in Headers */,
 				D4078DC416E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D44C5B1C16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +393,7 @@
 				D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */,
 				D4CF2C6D16D71996005F5810 /* RXCollections.h in Headers */,
 				D4078DC216E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D44C5B1A16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +414,7 @@
 				D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */,
 				D4CF2C6E16D71996005F5810 /* RXCollections.h in Headers */,
 				D4078DC316E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D44C5B1B16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +611,7 @@
 				D473F65A16DA81F3000FCD8D /* RXPair.m in Sources */,
 				D473F65B16DA81F3000FCD8D /* RXRecursiveEnumerator.m in Sources */,
 				D4078DC716E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D44C5B1F16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +630,7 @@
 				D4CF2C6416D7160C005F5810 /* RXMap.m in Sources */,
 				D4CF2C6A16D718B0005F5810 /* RXFold.m in Sources */,
 				D4078DC516E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D44C5B1D16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,6 +649,7 @@
 				D4CF2C6516D7160C005F5810 /* RXMap.m in Sources */,
 				D4CF2C6B16D718B0005F5810 /* RXFold.m in Sources */,
 				D4078DC616E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D44C5B1E16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

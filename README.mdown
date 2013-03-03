@@ -41,6 +41,8 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 - Lazily constructed arrays
 
+- Adding -count + a constant for indeterminate length to RXTraversal
+
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 
 [Zip]: http://en.wikipedia.org/wiki/Convolution_(computer_science)
