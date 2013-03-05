@@ -15,6 +15,14 @@
 
 const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 
+typedef struct RXTraversalArrayEnumerationState {
+	unsigned long iterationCount;
+	__unsafe_unretained id *items;
+	unsigned long *mutations;
+	unsigned long enumeratedObjectsCount;
+	unsigned long extra[4];
+} RXTraversalArrayEnumerationState;
+
 @interface RXTraversalArray ()
 
 @property (nonatomic, strong) id<NSFastEnumeration> enumeration;
@@ -83,6 +91,12 @@ const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 
 #pragma mark Populating
 
+@l3_test("nils out its enumeration when it has been exhausted") {
+	RXTraversalArray *array = test[@"array"];
+	[array populateUpToIndex:NSUIntegerMax];
+	l3_assert(array.enumeration, nil);
+}
+
 -(void)populateUpToIndex:(NSUInteger)index {
 	if (!self.enumeration || self.enumeratedObjects.count > index)
 		return;
@@ -103,6 +117,40 @@ const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 			[self.enumeratedObjects addObject:objects[i]];
 		}
 	}
+}
+
+
+#pragma mark NSFastEnumeration
+
+@l3_test("implements NSFastEnumeration by lazily populating its array") {
+	RXTraversalArray *array = test[@"array"];
+	for (id x in array) { break; }
+	l3_assert(array.enumeratedObjects.count, 16);
+	for (id x in array) { break; }
+	l3_assert(array.enumeratedObjects.count, 16);
+	for (id x in array) {}
+	l3_assert(array.enumeratedObjects.count, 32);
+}
+
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)enumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	RXTraversalArrayEnumerationState *state = (RXTraversalArrayEnumerationState *)enumerationState;
+	state->iterationCount++;
+	
+	NSUInteger count = 0;
+	if (state->enumeratedObjectsCount != self.internalCount) {
+		[self populateUpToIndex:state->enumeratedObjectsCount + len - 1];
+		if (self.enumeration)
+			state->mutations = self.state.mutationsPtr;
+		else
+			state->mutations = state->extra;
+		
+		count = MIN(len, self.enumeratedObjects.count - state->enumeratedObjectsCount);
+		[self.enumeratedObjects getObjects:buffer range:NSMakeRange(state->enumeratedObjectsCount, count)];
+		state->enumeratedObjectsCount += count;
+		state->items = buffer;
+	}
+	
+	return count;
 }
 
 @end
