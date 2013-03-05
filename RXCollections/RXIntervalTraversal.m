@@ -27,6 +27,16 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 
 #pragma mark Construction
 
+@l3_test("defaults to a stride of 1.0 if neither stride nor count is specified") {
+	RXIntervalTraversal *traversal = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 1)];
+	l3_assert(traversal.stride, 1.0);
+}
+
+@l3_test("intervals are closed under default stride") {
+	RXIntervalTraversal *traversal = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 1)];
+	l3_assert(RXConstructArray(traversal), (@[@0, @1]));
+}
+
 +(instancetype)traversalWithInterval:(RXInterval)interval {
 	return [self traversalWithInterval:interval stride:1.0];
 }
@@ -34,7 +44,12 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 
 @l3_test("calculates count as the length divided by stride when stride is provided") {
 	RXIntervalTraversal *traversal = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 20) stride:5];
-	l3_assert(traversal.count, 4u);
+	l3_assert(RXConstructArray(traversal), (@[@0, @5, @10, @15, @20]));
+}
+
+@l3_test("intervals are closed when specifying stride") {
+	RXIntervalTraversal *traversal = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 1) stride:0.5];
+	l3_assert(RXConstructArray(traversal), (@[@0, @0.5, @1]));
 }
 
 +(instancetype)traversalWithInterval:(RXInterval)interval stride:(RXMagnitude)stride {
@@ -43,7 +58,7 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 	
 	RXMagnitude length = RXIntervalGetLength(interval);
 	
-	return [[self alloc] initWithInterval:interval length:length absoluteStride:absoluteStride count:ceil(length / stride)];
+	return [[self alloc] initWithInterval:interval length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
 }
 
 

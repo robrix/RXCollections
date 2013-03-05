@@ -9,7 +9,7 @@
 @l3_suite("RXTraversalArray");
 
 @l3_set_up {
-	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 32)];
+	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 31)];
 	test[@"array"] = [RXTraversalArray arrayWithFastEnumeration:test[@"items"]];
 }
 
