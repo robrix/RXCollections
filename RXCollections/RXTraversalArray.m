@@ -9,7 +9,7 @@
 @l3_suite("RXTraversalArray");
 
 @l3_set_up {
-	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 31)];
+	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 63)];
 	test[@"array"] = [RXTraversalArray arrayWithFastEnumeration:test[@"items"]];
 }
 
@@ -27,6 +27,8 @@ typedef struct RXTraversalArrayEnumerationState {
 
 @property (nonatomic, strong) id<NSFastEnumeration> enumeration;
 @property (nonatomic, assign) NSUInteger internalCount;
+@property (nonatomic, assign) NSUInteger enumeratedCount;
+@property (nonatomic, assign) NSUInteger processedCount;
 @property (nonatomic, assign, readonly) NSFastEnumerationState state;
 @property (nonatomic, strong) NSMutableArray *enumeratedObjects;
 
@@ -64,7 +66,7 @@ typedef struct RXTraversalArrayEnumerationState {
 @l3_test("if count is inferred, it must traverse the entire enumeration") {
 	RXTraversalArray *array = test[@"array"];
 	[array count];
-	l3_assert(array.enumeratedObjects.count, 32);
+	l3_assert(array.enumeratedObjects.count, 64);
 }
 
 -(NSUInteger)count {
@@ -105,17 +107,25 @@ typedef struct RXTraversalArrayEnumerationState {
 		self.enumeratedObjects = [NSMutableArray new];
 	
 	__unsafe_unretained id objects[16];
+	const NSUInteger kChunkCount = sizeof objects / sizeof *objects;
 	while (self.enumeratedObjects.count <= index) {
-		NSUInteger count = [self.enumeration countByEnumeratingWithState:&_state objects:objects count:sizeof objects / sizeof *objects];
-		if (count == 0) {
-			self.internalCount = self.enumeratedObjects.count;
-			self.enumeration = nil;
-			break;
+		if (self.processedCount == self.enumeratedCount) {
+			self.processedCount = 0;
+			self.enumeratedCount = [self.enumeration countByEnumeratingWithState:&_state objects:objects count:kChunkCount];
+			if (self.enumeratedCount == 0) {
+				self.internalCount = self.enumeratedObjects.count;
+				self.enumeration = nil;
+				break;
+			}
 		}
 		
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalArrayUnknownCount)? NSUIntegerMax : (ceil((index + 1) / kChunkCount) * kChunkCount));
+		
 		for (NSUInteger i = 0; i < count; i++) {
-			[self.enumeratedObjects addObject:objects[i]];
+			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];
 		}
+		
+		self.processedCount += count;
 	}
 }
 
@@ -129,7 +139,7 @@ typedef struct RXTraversalArrayEnumerationState {
 	for (id x in array) { break; }
 	l3_assert(array.enumeratedObjects.count, 16);
 	for (id x in array) {}
-	l3_assert(array.enumeratedObjects.count, 32);
+	l3_assert(array.enumeratedObjects.count, 64);
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)enumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
