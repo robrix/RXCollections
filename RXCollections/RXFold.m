@@ -4,6 +4,7 @@
 
 #import "RXFold.h"
 #import "RXPair.h"
+#import "RXTraversalArray.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -33,10 +34,7 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 }
 
 NSArray *RXConstructArray(id<NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableArray array], ^(NSMutableArray *memo, id each) {
-		[memo addObject:each];
-		return memo;
-	});
+	return [RXTraversalArray arrayWithFastEnumeration:enumeration];
 }
 
 @l3_test("construct sets from enumerations") {
