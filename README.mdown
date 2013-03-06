@@ -39,7 +39,7 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 - Concatenation of traversals
 
-- Lazily constructed arrays
+- Adding -count + a constant for indeterminate length to RXTraversal
 
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 
