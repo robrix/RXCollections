@@ -18,6 +18,7 @@
 #import <RXCollections/RXMap.h>
 
 
-#pragma mark Pairs
+#pragma mark Values
 
 #import <RXCollections/RXPair.h>
+#import <RXCollections/RXTuple.h>
