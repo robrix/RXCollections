@@ -128,10 +128,15 @@
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	state->state = 1;
-	state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
-	state->mutationsPtr = state->extra;
-	return self.count;
+	NSUInteger count = self.count;
+	if (!state->state) {
+		state->state = 1;
+		state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
+		state->mutationsPtr = state->extra;
+	} else {
+		count = 0;
+	}
+	return count;
 }
 
 @end
