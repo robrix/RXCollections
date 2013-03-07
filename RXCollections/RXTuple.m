@@ -19,42 +19,42 @@
 
 #pragma mark Construction
 
-@l3_test("generates class names for a given cardinality") {
-	l3_assert([RXTuple classNameWithCardinality:0], @"RX0Tuple");
+@l3_test("generates class names for a given count") {
+	l3_assert([RXTuple classNameWithCount:0], @"RX0Tuple");
 }
 
-+(NSString *)classNameWithCardinality:(NSUInteger)cardinality {
-	return [NSString stringWithFormat:@"RX%luTuple", (unsigned long)cardinality];
++(NSString *)classNameWithCount:(NSUInteger)count {
+	return [NSString stringWithFormat:@"RX%luTuple", (unsigned long)count];
 }
 
 
-@l3_test("generates subclasses for a given cardinality") {
-	Class subclass = [RXTuple subclassWithCardinality:2];
+@l3_test("generates subclasses for a given count") {
+	Class subclass = [RXTuple subclassWithCount:2];
 	l3_assert(subclass, l3_not(Nil));
 }
 
-@l3_test("reuses extant subclasses for a given cardinality") {
-	Class subclass = [RXTuple subclassWithCardinality:3];
-	Class secondSubclass = [RXTuple subclassWithCardinality:3];
+@l3_test("reuses extant subclasses for a given count") {
+	Class subclass = [RXTuple subclassWithCount:3];
+	Class secondSubclass = [RXTuple subclassWithCount:3];
 	l3_assert((uintptr_t)subclass, (uintptr_t)secondSubclass);
 }
 
-+(Class)subclassWithCardinality:(NSUInteger)cardinality {
-	const char *subclassName = [self classNameWithCardinality:cardinality].UTF8String;
++(Class)subclassWithCount:(NSUInteger)count {
+	const char *subclassName = [self classNameWithCount:count].UTF8String;
 	Class subclass = objc_getClass(subclassName);
 	if (!subclass) {
 		subclass = objc_allocateClassPair(self, subclassName, 0);
 		
 		const char *elementsVariableName = "_elements";
-		class_addIvar(subclass, elementsVariableName, sizeof(id[cardinality]), log2(sizeof(id *)), @encode(id[cardinality]));
+		class_addIvar(subclass, elementsVariableName, sizeof(id[count]), log2(sizeof(id *)), @encode(id[count]));
 		Ivar elementsVariable = class_getInstanceVariable(subclass, elementsVariableName);
 		ptrdiff_t elementsOffset = ivar_getOffset(elementsVariable);
 		
 		Method elementsMethod = class_getInstanceMethod(subclass, @selector(elements));
 		class_addMethod(subclass, @selector(elements), imp_implementationWithBlock(^(id self){ return ((__strong id *)(__bridge void *)self) + (elementsOffset / sizeof(id)); }), method_getTypeEncoding(elementsMethod));
 		
-		Method cardinalityMethod = class_getInstanceMethod(subclass, @selector(cardinality));
-		class_addMethod(subclass, @selector(cardinality), imp_implementationWithBlock(^(id self){ return cardinality; }), method_getTypeEncoding(cardinalityMethod));
+		Method countMethod = class_getInstanceMethod(subclass, @selector(count));
+		class_addMethod(subclass, @selector(count), imp_implementationWithBlock(^(id self){ return count; }), method_getTypeEncoding(countMethod));
 		
 		objc_registerClassPair(subclass);
 	}
@@ -68,15 +68,15 @@
 }
 
 +(instancetype)tupleWithArray:(NSArray *)array {
-	return [[[self subclassWithCardinality:array.count] alloc] initWithArray:array];
+	return [[[self subclassWithCount:array.count] alloc] initWithArray:array];
 }
 
 -(instancetype)initWithArray:(NSArray *)array {
 	NSParameterAssert(array != nil);
-	NSParameterAssert(array.count == self.cardinality);
+	NSParameterAssert(array.count == self.count);
 	
 	if ((self = [super init])) {
-		for (NSUInteger index = 0; index < self.cardinality; index++) {
+		for (NSUInteger index = 0; index < self.count; index++) {
 			self.elements[index] = array[index];
 		}
 	}
@@ -86,12 +86,12 @@
 
 #pragma mark Access
 
-@l3_test("has a specific cardinality") {
+@l3_test("has a specific count") {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@M_PI, @M_PI]];
-	l3_assert(tuple.cardinality, 2);
+	l3_assert(tuple.count, 2);
 }
 
--(NSUInteger)cardinality {
+-(NSUInteger)count {
 	[self doesNotRecognizeSelector:_cmd];
 	return 0;
 }
@@ -108,7 +108,7 @@
 }
 
 -(id)objectAtIndexedSubscript:(NSUInteger)subscript {
-	NSParameterAssert(subscript < self.cardinality);
+	NSParameterAssert(subscript < self.count);
 	
 	return self.elements[subscript];
 }
@@ -131,7 +131,7 @@
 	state->state = 1;
 	state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
 	state->mutationsPtr = state->extra;
-	return self.cardinality;
+	return self.count;
 }
 
 @end

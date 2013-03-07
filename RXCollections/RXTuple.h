@@ -10,7 +10,7 @@
 
 -(id)objectAtIndexedSubscript:(NSUInteger)subscript;
 
-@property (nonatomic, readonly) NSUInteger cardinality;
+@property (nonatomic, readonly) NSUInteger count;
 
 @end
 
