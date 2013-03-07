@@ -119,7 +119,7 @@ typedef struct RXTraversalArrayEnumerationState {
 			}
 		}
 		
-		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalArrayUnknownCount)? NSUIntegerMax : (ceil((index + 1) / kChunkCount) * kChunkCount));
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalArrayUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (CGFloat)kChunkCount) * kChunkCount));
 		
 		for (NSUInteger i = 0; i < count; i++) {
 			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];
