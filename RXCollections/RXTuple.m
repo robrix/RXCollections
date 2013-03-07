@@ -3,6 +3,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXTuple.h"
+#import "RXFold.h"
 #import <objc/runtime.h>
 
 #import <Lagrangian/Lagrangian.h>
@@ -118,13 +119,7 @@
 
 @l3_test("implements fast enumeration by returning an internal pointer") {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@0, @1, @2]];
-	NSFastEnumerationState state = {};
-	__unsafe_unretained id objects[4];
-	NSUInteger count = [tuple countByEnumeratingWithState:&state objects:objects count:sizeof objects / sizeof *objects];
-	l3_assert(count, 3);
-	l3_assert(state.itemsPtr[0], @0);
-	l3_assert(state.itemsPtr[1], @1);
-	l3_assert(state.itemsPtr[2], @2);
+	l3_assert(RXConstructArray(tuple), l3_is(@[@0, @1, @2]));
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
