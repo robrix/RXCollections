@@ -115,6 +115,27 @@
 }
 
 
+#pragma mark NSObject
+
+@l3_test("describes itself parenthesized and comma-separated") {
+	RXTuple *tuple = [RXTuple tupleWithArray:@[@1, @2, @3]];
+	l3_assert([tuple description], @"(1, 2, 3)");
+}
+
+-(NSString *)description {
+	NSMutableString *description = RXFold(self, nil, ^(NSMutableString *memo, id element) {
+		if (!memo)
+			memo = [@"(" mutableCopy];
+		else
+			[memo appendString:@", "];
+		[memo appendString:[element description]];
+		return memo;
+	});
+	[description appendString:@")"];
+	return description;
+}
+
+
 #pragma mark NSFastEnumeration
 
 @l3_test("implements fast enumeration by returning an internal pointer") {
