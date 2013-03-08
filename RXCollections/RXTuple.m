@@ -146,10 +146,8 @@
 }
 
 -(NSString *)description {
-	NSMutableString *description = RXFold(self, nil, ^(NSMutableString *memo, id element) {
-		if (!memo)
-			memo = [@"(" mutableCopy];
-		else
+	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element) {
+		if (memo.length > 1)
 			[memo appendString:@", "];
 		[memo appendString:[element description]];
 		return memo;
@@ -182,6 +180,15 @@
 -(BOOL)isEqual:(id)object {
 	return [self isEqualToTuple:object];
 }
+
+
+//@l3_test("hashes") {
+//	<##>
+//}
+//
+//-(NSUInteger)hash {
+//	
+//}
 
 
 #pragma mark NSFastEnumeration
