@@ -157,6 +157,17 @@
 }
 
 
+@l3_test("includes its class name and address in its debugging description") {
+	RXTuple *tuple = [RXTuple tupleWithArray:@[]];
+	l3_assert([[tuple debugDescription] hasPrefix:@"<RX0Tuple: 0x"], YES);
+	l3_assert([[tuple debugDescription] hasSuffix:@"> ()"], YES);
+}
+
+-(NSString *)debugDescription {
+	return [NSString stringWithFormat:@"<%@: %p> %@", self.class, self, self.description];
+}
+
+
 @l3_test("equality is defined piecewise") {
 	RXTuple *left = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	RXTuple *right = [RXTuple tupleWithArray:@[@1, @2, @3]];
@@ -180,15 +191,6 @@
 -(BOOL)isEqual:(id)object {
 	return [self isEqualToTuple:object];
 }
-
-
-//@l3_test("hashes") {
-//	<##>
-//}
-//
-//-(NSUInteger)hash {
-//	
-//}
 
 
 #pragma mark NSFastEnumeration
