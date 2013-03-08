@@ -6,6 +6,7 @@
 
 @interface RXTuple : NSObject <NSFastEnumeration>
 
++(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;
 
 -(id)objectAtIndexedSubscript:(NSUInteger)subscript;

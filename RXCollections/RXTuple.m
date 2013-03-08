@@ -63,6 +63,29 @@
 }
 
 
+@l3_test("builds tuples with C arrays") {
+	id const objects[] = {@1, @1, @2};
+	RXTuple *tuple = [RXTuple tupleWithObjects:objects count:sizeof objects / sizeof *objects];
+	l3_assert(tuple, ([RXTuple tupleWithArray:@[@1, @1, @2]]));
+}
+
++(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count {
+	return [[[self subclassWithCount:count] alloc] initWithObjects:objects count:count];
+}
+
+-(instancetype)initWithObjects:(id const [])objects count:(NSUInteger)count {
+	NSParameterAssert(objects != NULL);
+	NSParameterAssert(count == self.count);
+	
+	if ((self = [super init])) {
+		for (NSUInteger index = 0; index < self.count; index++) {
+			self.elements[index] = objects[index];
+		}
+	}
+	return self;
+}
+
+
 @l3_test("builds tuples with arrays") {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	l3_assert(tuple, l3_not(nil));
