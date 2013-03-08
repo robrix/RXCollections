@@ -12,6 +12,8 @@
 
 @property (nonatomic, readonly) NSUInteger count;
 
+-(bool)isEqualToTuple:(RXTuple *)tuple;
+
 @end
 
 @interface RXTuple ()

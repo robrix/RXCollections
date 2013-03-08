@@ -136,6 +136,31 @@
 }
 
 
+@l3_test("equality is defined piecewise") {
+	RXTuple *left = [RXTuple tupleWithArray:@[@1, @2, @3]];
+	RXTuple *right = [RXTuple tupleWithArray:@[@1, @2, @3]];
+	l3_assert([left isEqualToTuple:right], YES);
+}
+
+-(bool)isEqualToTuple:(RXTuple *)tuple {
+	bool isEqual =
+		[tuple isKindOfClass:self.class]
+	&&	tuple.count == self.count;
+	
+	for (NSUInteger index = 0; index < self.count; index++) {
+		isEqual &= [tuple[index] isEqual:self[index]];
+		if (!isEqual)
+			break;
+	}
+	
+	return isEqual;
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToTuple:object];
+}
+
+
 #pragma mark NSFastEnumeration
 
 @l3_test("implements fast enumeration by returning an internal pointer") {
