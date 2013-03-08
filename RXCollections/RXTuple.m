@@ -70,7 +70,7 @@
 }
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count {
-	return [[[self subclassWithCount:count] alloc] initWithObjects:objects count:count];
+	return [[(id)[self subclassWithCount:count] alloc] initWithObjects:objects count:count];
 }
 
 -(instancetype)initWithObjects:(id const [])objects count:(NSUInteger)count {
@@ -92,7 +92,7 @@
 }
 
 +(instancetype)tupleWithArray:(NSArray *)array {
-	return [[[self subclassWithCount:array.count] alloc] initWithArray:array];
+	return [[(id)[self subclassWithCount:array.count] alloc] initWithArray:array];
 }
 
 -(instancetype)initWithArray:(NSArray *)array {

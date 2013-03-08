@@ -19,8 +19,9 @@
 
 @interface RXTuple ()
 
++(instancetype)new __attribute__((unavailable));
 +(instancetype)allocWithZone:(NSZone *)zone __attribute__((unavailable));
++(instancetype)alloc __attribute__((unavailable));
 -(instancetype)init __attribute__((unavailable));
-//+(instancetype)alloc __attribute__((unavailable));
 
 @end
