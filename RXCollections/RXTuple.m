@@ -193,6 +193,38 @@
 }
 
 
+@l3_test("hashes 0-tuples to 0") {
+	l3_assert([RXTuple tupleWithArray:@[]].hash, 0);
+}
+
+@l3_test("hashes tuples with their elements' shifted hashes plus their count") {
+	RXTuple *unary = [RXTuple tupleWithArray:@[@""]];
+	RXTuple *tuple = [RXTuple tupleWithArray:@[unary, unary, unary]];
+#if __LP64__
+	NSUInteger expected = ((1ul << 42ul) | (1ul << 21ul) | 1ul) + 3;
+#else
+	NSUInteger expected = ((1ul << 20ul) | (1ul << 10ul) | 1ul) + 3;
+#endif
+	l3_assert(tuple.hash, expected);
+}
+
+-(NSUInteger)hash {
+	const NSUInteger kCount = self.count;
+	NSUInteger hash = 0;
+	if (kCount) {
+		const NSUInteger kWidth = sizeof(NSUInteger) * 8; // # of bits in a hash
+		const NSUInteger kShift = kWidth / kCount;
+		const NSUInteger kModulus = 1 << (kShift - 1);
+		
+		for (NSUInteger index = 0; index < kCount; index++) {
+			id<NSObject> element = self[index];
+			hash |= (element.hash % kModulus) << (kShift * index);
+		}
+	}
+	return hash + kCount;
+}
+
+
 #pragma mark NSFastEnumeration
 
 @l3_test("implements fast enumeration by returning an internal pointer") {
