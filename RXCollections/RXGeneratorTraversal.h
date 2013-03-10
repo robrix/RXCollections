@@ -5,11 +5,12 @@
 #import <Foundation/Foundation.h>
 
 typedef id (^RXGenerator)();
+typedef RXGenerator (^RXGeneratorProvider)();
 
 @interface RXGeneratorTraversal : NSObject <NSFastEnumeration>
 
-+(instancetype)traversalWithGenerator:(RXGenerator)generator;
++(instancetype)traversalWithGeneratorProvider:(RXGeneratorProvider)provider;
 
-@property (nonatomic, copy, readonly) RXGenerator generator;
+@property (nonatomic, copy, readonly) RXGeneratorProvider provider;
 
 @end

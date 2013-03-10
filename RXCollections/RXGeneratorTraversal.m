@@ -9,17 +9,25 @@
 
 @l3_suite("RXGeneratorTraversal");
 
+typedef struct RXGeneratorTraversalState {
+	unsigned long state;
+	__unsafe_unretained id *items;
+	unsigned long *mutations;
+	__unsafe_unretained RXGenerator generator;
+	unsigned long extra[4];
+} RXGeneratorTraversalState;
+
 @implementation RXGeneratorTraversal
 
 #pragma mark Construction
 
-+(instancetype)traversalWithGenerator:(RXGenerator)generator {
-	return [[self alloc] initWithGenerator:generator];
++(instancetype)traversalWithGeneratorProvider:(RXGeneratorProvider)provider {
+	return [[self alloc] initWithGeneratorProvider:provider];
 }
 
--(instancetype)initWithGenerator:(RXGenerator)generator {
+-(instancetype)initWithGeneratorProvider:(RXGeneratorProvider)provider {
 	if ((self = [super init])) {
-		_generator = [generator copy];
+		_provider = [provider copy];
 	}
 	return self;
 }
@@ -30,17 +38,15 @@
 static RXGenerator RXFibonacciSequenceGenerator() {
 	__block RXTuple *tuple = [RXTuple tupleWithArray:@[@0, @1]];
 	return [^{
-		NSNumber *previous = tuple[1];
-		NSUInteger next = [tuple[0] unsignedIntegerValue] + [previous unsignedIntegerValue];
-		tuple = [RXTuple tupleWithArray:@[tuple[1], @(next)]];
+		NSNumber *previous = tuple[1], *next = @([tuple[0] unsignedIntegerValue] + [previous unsignedIntegerValue]);
+		tuple = [RXTuple tupleWithArray:@[previous, next]];
 		return previous;
 	} copy];
 }
 
-
 @l3_test("enumerates generated objects") {
 	NSMutableArray *series = [NSMutableArray new];
-	for (NSNumber *number in [RXGeneratorTraversal traversalWithGenerator:RXFibonacciSequenceGenerator()]) {
+	for (NSNumber *number in [RXGeneratorTraversal traversalWithGeneratorProvider:^{ return RXFibonacciSequenceGenerator(); }]) {
 		[series addObject:number];
 		if (series.count == 12)
 			break;
@@ -48,22 +54,25 @@ static RXGenerator RXFibonacciSequenceGenerator() {
 	l3_assert(series, (@[@1, @1, @2, @3, @5, @8, @13, @21, @34, @55, @89, @144]));
 }
 
--(NSUInteger)generateObjects:(__autoreleasing id [])objects count:(NSUInteger)count {
+-(NSUInteger)populateObjects:(__autoreleasing id [])objects count:(NSUInteger)count generator:(RXGenerator)generator {
 	for (NSUInteger i = 0; i < count; i++) {
-		objects[i] = self.generator();
+		objects[i] = generator();
 	}
 	return count;
 }
 
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	RXGeneratorTraversalState *state = (RXGeneratorTraversalState *)fastEnumerationState;
+	__strong RXGenerator *generator = (__strong RXGenerator *)(void *)&(state->generator);
 	if (!state->state) {
 		state->state = 1;
-		state->mutationsPtr = state->extra;
+		state->mutations = state->extra;
+		*generator = self.provider();
 	}
 	
-	NSUInteger count = [self generateObjects:(__autoreleasing id *)(void *)buffer count:len];
+	NSUInteger count = [self populateObjects:(__autoreleasing id *)(void *)buffer count:len generator:*generator];
 	
-	state->itemsPtr = buffer;
+	state->items = buffer;
 	
 	return count;
 }
