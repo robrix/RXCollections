@@ -4,13 +4,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef id (^RXGenerator)(bool *stop);
-typedef RXGenerator (^RXGeneratorProvider)();
+typedef id (^RXGeneratorBlock)(id __autoreleasing *context, bool *stop);
 
 @interface RXGeneratorTraversal : NSObject <NSFastEnumeration>
 
-+(instancetype)traversalWithGeneratorProvider:(RXGeneratorProvider)provider;
++(instancetype)generatorWithBlock:(RXGeneratorBlock)block;
++(instancetype)generatorWithContext:(id<NSCopying>)context block:(RXGeneratorBlock)block;
 
-@property (nonatomic, copy, readonly) RXGeneratorProvider provider;
+@property (nonatomic, copy, readonly) id<NSCopying> context;
+@property (nonatomic, copy, readonly) RXGeneratorBlock block;
 
 @end
