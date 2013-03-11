@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef id (^RXGenerator)();
+typedef id (^RXGenerator)(bool *stop);
 typedef RXGenerator (^RXGeneratorProvider)();
 
 @interface RXGeneratorTraversal : NSObject <NSFastEnumeration>

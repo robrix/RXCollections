@@ -35,8 +35,6 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 - Depth-first tree traversals with prefix/infix/postfix ordering
 
-- Generators
-
 - Concatenation of traversals
 
 - Adding -count + a constant for indeterminate length to RXTraversal

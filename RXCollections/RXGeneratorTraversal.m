@@ -2,6 +2,7 @@
 //  Created by Rob Rix on 2013-03-09.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
+#import "RXFold.h"
 #import "RXGeneratorTraversal.h"
 #import "RXTuple.h"
 
@@ -37,7 +38,7 @@ typedef struct RXGeneratorTraversalState {
 
 static RXGenerator RXFibonacciSequenceGenerator() {
 	__block RXTuple *tuple = [RXTuple tupleWithArray:@[@0, @1]];
-	return [^{
+	return [^(bool *stop) {
 		NSNumber *previous = tuple[1], *next = @([tuple[0] unsignedIntegerValue] + [previous unsignedIntegerValue]);
 		tuple = [RXTuple tupleWithArray:@[previous, next]];
 		return previous;
@@ -54,9 +55,27 @@ static RXGenerator RXFibonacciSequenceGenerator() {
 	l3_assert(series, (@[@1, @1, @2, @3, @5, @8, @13, @21, @34, @55, @89, @144]));
 }
 
+static RXGenerator RXIntegerGenerator(NSUInteger n) {
+	__block NSUInteger current = 0;
+	return [^(bool *stop) {
+		current++;
+		if (current == n)
+			*stop = YES;
+		return @(current);
+	} copy];
+}
+
+@l3_test("stops enumerating when requested to by the generator") {
+	NSArray *integers = RXConstructArray([RXGeneratorTraversal traversalWithGeneratorProvider:^{ return RXIntegerGenerator(3); }]);
+	l3_assert(integers, (@[@0, @1, @2, @3]));
+}
+
 -(NSUInteger)populateObjects:(__autoreleasing id [])objects count:(NSUInteger)count generator:(RXGenerator)generator {
+	bool stop = NO;
 	for (NSUInteger i = 0; i < count; i++) {
-		objects[i] = generator();
+		objects[i] = generator(&stop);
+		if (stop)
+			break;
 	}
 	return count;
 }
