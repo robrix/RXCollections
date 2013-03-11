@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RXTuple : NSObject <NSFastEnumeration>
+@interface RXTuple : NSObject <NSCopying, NSFastEnumeration>
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;

@@ -225,6 +225,13 @@
 }
 
 
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
+
 #pragma mark NSFastEnumeration
 
 @l3_test("implements fast enumeration by returning an internal pointer") {
