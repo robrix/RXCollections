@@ -6,7 +6,7 @@
 
 #import <RXCollections/RXTraversal.h>
 #import <RXCollections/RXEnumerationTraversal.h>
-#import <RXCollections/RXGeneratorTraversal.h>
+#import <RXCollections/RXGenerator.h>
 #import <RXCollections/RXRangeTraversal.h>
 
 #import <RXCollections/RXRecursiveEnumerator.h>

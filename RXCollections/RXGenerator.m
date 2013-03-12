@@ -1,14 +1,14 @@
-//  RXGeneratorTraversal.m
+//  RXGenerator.m
 //  Created by Rob Rix on 2013-03-09.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFold.h"
-#import "RXGeneratorTraversal.h"
+#import "RXGenerator.h"
 #import "RXTuple.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXGeneratorTraversal");
+@l3_suite("RXGenerator");
 
 typedef struct RXGeneratorTraversalState {
 	unsigned long state;
@@ -24,7 +24,7 @@ typedef NS_ENUM(unsigned long, RXGeneratorTraversalCurrentState) {
 	RXGeneratorTraversalCurrentStateComplete = 2,
 };
 
-@implementation RXGeneratorTraversal
+@implementation RXGenerator
 
 #pragma mark Construction
 
@@ -57,7 +57,7 @@ static RXGeneratorBlock RXFibonacciGenerator() {
 
 @l3_test("enumerates generated objects") {
 	NSMutableArray *series = [NSMutableArray new];
-	for (NSNumber *number in [RXGeneratorTraversal generatorWithContext:[RXTuple tupleWithArray:@[@0, @1]] block:RXFibonacciGenerator()]) {
+	for (NSNumber *number in [RXGenerator generatorWithContext:[RXTuple tupleWithArray:@[@0, @1]] block:RXFibonacciGenerator()]) {
 		[series addObject:number];
 		if (series.count == 12)
 			break;
@@ -76,7 +76,7 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 }
 
 @l3_test("stops enumerating when requested to by the generator") {
-	NSArray *integers = RXConstructArray([RXGeneratorTraversal generatorWithBlock:RXIntegerGenerator(3)]);
+	NSArray *integers = RXConstructArray([RXGenerator generatorWithBlock:RXIntegerGenerator(3)]);
 	l3_assert(integers, (@[@0, @1, @2, @3]));
 }
 
