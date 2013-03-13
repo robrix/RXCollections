@@ -33,8 +33,8 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	l3_assert(RXConstructArray(@[@1, @2, @3]), l3_is(@[@1, @2, @3]));
 }
 
-NSArray *RXConstructArray(id<NSFastEnumeration> enumeration) {
-	return [RXTraversalArray arrayWithFastEnumeration:enumeration];
+NSArray *RXConstructArray(id<RXTraversal> traversal) {
+	return [RXTraversalArray arrayWithTraversal:traversal];
 }
 
 @l3_test("construct sets from enumerations") {

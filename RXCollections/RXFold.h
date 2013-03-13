@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <RXCollections/RXTraversal.h>
 
 typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
 
@@ -17,11 +17,11 @@ extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock bloc
 #pragma mark Constructors
 
 /**
- NSArray *RXConstructArray(id<NSFastEnumeration> traversal)
+ NSArray *RXConstructArray(id<RXTraversal> traversal)
  
- Constructs an array with the elements of the specified enumeration. The enumeration's elements must not be nil.
+ Constructs an array with the elements of the specified traversal. The enumeration's elements must not be nil.
  */
-extern NSArray *RXConstructArray(id<NSFastEnumeration> enumeration);
+extern NSArray *RXConstructArray(id<RXTraversal> traversal);
 
 /**
  NSSet *RXConstructSet(id<NSFastEnumeration>)
