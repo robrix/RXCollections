@@ -15,6 +15,9 @@
 @protocol RXTraversal <NSObject, NSFastEnumeration>
 @end
 
+@interface NSEnumerator (RXTraversal) <RXTraversal>
+@end
+
 
 /**
  RXFiniteTraversal
