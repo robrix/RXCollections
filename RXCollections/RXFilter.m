@@ -89,4 +89,4 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	return needle;
 }
 
-RXLinearSearchFunction const RXDetect = RXLinearSearch;
+id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
