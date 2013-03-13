@@ -13,8 +13,6 @@
 	test[@"array"] = [RXTraversalArray arrayWithTraversal:test[@"items"]];
 }
 
-const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
-
 typedef struct RXTraversalArrayEnumerationState {
 	unsigned long iterationCount;
 	__unsafe_unretained id *items;
@@ -43,13 +41,13 @@ typedef struct RXTraversalArrayEnumerationState {
 }
 
 +(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal {
-	return [self arrayWithTraversal:traversal count:RXTraversalArrayUnknownCount];
+	return [self arrayWithTraversal:traversal count:RXTraversalUnknownCount];
 }
 
 -(instancetype)initWithTraversal:(id<RXTraversal>)traversal count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_enumeration = traversal;
-		if ((count == RXTraversalArrayUnknownCount) && ([traversal respondsToSelector:@selector(count)]))
+		if ((count == RXTraversalUnknownCount) && ([traversal respondsToSelector:@selector(count)]))
 			_internalCount = [(id<RXFiniteTraversal>)traversal count];
 		else
 			_internalCount = count;
@@ -73,7 +71,7 @@ typedef struct RXTraversalArrayEnumerationState {
 }
 
 -(NSUInteger)count {
-	if (self.internalCount == RXTraversalArrayUnknownCount)
+	if (self.internalCount == RXTraversalUnknownCount)
 		[self populateUpToIndex:NSUIntegerMax];
 	return self.internalCount;
 }
@@ -122,7 +120,7 @@ typedef struct RXTraversalArrayEnumerationState {
 			}
 		}
 		
-		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalArrayUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (CGFloat)kChunkCount) * kChunkCount));
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (CGFloat)kChunkCount) * kChunkCount));
 		
 		for (NSUInteger i = 0; i < count; i++) {
 			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];

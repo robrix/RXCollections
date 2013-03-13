@@ -28,6 +28,8 @@
 
 @end
 
+extern const NSUInteger RXTraversalUnknownCount;
+
 
 @interface NSArray (RXFiniteTraversal) <RXFiniteTraversal>
 @end

@@ -4,8 +4,6 @@
 
 #import <RXCollections/RXTraversal.h>
 
-extern const NSUInteger RXTraversalArrayUnknownCount;
-
 @interface RXTraversalArray : NSArray
 
 +(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal;
