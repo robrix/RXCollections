@@ -123,7 +123,7 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 	RXIntervalTraversalState *state = (RXIntervalTraversalState *)fastEnumerationState;
 	
 	if (!state->iterationCount) {
-		state->mutations = &state->extra[0];
+		state->mutations = state->extra;
 		state->count = self.count;
 		state->from = self.interval.from;
 	}
@@ -135,7 +135,7 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 	RXMagnitude stride = self.stride;
 	NSUInteger stepCount = MIN(state->count, len);
 	for (NSUInteger step = 0; step < stepCount; state->from += stride, step++) {
-		__autoreleasing id *item = (__autoreleasing id *)(void *)buffer + step;
+		RXTraversalElement *item = (RXTraversalElement *)(void *)buffer + step;
 		*item = @(state->from);
 	}
 	
