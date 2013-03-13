@@ -14,3 +14,26 @@
 
 @protocol RXTraversal <NSObject, NSFastEnumeration>
 @end
+
+
+/**
+ RXFiniteTraversal
+ 
+ Defines the interface for traversing some finite collection of objects with known cardinality in sequence.
+ */
+
+@protocol RXFiniteTraversal <RXTraversal>
+
+@property (nonatomic, readonly) NSUInteger count;
+
+@end
+
+
+@interface NSArray (RXFiniteTraversal) <RXFiniteTraversal>
+@end
+
+@interface NSSet (RXFiniteTraversal) <RXFiniteTraversal>
+@end
+
+@interface NSDictionary (RXFiniteTraversal) <RXFiniteTraversal>
+@end
