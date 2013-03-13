@@ -10,7 +10,7 @@
 
 @l3_set_up {
 	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 63)];
-	test[@"array"] = [RXTraversalArray arrayWithFastEnumeration:test[@"items"]];
+	test[@"array"] = [RXTraversalArray arrayWithTraversal:test[@"items"]];
 }
 
 const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
@@ -25,7 +25,7 @@ typedef struct RXTraversalArrayEnumerationState {
 
 @interface RXTraversalArray ()
 
-@property (nonatomic, strong) id<NSFastEnumeration> enumeration;
+@property (nonatomic, strong) id<RXTraversal> enumeration;
 @property (nonatomic, assign) NSUInteger internalCount;
 @property (nonatomic, assign) NSUInteger enumeratedCount;
 @property (nonatomic, assign) NSUInteger processedCount;
@@ -38,18 +38,21 @@ typedef struct RXTraversalArrayEnumerationState {
 
 #pragma mark Construction
 
-+(instancetype)arrayWithFastEnumeration:(id<NSFastEnumeration>)enumeration count:(NSUInteger)count {
-	return [[self alloc] initWithFastEnumeration:enumeration count:count];
++(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal count:(NSUInteger)count {
+	return [[self alloc] initWithTraversal:traversal count:count];
 }
 
-+(instancetype)arrayWithFastEnumeration:(id<NSFastEnumeration>)enumeration {
-	return [self arrayWithFastEnumeration:enumeration count:RXTraversalArrayUnknownCount];
++(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal {
+	return [self arrayWithTraversal:traversal count:RXTraversalArrayUnknownCount];
 }
 
--(instancetype)initWithFastEnumeration:(id<NSFastEnumeration>)enumeration count:(NSUInteger)count {
+-(instancetype)initWithTraversal:(id<RXTraversal>)traversal count:(NSUInteger)count {
 	if ((self = [super init])) {
-		_enumeration = enumeration;
-		_internalCount = count;
+		_enumeration = traversal;
+		if ((count == RXTraversalArrayUnknownCount) && ([traversal respondsToSelector:@selector(count)]))
+			_internalCount = [(id<RXFiniteTraversal>)traversal count];
+		else
+			_internalCount = count;
 	}
 	return self;
 }
@@ -58,7 +61,7 @@ typedef struct RXTraversalArrayEnumerationState {
 #pragma mark NSArray primitives
 
 @l3_test("count can be passed in to avoid traversing the entire enumeration") {
-	RXTraversalArray *array = [RXTraversalArray arrayWithFastEnumeration:test[@"items"] count:[test[@"items"] count]];
+	RXTraversalArray *array = [RXTraversalArray arrayWithTraversal:test[@"items"] count:[test[@"items"] count]];
 	[array count];
 	l3_assert(array.enumeratedObjects, nil);
 }
