@@ -37,3 +37,11 @@
 
 @interface NSDictionary (RXFiniteTraversal) <RXFiniteTraversal>
 @end
+
+
+/**
+ RXTraversalElement
+ 
+ A convenience typedef for implementations of RXTraversal which traverse temporary objects.
+ */
+typedef __autoreleasing id RXTraversalElement;
