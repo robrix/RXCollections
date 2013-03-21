@@ -7,27 +7,27 @@
 typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
 
 /**
- id<RXTraversal> RXConvolveWith(id<RXFiniteTraversal> sequences, id(^)(...))
+ id<RXTraversal> RXConvolveWith(id<RXTraversal> sequences, id(^)(...))
  */
 
-extern id<RXTraversal> RXConvolveWith(id<RXFiniteTraversal> sequences, RXConvolutionBlock block);
-extern id (* const RXZipWith)(id<RXFiniteTraversal>, RXConvolutionBlock);
+extern id<RXTraversal> RXConvolveWith(id<RXTraversal> sequences, RXConvolutionBlock block);
+extern id (* const RXZipWith)(id<RXTraversal>, RXConvolutionBlock);
 
 /**
- id<RXTraversal> RXConvolve(id<RXFiniteTraversal> sequences)
+ id<RXTraversal> RXConvolve(id<RXTraversal> sequences)
  
  Traverses the elements of the sequences in lockstep, producing a tuple for each one.
  
  RXZip is a synonym for this function.
  */
-extern id<RXTraversal> RXConvolve(id<RXFiniteTraversal> sequences);
-extern id (* const RXZip)(id<RXFiniteTraversal>);
+extern id<RXTraversal> RXConvolve(id<RXTraversal> sequences);
+extern id (* const RXZip)(id<RXTraversal>);
 
 
 @interface RXConvolutionTraversal : NSObject <RXTraversal>
 
-+(instancetype)traversalWithSequences:(id<RXFiniteTraversal>)sequences block:(RXConvolutionBlock)block;
++(instancetype)traversalWithSequences:(id<RXTraversal>)sequences block:(RXConvolutionBlock)block;
 
-@property (nonatomic, readonly) id<RXFiniteTraversal> sequences;
+@property (nonatomic, readonly) id<RXTraversal> sequences;
 
 @end
