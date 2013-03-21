@@ -24,7 +24,7 @@ extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock bloc
 extern NSArray *RXConstructArray(id<RXTraversal> traversal);
 
 /**
- NSSet *RXConstructSet(id<NSFastEnumeration>)
+ NSSet *RXConstructSet(id<NSFastEnumeration> enumeration)
  
  Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be nil.
  */
@@ -36,3 +36,12 @@ extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
  Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be nil, and must conform to RXKeyValuePair.
  */
 extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
+
+
+/**
+ RXTuple *RXConstructTuple(id<NSFastTraversal> traversal)
+ 
+ Constructs a tuple with the elements of the specified traversal. The traversal's elements may be nil.
+ */
+//@class RXTuple;
+//extern RXTuple *RXConstructTuple(id<RXTraversal> traversal);
