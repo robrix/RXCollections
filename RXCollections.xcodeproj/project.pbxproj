@@ -135,6 +135,13 @@
 			remoteGlobalIDString = D4B62B4B16A1581700E42C84;
 			remoteInfo = "Lagrangian (Mac OS X framework)";
 		};
+		D496681D16FB151A002C0FA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D4A5B2C0164B4FAF00338EB4;
+			remoteInfo = lagrangian;
+		};
 		D4B62B3516A1177B00E42C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4B62B2B16A1177A00E42C84 /* Lagrangian.xcodeproj */;
@@ -511,6 +518,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D496681E16FB151A002C0FA8 /* PBXTargetDependency */,
 				D473F66816DA87E8000FCD8D /* PBXTargetDependency */,
 			);
 			name = "RXCollections (Mac OS X framework)";
@@ -702,6 +710,11 @@
 			isa = PBXTargetDependency;
 			name = "Lagrangian (Mac OS X framework)";
 			targetProxy = D473F66B16DA8832000FCD8D /* PBXContainerItemProxy */;
+		};
+		D496681E16FB151A002C0FA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = lagrangian;
+			targetProxy = D496681D16FB151A002C0FA8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

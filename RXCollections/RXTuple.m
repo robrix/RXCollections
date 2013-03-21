@@ -110,6 +110,15 @@
 
 #pragma mark Access
 
+@l3_test("can return its contents as an array") {
+	l3_assert(([[RXTuple tupleWithArray:@[@1, @2]] allObjects]), (@[@1, @2]));
+}
+
+-(NSArray *)allObjects {
+	return [NSArray arrayWithObjects:self.elements count:self.count];
+}
+
+
 @l3_test("has a specific count") {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@M_PI, @M_PI]];
 	l3_assert(tuple.count, 2);

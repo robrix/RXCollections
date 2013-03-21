@@ -2,19 +2,18 @@
 //  Created by Rob Rix on 2013-01-12.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <RXCollections/RXTuple.h>
 
-@interface RXPair : NSObject <NSCopying>
+@protocol RXPair <NSObject>
 
-+(instancetype)pairWithLeft:(id)left right:(id)right;
--(instancetype)initWithLeft:(id)left right:(id)right;
++(instancetype)tupleWithLeft:(id)left right:(id)right;
 
 @property (nonatomic, strong, readonly) id left;
 @property (nonatomic, strong, readonly) id right;
 
-@property (nonatomic, copy, readonly) NSArray *elements;
+@end
 
--(bool)isEqualToPair:(RXPair *)pair;
+@interface RXTuple (RXPair) <RXPair>
 
 @end
 
@@ -26,9 +25,9 @@
 
 @end
 
-@interface RXPair (RXKeyValuePair) <RXKeyValuePair>
+@interface RXTuple (RXKeyValuePair) <RXKeyValuePair>
 
-+(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value;
++(instancetype)tupleWithKey:(id<NSCopying>)key value:(id)value;
 
 @end
 
@@ -40,8 +39,8 @@
 
 @end
 
-@interface RXPair (RXLinkedListNode) <RXLinkedListNode>
+@interface RXTuple (RXLinkedListNode) <RXLinkedListNode>
 
-+(instancetype)pairWithFirst:(id)first rest:(id)rest;
++(instancetype)tupleWithFirst:(id)first rest:(id)rest;
 
 @end
