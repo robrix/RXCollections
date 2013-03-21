@@ -29,9 +29,9 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 
 
 @l3_test("accumulates the contents of homogeneous trees in depth-first order") {
-	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
+	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
 	NSMutableArray *flattened = [NSMutableArray new];
-	RXAccumulateRecursiveContentsOfTarget(flattened, tree, @"elements");
+	RXAccumulateRecursiveContentsOfTarget(flattened, tree, @"allObjects");
 	l3_assert(flattened, l3_equals(@[tree, tree.left, [tree.left left], [tree.left right], [[tree.left right] left], [[tree.left right] right], tree.right]));
 }
 
@@ -46,8 +46,8 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 
 
 @l3_test("recursively enumerates trees in depth-first order") {
-	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
-	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"elements"], @"", ^(NSString *memo, id each) {
+	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
+	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each) {
 		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
 	}), @"xyzw");
 }

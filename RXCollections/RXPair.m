@@ -4,49 +4,28 @@
 
 #import "RXPair.h"
 
-@implementation RXPair
+@implementation RXTuple (RXPair)
 
-+(instancetype)pairWithLeft:(id)left right:(id)right {
-	return [[self alloc] initWithLeft:left right:right];
-}
-
--(instancetype)initWithLeft:(id)left right:(id)right {
-	if ((self = [super init])) {
-		_left = left;
-		_right = right;
-	}
-	return self;
++(instancetype)tupleWithLeft:(id)left right:(id)right {
+	return [self tupleWithObjects:(const id []){ left, right } count:2];
 }
 
 
--(NSArray *)elements {
-	return @[self.left, self.right];
+-(id)left {
+	return self[0];
 }
 
-
--(bool)isEqualToPair:(RXPair *)pair {
-	return
-		[pair isKindOfClass:self.class]
-	&&	[self.left isEqual:pair.left]
-	&&	[self.right isEqual:pair.right];
-}
-
--(BOOL)isEqual:(id)object {
-	return [self isEqualToPair:object];
-}
-
-
--(instancetype)copyWithZone:(NSZone *)zone {
-	return self;
+-(id)right {
+	return self[1];
 }
 
 @end
 
 
-@implementation RXPair (RXKeyValuePair)
+@implementation RXTuple (RXKeyValuePair)
 
-+(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value {
-	return [[self alloc] initWithLeft:key right:value];
++(instancetype)tupleWithKey:(id<NSCopying>)key value:(id)value {
+	return [self tupleWithLeft:key right:value];
 }
 
 
@@ -61,10 +40,10 @@
 @end
 
 
-@implementation RXPair (RXLinkedListNode)
+@implementation RXTuple (RXLinkedListNode)
 
-+(instancetype)pairWithFirst:(id)first rest:(id)rest {
-	return [self pairWithLeft:first right:rest];
++(instancetype)tupleWithFirst:(id)first rest:(id)rest {
+	return [self tupleWithLeft:first right:rest];
 }
 
 
