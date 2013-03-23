@@ -9,6 +9,19 @@
 	unsigned long *_mutations;
 }
 
++(instancetype)newWithNSFastEnumerationState:(NSFastEnumerationState *)state {
+	state->state = (unsigned long)self;
+	RXFastEnumerationState *instance = (__bridge RXFastEnumerationState *)state;
+	return instance;
+}
 
+
+-(__unsafe_unretained id *)itemsBuffer {
+	return (__unsafe_unretained id *)(void *)self.items;
+}
+
+-(void)setItemsBuffer:(__unsafe_unretained id *)itemsBuffer {
+	self.items = (__autoreleasing id *)(void *)itemsBuffer;
+}
 
 @end
