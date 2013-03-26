@@ -4,16 +4,26 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ RXFastEnumerationState : NSObject
+ 
+ RXFastEnumerationState is expected to be used in classes implementing NSFastEnumeration, via purpose-specific subclasses which add any extra state necessary (up to five words such) as properties.
+ 
+ Using RXFastEnumerationState is intended to ease the storage of autoreleased objects into an NSFastEnumerationState structure and otherwise simplify the implementation of NSFastEnumeration when you are doing anything more complex than trivially storing an object-lifetime interior pointer into it.
+ */
+
 @interface RXFastEnumerationState : NSObject
 
 /**
- +newWithNSFastEnumerationState:(NSFastEnumerationState *)state;
+ +stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count initializationHandler:(void(^)(id state))block;
  
- Returns the NSFastEnumerationState cast to RXFastEnumerationState or the receiving subclass and with a pointer to the receiving class in the state field (effectively an isa pointer). This method returns a retained instance (following the +new rule), because by the time the autorelease pool has been popped the underlying state will have gone away and the object would be invalid, leading to a crash in objc_release.
+ Returns the NSFastEnumerationState cast to RXFastEnumerationState or the receiving subclass and with a pointer to the receiving class in the state field (effectively an isa pointer). This method returns a retained instance (hence the NS_RETURNS_RETAINED markup), because by the time the autorelease pool has been popped the underlying state will have gone away and the object would be invalid, leading to a crash in objc_release.
  
- To reiterate: if you are using this method, you must ensure that the instance is not autoreleased. Such is the cost of an effectively stack-allocated instance.
+ The underlying state's mutations pointer is set to point at the isa pointer, which is an appropriate choice for enumerations of immutable collections whose state subclass is not expected to change between calls to -countByEnumeratingWithState:objects:count:.
+ 
+ This method also calls the passed block the first time it is applied to a given state pointer; this block (or the caller) is welcome to reassign the mutations address to a more appropriate value.
  */
-+(instancetype)newWithNSFastEnumerationState:(NSFastEnumerationState *)state;
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count initializationHandler:(void(^)(id state))block NS_RETURNS_RETAINED;
 
 @property (nonatomic, assign) __autoreleasing id *items;
 @property (nonatomic, assign) __unsafe_unretained id *itemsBuffer;

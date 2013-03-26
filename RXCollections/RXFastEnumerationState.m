@@ -9,9 +9,17 @@
 	unsigned long *_mutations;
 }
 
-+(instancetype)newWithNSFastEnumerationState:(NSFastEnumerationState *)state {
-	state->state = (unsigned long)self;
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count initializationHandler:(void(^)(id state))block NS_RETURNS_RETAINED {
+	bool needsInitialization = state->state == 0;
+	if (needsInitialization)
+		state->state = (unsigned long)self;
 	RXFastEnumerationState *instance = (__bridge RXFastEnumerationState *)state;
+	if (needsInitialization) {
+		instance.mutations = &(state->state);
+		instance.itemsBuffer = buffer;
+		if (block)
+			block(instance);
+	}
 	return instance;
 }
 

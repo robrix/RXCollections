@@ -23,7 +23,6 @@ typedef NS_ENUM(unsigned long, RXGeneratorTraversalCurrentState) {
 @property (nonatomic, copy) id<NSCopying> context;
 @property (nonatomic, readonly) __autoreleasing id<NSCopying> *contextReference;
 @property (nonatomic, copy) RXGeneratorBlock generatorBlock;
-@property (nonatomic, readonly) unsigned long *extra;
 
 @end
 
@@ -84,11 +83,11 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 	l3_assert(integers, (@[@0, @1, @2, @3]));
 }
 
--(NSUInteger)populateObjects:(__autoreleasing id [])objects count:(NSUInteger)count state:(RXGeneratorEnumerationState *)state {
+-(NSUInteger)populateCountObjects:(NSUInteger)count intoState:(RXGeneratorEnumerationState *)state {
 	bool stop = NO;
 	NSUInteger i = 0;
 	while ((i < count) && !stop) {
-		objects[i++] = state.generatorBlock(state.contextReference, &stop);
+		state.items[i++] = state.generatorBlock(state.contextReference, &stop);
 	}
 	if ((stop == YES) || (i == 0))
 		state.state = RXGeneratorTraversalCurrentStateComplete;
@@ -96,18 +95,15 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXGeneratorEnumerationState *state = [RXGeneratorEnumerationState newWithNSFastEnumerationState:fastEnumerationState];
-	if (!state.state) {
+	RXGeneratorEnumerationState *state = [RXGeneratorEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len initializationHandler:^(RXGeneratorEnumerationState *state) {
 		state.state = RXGeneratorTraversalCurrentStateActive;
-		state.mutations = state.extra;
 		state.context = self.context;
 		state.generatorBlock = self.block;
-	}
-	state.itemsBuffer = buffer;
+	}];
 	
 	NSUInteger count = 0;
 	if (state.state != RXGeneratorTraversalCurrentStateComplete)
-		count = [self populateObjects:state.items count:len state:state];
+		count = [self populateCountObjects:len intoState:state];
 	
 	return count;
 }
@@ -119,7 +115,6 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 	RXGeneratorTraversalCurrentState _state;
 	__unsafe_unretained id<NSCopying> _context;
 	__unsafe_unretained RXGeneratorBlock _generatorBlock;
-	unsigned long _extra[2];
 }
 
 -(id<NSCopying>)context {
@@ -143,11 +138,6 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 -(void)setGeneratorBlock:(RXGeneratorBlock)generatorBlock {
 	__autoreleasing RXGeneratorBlock temporaryGeneratorBlock = [generatorBlock copy];
 	_generatorBlock = temporaryGeneratorBlock;
-}
-
-
--(unsigned long *)extra {
-	return _extra;
 }
 
 @end
