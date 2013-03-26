@@ -47,6 +47,15 @@
 	self.items = (__autoreleasing id *)(void *)itemsBuffer;
 }
 
+
+-(__unsafe_unretained const id *)constItems {
+	return self.itemsBuffer;
+}
+
+-(void)setConstItems:(__unsafe_unretained const id *)constItems {
+	self.itemsBuffer = (__unsafe_unretained id *)constItems;
+}
+
 @end
 
 
@@ -74,6 +83,15 @@
 
 -(void)setItemsBuffer:(__unsafe_unretained id *)itemsBuffer {
 	_NSFastEnumerationState.itemsPtr = itemsBuffer;
+}
+
+
+-(__unsafe_unretained const id *)constItems {
+	return _NSFastEnumerationState.itemsPtr;
+}
+
+-(void)setConstItems:(__unsafe_unretained const id *)constItems {
+	_NSFastEnumerationState.itemsPtr = (__unsafe_unretained id *)(void *)constItems;
 }
 
 

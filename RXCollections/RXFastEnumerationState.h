@@ -10,6 +10,7 @@
 
 @property (nonatomic, assign) __autoreleasing id *items;
 @property (nonatomic, assign) __unsafe_unretained id *itemsBuffer;
+@property (nonatomic, assign) const id *constItems;
 @property (nonatomic, assign) unsigned long *mutations;
 
 @end
