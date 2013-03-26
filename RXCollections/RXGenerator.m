@@ -19,6 +19,8 @@ typedef NS_ENUM(unsigned long, RXGeneratorTraversalCurrentState) {
 
 @interface RXGeneratorEnumerationState : RXFastEnumerationState
 
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count generator:(RXGenerator *)generator NS_RETURNS_RETAINED;
+
 @property (nonatomic, assign) RXGeneratorTraversalCurrentState state;
 @property (nonatomic, copy) id<NSCopying> context;
 @property (nonatomic, readonly) __autoreleasing id<NSCopying> *contextReference;
@@ -95,17 +97,11 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXGeneratorEnumerationState *state = [RXGeneratorEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len initializationHandler:^(RXGeneratorEnumerationState *state) {
-		state.state = RXGeneratorTraversalCurrentStateActive;
-		state.context = self.context;
-		state.generatorBlock = self.block;
-	}];
+	RXGeneratorEnumerationState *state = [RXGeneratorEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len generator:self];
 	
-	NSUInteger count = 0;
-	if (state.state != RXGeneratorTraversalCurrentStateComplete)
-		count = [self populateCountObjects:len intoState:state];
-	
-	return count;
+	return (state.state != RXGeneratorTraversalCurrentStateComplete)?
+		[self populateCountObjects:len intoState:state]
+	:	0;
 }
 
 @end
@@ -115,6 +111,14 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 	RXGeneratorTraversalCurrentState _state;
 	__unsafe_unretained id<NSCopying> _context;
 	__unsafe_unretained RXGeneratorBlock _generatorBlock;
+}
+
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count generator:(RXGenerator *)generator NS_RETURNS_RETAINED {
+	return [self stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXGeneratorEnumerationState *state) {
+		state.state = RXGeneratorTraversalCurrentStateActive;
+		state.context = generator.context;
+		state.generatorBlock = generator.block;
+	}];
 }
 
 -(id<NSCopying>)context {
