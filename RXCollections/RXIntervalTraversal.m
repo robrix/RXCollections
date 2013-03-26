@@ -2,21 +2,23 @@
 //  Created by Rob Rix on 2013-03-01.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXIntervalTraversal.h"
+#import "RXFastEnumerationState.h"
 #import "RXFold.h"
+#import "RXIntervalTraversal.h"
 
 #import <Lagrangian/Lagrangian.h>
 
 @l3_suite("RXIntervalTraversal");
 
-typedef struct RXIntervalTraversalState {
-	unsigned long iterationCount;
-	__unsafe_unretained id *items;
-	unsigned long *mutations;
-	RXMagnitude from;
-	NSUInteger count;
-	unsigned long extra[3];
-} RXIntervalTraversalState;
+@interface RXIntervalEnumerationState : RXFastEnumerationState
+
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count intervalTraversal:(RXIntervalTraversal *)traversal NS_RETURNS_RETAINED;
+
+@property (nonatomic, assign) RXMagnitude from;
+@property (nonatomic, assign) RXMagnitude stride;
+@property (nonatomic, assign) NSUInteger count;
+
+@end
 
 @interface RXIntervalTraversal ()
 @end
@@ -120,28 +122,33 @@ static RXMagnitude RXIntervalTraversalStrideWithMagnitude(RXMagnitude magnitude,
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXIntervalTraversalState *state = (RXIntervalTraversalState *)fastEnumerationState;
-	
-	if (!state->iterationCount) {
-		state->mutations = &state->extra[0];
-		state->count = self.count;
-		state->from = self.interval.from;
-	}
-	
-	state->items = buffer;
-	
-	state->iterationCount++;
+	RXIntervalEnumerationState *state = [RXIntervalEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len intervalTraversal:self];
 	
 	RXMagnitude stride = self.stride;
-	NSUInteger stepCount = MIN(state->count, len);
-	for (NSUInteger step = 0; step < stepCount; state->from += stride, step++) {
-		__autoreleasing id *item = (__autoreleasing id *)(void *)buffer + step;
-		*item = @(state->from);
+	NSUInteger stepCount = MIN(state.count, len);
+	for (NSUInteger step = 0; step < stepCount; state.from += stride, step++) {
+		state.items[step] = @(state.from);
 	}
 	
-	state->count -= stepCount;
+	state.count -= stepCount;
 	
 	return stepCount;
+}
+
+@end
+
+@implementation RXIntervalEnumerationState {
+	RXMagnitude _from;
+	RXMagnitude _stride;
+	NSUInteger _count;
+}
+
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count intervalTraversal:(RXIntervalTraversal *)traversal NS_RETURNS_RETAINED {
+	return [self stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXIntervalEnumerationState *state) {
+		state.from = traversal.interval.from;
+		state.stride = traversal.stride;
+		state.count = traversal.count;
+	}];
 }
 
 @end

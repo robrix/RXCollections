@@ -6,7 +6,7 @@
 
 @implementation RXNullTraversalStrategy
 
--(void)enumerateObjects:(in __unsafe_unretained id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
+-(void)enumerateObjects:(in const id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
 	*externalObjectsCount = 0;
 }
 
