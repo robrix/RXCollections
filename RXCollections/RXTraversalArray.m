@@ -17,7 +17,7 @@
 
 const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 
-@interface RXTraversalArrayFastEnumerationState : RXFastEnumerationState
+@interface RXTraversalArrayEnumerationState : RXFastEnumerationState
 @property (nonatomic, assign) unsigned long enumeratedObjectsCount;
 @end
 
@@ -141,7 +141,7 @@ const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)enumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXTraversalArrayFastEnumerationState *state = [RXTraversalArrayFastEnumerationState stateWithNSFastEnumerationState:enumerationState objects:buffer count:len initializationHandler:nil];
+	RXTraversalArrayEnumerationState *state = [RXTraversalArrayEnumerationState stateWithNSFastEnumerationState:enumerationState objects:buffer count:len initializationHandler:nil];
 	
 	NSUInteger count = 0;
 	if (state.enumeratedObjectsCount != self.internalCount) {
@@ -159,7 +159,7 @@ const NSUInteger RXTraversalArrayUnknownCount = NSUIntegerMax;
 
 @end
 
-@implementation RXTraversalArrayFastEnumerationState {
+@implementation RXTraversalArrayEnumerationState {
 	unsigned long _enumeratedObjectsCount;
 }
 
