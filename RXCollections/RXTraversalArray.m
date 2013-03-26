@@ -2,8 +2,10 @@
 //  Created by Rob Rix on 2013-03-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXTraversalArray.h"
+#import "RXFastEnumerationState.h"
 #import "RXIntervalTraversal.h"
+#import "RXTraversalArray.h"
+
 #import <Lagrangian/Lagrangian.h>
 
 @l3_suite("RXTraversalArray");
@@ -13,13 +15,9 @@
 	test[@"array"] = [RXTraversalArray arrayWithTraversal:test[@"items"]];
 }
 
-typedef struct RXTraversalArrayEnumerationState {
-	unsigned long iterationCount;
-	__unsafe_unretained id *items;
-	unsigned long *mutations;
-	unsigned long enumeratedObjectsCount;
-	unsigned long extra[4];
-} RXTraversalArrayEnumerationState;
+@interface RXTraversalArrayEnumerationState : RXFastEnumerationState
+@property (nonatomic, assign) unsigned long enumeratedObjectsCount;
+@end
 
 @interface RXTraversalArray ()
 
@@ -144,24 +142,26 @@ typedef struct RXTraversalArrayEnumerationState {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)enumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXTraversalArrayEnumerationState *state = (RXTraversalArrayEnumerationState *)enumerationState;
-	state->iterationCount++;
+	RXTraversalArrayEnumerationState *state = [RXTraversalArrayEnumerationState stateWithNSFastEnumerationState:enumerationState objects:buffer count:len initializationHandler:nil];
 	
 	NSUInteger count = 0;
-	if (state->enumeratedObjectsCount != self.internalCount) {
-		[self populateUpToIndex:state->enumeratedObjectsCount + len - 1];
+	if (state.enumeratedObjectsCount != self.internalCount) {
+		[self populateUpToIndex:state.enumeratedObjectsCount + len - 1];
 		if (self.enumeration)
-			state->mutations = self.state.mutationsPtr;
-		else
-			state->mutations = state->extra;
+			state.mutations = self.state.mutationsPtr;
 		
-		count = MIN(len, self.enumeratedObjects.count - state->enumeratedObjectsCount);
-		[self.enumeratedObjects getObjects:buffer range:NSMakeRange(state->enumeratedObjectsCount, count)];
-		state->enumeratedObjectsCount += count;
-		state->items = buffer;
+		count = MIN(len, self.enumeratedObjects.count - state.enumeratedObjectsCount);
+		[self.enumeratedObjects getObjects:buffer range:NSMakeRange(state.enumeratedObjectsCount, count)];
+		state.enumeratedObjectsCount += count;
 	}
 	
 	return count;
+}
+
+@end
+
+@implementation RXTraversalArrayEnumerationState {
+	unsigned long _enumeratedObjectsCount;
 }
 
 @end

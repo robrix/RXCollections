@@ -3,22 +3,23 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXEnumerationTraversal.h"
-#import "RXIdentityTraversalStrategy.h"
+#import "RXFastEnumerationState.h"
 #import "RXFilteringTraversalStrategy.h"
+#import "RXIdentityTraversalStrategy.h"
 
 #import <Lagrangian/Lagrangian.h>
 
 @l3_suite("RXEnumerationTraversal");
 
-typedef struct RXEnumerationTraversalState {
-	unsigned long iterationCount;
-	__unsafe_unretained id *items;
-	unsigned long *mutations;
-	NSFastEnumerationState *internalState;
-	__unsafe_unretained id *internalObjects;
-	unsigned long internalObjectsCount;
-	unsigned long extra[2];
-} RXEnumerationTraversalState;
+@interface RXEnumerationTraversalState : RXFastEnumerationState
+
++(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count NS_RETURNS_RETAINED;
+
+@property (nonatomic, strong) id<RXFastEnumerationState> internalState;
+@property (nonatomic, assign) __autoreleasing id *internalObjects;
+@property (nonatomic, assign) unsigned long internalObjectsCount;
+
+@end
 
 @l3_set_up {
 	test[@"alphabet"] = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
@@ -83,49 +84,44 @@ typedef struct RXEnumerationTraversalState {
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])externalObjects count:(NSUInteger)externalObjectsCount {
-	RXEnumerationTraversalState *state = (RXEnumerationTraversalState *)fastEnumerationState;
+	RXEnumerationTraversalState *state = [RXEnumerationTraversalState stateWithNSFastEnumerationState:fastEnumerationState objects:externalObjects count:externalObjectsCount];
+	RXFastEnumerationState *internalState = state.internalState;
 	
-	if (!state->internalState) {
-		// this allows the internal state to be persisted for the duration of the current enumeration, without having it extend past the end in the event of early termination (e.g. a break in a for(in) loop).
-		// we require callers to ensure that they do not drain the external autorelease pool between calls using the same fastEnumerationState pointer.
-		// this is the case for for(in), and is believed to be a reasonable requirement for other well-designed callers.
-		__autoreleasing NSMutableData *internalStateData = [NSMutableData dataWithLength:sizeof *state->internalState];
-		state->internalState = internalStateData.mutableBytes;
-	}
-	NSFastEnumerationState *internalState = state->internalState;
-	
-	if (state->internalObjectsCount == 0) {
-		// if we processed all the remaining objects on our last call, then we need to get the next batch
-		state->internalObjectsCount = [self.enumeration countByEnumeratingWithState:internalState objects:externalObjects count:externalObjectsCount];
+	if (state.internalObjectsCount == 0) {
+		// if this is the first iteration or if we processed all our objects on our previous iteration, then we need to get the next batch of objects, if any
+		state.internalObjectsCount = [self.enumeration countByEnumeratingWithState:internalState.NSFastEnumerationState objects:externalObjects count:externalObjectsCount];
 		
 		// externalize the mutations of our internal enumeration, allowing for(in) (or other interested callers) to correctly assert that our internal enumeration has not changed while it is being iterated.
 		// additionally, for(in) requires that this be a valid pointer; it dereferences it without checking.
-		state->mutations = internalState->mutationsPtr;
+		state.mutations = internalState.mutations;
 		
 		// our marker for iterating through the internal items
-		state->internalObjects = internalState->itemsPtr;
+		state.internalObjects = internalState.items;
 	}
 	
-	// for(in) requires that we store some non-zero value to this field.
-	// counting the calls to this method may be useful for debugging.
-	state->iterationCount++;
-	
-	NSUInteger consumedCount = state->internalObjectsCount;
+	NSUInteger consumedCount = state.internalObjectsCount;
 	NSUInteger producedCount = 0;
 	while (consumedCount > 0 && producedCount == 0) {
-		consumedCount = state->internalObjectsCount;
+		consumedCount = state.internalObjectsCount;
 		producedCount = externalObjectsCount;
-		[self.strategy enumerateObjects:state->internalObjects count:&consumedCount intoObjects:(__autoreleasing id *)(void *)externalObjects count:&producedCount];
+		[self.strategy enumerateObjects:state.internalObjects count:&consumedCount intoObjects:state.items count:&producedCount];
 		
 		// adjust the internal objects pointer and count based on how many internal objects we consumed
-		state->internalObjects += consumedCount;
-		state->internalObjectsCount -= consumedCount;
+		state.internalObjects += consumedCount;
+		state.internalObjectsCount -= consumedCount;
 	}
 	
-	// we always return results in the buffer given to us by the caller.
-	state->items = externalObjects;
-	
 	return producedCount;
+}
+
+@end
+
+@implementation RXEnumerationTraversalState
+
++(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count NS_RETURNS_RETAINED {
+	return [super stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXEnumerationTraversalState *state) {
+		state.internalState = [RXFastEnumerationState state];
+	}];
 }
 
 @end

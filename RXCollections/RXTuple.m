@@ -2,8 +2,9 @@
 //  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXTuple.h"
+#import "RXFastEnumerationState.h"
 #import "RXFold.h"
+#import "RXTuple.h"
 #import <objc/runtime.h>
 
 #import <Lagrangian/Lagrangian.h>
@@ -109,6 +110,15 @@
 
 
 #pragma mark Access
+
+@l3_test("can return its contents as an array") {
+	l3_assert(([[RXTuple tupleWithArray:@[@1, @2]] allObjects]), (@[@1, @2]));
+}
+
+-(NSArray *)allObjects {
+	return [NSArray arrayWithObjects:self.elements count:self.count];
+}
+
 
 @l3_test("has a specific count") {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@M_PI, @M_PI]];
@@ -240,15 +250,14 @@
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	NSUInteger count = self.count;
-	if (!state->state) {
-		state->state = 1;
-		state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
-		state->mutationsPtr = state->extra;
-	} else {
-		count = 0;
-	}
-	return count;
+	__block bool isFirstIteration = NO;
+	[RXFastEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:len initializationHandler:^(id<RXFastEnumerationState> state) {
+		state.constItems = self.elements;
+		isFirstIteration = YES;
+	}];
+	return isFirstIteration?
+		self.count
+	:	0;
 }
 
 @end

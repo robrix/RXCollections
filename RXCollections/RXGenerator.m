@@ -5,24 +5,29 @@
 #import "RXFold.h"
 #import "RXGenerator.h"
 #import "RXTuple.h"
+#import "RXFastEnumerationState.h"
 
 #import <Lagrangian/Lagrangian.h>
 
 @l3_suite("RXGenerator");
 
-typedef struct RXGeneratorTraversalState {
-	unsigned long state;
-	__unsafe_unretained id *items;
-	unsigned long *mutations;
-	__unsafe_unretained id<NSCopying> context;
-	__unsafe_unretained RXGeneratorBlock generatorBlock;
-	unsigned long extra[3];
-} RXGeneratorTraversalState;
-
 typedef NS_ENUM(unsigned long, RXGeneratorTraversalCurrentState) {
+	RXGeneratorTraversalCurrentStatePending = 0,
 	RXGeneratorTraversalCurrentStateActive = 1,
 	RXGeneratorTraversalCurrentStateComplete = 2,
 };
+
+@interface RXGeneratorEnumerationState : RXFastEnumerationState
+
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count generator:(RXGenerator *)generator NS_RETURNS_RETAINED;
+
+@property (nonatomic, assign) RXGeneratorTraversalCurrentState state;
+@property (nonatomic, copy) id<NSCopying> context;
+@property (nonatomic, readonly) __autoreleasing id<NSCopying> *contextReference;
+@property (nonatomic, copy) RXGeneratorBlock generatorBlock;
+
+@end
+
 
 @implementation RXGenerator
 
@@ -80,36 +85,63 @@ static RXGeneratorBlock RXIntegerGenerator(NSUInteger n) {
 	l3_assert(integers, (@[@0, @1, @2, @3]));
 }
 
--(NSUInteger)populateObjects:(__autoreleasing id [])objects count:(NSUInteger)count state:(RXGeneratorTraversalState *)state {
+-(NSUInteger)populateCountObjects:(NSUInteger)count intoState:(RXGeneratorEnumerationState *)state {
 	bool stop = NO;
-	__autoreleasing id *contextRef = (__autoreleasing id *)(void *)&(state->context);
 	NSUInteger i = 0;
 	while ((i < count) && !stop) {
-		objects[i++] = state->generatorBlock(contextRef, &stop);
+		state.items[i++] = state.generatorBlock(state.contextReference, &stop);
 	}
 	if ((stop == YES) || (i == 0))
-		state->state = RXGeneratorTraversalCurrentStateComplete;
+		state.state = RXGeneratorTraversalCurrentStateComplete;
 	return i;
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXGeneratorTraversalState *state = (RXGeneratorTraversalState *)fastEnumerationState;
-	__autoreleasing RXGeneratorBlock *generatorBlock = (__autoreleasing RXGeneratorBlock *)(void *)&(state->generatorBlock);
-	__autoreleasing id<NSCopying> *context = (__autoreleasing id<NSCopying> *)(void *)&(state->context);
-	if (!state->state) {
-		state->state = RXGeneratorTraversalCurrentStateActive;
-		state->mutations = state->extra;
-		*context = [self.context copyWithZone:NULL];
-		*generatorBlock = self.block;
-	}
+	RXGeneratorEnumerationState *state = [RXGeneratorEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len generator:self];
 	
-	NSUInteger count = 0;
-	if (state->state != RXGeneratorTraversalCurrentStateComplete)
-		count = [self populateObjects:(__autoreleasing id *)(void *)buffer count:len state:state];
-	
-	state->items = buffer;
-	
-	return count;
+	return (state.state != RXGeneratorTraversalCurrentStateComplete)?
+		[self populateCountObjects:len intoState:state]
+	:	0;
+}
+
+@end
+
+
+@implementation RXGeneratorEnumerationState {
+	RXGeneratorTraversalCurrentState _state;
+	__unsafe_unretained id<NSCopying> _context;
+	__unsafe_unretained RXGeneratorBlock _generatorBlock;
+}
+
++(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count generator:(RXGenerator *)generator NS_RETURNS_RETAINED {
+	return [self stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXGeneratorEnumerationState *state) {
+		state.state = RXGeneratorTraversalCurrentStateActive;
+		state.context = generator.context;
+		state.generatorBlock = generator.block;
+	}];
+}
+
+-(id<NSCopying>)context {
+	return _context;
+}
+
+-(void)setContext:(id<NSCopying>)context {
+	__autoreleasing id<NSCopying> temporaryContext = [context copyWithZone:NULL];
+	_context = temporaryContext;
+}
+
+-(__autoreleasing id<NSCopying> *)contextReference {
+	return (__autoreleasing id *)(void *)&_context;
+}
+
+
+-(RXGeneratorBlock)generatorBlock {
+	return _generatorBlock;
+}
+
+-(void)setGeneratorBlock:(RXGeneratorBlock)generatorBlock {
+	__autoreleasing RXGeneratorBlock temporaryGeneratorBlock = [generatorBlock copy];
+	_generatorBlock = temporaryGeneratorBlock;
 }
 
 @end

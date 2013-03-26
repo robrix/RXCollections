@@ -37,7 +37,7 @@
 	l3_assert(actual, l3_is(@[@"rapidly", @"deeply", @"maximally"]));
 }
 
--(void)enumerateObjects:(in __unsafe_unretained id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
+-(void)enumerateObjects:(in const id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
 	NSUInteger count = MIN(*internalObjectsCount, *externalObjectsCount);
 	for (NSUInteger i = 0; i < count; i++) {
 		externalObjects[i] = self.block(internalObjects[i]);

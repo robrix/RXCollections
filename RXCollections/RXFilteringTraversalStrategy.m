@@ -39,7 +39,7 @@
 	l3_assert(actual, l3_is(@[@"cat", @"cow"]));
 }
 
--(void)enumerateObjects:(in __unsafe_unretained id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
+-(void)enumerateObjects:(in const id [])internalObjects count:(inout NSUInteger *)internalObjectsCount intoObjects:(out __autoreleasing id [])externalObjects count:(inout NSUInteger *)externalObjectsCount {
 	NSUInteger producedCount = 0, consumedCount = 0;
 	while (consumedCount < *internalObjectsCount && producedCount < *externalObjectsCount) {
 		id object = internalObjects[consumedCount];

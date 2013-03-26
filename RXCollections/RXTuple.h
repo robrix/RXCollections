@@ -11,6 +11,8 @@
 
 -(id)objectAtIndexedSubscript:(NSUInteger)subscript;
 
+-(NSArray *)allObjects;
+
 @property (nonatomic, readonly) NSUInteger count;
 
 -(bool)isEqualToTuple:(RXTuple *)tuple;

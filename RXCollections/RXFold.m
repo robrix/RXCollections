@@ -49,8 +49,8 @@ NSSet *RXConstructSet(id<NSFastEnumeration> enumeration) {
 	});
 }
 
-@l3_test("constructs dictionaries from enumerations of pairs") {
-	l3_assert(RXConstructDictionary(@[[RXPair pairWithKey:@1 value:@1], [RXPair pairWithKey:@2 value:@4], [RXPair pairWithKey:@3 value:@9]]), l3_is(@{@1: @1, @2: @4, @3: @9}));
+@l3_test("construct dictionaries from enumerations of pairs") {
+	l3_assert(RXConstructDictionary(@[[RXTuple tupleWithKey:@1 value:@1], [RXTuple tupleWithKey:@2 value:@4], [RXTuple tupleWithKey:@3 value:@9]]), l3_is(@{@1: @1, @2: @4, @3: @9}));
 }
 
 NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
