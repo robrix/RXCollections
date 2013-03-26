@@ -2,8 +2,9 @@
 //  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXTuple.h"
+#import "RXFastEnumerationState.h"
 #import "RXFold.h"
+#import "RXTuple.h"
 #import <objc/runtime.h>
 
 #import <Lagrangian/Lagrangian.h>
@@ -249,15 +250,12 @@
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	NSUInteger count = self.count;
-	if (!state->state) {
-		state->state = 1;
-		state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
-		state->mutationsPtr = state->extra;
-	} else {
-		count = 0;
-	}
-	return count;
+	RXFastEnumerationState *enumerationState = [RXFastEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:len initializationHandler:^(id<RXFastEnumerationState> state) {
+		state.constItems = state.constItems != self.elements? self.elements : NULL;
+	}];
+	return enumerationState.constItems != NULL?
+		self.count
+	:	0;
 }
 
 @end
