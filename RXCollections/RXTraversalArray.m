@@ -158,6 +158,13 @@
 	return count;
 }
 
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
 @end
 
 @implementation RXTraversalArrayEnumerationState {
