@@ -120,7 +120,7 @@
 
 +(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count NS_RETURNS_RETAINED {
 	return [super stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXEnumerationTraversalState *state) {
-		state.internalState = [RXFastEnumerationState state];
+		state.internalState = [RXHeapFastEnumerationState state];
 	}];
 }
 
