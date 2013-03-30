@@ -14,6 +14,12 @@ In short:
 	RXFold(chunksOfText, @"", ^(NSString *full, NSString *each) { return [full stringByAppendingString:each]; });
 	
 	RXLinearSearch(scientists, ^(Scientist *each) { return [each.name isEqualToString:@"Richard Feynman"]; });
+	
+	RXConvolveWith(@[names, addresses, phoneNumbers], ^(NSUInteger count, id const objects[count]) {
+		return [BusinessCard withName:objects[0] address:objects[1] phoneNumber:object[2]];
+	});
+
+(Yeah, yeah, you can call it `RXZipWith` instead if you like that so much better.)
 
 ## Collections that can be created
 
