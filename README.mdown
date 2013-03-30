@@ -1,6 +1,6 @@
 # RXCollections
 
-Higher-order functions for Cocoa collections (including your own), with as little chaff as possible.
+Lazily-evaluated (when feasible) higher-order functions for Cocoa collections (including your own), with as little chaff as possible.
 
 In short:
 
@@ -25,18 +25,18 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 ## Notes
 
+- Maps, filters, and convolutions are lazily evaluated. `RXConstructArray` lazily constructs an array from its source enumeration.
+
 - More documentation is available in the header files.
 
 - The included Xcode target compiles a framework and a dylib, but you can also just link the source files in.
 
 ## Future
 
-- [Zip][]
+- Depth-first tree traversals with prefix/infix/postfix ordering. As a corollary, removing `RXRecursiveEnumerator`.
 
-- Depth-first tree traversals with prefix/infix/postfix ordering
-
-- Concatenation of traversals
+- Concatenation of traversals.
 
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 
-[Zip]: http://en.wikipedia.org/wiki/Convolution_(computer_science)
+- `NSFastEnumeration` is not exactly an ideal interface for lazy evaluation (no matter how nice its chunking is). A safer (i.e. strongly-referenced) interface that can be fast-enumerated would be preferable. At the same time, integrating more automatic chunking could be great if it would help provide better locality of reference. The resonance with buffering problems is palpable.
