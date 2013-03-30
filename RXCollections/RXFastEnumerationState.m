@@ -4,9 +4,6 @@
 
 #import "RXFastEnumerationState.h"
 
-@interface RXHeapFastEnumerationState : NSObject <RXFastEnumerationState>
-@end
-
 @implementation RXFastEnumerationState {
 	__autoreleasing id *_items;
 	unsigned long *_mutations;
@@ -27,10 +24,6 @@
 			block(instance);
 	}
 	return instance;
-}
-
-+(id<RXFastEnumerationState>)state {
-	return [RXHeapFastEnumerationState new];
 }
 
 
@@ -62,6 +55,11 @@
 @implementation RXHeapFastEnumerationState {
 	NSFastEnumerationState _NSFastEnumerationState;
 }
+
++(instancetype)state {
+	return [RXHeapFastEnumerationState new];
+}
+
 
 -(NSFastEnumerationState *)NSFastEnumerationState {
 	return &_NSFastEnumerationState;

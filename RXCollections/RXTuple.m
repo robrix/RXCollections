@@ -159,7 +159,7 @@
 	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element) {
 		if (memo.length > 1)
 			[memo appendString:@", "];
-		[memo appendString:[element description]];
+		[memo appendString:[element description] ?: @"(null)"];
 		return memo;
 	});
 	[description appendString:@")"];
@@ -250,10 +250,12 @@
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXFastEnumerationState *enumerationState = [RXFastEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:len initializationHandler:^(id<RXFastEnumerationState> state) {
-		state.constItems = state.constItems != self.elements? self.elements : NULL;
+	__block bool isFirstIteration = NO;
+	[RXFastEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:len initializationHandler:^(id<RXFastEnumerationState> state) {
+		state.constItems = self.elements;
+		isFirstIteration = YES;
 	}];
-	return enumerationState.constItems != NULL?
+	return isFirstIteration?
 		self.count
 	:	0;
 }

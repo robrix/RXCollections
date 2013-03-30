@@ -35,11 +35,15 @@
  */
 +(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count initializationHandler:(void(^)(id<RXFastEnumerationState> state))block NS_RETURNS_RETAINED;
 
+@end
+
+@interface RXHeapFastEnumerationState : NSObject <RXFastEnumerationState>
+
 /**
  +state
  
  Returns a new NSFastEnumerationState-sized RXFastEnumerationState instance suitable for use by callers of -countByEnumeratingWithState:objects:count:that need a heap-allocated, ARC-manageable state instance.
  */
-+(id<RXFastEnumerationState>)state;
++(instancetype)state;
 
 @end

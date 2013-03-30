@@ -5,6 +5,7 @@
 #import "RXFold.h"
 #import "RXPair.h"
 #import "RXTraversalArray.h"
+#import "RXTuple.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -27,17 +28,17 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 
 #pragma mark Constructors
 
-@l3_suite("RXConstructors");
+@l3_suite("RXConstruct");
 
-@l3_test("construct arrays from enumerations") {
+@l3_test("constructs arrays from traversals") {
 	l3_assert(RXConstructArray(@[@1, @2, @3]), l3_is(@[@1, @2, @3]));
 }
 
-NSArray *RXConstructArray(id<NSFastEnumeration> enumeration) {
-	return [RXTraversalArray arrayWithFastEnumeration:enumeration];
+NSArray *RXConstructArray(id<RXTraversal> traversal) {
+	return [RXTraversalArray arrayWithTraversal:traversal];
 }
 
-@l3_test("construct sets from enumerations") {
+@l3_test("constructs sets from enumerations") {
 	l3_assert(RXConstructSet(@[@1, @2, @3]), l3_is([NSSet setWithObjects:@1, @2, @3, nil]));
 }
 
@@ -56,5 +57,29 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each) {
 		[memo setObject:each.value forKey:each.key];
 		return memo;
+	});
+}
+
+
+@l3_suite("RXMin");
+
+@l3_test("finds the minimum value among a collection") {
+	l3_assert(RXMin(@[@3, @1, @2], nil, nil), @1);
+}
+
+@l3_test("considers the initial value if provided") {
+	l3_assert(RXMin(@[@3, @1, @2], @0, nil), @0);
+}
+
+@l3_test("compares the value provided by the block if provided") {
+	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each) { return @(each.length); }), @1);
+}
+
+id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
+	return RXFold(enumeration, initial, ^(id memo, id each) {
+		id value = minBlock? minBlock(each) : each;
+		return [memo compare:value] == NSOrderedAscending?
+			memo
+		:	value;
 	});
 }

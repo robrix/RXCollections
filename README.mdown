@@ -4,7 +4,7 @@ Higher-order functions for Cocoa collections (including your own), with as littl
 
 In short:
 
-	#import "RXCollections.h"
+	#import <RXCollections/RXCollections.h>
 	
 	…
 	RXMap(people, ^(Pal *each) { return each.phoneNumber; });
@@ -36,8 +36,6 @@ Maps and filters return enumerations, which can be made into concrete collection
 - Depth-first tree traversals with prefix/infix/postfix ordering
 
 - Concatenation of traversals
-
-- Adding -count + a constant for indeterminate length to RXTraversal
 
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
 

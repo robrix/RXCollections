@@ -2,11 +2,12 @@
 //  Created by Rob Rix on 2013-03-09.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <RXCollections/RXTraversal.h>
 
 typedef id (^RXGeneratorBlock)(id __autoreleasing *context, bool *stop);
 
-@interface RXGenerator : NSObject <NSFastEnumeration>
+@interface RXGenerator : NSObject <RXTraversal>
+
 +(instancetype)generatorWithBlock:(RXGeneratorBlock)block;
 +(instancetype)generatorWithContext:(id<NSCopying>)context block:(RXGeneratorBlock)block;
 

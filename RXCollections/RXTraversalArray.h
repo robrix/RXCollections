@@ -4,11 +4,9 @@
 
 #import <RXCollections/RXTraversal.h>
 
-extern const NSUInteger RXTraversalArrayUnknownCount;
-
 @interface RXTraversalArray : NSArray
 
-+(instancetype)arrayWithFastEnumeration:(id<NSFastEnumeration>)enumeration;
-+(instancetype)arrayWithFastEnumeration:(id<NSFastEnumeration>)enumeration count:(NSUInteger)count;
++(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal;
++(instancetype)arrayWithTraversal:(id<RXTraversal>)traversal count:(NSUInteger)count;
 
 @end

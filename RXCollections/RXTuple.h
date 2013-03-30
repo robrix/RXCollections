@@ -2,9 +2,9 @@
 //  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <RXCollections/RXTraversal.h>
 
-@interface RXTuple : NSObject <NSCopying, NSFastEnumeration>
+@interface RXTuple : NSObject <NSCopying, RXFiniteTraversal>
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;
