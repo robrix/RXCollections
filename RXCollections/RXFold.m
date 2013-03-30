@@ -60,67 +60,26 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 	});
 }
 
-//bool RXTraversalCopyN(id<RXTraversal> traversal, __strong id buffer[], NSUInteger *capacity);
-//bool RXTraversalCopyN(id<RXTraversal> traversal, __strong id buffer[], NSUInteger *capacity) {
-//	NSCParameterAssert(traversal != nil);
-//	NSCParameterAssert(buffer != NULL);
-//	NSCParameterAssert(capacity != NULL);
-//	NSCParameterAssert(*capacity > 0);
-//	
-//	bool wouldOverflow = NO;
-//	NSUInteger index = 0;
-//	for (id element in traversal) {
-//		if (index >= *capacity) {
-//			wouldOverflow = YES;
-//			break;
-//		}
-//		buffer[index] = element;
-//		index++;
-//	}
-//	return wouldOverflow;
-//}
-//
-//__strong id *RXTraversalCopy(id<RXTraversal> traversal, __strong id buffer[], NSUInteger *capacity);
-//__strong id *RXTraversalCopy(id<RXTraversal> traversal, __strong id buffer[], NSUInteger *capacity) {
-//	NSCParameterAssert(traversal != nil);
-//	NSCParameterAssert(buffer != NULL);
-//	NSCParameterAssert(capacity != NULL);
-//	
-//	// intention: given a traversal, a buffer, and its capacity, return a buffer containing the objects in the traversal, using the passed-in buffer if it's large enough and using malloc/realloc otherwise, and return the actual count by reference
-//	
-//	NSUInteger count = [traversal respondsToSelector:@selector(count)]?
-//		[(id<RXFiniteTraversal>)traversal count]
-//	:	0;
-//	
-//	__strong id *objects = buffer;
-//	if (count > *capacity) {
-//		objects = (__strong id *)malloc(count * sizeof(id));
-//	}
-//	
-//	for (id element in traversal) {
-//		if (count > *capacity) {
-//			
-//		}
-//		objects[count] = element;
-//		
-//		count++;
-//	}
-//	
-//	*capacity = count;
-//	
-//	return objects;
-//}
-//
-//@l3_test("constructs tuples") {
-//	l3_assert(RXConstructTuple(@[@1, @2]), ([RXTuple tupleWithArray:@[@1, @2]]));
-//}
-//
-//RXTuple *RXConstructTuple(id<RXTraversal> traversal) {
-//	NSUInteger capacity = [traversal respondsToSelector:@selector(count)]?
-//		[(id<RXFiniteTraversal>)traversal count]
-//	:	16;
-//	__strong id buffer[capacity];
-//	__strong id *objects = RXTraversalCopy(traversal, buffer, &capacity);
-//	
-//	return [RXTuple tupleWithObjects:objects count:capacity];
-//}
+
+@l3_suite("RXMin");
+
+@l3_test("finds the minimum value among a collection") {
+	l3_assert(RXMin(@[@3, @1, @2], nil, nil), @1);
+}
+
+@l3_test("considers the initial value if provided") {
+	l3_assert(RXMin(@[@3, @1, @2], @0, nil), @0);
+}
+
+@l3_test("compares the value provided by the block if provided") {
+	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each) { return @(each.length); }), @1);
+}
+
+id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
+	return RXFold(enumeration, initial, ^(id memo, id each) {
+		id value = minBlock? minBlock(each) : each;
+		return [memo compare:value] == NSOrderedAscending?
+			memo
+		:	value;
+	});
+}
