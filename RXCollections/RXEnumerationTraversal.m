@@ -6,6 +6,7 @@
 #import "RXFastEnumerationState.h"
 #import "RXFilteringTraversalStrategy.h"
 #import "RXIdentityTraversalStrategy.h"
+#import "RXSequence.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -24,6 +25,10 @@
 @l3_set_up {
 	test[@"alphabet"] = @[@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z"];
 }
+
+@interface RXEnumerationTraversal () <RXSequence>
+
+@end
 
 @implementation RXEnumerationTraversal
 
@@ -112,6 +117,12 @@
 	}
 	
 	return producedCount;
+}
+
+
+-(bool)retrieveObjectsWithState:(RXSequenceEnumerationState *)state {
+	
+	return NO;
 }
 
 @end

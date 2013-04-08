@@ -260,4 +260,17 @@
 	:	0;
 }
 
+
+#pragma mark RXSequence
+
+@l3_test("sequences its elements en masse") {
+	
+}
+
+-(bool)retrieveObjectsWithState:(RXSequenceEnumerationState *)state {
+	state.objects = self.elements;
+	state.count = self.count;
+	return NO;
+}
+
 @end

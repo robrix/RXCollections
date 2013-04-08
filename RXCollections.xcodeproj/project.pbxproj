@@ -119,6 +119,18 @@
 		D4EC50F916EB15A700EB3B64 /* RXGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EC50F516EB15A700EB3B64 /* RXGenerator.m */; };
 		D4EC50FA16EB15A700EB3B64 /* RXGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EC50F516EB15A700EB3B64 /* RXGenerator.m */; };
 		D4EC50FB16EB15A700EB3B64 /* RXGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EC50F516EB15A700EB3B64 /* RXGenerator.m */; };
+		D4F234B5170772AB007771E9 /* RXSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234B4170772A7007771E9 /* RXSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4F234B6170772AC007771E9 /* RXSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234B4170772A7007771E9 /* RXSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4F234B7170772B1007771E9 /* RXSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234B4170772A7007771E9 /* RXSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4F234B91708AC76007771E9 /* RXSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234B81708AC76007771E9 /* RXSequence.m */; };
+		D4F234BA1708AC76007771E9 /* RXSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234B81708AC76007771E9 /* RXSequence.m */; };
+		D4F234BB1708AC76007771E9 /* RXSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234B81708AC76007771E9 /* RXSequence.m */; };
+		D4F234BE1708B25E007771E9 /* RXSequenceEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234BC1708B25E007771E9 /* RXSequenceEnumerator.h */; };
+		D4F234BF1708B25E007771E9 /* RXSequenceEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234BC1708B25E007771E9 /* RXSequenceEnumerator.h */; };
+		D4F234C01708B25E007771E9 /* RXSequenceEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F234BC1708B25E007771E9 /* RXSequenceEnumerator.h */; };
+		D4F234C11708B25E007771E9 /* RXSequenceEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234BD1708B25E007771E9 /* RXSequenceEnumerator.m */; };
+		D4F234C21708B25E007771E9 /* RXSequenceEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234BD1708B25E007771E9 /* RXSequenceEnumerator.m */; };
+		D4F234C31708B25E007771E9 /* RXSequenceEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D4F234BD1708B25E007771E9 /* RXSequenceEnumerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -244,6 +256,10 @@
 		D4E8CC3C16D3D3AB002D6C0A /* RXNullTraversalStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXNullTraversalStrategy.m; sourceTree = "<group>"; };
 		D4EC50F416EB15A700EB3B64 /* RXGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXGenerator.h; sourceTree = "<group>"; };
 		D4EC50F516EB15A700EB3B64 /* RXGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXGenerator.m; sourceTree = "<group>"; };
+		D4F234B4170772A7007771E9 /* RXSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXSequence.h; sourceTree = "<group>"; };
+		D4F234B81708AC76007771E9 /* RXSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXSequence.m; sourceTree = "<group>"; };
+		D4F234BC1708B25E007771E9 /* RXSequenceEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXSequenceEnumerator.h; sourceTree = "<group>"; };
+		D4F234BD1708B25E007771E9 /* RXSequenceEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXSequenceEnumerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -338,6 +354,7 @@
 		D49E8F95147978C8004490EA /* RXCollections */ = {
 			isa = PBXGroup;
 			children = (
+				D4F234B117077291007771E9 /* Sequences */,
 				D4CF2C0216D6FFFA005F5810 /* RXFilter.h */,
 				D4CF2C0316D6FFFA005F5810 /* RXFilter.m */,
 				D4CF2C6616D718B0005F5810 /* RXFold.h */,
@@ -412,6 +429,17 @@
 			name = "Traversal strategies";
 			sourceTree = "<group>";
 		};
+		D4F234B117077291007771E9 /* Sequences */ = {
+			isa = PBXGroup;
+			children = (
+				D4F234B4170772A7007771E9 /* RXSequence.h */,
+				D4F234B81708AC76007771E9 /* RXSequence.m */,
+				D4F234BC1708B25E007771E9 /* RXSequenceEnumerator.h */,
+				D4F234BD1708B25E007771E9 /* RXSequenceEnumerator.m */,
+			);
+			name = Sequences;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -437,6 +465,8 @@
 				D4EC50F816EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68516F015FD00C732A0 /* RXConvolutionTraversal.h in Headers */,
 				D496682C16FB1734002C0FA8 /* RXFastEnumerationState.h in Headers */,
+				D4F234B7170772B1007771E9 /* RXSequence.h in Headers */,
+				D4F234C01708B25E007771E9 /* RXSequenceEnumerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +492,8 @@
 				D4EC50F616EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68316F015FD00C732A0 /* RXConvolutionTraversal.h in Headers */,
 				D496682A16FB1734002C0FA8 /* RXFastEnumerationState.h in Headers */,
+				D4F234B5170772AB007771E9 /* RXSequence.h in Headers */,
+				D4F234BE1708B25E007771E9 /* RXSequenceEnumerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +519,8 @@
 				D4EC50F716EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68416F015FD00C732A0 /* RXConvolutionTraversal.h in Headers */,
 				D496682B16FB1734002C0FA8 /* RXFastEnumerationState.h in Headers */,
+				D4F234B6170772AC007771E9 /* RXSequence.h in Headers */,
+				D4F234BF1708B25E007771E9 /* RXSequenceEnumerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +724,8 @@
 				D4ADB68816F015FD00C732A0 /* RXConvolutionTraversal.m in Sources */,
 				D4ADB68F16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D496682F16FB1734002C0FA8 /* RXFastEnumerationState.m in Sources */,
+				D4F234BB1708AC76007771E9 /* RXSequence.m in Sources */,
+				D4F234C31708B25E007771E9 /* RXSequenceEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +750,8 @@
 				D4ADB68616F015FD00C732A0 /* RXConvolutionTraversal.m in Sources */,
 				D4ADB68D16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D496682D16FB1734002C0FA8 /* RXFastEnumerationState.m in Sources */,
+				D4F234B91708AC76007771E9 /* RXSequence.m in Sources */,
+				D4F234C11708B25E007771E9 /* RXSequenceEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +776,8 @@
 				D4ADB68716F015FD00C732A0 /* RXConvolutionTraversal.m in Sources */,
 				D4ADB68E16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D496682E16FB1734002C0FA8 /* RXFastEnumerationState.m in Sources */,
+				D4F234BA1708AC76007771E9 /* RXSequence.m in Sources */,
+				D4F234C21708B25E007771E9 /* RXSequenceEnumerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
