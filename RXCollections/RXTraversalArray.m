@@ -118,7 +118,7 @@
 			}
 		}
 		
-		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (CGFloat)kChunkCount) * kChunkCount));
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (double)kChunkCount) * kChunkCount));
 		
 		for (NSUInteger i = 0; i < count; i++) {
 			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];
