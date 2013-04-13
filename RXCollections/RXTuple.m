@@ -108,6 +108,13 @@
 	return self;
 }
 
+-(void)dealloc {
+	__strong id *elements = self.elements;
+	for (NSUInteger i = 0; i < self.count; i++) {
+		elements[i] = nil;
+	}
+}
+
 
 #pragma mark Access
 
