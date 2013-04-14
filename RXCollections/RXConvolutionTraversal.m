@@ -61,8 +61,8 @@ id (* const RXZip)(id<RXTraversal>) = RXConvolve;
 	return source;
 }
 
--(void)populateTraversal:(id<RXBatchedTraversal>)traversal {
-	[traversal populateWithBlock:^{
+-(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
+	[traversal refillWithBlock:^{
 		size_t arity = self.sequences.count;
 		id objects[arity];
 		NSUInteger i = 0;

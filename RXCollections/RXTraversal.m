@@ -10,7 +10,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 -(void)refill; // subclass responsibility
 @end
 
-@interface RXSourcedTraversal : RXRefillingTraversal <RXBatchedTraversal>
+@interface RXSourcedTraversal : RXRefillingTraversal <RXRefillableTraversal>
 +(instancetype)traversalWithSource:(id<RXTraversalSource>)source;
 
 @property (nonatomic, strong) id<RXTraversalSource> source;
@@ -130,7 +130,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 
 -(void)refill {
-	[self.source populateTraversal:self];
+	[self.source refillTraversal:self];
 }
 
 
@@ -139,7 +139,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	self.current = 0;
 }
 
--(void)populateWithBlock:(bool(^)())block {
+-(void)refillWithBlock:(bool(^)())block {
 	[self empty];
 	
 	while ((self.source != nil) && (self.count < self.capacity)) {

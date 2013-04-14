@@ -24,9 +24,9 @@
 @end
 
 
-@protocol RXBatchedTraversal <RXTraversal>
+@protocol RXRefillableTraversal <RXTraversal>
 
--(void)populateWithBlock:(bool(^)())block;
+-(void)refillWithBlock:(bool(^)())block;
 
 -(void)empty;
 -(void)produce:(id)object;
@@ -35,7 +35,7 @@
 
 @protocol RXTraversalSource <NSObject>
 
--(void)populateTraversal:(id<RXBatchedTraversal>)traversal;
+-(void)refillTraversal:(id<RXRefillableTraversal>)traversal;
 
 @end
 

@@ -21,8 +21,8 @@
 }
 
 
--(void)populateTraversal:(id<RXBatchedTraversal>)traversal {
-	[traversal populateWithBlock:^{
+-(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
+	[traversal refillWithBlock:^{
 		bool exhausted = ((RXTraversal *)self.traversal).isExhausted;
 		if (!exhausted) {
 			id each = [(RXTraversal *)self.traversal consume];
