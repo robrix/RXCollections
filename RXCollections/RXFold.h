@@ -37,6 +37,14 @@ extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
  */
 extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
 
+/**
+ RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration)
+ 
+ Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be nil.
+ */
+@class RXTuple;
+extern RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration);
+
 
 /**
  RXTuple *RXConstructTuple(id<NSFastTraversal> traversal)

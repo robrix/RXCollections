@@ -61,6 +61,15 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 }
 
 
+RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
+	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^id(NSMutableArray *memo, id each) {
+		[memo addObject:each];
+		return memo;
+	});
+	return [RXTuple tupleWithArray:objects];
+}
+
+
 @l3_suite("RXMin");
 
 @l3_test("finds the minimum value among a collection") {
