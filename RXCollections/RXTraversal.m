@@ -60,17 +60,19 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 }
 
 
+-(bool)isExhausted {
+	return !self.canConsume;
+}
+
 -(bool)canConsume {
 	return self.count > self.current;
 }
 
 
--(id)consume:(out bool *)exhausted {
+-(id)consume {
 	id consumed = nil;
 	if (self.canConsume)
 		consumed = self.objects[self.current++];
-	else if (exhausted)
-		*exhausted = YES;
 	return consumed;
 }
 
@@ -137,14 +139,11 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	self.current = 0;
 }
 
--(void)populateWithBlock:(void (^)(bool *))block {
+-(void)populateWithBlock:(bool(^)())block {
 	[self empty];
 	
-	bool exhausted = NO;
-	while ((exhausted == NO) && (self.count < self.capacity)) {
-		exhausted = NO;
-		block(&exhausted);
-		if (exhausted)
+	while ((self.source != nil) && (self.count < self.capacity)) {
+		if (block())
 			self.source = nil;
 	}
 }

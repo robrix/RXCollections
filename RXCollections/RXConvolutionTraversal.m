@@ -62,15 +62,18 @@ id (* const RXZip)(id<RXTraversal>) = RXConvolve;
 }
 
 -(void)populateTraversal:(id<RXBatchedTraversal>)traversal {
-	[traversal populateWithBlock:^(bool *exhausted) {
+	[traversal populateWithBlock:^{
 		size_t arity = self.sequences.count;
 		id objects[arity];
 		NSUInteger i = 0;
-		for (id<RXTraversal> sequence in self.sequences) {
-			objects[i++] = [(RXTraversal *)sequence consume:exhausted];
+		bool exhausted = NO;
+		for (RXTraversal *sequence in self.sequences) {
+			exhausted = exhausted || sequence.isExhausted;
+			objects[i++] = [sequence consume];
 		}
-		if (!*exhausted)
+		if (!exhausted)
 			[traversal produce:self.block(arity, objects)];
+		return exhausted;
 	}];
 }
 

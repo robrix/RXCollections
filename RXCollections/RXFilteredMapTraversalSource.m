@@ -22,10 +22,14 @@
 
 
 -(void)populateTraversal:(id<RXBatchedTraversal>)traversal {
-	[traversal populateWithBlock:^(bool *exhausted){
-		id each = [(RXTraversal *)self.traversal consume:exhausted];
-		if(!*exhausted && (!self.filter || self.filter(each)))
-			[traversal produce:self.map? self.map(each) : each];
+	[traversal populateWithBlock:^{
+		bool exhausted = ((RXTraversal *)self.traversal).isExhausted;
+		if (!exhausted) {
+			id each = [(RXTraversal *)self.traversal consume];
+			if(!self.filter || self.filter(each))
+				[traversal produce:self.map? self.map(each) : each];
+		}
+		return exhausted;
 	}];
 }
 

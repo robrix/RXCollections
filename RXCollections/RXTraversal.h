@@ -26,7 +26,7 @@
 
 @protocol RXBatchedTraversal <RXTraversal>
 
--(void)populateWithBlock:(void(^)(bool *))block;
+-(void)populateWithBlock:(bool(^)())block;
 
 -(void)empty;
 -(void)produce:(id)object;
@@ -45,7 +45,9 @@
 +(instancetype)traversalWithSource:(id<RXTraversalSource>)source;
 +(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration;
 
--(id)consume:(out bool *)exhausted;
+-(id)consume;
+
+@property (nonatomic, getter = isExhausted, readonly) bool exhausted;
 
 @end
 
