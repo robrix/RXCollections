@@ -108,6 +108,11 @@
 	return self;
 }
 
+/*
+ Since the tuple class and its elements ivar is created at runtime, ARC does not have the information necessary to release the contained objects, even if it had the opportunity to generate the correct -dealloc method for us.
+ Assigning nil to each element ensures that ARC can release its previous (strongly-held) reference (if any), per http://clang.llvm.org/docs/AutomaticReferenceCounting.html#conversion-of-pointers-to-ownership-qualified-types
+ h/t to @rustle for catching this and suggesting this explanatory comment.
+*/
 -(void)dealloc {
 	__strong id *elements = self.elements;
 	for (NSUInteger i = 0; i < self.count; i++) {
