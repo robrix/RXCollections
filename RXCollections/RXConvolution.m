@@ -1,8 +1,8 @@
-//  RXConvolutionTraversal.m
+//  RXConvolution.m
 //  Created by Rob Rix on 2013-03-12.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXConvolutionTraversal.h"
+#import "RXConvolution.h"
 #import "RXFold.h"
 #import "RXTuple.h"
 #import "RXMap.h"

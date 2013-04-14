@@ -1,4 +1,4 @@
-//  RXConvolutionTraversal.h
+//  RXConvolution.h
 //  Created by Rob Rix on 2013-03-12.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
@@ -25,13 +25,3 @@ extern id (* const RXZipWith)(id<RXTraversal>, RXConvolutionBlock);
  */
 extern id<RXTraversal> RXConvolve(id<RXTraversal> sequences);
 extern id (* const RXZip)(id<RXTraversal>);
-
-
-@interface RXConvolutionTraversal : NSObject <RXTraversal>
-
-+(instancetype)traversalWithSequences:(id<RXTraversal>)sequences block:(RXConvolutionBlock)block;
-
-@property (nonatomic, readonly) id<RXTraversal> sequences;
-@property (nonatomic, copy, readonly) RXConvolutionBlock block;
-
-@end
