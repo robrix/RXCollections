@@ -3,9 +3,8 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXMap.h"
-#import "RXEnumerationTraversal.h"
+#import "RXFilteredMapTraversalSource.h"
 #import "RXFold.h"
-#import "RXMappingTraversalStrategy.h"
 
 #import <Lagrangian/Lagrangian.h>
 
@@ -26,6 +25,6 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 	})), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 }
 
-id<RXTraversal> RXMap(id<NSFastEnumeration> collection, RXMapBlock block) {
-	return [RXEnumerationTraversal traversalWithEnumeration:collection strategy:[RXMappingTraversalStrategy strategyWithBlock:block]];
+id<RXTraversal> RXMap(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithTraversal:[RXTraversal traversalWithEnumeration:enumeration] filter:nil map:block]];
 }

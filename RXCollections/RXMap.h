@@ -15,9 +15,9 @@ typedef id (^RXMapBlock)(id each);
 extern RXMapBlock const RXIdentityMapBlock;
 
 /**
- id<RXTraversal> RXMap(id<RXTraversal> collection, RXMapBlock block)
+ id<RXTraversal> RXMap(id<RXTraversal> enumeration, RXMapBlock block)
  
  Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil. Further details of the contract of the returned traversal are specified in the documentation for RXMappingTraversal.
  */
 
-extern id<RXTraversal> RXMap(id<NSFastEnumeration> collection, RXMapBlock block);
+extern id<RXTraversal> RXMap(id<NSFastEnumeration> enumeration, RXMapBlock block);

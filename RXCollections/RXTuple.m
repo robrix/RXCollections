@@ -268,16 +268,8 @@
 }
 
 
-#pragma mark RXSequence
-
-@l3_test("sequences its elements en masse") {
-	
-}
-
--(bool)retrieveObjectsWithState:(RXSequenceEnumerationState *)state {
-	state.objects = self.elements;
-	state.count = self.count;
-	return NO;
+-(id<RXTraversal>)traversal {
+	return [RXTraversal traversalWithInteriorObjects:self.elements count:self.count owner:self];
 }
 
 @end

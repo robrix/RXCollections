@@ -3,8 +3,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilter.h"
-#import "RXEnumerationTraversal.h"
-#import "RXFilteringTraversalStrategy.h"
+#import "RXFilteredMapTraversalSource.h"
 #import "RXFold.h"
 #import "RXMap.h"
 
@@ -68,7 +67,7 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 }
 
 id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return [RXEnumerationTraversal traversalWithEnumeration:enumeration strategy:[RXFilteringTraversalStrategy strategyWithBlock:block]];
+	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithTraversal:[RXTraversal traversalWithEnumeration:enumeration] filter:block map:nil]];
 }
 
 

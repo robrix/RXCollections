@@ -3,9 +3,8 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXTraversal.h>
-#import <RXCollections/RXSequence.h>
 
-@interface RXTuple : NSObject <NSCopying, RXFiniteTraversal, RXSequence>
+@interface RXTuple : NSObject <NSCopying, RXFiniteTraversal, RXTraversable>
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;

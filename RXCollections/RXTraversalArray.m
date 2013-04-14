@@ -45,7 +45,7 @@
 -(instancetype)initWithTraversal:(id<RXTraversal>)traversal count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_enumeration = traversal;
-		if ((count == RXTraversalUnknownCount) && ([traversal respondsToSelector:@selector(count)]))
+		if ((count == RXTraversalUnknownCount) && ([traversal conformsToProtocol:@protocol(RXFiniteTraversal)]))
 			_internalCount = [(id<RXFiniteTraversal>)traversal count];
 		else
 			_internalCount = count;
