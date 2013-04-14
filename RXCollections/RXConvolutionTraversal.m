@@ -3,7 +3,6 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXConvolutionTraversal.h"
-#import "RXFastEnumerationState.h"
 #import "RXFold.h"
 #import "RXTuple.h"
 #import "RXMap.h"
@@ -12,123 +11,18 @@
 
 @l3_suite("RXConvolutionTraversal");
 
-@interface RXConvolutionEnumerationState : RXFastEnumerationState
+@interface RXConvolutionTraversalSource : NSObject <RXTraversalSource>
++(instancetype)sourceWithSequences:(RXTuple *)sequences block:(RXConvolutionBlock)block;
 
-+(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count sequences:(id<RXTraversal>)sequences;
-
-@property (nonatomic, strong) RXTuple *sequenceEnumerations;
-
-@end
-
-@interface RXConvolutionSequenceEnumerationState : RXHeapFastEnumerationState
-
-+(instancetype)stateWithSequence:(id<NSFastEnumeration>)sequence;
-
--(id)nextObject;
-
--(NSUInteger)countByEnumerating;
-
-@end
-
-@implementation RXConvolutionTraversal
-
-#pragma mark Construction
-
-+(instancetype)traversalWithSequences:(id<RXTraversal>)sequences block:(RXConvolutionBlock)block {
-	return [[self alloc] initWithSequences:sequences block:block];
-}
-
--(instancetype)initWithSequences:(id<RXTraversal>)sequences block:(RXConvolutionBlock)block {
-	if ((self = [super init])) {
-		_sequences = sequences;
-		_block = [block copy];
-	}
-	return self;
-}
-
-
-#pragma mark NSFastEnumeration
-
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)fastEnumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXConvolutionEnumerationState *state = [RXConvolutionEnumerationState stateWithNSFastEnumerationState:fastEnumerationState objects:buffer count:len sequences:self.sequences];
-	NSUInteger count = [RXMin(state.sequenceEnumerations, @(len), ^(id each) {
-		return @([each countByEnumerating]);
-	}) unsignedIntegerValue];
-	
-	for (NSUInteger i = 0; i < count; i++) {
-		size_t arity = state.sequenceEnumerations.count;
-		id objects[arity];
-		NSUInteger j = 0;
-		for (RXConvolutionSequenceEnumerationState *sequenceState in state.sequenceEnumerations) {
-			objects[j++] = [sequenceState nextObject];
-		}
-		
-		state.items[i] = self.block(arity, objects);
-	}
-	
-	return count;
-}
-
-@end
-
-@implementation RXConvolutionEnumerationState
-
-+(instancetype)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count sequences:(id<RXTraversal>)sequences {
-	return [RXConvolutionEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXConvolutionEnumerationState *state) {
-		state.sequenceEnumerations = [RXTuple tupleWithArray:RXConstructArray(RXMap(sequences, ^(id<NSFastEnumeration> sequence){
-			return [RXConvolutionSequenceEnumerationState stateWithSequence:sequence];
-		}))];
-	}];
-}
-
-@end
-
-@interface RXConvolutionSequenceEnumerationState ()
-
-@property (nonatomic, readonly) id<NSFastEnumeration> sequence;
-@property (nonatomic, readonly) __unsafe_unretained id *objects;
-@property (nonatomic, readwrite) NSUInteger countProduced;
-@property (nonatomic) NSUInteger countConsumed;
-
-@end
-
-@implementation RXConvolutionSequenceEnumerationState {
-	__unsafe_unretained id _objects[16];
-}
-
-+(instancetype)stateWithSequence:(id<NSFastEnumeration>)sequence {
-	RXConvolutionSequenceEnumerationState *state = [self new];
-	state->_sequence = sequence;
-	return state;
-}
-
--(__unsafe_unretained id *)objects {
-	return _objects;
-}
-
--(size_t)capacity {
-	return sizeof(_objects) / sizeof(*_objects);
-}
-
-
--(id)nextObject {
-	return self.NSFastEnumerationState->itemsPtr[self.countConsumed++];
-}
-
-
--(NSUInteger)countByEnumerating {
-	if (self.countConsumed == self.countProduced) {
-		self.countConsumed = 0;
-		self.countProduced = [self.sequence countByEnumeratingWithState:self.NSFastEnumerationState objects:self.objects count:self.capacity];
-	}
-	return self.countProduced - self.countConsumed;
-}
-
+@property (nonatomic, strong, readonly) RXTuple *sequences;
+@property (nonatomic, copy, readonly) RXConvolutionBlock block;
 @end
 
 
 id<RXTraversal> RXConvolveWith(id<RXTraversal> sequences, RXConvolutionBlock block) {
-	return [RXConvolutionTraversal traversalWithSequences:sequences block:block];
+	return [RXTraversal traversalWithSource:[RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id each) {
+		return [RXTraversal traversalWithEnumeration:each];
+	})) block:block]];
 }
 
 id (* const RXZipWith)(id<RXTraversal>, RXConvolutionBlock) = RXConvolveWith;
@@ -151,3 +45,33 @@ id<RXTraversal> RXConvolve(id<RXTraversal> sequences) {
 }
 
 id (* const RXZip)(id<RXTraversal>) = RXConvolve;
+
+
+@interface RXConvolutionTraversalSource ()
+@property (nonatomic, strong, readwrite) RXTuple *sequences;
+@property (nonatomic, copy, readwrite) RXConvolutionBlock block;
+@end
+
+@implementation RXConvolutionTraversalSource
+
++(instancetype)sourceWithSequences:(RXTuple *)sequences block:(RXConvolutionBlock)block {
+	RXConvolutionTraversalSource *source = [self new];
+	source.sequences = sequences;
+	source.block = block;
+	return source;
+}
+
+-(void)populateTraversal:(id<RXBatchedTraversal>)traversal {
+	[traversal populateWithBlock:^(bool *exhausted) {
+		size_t arity = self.sequences.count;
+		id objects[arity];
+		NSUInteger i = 0;
+		for (id<RXTraversal> sequence in self.sequences) {
+			objects[i++] = [(RXTraversal *)sequence consume:exhausted];
+		}
+		if (!*exhausted)
+			[traversal produce:self.block(arity, objects)];
+	}];
+}
+
+@end
