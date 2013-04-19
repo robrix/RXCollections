@@ -14,7 +14,7 @@
 
 typedef id (^RXGeneratorBlock)(id<RXGenerator> generator);
 
-id<RXTraversal> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block);
+extern id<RXTraversal> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block);
 /**
  id<RXTraversal> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block)
  
