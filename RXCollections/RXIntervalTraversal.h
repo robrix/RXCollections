@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-03-01.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXTraversal.h"
+#import <RXCollections/RXTraversal.h>
 #import <float.h>
 
 #if defined(__LP64__) && __LP64__
