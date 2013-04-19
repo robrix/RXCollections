@@ -45,7 +45,7 @@
 		return previous;
 	};
 	NSMutableArray *series = [NSMutableArray new];
-	for (NSNumber *number in RXGenerator([RXTuple tupleWithArray:@[@0, @1]], fibonacci)) {
+	for (NSNumber *number in RXGenerator([RXTuple tupleWithArray:@[@0, @1]], fibonacci).traversal) {
 		[series addObject:number];
 		if (series.count == 12)
 			break;
@@ -62,7 +62,7 @@
 			[self complete];
 		return @(current);
 	};
-	NSArray *integers = RXConstructArray(RXGenerator(nil, block));
+	NSArray *integers = RXConstructArray(RXGenerator(nil, block).traversal);
 	l3_assert(integers, (@[@0, @1, @2, @3]));
 }
 
@@ -93,6 +93,6 @@
 
 @end
 
-id<RXTraversal> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
-	return [RXGeneratorTraversalSource sourceWithContext:context block:block].traversal;
+id<RXGenerator, RXTraversable> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
+	return [RXGeneratorTraversalSource sourceWithContext:context block:block];
 }
