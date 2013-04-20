@@ -2,7 +2,6 @@
 //  Created by Rob Rix on 2013-01-11.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXFastEnumerationState.h"
 #import "RXFold.h"
 #import "RXPair.h"
 #import "RXRecursiveEnumerator.h"
@@ -13,13 +12,8 @@
 
 static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, id target, NSString *keyPath);
 
-@interface RXRecursiveEnumeratorState : RXFastEnumerationState
-
-+(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count recursiveEnumerator:(RXRecursiveEnumerator *)enumerator NS_RETURNS_RETAINED;
-
-@property (nonatomic, strong) NSMutableArray *flattened;
-@property (nonatomic, assign) NSUInteger currentIndex;
-
+@interface RXRecursiveEnumerator ()
+@property (nonatomic, copy) NSArray *flattened;
 @end
 
 @implementation RXRecursiveEnumerator
@@ -53,6 +47,15 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 	}
 }
 
+-(NSArray *)flattened {
+	if (!_flattened) {
+		NSMutableArray *flattened = [NSMutableArray new];
+		RXAccumulateRecursiveContentsOfTarget(flattened, self.target, self.keyPath);
+		self.flattened = flattened;
+	}
+	return _flattened;
+}
+
 
 @l3_test("recursively enumerates trees in depth-first order") {
 	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
@@ -62,44 +65,20 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXRecursiveEnumeratorState *enumeratorState = [RXRecursiveEnumeratorState stateWithNSFastEnumerationState:state objects:buffer count:len recursiveEnumerator:self];
-	
-	NSMutableArray *flattened = enumeratorState.flattened;
+	NSArray *flattened = self.flattened;
 	
 	NSUInteger count = 0;
-	if (enumeratorState.currentIndex < flattened.count) {
-		while ((enumeratorState.currentIndex < flattened.count) && (count < len)) {
-			buffer[count] = flattened[enumeratorState.currentIndex];
-			enumeratorState.currentIndex++;
+	if (state->state < flattened.count) {
+		state->itemsPtr = buffer;
+		state->mutationsPtr = state->extra;
+		while ((state->state < flattened.count) && (count < len)) {
+			buffer[count] = flattened[state->state];
+			state->state++;
 			count++;
 		}
 	}
 	
 	return count;
-}
-
-@end
-
-@implementation RXRecursiveEnumeratorState {
-	__unsafe_unretained NSMutableArray *_flattened;
-	NSUInteger _currentIndex;
-}
-
-+(id<RXFastEnumerationState>)stateWithNSFastEnumerationState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)count recursiveEnumerator:(RXRecursiveEnumerator *)enumerator NS_RETURNS_RETAINED {
-	return [self stateWithNSFastEnumerationState:state objects:buffer count:count initializationHandler:^(RXRecursiveEnumeratorState *state) {
-		state.flattened = [NSMutableArray new];
-		RXAccumulateRecursiveContentsOfTarget(state.flattened, enumerator.target, enumerator.keyPath);
-	}];
-}
-
-
--(NSMutableArray *)flattened {
-	return _flattened;
-}
-
--(void)setFlattened:(NSMutableArray *)flattened {
-	__autoreleasing NSMutableArray *autoreleasingFlattened = flattened;
-	_flattened = autoreleasingFlattened;
 }
 
 @end
