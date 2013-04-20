@@ -1,9 +1,11 @@
-//  RXIntervalTraversal.h
+//  RXInterval.h
 //  Created by Rob Rix on 2013-03-01.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXTraversal.h>
 #import <float.h>
+
+#pragma mark RXMagnitude
 
 #if defined(__LP64__) && __LP64__
 #define RX_MAGNITUDE_TYPE double
@@ -20,21 +22,6 @@
 typedef RX_MAGNITUDE_TYPE RXMagnitude;
 #define RX_MAGNITUDE_DEFINED 1
 
-@protocol RXInterval <NSObject, RXTraversable>
-@property (nonatomic, readonly) RXMagnitude from;
-@property (nonatomic, readonly) RXMagnitude to;
-@property (nonatomic, readonly) RXMagnitude length;
-@property (nonatomic, readonly) RXMagnitude stride;
-@property (nonatomic, readonly) NSUInteger count;
-@end
-
-extern id<RXInterval> RXInterval(RXMagnitude from, RXMagnitude to); // implicit stride of 1
-extern id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude stride);
-extern id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger count);
-
-
-#pragma mark RXMagnitude
-
 static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x);
 
 static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x) {
@@ -47,6 +34,18 @@ static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x) {
 
 
 #pragma mark RXInterval
+
+@protocol RXInterval <NSObject, RXTraversable>
+@property (nonatomic, readonly) RXMagnitude from;
+@property (nonatomic, readonly) RXMagnitude to;
+@property (nonatomic, readonly) RXMagnitude length;
+@property (nonatomic, readonly) RXMagnitude stride;
+@property (nonatomic, readonly) NSUInteger count;
+@end
+
+extern id<RXInterval> RXInterval(RXMagnitude from, RXMagnitude to); // implicit stride of 1
+extern id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude stride);
+extern id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger count);
 
 static inline RXMagnitude RXIntervalGetLength(RXMagnitude from, RXMagnitude to);
 

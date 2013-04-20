@@ -1,13 +1,13 @@
-//  RXIntervalTraversal.m
+//  RXInterval.m
 //  Created by Rob Rix on 2013-03-01.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFold.h"
-#import "RXIntervalTraversal.h"
+#import "RXInterval.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXIntervalTraversal");
+@l3_suite("RXInterval");
 
 @interface RXIntervalTraversalSource : NSObject <RXInterval, RXTraversalSource>
 -(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count;

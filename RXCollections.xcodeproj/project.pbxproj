@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4078DC216E124490005B4C8 /* RXIntervalTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */; };
-		D4078DC316E124490005B4C8 /* RXIntervalTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */; };
-		D4078DC416E124490005B4C8 /* RXIntervalTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */; };
-		D4078DC516E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
-		D4078DC616E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
-		D4078DC716E124490005B4C8 /* RXIntervalTraversal.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */; };
+		D4078DC216E124490005B4C8 /* RXInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXInterval.h */; };
+		D4078DC316E124490005B4C8 /* RXInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXInterval.h */; };
+		D4078DC416E124490005B4C8 /* RXInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = D4078DC016E124490005B4C8 /* RXInterval.h */; };
+		D4078DC516E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
+		D4078DC616E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
+		D4078DC716E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
 		D44C5B1A16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
 		D44C5B1B16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
 		D44C5B1C16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */; };
@@ -176,8 +176,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXIntervalTraversal.h; sourceTree = "<group>"; };
-		D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXIntervalTraversal.m; sourceTree = "<group>"; };
+		D4078DC016E124490005B4C8 /* RXInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXInterval.h; sourceTree = "<group>"; };
+		D4078DC116E124490005B4C8 /* RXInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXInterval.m; sourceTree = "<group>"; };
 		D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXTraversalArray.h; sourceTree = "<group>"; };
 		D44C5B1916E3B4FC00A2A350 /* RXTraversalArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTraversalArray.m; sourceTree = "<group>"; };
 		D473F63616DA7E5D000FCD8D /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -252,8 +252,6 @@
 				D4ADB68C16F039D300C732A0 /* RXTraversal.m */,
 				D4EC50F416EB15A700EB3B64 /* RXGenerator.h */,
 				D4EC50F516EB15A700EB3B64 /* RXGenerator.m */,
-				D4078DC016E124490005B4C8 /* RXIntervalTraversal.h */,
-				D4078DC116E124490005B4C8 /* RXIntervalTraversal.m */,
 				D4B62B1C16A113C600E42C84 /* RXRecursiveEnumerator.h */,
 				D4B62B1D16A113C600E42C84 /* RXRecursiveEnumerator.m */,
 				D4B5CA56171A79ED00069C92 /* RXFilteredMapTraversalSource.h */,
@@ -341,6 +339,8 @@
 		D4B5CA60171A819100069C92 /* Collections */ = {
 			isa = PBXGroup;
 			children = (
+				D4078DC016E124490005B4C8 /* RXInterval.h */,
+				D4078DC116E124490005B4C8 /* RXInterval.m */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
 				D4C8768B16A2172100208BE9 /* RXPair.m */,
 				D44C5B1816E3B4FC00A2A350 /* RXTraversalArray.h */,
@@ -394,7 +394,7 @@
 				D473F64F16DA81DD000FCD8D /* RXRecursiveEnumerator.h in Headers */,
 				D473F65016DA81DD000FCD8D /* RXTraversal.h in Headers */,
 				D473F65116DA81DD000FCD8D /* RXCollections.h in Headers */,
-				D4078DC416E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D4078DC416E124490005B4C8 /* RXInterval.h in Headers */,
 				D44C5B1C16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 				D4C01DF516E8169B00C17FF6 /* RXTuple.h in Headers */,
 				D4EC50F816EB15A700EB3B64 /* RXGenerator.h in Headers */,
@@ -415,7 +415,7 @@
 				D4CF2C6216D7160C005F5810 /* RXMap.h in Headers */,
 				D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */,
 				D4CF2C6D16D71996005F5810 /* RXCollections.h in Headers */,
-				D4078DC216E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D4078DC216E124490005B4C8 /* RXInterval.h in Headers */,
 				D44C5B1A16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 				D4C01DF316E8169B00C17FF6 /* RXTuple.h in Headers */,
 				D4EC50F616EB15A700EB3B64 /* RXGenerator.h in Headers */,
@@ -436,7 +436,7 @@
 				D4CF2C6316D7160C005F5810 /* RXMap.h in Headers */,
 				D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */,
 				D4CF2C6E16D71996005F5810 /* RXCollections.h in Headers */,
-				D4078DC316E124490005B4C8 /* RXIntervalTraversal.h in Headers */,
+				D4078DC316E124490005B4C8 /* RXInterval.h in Headers */,
 				D44C5B1B16E3B4FC00A2A350 /* RXTraversalArray.h in Headers */,
 				D4C01DF416E8169B00C17FF6 /* RXTuple.h in Headers */,
 				D4EC50F716EB15A700EB3B64 /* RXGenerator.h in Headers */,
@@ -634,7 +634,7 @@
 				D473F65416DA81F3000FCD8D /* RXMap.m in Sources */,
 				D473F65A16DA81F3000FCD8D /* RXPair.m in Sources */,
 				D473F65B16DA81F3000FCD8D /* RXRecursiveEnumerator.m in Sources */,
-				D4078DC716E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D4078DC716E124490005B4C8 /* RXInterval.m in Sources */,
 				D44C5B1F16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 				D4C01DF816E8169B00C17FF6 /* RXTuple.m in Sources */,
 				D4EC50FB16EB15A700EB3B64 /* RXGenerator.m in Sources */,
@@ -654,7 +654,7 @@
 				D4CF2C0616D6FFFA005F5810 /* RXFilter.m in Sources */,
 				D4CF2C6416D7160C005F5810 /* RXMap.m in Sources */,
 				D4CF2C6A16D718B0005F5810 /* RXFold.m in Sources */,
-				D4078DC516E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D4078DC516E124490005B4C8 /* RXInterval.m in Sources */,
 				D44C5B1D16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 				D4C01DF616E8169B00C17FF6 /* RXTuple.m in Sources */,
 				D4EC50F916EB15A700EB3B64 /* RXGenerator.m in Sources */,
@@ -674,7 +674,7 @@
 				D4CF2C0716D6FFFA005F5810 /* RXFilter.m in Sources */,
 				D4CF2C6516D7160C005F5810 /* RXMap.m in Sources */,
 				D4CF2C6B16D718B0005F5810 /* RXFold.m in Sources */,
-				D4078DC616E124490005B4C8 /* RXIntervalTraversal.m in Sources */,
+				D4078DC616E124490005B4C8 /* RXInterval.m in Sources */,
 				D44C5B1E16E3B4FC00A2A350 /* RXTraversalArray.m in Sources */,
 				D4C01DF716E8169B00C17FF6 /* RXTuple.m in Sources */,
 				D4EC50FA16EB15A700EB3B64 /* RXGenerator.m in Sources */,

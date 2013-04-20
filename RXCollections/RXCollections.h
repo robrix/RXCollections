@@ -4,22 +4,23 @@
 
 #pragma mark Traversals
 
-#import <RXCollections/RXTraversal.h>
-#import <RXCollections/RXConvolutionTraversal.h>
 #import <RXCollections/RXGenerator.h>
 #import <RXCollections/RXRangeTraversal.h>
-
 #import <RXCollections/RXRecursiveEnumerator.h>
+#import <RXCollections/RXTraversal.h>
 
 
 #pragma mark Higher-order functions
 
+#import <RXCollections/RXConvolution.h>
 #import <RXCollections/RXFilter.h>
 #import <RXCollections/RXFold.h>
 #import <RXCollections/RXMap.h>
 
 
-#pragma mark Values
+#pragma mark Collections
 
+#import <RXCollections/RXInterval.h>
 #import <RXCollections/RXPair.h>
+#import <RXCollections/RXTraversalArray.h>
 #import <RXCollections/RXTuple.h>
