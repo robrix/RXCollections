@@ -11,7 +11,7 @@
 @l3_suite("RXTraversalArray");
 
 @l3_set_up {
-	test[@"items"] = [RXIntervalTraversal traversalWithInterval:RXIntervalMake(0, 63)];
+	test[@"items"] = RXInterval(0, 63).traversal;
 	test[@"array"] = [RXTraversalArray arrayWithTraversal:test[@"items"]];
 }
 

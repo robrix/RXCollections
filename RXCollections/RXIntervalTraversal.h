@@ -20,34 +20,22 @@
 typedef RX_MAGNITUDE_TYPE RXMagnitude;
 #define RX_MAGNITUDE_DEFINED 1
 
-typedef struct RXInterval {
-	RXMagnitude from;
-	RXMagnitude to;
-} RXInterval;
-
-
-@interface RXIntervalTraversal : NSObject <RXTraversal>
-
-+(instancetype)traversalWithInterval:(RXInterval)interval;
-+(instancetype)traversalWithInterval:(RXInterval)interval stride:(RXMagnitude)stride;
-+(instancetype)traversalWithInterval:(RXInterval)interval count:(NSUInteger)count;
-
-@property (nonatomic, readonly) RXInterval interval;
+@protocol RXInterval <NSObject, RXTraversable>
+@property (nonatomic, readonly) RXMagnitude from;
+@property (nonatomic, readonly) RXMagnitude to;
 @property (nonatomic, readonly) RXMagnitude length;
 @property (nonatomic, readonly) RXMagnitude stride;
 @property (nonatomic, readonly) NSUInteger count;
-
 @end
 
-
-static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x);
-
-static inline RXInterval RXIntervalMake(RXMagnitude from, RXMagnitude to);
-static inline RXInterval RXIntervalMakeWithLength(RXMagnitude from, RXMagnitude length);
-static inline RXMagnitude RXIntervalGetLength(RXInterval interval);
+extern id<RXInterval> RXInterval(RXMagnitude from, RXMagnitude to); // implicit stride of 1
+extern id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude stride);
+extern id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger count);
 
 
 #pragma mark RXMagnitude
+
+static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x);
 
 static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x) {
 #if RX_MAGNITUDE_IS_DOUBLE
@@ -60,14 +48,8 @@ static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x) {
 
 #pragma mark RXInterval
 
-static inline RXInterval RXIntervalMake(RXMagnitude from, RXMagnitude to) {
-	return (RXInterval){ from, to };
-}
+static inline RXMagnitude RXIntervalGetLength(RXMagnitude from, RXMagnitude to);
 
-static inline RXInterval RXIntervalMakeWithLength(RXMagnitude from, RXMagnitude length) {
-	return (RXInterval){ from, from + length };
-}
-
-static inline RXMagnitude RXIntervalGetLength(RXInterval interval) {
-	return RXMagnitudeGetAbsoluteValue(interval.to - interval.from);
+static inline RXMagnitude RXIntervalGetLength(RXMagnitude from, RXMagnitude to) {
+	return RXMagnitudeGetAbsoluteValue(to - from);
 }
