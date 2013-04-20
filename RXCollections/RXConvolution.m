@@ -19,13 +19,13 @@
 @end
 
 
-id<RXTraversal> RXConvolveWith(id<NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	return [RXTraversal traversalWithSource:[RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id each) {
-		return [RXTraversal traversalWithEnumeration:each];
-	})) block:block]];
+id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
+	return RXTraversalWithSource([RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each) {
+		return RXTraversalWithEnumeration(each);
+	})) block:block]);
 }
 
-id (* const RXZipWith)(id<NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
+id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
 
 
 @l3_test("transforms a tuple of sequences into a sequence of tuples") {
@@ -38,13 +38,13 @@ id (* const RXZipWith)(id<NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWi
 	l3_assert(convoluted.count, 2);
 }
 
-id<RXTraversal> RXConvolve(id<NSFastEnumeration> sequences) {
+id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count]) {
 		return [RXTuple tupleWithObjects:objects count:count];
 	});
 }
 
-id (* const RXZip)(id<NSFastEnumeration>) = RXConvolve;
+id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
 
 
 @interface RXConvolutionTraversalSource ()
@@ -67,7 +67,7 @@ id (* const RXZip)(id<NSFastEnumeration>) = RXConvolve;
 		id objects[arity];
 		NSUInteger i = 0;
 		bool exhausted = NO;
-		for (RXTraversal *sequence in self.sequences) {
+		for (id<RXTraversal> sequence in self.sequences) {
 			exhausted = exhausted || sequence.isExhausted;
 			objects[i++] = [sequence consume];
 		}

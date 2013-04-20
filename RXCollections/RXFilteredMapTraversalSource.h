@@ -8,6 +8,6 @@
 
 @interface RXFilteredMapTraversalSource : NSObject <RXTraversalSource>
 
-+(instancetype)sourceWithEnumeration:(id<NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map;
++(instancetype)sourceWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map;
 
 @end

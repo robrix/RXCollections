@@ -12,9 +12,9 @@
 
 @implementation RXFilteredMapTraversalSource
 
-+(instancetype)sourceWithEnumeration:(id<NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map {
++(instancetype)sourceWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map {
 	RXFilteredMapTraversalSource *source = [self new];
-	source.traversal = [RXTraversal traversalWithEnumeration:enumeration];
+	source.traversal = RXTraversalWithEnumeration(enumeration);
 	source.filter = filter;
 	source.map = map;
 	return source;

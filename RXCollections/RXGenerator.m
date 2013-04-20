@@ -67,7 +67,7 @@
 
 
 -(id<RXTraversal>)traversal {
-	return [RXTraversal traversalWithSource:self];
+	return RXTraversalWithSource(self);
 }
 
 

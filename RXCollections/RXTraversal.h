@@ -46,13 +46,10 @@
 
 @end
 
-@interface RXTraversal : NSObject <RXTraversal>
 
-+(instancetype)traversalWithInteriorObjects:(const id *)objects count:(NSUInteger)count owner:(id)owner;
-+(id<RXRefillableTraversal>)traversalWithSource:(id<RXTraversalSource>)source;
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration;
-
-@end
+extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
+extern id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source);
+extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
 
 
 @interface NSEnumerator (RXTraversal) <RXTraversal>

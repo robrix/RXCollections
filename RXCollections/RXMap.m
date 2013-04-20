@@ -25,6 +25,6 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 	})), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 }
 
-id<RXTraversal> RXMap(id<NSFastEnumeration> enumeration, RXMapBlock block) {
-	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:nil map:block]];
+id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
+	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:nil map:block]);
 }

@@ -110,7 +110,7 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 -(id<RXTraversal>)traversal {
-	return [RXTraversal traversalWithSource:self];
+	return RXTraversalWithSource(self);
 }
 
 -(void)refillTraversal:(id<RXRefillableTraversal>)traversal {

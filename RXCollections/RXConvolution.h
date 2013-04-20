@@ -13,8 +13,8 @@ typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
  
  RXZipWith is a synonym for this function.
  */
-extern id<RXTraversal> RXConvolveWith(id<NSFastEnumeration> sequences, RXConvolutionBlock block);
-extern id (* const RXZipWith)(id<NSFastEnumeration>, RXConvolutionBlock);
+extern id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block);
+extern id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock);
 
 /**
  id<RXTraversal> RXConvolve(id<NSFastEnumeration> sequences)
@@ -23,5 +23,5 @@ extern id (* const RXZipWith)(id<NSFastEnumeration>, RXConvolutionBlock);
  
  RXZip is a synonym for this function.
  */
-extern id<RXTraversal> RXConvolve(id<NSFastEnumeration> sequences);
-extern id (* const RXZip)(id<NSFastEnumeration>);
+extern id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences);
+extern id (* const RXZip)(id<NSObject, NSFastEnumeration>);

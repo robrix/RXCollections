@@ -256,7 +256,7 @@
 #pragma mark RXTraversable
 
 -(id<RXTraversal>)traversal {
-	return [RXTraversal traversalWithInteriorObjects:self.elements count:self.count owner:self];
+	return RXTraversalWithObjects(self, self.elements, self.count);
 }
 
 

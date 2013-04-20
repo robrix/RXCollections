@@ -6,6 +6,13 @@
 
 const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
+@interface RXTraversal : NSObject <RXTraversal>
+@property (nonatomic, assign, readonly) id const *objects; // subclass responsibility
+@property (nonatomic, assign) NSUInteger count;
+@property (nonatomic, assign) NSUInteger current;
+@property (nonatomic, readonly) bool canConsume;
+@end
+
 @interface RXRefillingTraversal : RXTraversal
 -(void)refill; // subclass responsibility
 @end
@@ -31,29 +38,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, strong) id owner;
 @end
 
-
-@interface RXTraversal ()
-@property (nonatomic, assign, readonly) id const *objects; // subclass responsibility
-@property (nonatomic, assign) NSUInteger count;
-@property (nonatomic, assign) NSUInteger current;
-@property (nonatomic, readonly) bool canConsume;
-@end
-
 @implementation RXTraversal
-
-+(instancetype)traversalWithInteriorObjects:(const id *)objects count:(NSUInteger)count owner:(id)owner {
-	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
-}
-
-+(id<RXRefillableTraversal>)traversalWithSource:(id<RXTraversalSource>)source {
-	return [RXSourcedTraversal traversalWithSource:source];
-}
-
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration {
-	return [(id)enumeration isKindOfClass:[RXTraversal class]]?
-		(RXTraversal *)enumeration
-	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
-}
 
 -(id const __unsafe_unretained *)objects {
 	[self doesNotRecognizeSelector:_cmd];
@@ -206,3 +191,18 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 }
 
 @end
+
+
+id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count) {
+	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
+}
+
+id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source) {
+	return [RXSourcedTraversal traversalWithSource:source];
+}
+
+id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration) {
+	return [enumeration isKindOfClass:[RXTraversal class]]?
+		(RXTraversal *)enumeration
+	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
+}

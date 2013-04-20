@@ -66,8 +66,8 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
 }
 
-id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]];
+id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
+	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]);
 }
 
 
