@@ -31,6 +31,8 @@
 -(void)empty;
 -(void)produce:(id)object;
 
+@property (nonatomic, assign, readonly) NSUInteger countProduced;
+
 @end
 
 @protocol RXTraversalSource <NSObject>
@@ -42,7 +44,7 @@
 @interface RXTraversal : NSObject <RXTraversal>
 
 +(instancetype)traversalWithInteriorObjects:(const id *)objects count:(NSUInteger)count owner:(id)owner;
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source;
++(id<RXRefillableTraversal>)traversalWithSource:(id<RXTraversalSource>)source;
 +(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration;
 
 -(id)consume;

@@ -15,6 +15,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @property (nonatomic, strong) id<RXTraversalSource> source;
 @property (nonatomic, readonly) NSUInteger capacity;
+@property (nonatomic) NSUInteger countProduced;
 @end
 
 @interface RXFastEnumerationTraversal : RXRefillingTraversal
@@ -44,7 +45,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
 }
 
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source {
++(id<RXRefillableTraversal>)traversalWithSource:(id<RXTraversalSource>)source {
 	return [RXSourcedTraversal traversalWithSource:source];
 }
 
@@ -150,6 +151,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 -(void)produce:(id)object {
 	_objects[self.count++] = object;
+	self.countProduced++;
 }
 
 @end
