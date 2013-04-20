@@ -27,7 +27,7 @@ Maps and filters return enumerations, which can be made into concrete collection
 
 ## Collections that can be traversed
 
-`RXMap`, `RXFold`, `RXFilter`, `RXLinearSearch` can traverse anything conforming to `NSFastEnumeration` (which includes, among other things, `NSEnumerator` and `NSManagedObjectModel`). The returned `RXTraversal` protocol is effectively a synonym for `NSFastEnumeration`, used to document the purpose of the object: it specifies some sequence in which a collection can be traversed.
+`RXMap`, `RXFold`, `RXFilter`, `RXLinearSearch` can traverse anything conforming to `NSFastEnumeration` (which includes, among other things, `NSEnumerator` and `NSManagedObjectModel`). The returned object can itself be enumerated, as well as composed with other traversals safely and cleanly.
 
 ## Notes
 
@@ -44,5 +44,3 @@ Maps and filters return enumerations, which can be made into concrete collection
 - Concatenation of traversals.
 
 - Combined `RXConstruct…` and `RXMap`/`RXFilter` shorthands, e.g. `RXMapToArray()`?
-
-- `NSFastEnumeration` is not exactly an ideal interface for lazy evaluation (no matter how nice its chunking is). A safer (i.e. strongly-referenced) interface that can be fast-enumerated would be preferable. At the same time, integrating more automatic chunking could be great if it would help provide better locality of reference. The resonance with buffering problems is palpable.
