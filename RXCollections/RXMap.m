@@ -26,5 +26,5 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 }
 
 id<RXTraversal> RXMap(id<NSFastEnumeration> enumeration, RXMapBlock block) {
-	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithTraversal:[RXTraversal traversalWithEnumeration:enumeration] filter:nil map:block]];
+	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:nil map:block]];
 }

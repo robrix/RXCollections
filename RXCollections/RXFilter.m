@@ -67,7 +67,7 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 }
 
 id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithTraversal:[RXTraversal traversalWithEnumeration:enumeration] filter:block map:nil]];
+	return [RXTraversal traversalWithSource:[RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]];
 }
 
 

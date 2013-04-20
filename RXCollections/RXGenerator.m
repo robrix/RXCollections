@@ -10,7 +10,7 @@
 
 @l3_suite("RXGenerator");
 
-@interface RXGeneratorTraversalSource : NSObject <RXGenerator, RXTraversalSource, RXTraversable>
+@interface RXGeneratorTraversalSource : NSObject <RXGenerator, RXTraversalSource>
 
 +(instancetype)sourceWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block;
 
@@ -92,6 +92,6 @@
 
 @end
 
-id<RXGenerator, RXTraversable> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
+id<RXGenerator> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
 	return [RXGeneratorTraversalSource sourceWithContext:context block:block];
 }

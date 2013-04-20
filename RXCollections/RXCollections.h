@@ -20,7 +20,7 @@
 
 #pragma mark Collections
 
+#import <RXCollections/RXEnumerationArray.h>
 #import <RXCollections/RXInterval.h>
 #import <RXCollections/RXPair.h>
-#import <RXCollections/RXTraversalArray.h>
 #import <RXCollections/RXTuple.h>

@@ -5,16 +5,16 @@
 #import "RXFilteredMapTraversalSource.h"
 
 @interface RXFilteredMapTraversalSource ()
-@property (nonatomic, strong, readwrite) id<RXTraversal> traversal;
-@property (nonatomic, copy, readwrite) RXFilterBlock filter;
-@property (nonatomic, copy, readwrite) RXMapBlock map;
+@property (nonatomic, strong) id<RXTraversal> traversal;
+@property (nonatomic, copy) RXFilterBlock filter;
+@property (nonatomic, copy) RXMapBlock map;
 @end
 
 @implementation RXFilteredMapTraversalSource
 
-+(instancetype)sourceWithTraversal:(id<RXTraversal>)traversal filter:(RXFilterBlock)filter map:(RXMapBlock)map {
++(instancetype)sourceWithEnumeration:(id<NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map {
 	RXFilteredMapTraversalSource *source = [self new];
-	source.traversal = traversal;
+	source.traversal = [RXTraversal traversalWithEnumeration:enumeration];
 	source.filter = filter;
 	source.map = map;
 	return source;
@@ -23,9 +23,9 @@
 
 -(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
 	[traversal refillWithBlock:^{
-		bool exhausted = ((RXTraversal *)self.traversal).isExhausted;
+		bool exhausted = self.traversal.isExhausted;
 		if (!exhausted) {
-			id each = [(RXTraversal *)self.traversal consume];
+			id each = [self.traversal consume];
 			if(!self.filter || self.filter(each))
 				[traversal produce:self.map? self.map(each) : each];
 		}

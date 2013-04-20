@@ -13,6 +13,11 @@
  */
 
 @protocol RXTraversal <NSObject, NSFastEnumeration>
+
+-(id)consume;
+
+@property (nonatomic, getter = isExhausted, readonly) bool exhausted;
+
 @end
 
 
@@ -46,10 +51,6 @@
 +(instancetype)traversalWithInteriorObjects:(const id *)objects count:(NSUInteger)count owner:(id)owner;
 +(id<RXRefillableTraversal>)traversalWithSource:(id<RXTraversalSource>)source;
 +(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration;
-
--(id)consume;
-
-@property (nonatomic, getter = isExhausted, readonly) bool exhausted;
 
 @end
 
