@@ -2,8 +2,7 @@
 //  Created by Rob Rix on 2013-03-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXFastEnumerationState.h"
-#import "RXIntervalTraversal.h"
+#import "RXInterval.h"
 #import "RXTraversalArray.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -14,10 +13,6 @@
 	test[@"items"] = RXInterval(0, 63).traversal;
 	test[@"array"] = [RXTraversalArray arrayWithTraversal:test[@"items"]];
 }
-
-@interface RXTraversalArrayEnumerationState : RXFastEnumerationState
-@property (nonatomic, assign) unsigned long enumeratedObjectsCount;
-@end
 
 @interface RXTraversalArray ()
 
@@ -141,18 +136,20 @@
 	l3_assert(array.enumeratedObjects.count, 64);
 }
 
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)enumerationState objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	RXTraversalArrayEnumerationState *state = [RXTraversalArrayEnumerationState stateWithNSFastEnumerationState:enumerationState objects:buffer count:len initializationHandler:nil];
-	
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSUInteger count = 0;
-	if (state.enumeratedObjectsCount != self.internalCount) {
-		[self populateUpToIndex:state.enumeratedObjectsCount + len - 1];
-		if (self.enumeration)
-			state.mutations = self.state.mutationsPtr;
+	if (state->state != self.internalCount) {
+		state->itemsPtr = buffer;
 		
-		count = MIN(len, self.enumeratedObjects.count - state.enumeratedObjectsCount);
-		[self.enumeratedObjects getObjects:buffer range:NSMakeRange(state.enumeratedObjectsCount, count)];
-		state.enumeratedObjectsCount += count;
+		[self populateUpToIndex:state->state + len - 1];
+		if (self.enumeration)
+			state->mutationsPtr = self.state.mutationsPtr;
+		else
+			state->mutationsPtr = state->extra;
+		
+		count = MIN(len, self.enumeratedObjects.count - state->state);
+		[self.enumeratedObjects getObjects:buffer range:NSMakeRange(state->state, count)];
+		state->state += count;
 	}
 	
 	return count;
@@ -163,12 +160,6 @@
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
-}
-
-@end
-
-@implementation RXTraversalArrayEnumerationState {
-	unsigned long _enumeratedObjectsCount;
 }
 
 @end

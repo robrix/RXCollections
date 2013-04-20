@@ -5,7 +5,6 @@
 #import "RXFold.h"
 #import "RXGenerator.h"
 #import "RXTuple.h"
-#import "RXFastEnumerationState.h"
 
 #import <Lagrangian/Lagrangian.h>
 
