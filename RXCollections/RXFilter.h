@@ -35,11 +35,11 @@ extern RXFilterBlock const RXAcceptNilFilterBlock;
 extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
- id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block)
+ id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
  
  Returns a traversal of the elements of `enumeration` which are matched by `block`.
  */
-extern id<RXTraversal> RXFilter(id<NSFastEnumeration> enumeration, RXFilterBlock block);
+extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
  id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block)

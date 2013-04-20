@@ -4,14 +4,20 @@
 
 #import <RXCollections/RXTraversal.h>
 
-typedef id (^RXGeneratorBlock)(id __autoreleasing *context, bool *stop);
+@protocol RXGenerator <NSObject, RXTraversable>
 
-@interface RXGenerator : NSObject <RXTraversal>
+@property (nonatomic, copy) id<NSObject, NSCopying> context;
 
-+(instancetype)generatorWithBlock:(RXGeneratorBlock)block;
-+(instancetype)generatorWithContext:(id<NSCopying>)context block:(RXGeneratorBlock)block;
-
-@property (nonatomic, copy, readonly) id<NSCopying> context;
-@property (nonatomic, copy, readonly) RXGeneratorBlock block;
+-(void)complete;
 
 @end
+
+typedef id (^RXGeneratorBlock)(id<RXGenerator> generator);
+
+/**
+ id<RXTraversal> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block)
+ 
+ RXGenerator() takes a context object (which can be nil) and a generator block, and returns a traversal which produces objects using that block. Blocks are free to use the context pointer or data closed over from the scope they are created within at their option.
+ */
+
+extern id<RXGenerator> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block);

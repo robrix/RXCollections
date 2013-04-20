@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <Foundation/Foundation.h>
 
 typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
 
@@ -17,11 +17,11 @@ extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock bloc
 #pragma mark Constructors
 
 /**
- NSArray *RXConstructArray(id<RXTraversal> traversal)
+ NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration)
  
  Constructs an array with the elements of the specified traversal. The enumeration's elements must not be nil.
  */
-extern NSArray *RXConstructArray(id<RXTraversal> traversal);
+extern NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration);
 
 /**
  NSSet *RXConstructSet(id<NSFastEnumeration> enumeration)
@@ -37,14 +37,13 @@ extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
  */
 extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
 
-
 /**
- RXTuple *RXConstructTuple(id<NSFastTraversal> traversal)
+ RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration)
  
- Constructs a tuple with the elements of the specified traversal. The traversal's elements may be nil.
+ Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be nil.
  */
-//@class RXTuple;
-//extern RXTuple *RXConstructTuple(id<RXTraversal> traversal);
+@class RXTuple;
+extern RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration);
 
 
 #pragma mark Numerical

@@ -2,7 +2,6 @@
 //  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXFastEnumerationState.h"
 #import "RXFold.h"
 #import "RXTuple.h"
 #import <objc/runtime.h>
@@ -254,22 +253,23 @@
 }
 
 
-#pragma mark NSFastEnumeration
+#pragma mark RXTraversable
 
-@l3_test("implements fast enumeration by returning an internal pointer") {
-	RXTuple *tuple = [RXTuple tupleWithArray:@[@0, @1, @2]];
-	l3_assert(RXConstructArray(tuple), l3_is(@[@0, @1, @2]));
+-(id<RXTraversal>)traversal {
+	return RXTraversalWithObjects(self, self.elements, self.count);
 }
 
+
+#pragma mark NSFastEnumeration
+
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	__block bool isFirstIteration = NO;
-	[RXFastEnumerationState stateWithNSFastEnumerationState:state objects:buffer count:len initializationHandler:^(id<RXFastEnumerationState> state) {
-		state.constItems = self.elements;
-		isFirstIteration = YES;
-	}];
-	return isFirstIteration?
-		self.count
-	:	0;
+	NSUInteger count = 0;
+	if (!state->state) {
+		count = state->state = self.count;
+		state->itemsPtr = (__unsafe_unretained id *)(void *)self.elements;
+		state->mutationsPtr = state->extra;
+	}
+	return count;
 }
 
 @end

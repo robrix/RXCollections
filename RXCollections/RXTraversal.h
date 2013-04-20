@@ -13,7 +13,44 @@
  */
 
 @protocol RXTraversal <NSObject, NSFastEnumeration>
+
+-(id)consume;
+
+@property (nonatomic, getter = isExhausted, readonly) bool exhausted;
+
 @end
+
+
+@protocol RXTraversable <NSObject>
+
+// for implementors with more than one viable traversal, this should return the default one, i.e. the one that would be used for fast enumeration
+@property (nonatomic, readonly) id<RXTraversal> traversal;
+
+@end
+
+
+@protocol RXRefillableTraversal <RXTraversal>
+
+-(void)refillWithBlock:(bool(^)())block;
+
+-(void)empty;
+-(void)produce:(id)object;
+
+@property (nonatomic, assign, readonly) NSUInteger countProduced;
+
+@end
+
+@protocol RXTraversalSource <NSObject>
+
+-(void)refillTraversal:(id<RXRefillableTraversal>)traversal;
+
+@end
+
+
+extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
+extern id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source);
+extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
+
 
 @interface NSEnumerator (RXTraversal) <RXTraversal>
 @end
@@ -42,11 +79,3 @@ extern const NSUInteger RXTraversalUnknownCount;
 
 @interface NSDictionary (RXFiniteTraversal) <RXFiniteTraversal>
 @end
-
-
-/**
- RXTraversalElement
- 
- A convenience typedef for implementations of RXTraversal which traverse temporary objects.
- */
-typedef __autoreleasing id RXTraversalElement;

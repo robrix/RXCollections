@@ -4,7 +4,7 @@
 
 #import <RXCollections/RXTraversal.h>
 
-@interface RXTuple : NSObject <NSCopying, RXFiniteTraversal>
+@interface RXTuple : NSObject <NSCopying, RXTraversable, NSFastEnumeration>
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;

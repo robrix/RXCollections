@@ -4,7 +4,7 @@
 
 #import "RXFold.h"
 #import "RXPair.h"
-#import "RXTraversalArray.h"
+#import "RXEnumerationArray.h"
 #import "RXTuple.h"
 
 #import <Lagrangian/Lagrangian.h>
@@ -34,8 +34,8 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	l3_assert(RXConstructArray(@[@1, @2, @3]), l3_is(@[@1, @2, @3]));
 }
 
-NSArray *RXConstructArray(id<RXTraversal> traversal) {
-	return [RXTraversalArray arrayWithTraversal:traversal];
+NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration) {
+	return [RXEnumerationArray arrayWithEnumeration:enumeration];
 }
 
 @l3_test("constructs sets from enumerations") {
@@ -58,6 +58,15 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 		[memo setObject:each.value forKey:each.key];
 		return memo;
 	});
+}
+
+
+RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
+	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^id(NSMutableArray *memo, id each) {
+		[memo addObject:each];
+		return memo;
+	});
+	return [RXTuple tupleWithArray:objects];
 }
 
 
