@@ -10,7 +10,6 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, assign, readonly) id const *objects; // subclass responsibility
 @property (nonatomic, assign) NSUInteger count;
 @property (nonatomic, assign) NSUInteger current;
-@property (nonatomic, readonly) bool canConsume;
 @end
 
 @interface RXRefillingTraversal : RXTraversal
@@ -47,17 +46,12 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 
 -(bool)isExhausted {
-	return !self.canConsume;
+	return self.count <= self.current;
 }
-
--(bool)canConsume {
-	return self.count > self.current;
-}
-
 
 -(id)consume {
 	id consumed = nil;
-	if (self.canConsume)
+	if (!self.isExhausted)
 		consumed = self.objects[self.current++];
 	return consumed;
 }
@@ -67,7 +61,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSUInteger count = 0;
-	if (self.canConsume) {
+	if (!self.isExhausted) {
 		state->itemsPtr = (__unsafe_unretained id *)self.objects;
 		state->mutationsPtr = state->extra;
 		state->state = count = self.current = self.count;
@@ -84,10 +78,10 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	[self doesNotRecognizeSelector:_cmd];
 }
 
--(bool)canConsume {
-	if (!super.canConsume)
+-(bool)isExhausted {
+	if (super.isExhausted)
 		[self refill];
-	return super.canConsume;
+	return super.isExhausted;
 }
 
 @end
@@ -183,11 +177,11 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 }
 
 
--(bool)canConsume {
-	bool canConsume = super.canConsume;
-	if (!canConsume)
+-(bool)isExhausted {
+	bool isExhausted = super.isExhausted;
+	if (isExhausted)
 		self.owner = nil;
-	return canConsume;
+	return isExhausted;
 }
 
 @end
