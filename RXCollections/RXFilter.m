@@ -70,7 +70,6 @@ id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBl
 	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]);
 }
 
-
 @l3_suite("RXLinearSearch");
 
 @l3_test("returns the first encountered object for which its block returns true") {
@@ -89,3 +88,87 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
+
+@l3_suite("RXFilterF");
+
+@l3_test("accept filter function returns YES") {
+	l3_assert(RXAcceptFilterFunction(nil), YES);
+}
+
+RXFilterFunction const RXAcceptFilterFunction = (id each) {
+	return YES;
+}
+
+@l3_test("reject filter function returns NO") {
+	l3_assert(RXRejectFilterFunction(nil), NO);
+}
+
+RXFilterFunction const RXRejectFilterFunction = (id each) {
+	return NO;
+}
+
+@l3_test("accept nil function filters accept nil") {
+	l3_assert(RXAcceptNilFilterFunction(nil), YES);
+}
+
+@l3_test("accept nil function filters reject non-nil") {
+	l3_assert(RXAcceptNilFilterFunction([NSObject new]), NO);
+}
+
+RXFilterFunction const RXAcceptNilFilterFunction = (id each) {
+	return each == nil;
+}
+
+@l3_test("reject nil function filters reject nil") {
+	l3_assert(RXRejectNilFilterFunction(nil), NO);
+}
+
+@l3_test("reject nil function filters accept non-nil") {
+	l3_assert(RXRejectNilFilterFunction([NSObject new]), YES);
+}
+
+RXFilterFunction const RXRejectNilFilterFunction = (id each) {
+	return each != nil;
+}
+
+@l3_test("filters a collection with the piecewise results of its function") {
+	bool itemsPrefixedWithA(id each) {
+		return [each hasPrefix:@"A"];
+	}
+	
+	l3_assert(RXConstructArray(RXFilterF(@[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"], itemsPrefixedWithA)),
+			  l3_equals(@[@"Ancestral", @"Azimuth"]));
+}
+
+@l3_test("produces a traversal of the elements of its enumeration which are matched by its function") {
+	bool itemsPrefixedWithS(id each) {
+		return [each hasPrefix:@"s"];
+	}
+	
+	NSArray *filtered = RXConstructArray(RXFilterF(@[@"Sanguinary", @"Inspirational", @"Susurrus"], itemsPrefixedWithS));
+	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
+}
+
+id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {
+	return RXFilter(enumeration, ^bool(id each) {
+		return function(each);
+	});
+}
+
+@l3_suite("RXLinearSearchF");
+
+@l3_test("returns the first encountered object for which its function returns true") {
+	bool itemIsPrefixedWithB(id each) {
+		return [each hasPrefix:@"B"];
+	}
+	
+	l3_assert(RXLinearSearchF(@[@"Amphibious", @"Belligerent", @"Bizarre"], itemIsPrefixedWithB), @"Belligerent");
+}
+
+id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
+	return RXLinearSearch(collection, ^bool(id each) {
+		return function(each);
+	});
+}
+
+id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;

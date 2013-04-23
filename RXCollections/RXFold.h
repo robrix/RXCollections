@@ -13,6 +13,14 @@ typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the
  */
 extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block);
 
+typedef id (*RXFoldFunction)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the function
+
+/**
+ id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction function);
+ 
+ Folds a `enumeration` with `function`, using `initial` as the `memo` argument to block for the first element.
+ */
+extern id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction function);
 
 #pragma mark Constructors
 
@@ -45,7 +53,6 @@ extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
 @class RXTuple;
 extern RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration);
 
-
 #pragma mark Numerical
 
 /**
@@ -65,3 +72,21 @@ typedef id (^RXMinBlock)(id each);
  If `minBlock` is nil, each object is compared instead of the result of the block.
  */
 extern id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock);
+
+/**
+ typedef id (*RXMinFunction)(id each);
+ 
+ The type of a function which is used to return a value to be minimized (in terms of `NSComparisonResult`) across an enumeration.
+ */
+typedef id (*RXMinFunction)(id each);
+
+/**
+ id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc)
+ 
+ Finds the minimum value returned by `minFunc` across `enumeration`.
+ 
+ If `initial` is nil, it is ignored. If it is non-nil it is the initial point of comparison.
+ 
+ If `minBlock` is nil, each object is compared instead of the result of the block.
+ */
+extern id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc);

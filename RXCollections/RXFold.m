@@ -25,6 +25,11 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	return initial;
 }
 
+id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction function) {
+	return RXFold(enumeration, initial, ^id(id memo, id each) {
+		return function(memo, each);
+	});
+}
 
 #pragma mark Constructors
 
@@ -90,5 +95,11 @@ id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
 		return [memo compare:value] == NSOrderedAscending?
 			memo
 		:	value;
+	});
+}
+
+id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc) {
+	return RXMin(enumeration, initial, ^id(id each) {
+		return minFunc(each);
 	});
 }
