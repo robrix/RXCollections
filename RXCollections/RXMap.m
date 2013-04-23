@@ -20,6 +20,12 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 
 
 @l3_test("collects the piecewise results of its block") {
+	NSString *accumulate(NSString *each) {
+		return [each stringByAppendingString:@"Superlative"];
+	}
+	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate
+	)), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
+	
 	l3_assert(RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
 		return [each stringByAppendingString:@"Superlative"];
 	})), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
@@ -39,15 +45,18 @@ RXMapFunction const RXIdentityMapFunction = (id x) {
 	return x;
 }
 
-@l3_test("collects the piecewise results of its function") {
-	NSString *accumulate(NSString *each) {
-		return [each stringByAppendingString:@"Superlative"];
-	}
-	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate)), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
+id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
+	return RXMap(enumeration, RXMapBlockFromFunction(function));
 }
 
-id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
-	return RXMap(enumeration, ^id(id each) {
+@l3_suite("RXMapBlockFromFunction");
+
+@l3_test("identity function to block returns an identity block") {
+	l3_assert(RXMapBlockFromFunction(RXIdentityMapFunction), RXIdentityMapBlock)
+}
+
+static inline RXMapBlock RXMapBlockFromFunction(RXMapFunction function) {
+	return id ^(id each) {
 		return function(each);
-	});
+	};
 }
