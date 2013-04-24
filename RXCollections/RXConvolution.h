@@ -5,6 +5,7 @@
 #import <RXCollections/RXTraversal.h>
 
 typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
+typedef id(*RXConvolutionFunction)(NSUInteger count, id const objects[count]);
 
 /**
  id<RXTraversal> RXConvolveWith(id<NSFastEnumeration> sequences, RXConvolutionBlock block)
@@ -15,6 +16,16 @@ typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
  */
 extern id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block);
 extern id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock);
+
+/**
+ id<RXTraversal> RXConvolveWithF(id<NSFastEnumeration> sequences, RXConvolutionFunction function)
+ 
+ Traverses the elements of the sequences in lockstep, producing the result of the function (called with the count and an array of the corresponding elements of each sequence) for each one.
+ 
+ RXZipWithF is a synonym for this function.
+ */
+extern id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function);
+extern id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction);
 
 /**
  id<RXTraversal> RXConvolve(id<NSFastEnumeration> sequences)
