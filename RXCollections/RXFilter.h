@@ -5,97 +5,63 @@
 #import <RXCollections/RXTraversal.h>
 
 typedef bool (^RXFilterBlock)(id each);
-
-/**
- RXFilterBlock const RXAcceptFilterBlock
- 
- A filter which accepts all objects.
- */
-extern RXFilterBlock const RXAcceptFilterBlock;
-
-/**
- RXFilterBlock const RXRejectFilterBlock
- 
- A filter which rejects all objects.
- */
-extern RXFilterBlock const RXRejectFilterBlock;
-
-/**
- RXFilterBlock const RXAcceptNilFilterBlock
- 
- A filter which accepts only nil.
- */
-extern RXFilterBlock const RXAcceptNilFilterBlock;
-
-/**
- RXFilterBlock const RXRejectNilFilterBlock
- 
- A filter which rejects only nil.
- */
-extern RXFilterBlock const RXRejectNilFilterBlock;
-
-/**
- id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
- 
- Returns a traversal of the elements of `enumeration` which are matched by `block`.
- */
-extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
-
-/**
- id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block)
- 
- Returns the first element found in `collection` which is matched by `block`.
- 
- RXDetect is a synonym for this function.
- */
-extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
-extern id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock);
-
-#pragma mark Function Pointer Support
-
 typedef bool (*RXFilterFunction)(id each);
 
 /**
+ RXFilterBlock const RXAcceptFilterBlock
  bool RXAcceptFilterFunction(id each)
  
  A filter which accepts all objects.
  */
+extern RXFilterBlock const RXAcceptFilterBlock;
 extern bool RXAcceptFilterFunction(id each);
 
 /**
+ RXFilterBlock const RXRejectFilterBlock
  bool RXRejectFilterFunction(id each)
  
  A filter which rejects all objects.
  */
+extern RXFilterBlock const RXRejectFilterBlock;
 extern bool RXRejectFilterFunction(id each);
 
 /**
+ RXFilterBlock const RXAcceptNilFilterBlock
  bool RXAcceptNilFilterFunction(id each)
  
  A filter which accepts only nil.
  */
+extern RXFilterBlock const RXAcceptNilFilterBlock;
 extern bool RXAcceptNilFilterFunction(id each);
 
 /**
+ RXFilterBlock const RXRejectNilFilterBlock
  bool RXRejectNilFilterFunction(id each)
  
  A filter which rejects only nil.
  */
+extern RXFilterBlock const RXRejectNilFilterBlock;
 extern bool RXRejectNilFilterFunction(id each);
 
 /**
+ id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
  id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function)
  
- Returns a traversal of the elements of `enumeration` which are matched by `function`.
+ Returns a traversal of the elements of `enumeration` which are matched by `block`.
  */
+extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 extern id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function);
 
 /**
  id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block)
+ id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function)
  
- Returns the first element found in `collection` which is matched by `function`.
+ Returns the first element found in `collection` which is matched by `block`.
  
- RXDetect is a synonym for this function.
+ RXDetect is a synonym for this RXLinearSearch.
+ RXDetectF is a synonym for RXLinearSearchF.
  */
+extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
 extern id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function);
+extern id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock);
 extern id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction);
