@@ -9,6 +9,9 @@
 
 #import <Lagrangian/Lagrangian.h>
 
+static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function);
+static RXMinBlock RXMinBlockWithFunction(RXMinFunction function);
+
 @l3_suite("RXFold");
 
 static NSString *accumulator(NSString *memo, NSString *each) {
@@ -16,13 +19,12 @@ static NSString *accumulator(NSString *memo, NSString *each) {
 }
 
 @l3_test("produces a result by recursively enumerating the collection") {
-	NSString *result = RXFold((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", ^(NSString * memo, NSString * each) {
+	NSArray *collection = @[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"];
+	l3_assert(RXFold(collection, @"", ^(NSString *memo, NSString *each) {
 		return [memo stringByAppendingString:each];
-	});
-	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
+	}), @"QuantumBoomerangPhysicistCognizant");
 
-	result = RXFoldF((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", accumulator);
-	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
+	l3_assert(RXFoldF(collection, @"", accumulator), @"QuantumBoomerangPhysicistCognizant");
 }
 
 id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
@@ -33,9 +35,7 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 }
 
 id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction function) {
-	return RXFold(enumeration, initial, ^id(id memo, id each) {
-		return function(memo, each);
-	});
+	return RXFold(enumeration, initial, RXFoldBlockWithFunction(function));
 }
 
 
@@ -102,17 +102,24 @@ static id minLength(NSString *each) { return @(each.length); }
 	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength), @1);
 }
 
-id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
+id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock block) {
 	return RXFold(enumeration, initial, ^(id memo, id each) {
-		id value = minBlock? minBlock(each) : each;
+		id value = block? block(each) : each;
 		return [memo compare:value] == NSOrderedAscending?
 			memo
 		:	value;
 	});
 }
 
-id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc) {
-	return RXMin(enumeration, initial, minFunc? ^(id each) {
-		return minFunc(each);
-	} : nil);
+id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction function) {
+	return RXMin(enumeration, initial, function? RXMinBlockWithFunction(function) : nil);
+}
+
+
+static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
+	return ^(id memo, id each){ return function(memo, each); };
+}
+
+static RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
+	return ^(id each){ return function(each); };
 }
