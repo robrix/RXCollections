@@ -25,15 +25,15 @@ id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConv
 	})) block:block]);
 }
 
-id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
-
 id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, const __unsafe_unretained id *objects) {
 		return function(count, objects);
 	});
 }
 
+id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
 id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction) = RXConvolveWithF;
+
 
 @l3_test("transforms a tuple of sequences into a sequence of tuples") {
 	NSArray *convoluted = RXConstructArray(RXConvolve(@[@[@0, @1], @[@2, @3]]));
