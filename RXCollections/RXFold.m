@@ -38,6 +38,7 @@ id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction functio
 	});
 }
 
+
 #pragma mark Constructors
 
 @l3_suite("RXConstruct");
