@@ -56,32 +56,32 @@ extern id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock);
 typedef bool (*RXFilterFunction)(id each);
 
 /**
- RXFilterFunction const RXAcceptFilterFunction
+ bool RXAcceptFilterFunction(id each)
  
  A filter which accepts all objects.
  */
-extern RXFilterFunction const RXAcceptFilterFunction;
+extern bool RXAcceptFilterFunction(id each);
 
 /**
- RXFilterFunction const RXRejectFilterFunction
+ bool RXRejectFilterFunction(id each)
  
  A filter which rejects all objects.
  */
-extern RXFilterFunction const RXRejectFilterFunction;
+extern bool RXRejectFilterFunction(id each);
 
 /**
- RXFilterFunction const RXAcceptNilFilterFunction
+ bool RXAcceptNilFilterFunction(id each)
  
  A filter which accepts only nil.
  */
-extern RXFilterFunction const RXAcceptNilFilterFunction;
+extern bool RXAcceptNilFilterFunction(id each);
 
 /**
- RXFilterFunction const RXRejectNilFilterFunction
+ bool RXRejectNilFilterFunction(id each)
  
  A filter which rejects only nil.
  */
-extern RXFilterFunction const RXRejectNilFilterFunction;
+extern bool RXRejectNilFilterFunction(id each);
 
 /**
  id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function)

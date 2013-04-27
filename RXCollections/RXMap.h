@@ -27,11 +27,11 @@ extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapB
 typedef id (*RXMapFunction)(id each);
 
 /**
- RXMapFunction const RXIdentityMapFunction
+ id RXIdentityMapFunction(id x)
  
  Returns its argument.
  */
 
-extern RXMapFunction const RXIdentityMapFunction;
+extern id RXIdentityMapFunction(id x);
 
 extern id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function);

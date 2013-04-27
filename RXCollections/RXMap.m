@@ -19,16 +19,16 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 };
 
 
+static NSString *accumulate(NSString *each) {
+	return [each stringByAppendingString:@"Superlative"];
+}
+
 @l3_test("collects the piecewise results of its block") {
-	NSString *accumulate(NSString *each) {
-		return [each stringByAppendingString:@"Superlative"];
-	}
-	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate
-	)), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
+	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate)), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 	
 	l3_assert(RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
 		return [each stringByAppendingString:@"Superlative"];
-	})), l3_equals(@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
+	})), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 }
 
 id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
@@ -41,10 +41,11 @@ id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock bl
 	l3_assert(RXIdentityMapFunction(@"Equestrian"), @"Equestrian");
 }
 
-RXMapFunction const RXIdentityMapFunction = (id x) {
+id RXIdentityMapFunction(id x) {
 	return x;
 }
 
+static inline RXMapBlock RXMapBlockFromFunction(RXMapFunction function);
 id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
 	return RXMap(enumeration, RXMapBlockFromFunction(function));
 }
@@ -52,11 +53,12 @@ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunctio
 @l3_suite("RXMapBlockFromFunction");
 
 @l3_test("identity function to block returns an identity block") {
-	l3_assert(RXMapBlockFromFunction(RXIdentityMapFunction), RXIdentityMapBlock)
+	NSObject *object = [NSObject new];
+	l3_assert(RXMapBlockFromFunction(RXIdentityMapFunction)(object), object);
 }
 
 static inline RXMapBlock RXMapBlockFromFunction(RXMapFunction function) {
-	return id ^(id each) {
+	return ^(id each) {
 		return function(each);
 	};
 }

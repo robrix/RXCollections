@@ -11,17 +11,18 @@
 
 @l3_suite("RXFold");
 
+static NSString *accumulator(NSString *memo, NSString *each) {
+	return [memo stringByAppendingString:each];
+}
+
 @l3_test("produces a result by recursively enumerating the collection") {
 	NSString *result = RXFold((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", ^(NSString * memo, NSString * each) {
 		return [memo stringByAppendingString:each];
 	});
 	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
 
-	NSString *accumulator(NSString *memo, NSString *each) {
-		return [memo stringByAppendingString:each];
-	}
-	NSString *resultF = RXFold((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", accumulator);
-	l3_assert(resultF, @"QuantumBoomerangPhysicistCognizant");
+	result = RXFoldF((@[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"]), @"", accumulator);
+	l3_assert(result, @"QuantumBoomerangPhysicistCognizant");
 }
 
 id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
@@ -85,18 +86,19 @@ RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
 
 @l3_test("finds the minimum value among a collection") {
 	l3_assert(RXMin(@[@3, @1, @2], nil, nil), @1);
-	l3_assert(RXMinF(@[@3, @1, @2], nil, NULL), @1);
+	l3_assert(RXMinF(@[@3, @1, @2], nil, nil), @1);
 }
 
 @l3_test("considers the initial value if provided") {
 	l3_assert(RXMin(@[@3, @1, @2], @0, nil), @0);
-	l3_assert(RXMinF(@[@3, @1, @2], @0, NULL), @0);
+	l3_assert(RXMinF(@[@3, @1, @2], @0, nil), @0);
 }
+
+static id minLength(NSString *each) { return @(each.length); }
 
 @l3_test("compares the value provided by the block if provided") {
 	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each) { return @(each.length); }), @1);
-	id minLength(id each) { return @(each.length); }
-	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength, @1);
+	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength), @1);
 }
 
 id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
@@ -109,7 +111,7 @@ id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock) {
 }
 
 id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc) {
-	return RXMin(enumeration, initial, ^id(id each) {
+	return RXMin(enumeration, initial, minFunc? ^(id each) {
 		return minFunc(each);
-	});
+	} : nil);
 }
