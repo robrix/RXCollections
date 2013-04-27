@@ -5,33 +5,24 @@
 #import <RXCollections/RXTraversal.h>
 
 typedef id (^RXMapBlock)(id each);
-
-/**
- RXMapBlock const RXIdentityMapBlock
- 
- Returns its argument.
- */
-
-extern RXMapBlock const RXIdentityMapBlock;
-
-/**
- id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block)
- 
- Returns a traversal which lazily maps the values in `collection` using `block`. `block` can return nil. Further details of the contract of the returned traversal are specified in the documentation for RXMappingTraversal.
- */
-
-extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
-
-#pragma mark Function Pointer Support
-
 typedef id (*RXMapFunction)(id each);
 
 /**
+ RXMapBlock const RXIdentityMapBlock
  id RXIdentityMapFunction(id x)
  
  Returns its argument.
  */
 
+extern RXMapBlock const RXIdentityMapBlock;
 extern id RXIdentityMapFunction(id x);
 
+/**
+ id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block)
+ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function)
+ 
+ Returns a traversal which lazily maps the values in `collection` using `block` or `function`. `block` or `function` can return nil.
+ */
+
+extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
 extern id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function);

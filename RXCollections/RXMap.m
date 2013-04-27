@@ -8,15 +8,22 @@
 
 #import <Lagrangian/Lagrangian.h>
 
+static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
+
 @l3_suite("RXMap");
 
 @l3_test("identity map block returns its argument") {
 	l3_assert(RXIdentityMapBlock(@"Equestrian"), @"Equestrian");
+	l3_assert(RXIdentityMapFunction(@"Equestrian"), @"Equestrian");
 }
 
 RXMapBlock const RXIdentityMapBlock = ^(id x) {
 	return x;
 };
+
+id RXIdentityMapFunction(id x) {
+	return x;
+}
 
 
 static NSString *accumulate(NSString *each) {
@@ -35,29 +42,19 @@ id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock bl
 	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:nil map:block]);
 }
 
-@l3_suite("RXMapF");
-
-@l3_test("identity map function returns its argument") {
-	l3_assert(RXIdentityMapFunction(@"Equestrian"), @"Equestrian");
-}
-
-id RXIdentityMapFunction(id x) {
-	return x;
-}
-
-static inline RXMapBlock RXMapBlockFromFunction(RXMapFunction function);
 id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
-	return RXMap(enumeration, RXMapBlockFromFunction(function));
+	return RXMap(enumeration, RXMapBlockWithFunction(function));
 }
 
-@l3_suite("RXMapBlockFromFunction");
+
+@l3_suite("RXMapBlockWithFunction");
 
 @l3_test("identity function to block returns an identity block") {
 	NSObject *object = [NSObject new];
-	l3_assert(RXMapBlockFromFunction(RXIdentityMapFunction)(object), object);
+	l3_assert(RXMapBlockWithFunction(RXIdentityMapFunction)(object), object);
 }
 
-static inline RXMapBlock RXMapBlockFromFunction(RXMapFunction function) {
+static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
 	return ^(id each) {
 		return function(each);
 	};
