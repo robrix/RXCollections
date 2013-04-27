@@ -47,7 +47,7 @@ extern bool RXRejectNilFilterFunction(id each);
  id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
  id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function)
  
- Returns a traversal of the elements of `enumeration` which are matched by `block`.
+ Returns a traversal of the elements of `enumeration` which are matched by `block` or `function`.
  */
 extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 extern id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function);
@@ -56,7 +56,7 @@ extern id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RX
  id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block)
  id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function)
  
- Returns the first element found in `collection` which is matched by `block`.
+ Returns the first element found in `collection` which is matched by `block` or `function`.
  
  RXDetect is a synonym for this RXLinearSearch.
  RXDetectF is a synonym for RXLinearSearchF.
