@@ -21,3 +21,17 @@ extern RXMapBlock const RXIdentityMapBlock;
  */
 
 extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
+
+#pragma mark Function Pointer Support
+
+typedef id (*RXMapFunction)(id each);
+
+/**
+ RXMapFunction const RXIdentityMapFunction
+ 
+ Returns its argument.
+ */
+
+extern RXMapFunction const RXIdentityMapFunction;
+
+extern id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function);
