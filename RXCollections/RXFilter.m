@@ -9,6 +9,8 @@
 
 #import <Lagrangian/Lagrangian.h>
 
+static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
+
 @l3_suite("RXFilter");
 
 @l3_test("accept filters return YES") {
@@ -110,9 +112,7 @@ id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBl
 }
 
 id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {
-	return RXFilter(enumeration, ^bool(id each) {
-		return function(each);
-	});
+	return RXFilter(enumeration, RXFilterBlockWithFunction(function));
 }
 
 
@@ -140,10 +140,13 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
-	return RXLinearSearch(collection, ^bool(id each) {
-		return function(each);
-	});
+	return RXLinearSearch(collection, RXFilterBlockWithFunction(function));
 }
 
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
+
+
+static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
+	return ^(id each){ return function(each); };
+};
