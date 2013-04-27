@@ -4,6 +4,8 @@
 
 #import "RXTraversal.h"
 
+#import <Lagrangian/Lagrangian.h>
+
 const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @interface RXTraversal : NSObject <RXTraversal>
@@ -67,6 +69,16 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 		state->state = count = self.current = self.count;
 	}
 	return count;
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXTraversal *copy = [self.class new];
+	copy.current = self.current;
+	copy.count = self.count;
+	return copy;
 }
 
 @end
@@ -133,7 +145,23 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	self.countProduced++;
 }
 
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXSourcedTraversal *copy = [super copyWithZone:zone];
+	copy.source = self.source;
+	copy.countProduced = self.countProduced;
+	for (NSUInteger i = 0; i < self.countProduced; i++) {
+		copy->_objects[i] = _objects[i];
+	}
+	return copy;
+}
+
 @end
+
+
+@l3_suite("RXFastEnumerationTraversal");
 
 @implementation RXFastEnumerationTraversal {
 	NSFastEnumerationState _state;
@@ -157,8 +185,38 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	self.count = [self.enumeration countByEnumeratingWithState:&_state objects:_objects count:sizeof(_objects) / sizeof(*_objects)];
 }
 
+
+#pragma mark NSCopying
+
+@l3_step("copy") {
+	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
+	[test[@"original"] consume];
+	test[@"copy"] = [test[@"original"] copy];
+}
+
+@l3_test("copies traverse from the current location") {
+	l3_perform_step("copy");
+	l3_assert([test[@"copy"] consume], @2);
+}
+
+@l3_test("copies are independently traversed") {
+	l3_perform_step("copy");
+	[test[@"copy"] consume];
+	l3_assert([test[@"original"] consume], @2);
+}
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXFastEnumerationTraversal *copy = [super copyWithZone:zone];
+	copy.enumeration = self.enumeration;
+	copy->_state = _state;
+	memcpy(&copy->_objects, &_objects, sizeof _objects);
+	return copy;
+}
+
 @end
 
+
+@l3_suite("RXInteriorTraversal");
 
 @implementation RXInteriorTraversal
 
@@ -182,6 +240,33 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	if (isExhausted)
 		self.owner = nil;
 	return isExhausted;
+}
+
+
+#pragma mark NSCopying
+
+@l3_step("copy") {
+	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
+	[test[@"original"] consume];
+	test[@"copy"] = [test[@"original"] copy];
+}
+
+@l3_test("copies traverse from the current location") {
+	l3_perform_step("copy");
+	l3_assert([test[@"copy"] consume], @2);
+}
+
+@l3_test("copies are independently traversed") {
+	l3_perform_step("copy");
+	[test[@"copy"] consume];
+	l3_assert([test[@"original"] consume], @2);
+}
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXInteriorTraversal *copy = [super copyWithZone:zone];
+	copy.objects = self.objects;
+	copy.owner = self.owner;
+	return copy;
 }
 
 @end

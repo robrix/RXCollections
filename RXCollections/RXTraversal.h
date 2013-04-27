@@ -12,7 +12,7 @@
  At present this is basically just NSFastEnumeration, but it also conforms to NSObject, which NSFastEnumeration does not; you are expected to be able to rely on traversals being and behaving like real objects.
  */
 
-@protocol RXTraversal <NSObject, NSFastEnumeration>
+@protocol RXTraversal <NSObject, NSCopying, NSFastEnumeration>
 
 -(id)consume;
 
