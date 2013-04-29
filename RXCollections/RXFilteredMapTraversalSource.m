@@ -27,7 +27,7 @@
 		if (!exhausted) {
 			id each = [self.traversal consume];
 			if(!self.filter || self.filter(each))
-				[traversal produce:self.map? self.map(each) : each];
+				[traversal produce:self.map? self.map(each, &exhausted) : each];
 		}
 		return exhausted;
 	}];

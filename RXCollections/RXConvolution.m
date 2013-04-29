@@ -20,7 +20,7 @@
 
 
 id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	return RXTraversalWithSource([RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each) {
+	return RXTraversalWithSource([RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each, bool *stop) {
 		return RXTraversalWithEnumeration(each);
 	})) block:block]);
 }

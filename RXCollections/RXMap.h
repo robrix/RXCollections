@@ -4,8 +4,8 @@
 
 #import <RXCollections/RXTraversal.h>
 
-typedef id (^RXMapBlock)(id each);
-typedef id (*RXMapFunction)(id each);
+typedef id (^RXMapBlock)(id each, bool *stop);
+typedef id (*RXMapFunction)(id each, bool *stop);
 
 /**
  RXMapBlock const RXIdentityMapBlock
@@ -15,7 +15,7 @@ typedef id (*RXMapFunction)(id each);
  */
 
 extern RXMapBlock const RXIdentityMapBlock;
-extern id RXIdentityMapFunction(id x);
+extern id RXIdentityMapFunction(id x, bool *stop);
 
 /**
  id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block)
