@@ -26,8 +26,8 @@ id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConv
 }
 
 id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function) {
-	return RXConvolveWith(sequences, ^id(NSUInteger count, const __unsafe_unretained id *objects) {
-		return function(count, objects);
+	return RXConvolveWith(sequences, ^id(NSUInteger count, const __unsafe_unretained id *objects, bool *stop) {
+		return function(count, objects, stop);
 	});
 }
 
@@ -46,7 +46,7 @@ id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction) 
 }
 
 id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
-	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count]) {
+	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count], bool *stop) {
 		return [RXTuple tupleWithObjects:objects count:count];
 	});
 }
@@ -79,7 +79,7 @@ id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
 			objects[i++] = [sequence consume];
 		}
 		if (!exhausted)
-			[traversal produce:self.block(arity, objects)];
+			[traversal produce:self.block(arity, objects, &exhausted)];
 		return exhausted;
 	}];
 }

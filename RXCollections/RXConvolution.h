@@ -4,8 +4,8 @@
 
 #import <RXCollections/RXTraversal.h>
 
-typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
-typedef id(*RXConvolutionFunction)(NSUInteger count, id const objects[count]);
+typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count], bool *stop);
+typedef id(*RXConvolutionFunction)(NSUInteger count, id const objects[count], bool *stop);
 
 /**
  id<RXTraversal> RXConvolveWith(id<NSFastEnumeration> sequences, RXConvolutionBlock block)
