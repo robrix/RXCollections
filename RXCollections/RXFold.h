@@ -4,8 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef id (^RXFoldBlock)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
-typedef id (*RXFoldFunction)(id memo, id each); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the function
+typedef id (^RXFoldBlock)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
+typedef id (*RXFoldFunction)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the function
 
 /**
  id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block)
@@ -57,8 +57,8 @@ extern RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration);
  
  The type of a block or function which is used to return a value to be minimized (in terms of `NSComparisonResult`) across an enumeration.
  */
-typedef id (^RXMinBlock)(id each);
-typedef id (*RXMinFunction)(id each);
+typedef id (^RXMinBlock)(id each, bool *stop);
+typedef id (*RXMinFunction)(id each, bool *stop);
 
 /**
  id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock)
