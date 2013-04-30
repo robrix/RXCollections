@@ -113,6 +113,13 @@ static bool itemsPrefixedWithS(id each, bool *stop) {
 	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
 }
 
+@l3_test("stops iterating when the stop flag is set") {
+	l3_assert(RXConstructArray(RXFilter(@[@1, @2, @3], ^bool(id each, bool *stop) {
+		*stop = YES;
+		return nil;
+	})), @[]);
+}
+
 id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
 	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]);
 }
