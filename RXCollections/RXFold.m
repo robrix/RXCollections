@@ -14,13 +14,13 @@ static RXMinBlock RXMinBlockWithFunction(RXMinFunction function);
 
 @l3_suite("RXFold");
 
-static NSString *accumulator(NSString *memo, NSString *each) {
+static NSString *accumulator(NSString *memo, NSString *each, bool *stop) {
 	return [memo stringByAppendingString:each];
 }
 
 @l3_test("produces a result by recursively enumerating the collection") {
 	NSArray *collection = @[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"];
-	l3_assert(RXFold(collection, @"", ^(NSString *memo, NSString *each) {
+	l3_assert(RXFold(collection, @"", ^(NSString *memo, NSString *each, bool *stop) {
 		return [memo stringByAppendingString:each];
 	}), @"QuantumBoomerangPhysicistCognizant");
 
@@ -29,7 +29,10 @@ static NSString *accumulator(NSString *memo, NSString *each) {
 
 id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	for (id each in enumeration) {
-		initial = block(initial, each);
+		bool stop = NO;
+		initial = block(initial, each, &stop);
+		if (stop)
+			break;
 	}
 	return initial;
 }
@@ -56,7 +59,7 @@ NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration) {
 }
 
 NSSet *RXConstructSet(id<NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each) {
+	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each, bool *stop) {
 		[memo addObject:each];
 		return memo;
 	});
@@ -67,7 +70,7 @@ NSSet *RXConstructSet(id<NSFastEnumeration> enumeration) {
 }
 
 NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each) {
+	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each, bool *stop) {
 		[memo setObject:each.value forKey:each.key];
 		return memo;
 	});
@@ -75,7 +78,7 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 
 
 RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
-	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^id(NSMutableArray *memo, id each) {
+	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^(NSMutableArray *memo, id each, bool *stop) {
 		[memo addObject:each];
 		return memo;
 	});
@@ -95,16 +98,16 @@ RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
 	l3_assert(RXMinF(@[@3, @1, @2], @0, nil), @0);
 }
 
-static id minLength(NSString *each) { return @(each.length); }
+static id minLength(NSString *each, bool *stop) { return @(each.length); }
 
 @l3_test("compares the value provided by the block if provided") {
-	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each) { return @(each.length); }), @1);
+	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each, bool *stop) { return @(each.length); }), @1);
 	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength), @1);
 }
 
 id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock block) {
-	return RXFold(enumeration, initial, ^(id memo, id each) {
-		id value = block? block(each) : each;
+	return RXFold(enumeration, initial, ^(id memo, id each, bool *stop) {
+		id value = block? block(each, stop) : each;
 		return [memo compare:value] == NSOrderedAscending?
 			memo
 		:	value;
@@ -116,10 +119,10 @@ id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction function)
 }
 
 
-static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
-	return ^(id memo, id each){ return function(memo, each); };
+static inline RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
+	return ^(id memo, id each, bool *stop){ return function(memo, each, stop); };
 }
 
-static RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
-	return ^(id each){ return function(each); };
+static inline RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
+	return ^(id each, bool *stop){ return function(each, stop); };
 }

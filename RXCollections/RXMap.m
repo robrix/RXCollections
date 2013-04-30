@@ -13,27 +13,23 @@ static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 @l3_suite("RXMap");
 
 @l3_test("identity map block returns its argument") {
-	l3_assert(RXIdentityMapBlock(@"Equestrian"), @"Equestrian");
-	l3_assert(RXIdentityMapFunction(@"Equestrian"), @"Equestrian");
+	__block bool stop = NO;
+	l3_assert(RXIdentityMapBlock(@"Equestrian", &stop), @"Equestrian");
 }
 
-RXMapBlock const RXIdentityMapBlock = ^(id x) {
+RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 	return x;
 };
 
-id RXIdentityMapFunction(id x) {
-	return x;
-}
 
-
-static NSString *accumulate(NSString *each) {
+static NSString *accumulate(NSString *each, bool *stop) {
 	return [each stringByAppendingString:@"Superlative"];
 }
 
 @l3_test("collects the piecewise results of its block") {
 	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate)), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 	
-	l3_assert(RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
+	l3_assert(RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
 		return [each stringByAppendingString:@"Superlative"];
 	})), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
 }
@@ -49,13 +45,18 @@ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunctio
 
 @l3_suite("RXMapBlockWithFunction");
 
+static id identityFunction(id each, bool *stop) {
+	return each;
+}
+
 @l3_test("identity function to block returns an identity block") {
 	NSObject *object = [NSObject new];
-	l3_assert(RXMapBlockWithFunction(RXIdentityMapFunction)(object), object);
+	__block bool stop = NO;
+	l3_assert(RXMapBlockWithFunction(identityFunction)(object, &stop), object);
 }
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
-	return ^(id each) {
-		return function(each);
+	return ^(id each, bool *stop) {
+		return function(each, stop);
 	};
 }

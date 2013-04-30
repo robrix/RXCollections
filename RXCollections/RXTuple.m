@@ -167,7 +167,7 @@
 }
 
 -(NSString *)description {
-	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element) {
+	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element, bool *stop) {
 		if (memo.length > 1)
 			[memo appendString:@", "];
 		[memo appendString:[element description] ?: @"(null)"];

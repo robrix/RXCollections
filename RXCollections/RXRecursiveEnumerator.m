@@ -59,7 +59,7 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 
 @l3_test("recursively enumerates trees in depth-first order") {
 	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
-	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each) {
+	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each, bool *stop) {
 		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
 	}), @"xyzw");
 }
