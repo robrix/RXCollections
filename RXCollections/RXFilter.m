@@ -14,91 +14,97 @@ static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
 @l3_suite("RXFilter");
 
 @l3_test("accept filters return YES") {
-	l3_assert(RXAcceptFilterBlock(nil), YES);
-	l3_assert(RXAcceptFilterFunction(nil), YES);
+	__block bool stop = NO;
+	l3_assert(RXAcceptFilterBlock(nil, &stop), YES);
+	l3_assert(RXAcceptFilterFunction(nil, &stop), YES);
 }
 
-RXFilterBlock const RXAcceptFilterBlock = ^bool(id each) {
+RXFilterBlock const RXAcceptFilterBlock = ^bool(id each, bool *stop) {
 	return YES;
 };
 
-bool RXAcceptFilterFunction(id each) {
+bool RXAcceptFilterFunction(id each, bool *stop) {
 	return YES;
 }
 
 
 @l3_test("reject filters return NO") {
-	l3_assert(RXRejectFilterBlock(nil), NO);
-	l3_assert(RXRejectFilterFunction(nil), NO);
+	__block bool stop = NO;
+	l3_assert(RXRejectFilterBlock(nil, &stop), NO);
+	l3_assert(RXRejectFilterFunction(nil, &stop), NO);
 }
 
-RXFilterBlock const RXRejectFilterBlock = ^bool(id each) {
+RXFilterBlock const RXRejectFilterBlock = ^bool(id each, bool *stop) {
 	return NO;
 };
 
-bool RXRejectFilterFunction(id each) {
+bool RXRejectFilterFunction(id each, bool *stop) {
 	return NO;
 }
 
 
 @l3_test("accept nil filters accept nil") {
-	l3_assert(RXAcceptNilFilterBlock(nil), YES);
-	l3_assert(RXAcceptNilFilterFunction(nil), YES);
+	__block bool stop = NO;
+	l3_assert(RXAcceptNilFilterBlock(nil, &stop), YES);
+	l3_assert(RXAcceptNilFilterFunction(nil, &stop), YES);
 }
 
 @l3_test("accept nil filters reject non-nil") {
-	l3_assert(RXAcceptNilFilterBlock([NSObject new]), NO);
-	l3_assert(RXAcceptNilFilterFunction([NSObject new]), NO);
+	__block bool stop = NO;
+	l3_assert(RXAcceptNilFilterBlock([NSObject new], &stop), NO);
+	l3_assert(RXAcceptNilFilterFunction([NSObject new], &stop), NO);
 }
 
-RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each) {
+RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each, bool *stop) {
 	return each == nil;
 };
 
-bool RXAcceptNilFilterFunction(id each) {
+bool RXAcceptNilFilterFunction(id each, bool *stop) {
 	return each == nil;
 }
 
 
 @l3_test("reject nil filters reject nil") {
-	l3_assert(RXRejectNilFilterBlock(nil), NO);
-	l3_assert(RXRejectNilFilterFunction(nil), NO);
+	__block bool stop = NO;
+	l3_assert(RXRejectNilFilterBlock(nil, &stop), NO);
+	l3_assert(RXRejectNilFilterFunction(nil, &stop), NO);
 }
 
 @l3_test("reject nil filters accept non-nil") {
-	l3_assert(RXRejectNilFilterBlock([NSObject new]), YES);
-	l3_assert(RXRejectNilFilterFunction([NSObject new]), YES);
+	__block bool stop = NO;
+	l3_assert(RXRejectNilFilterBlock([NSObject new], &stop), YES);
+	l3_assert(RXRejectNilFilterFunction([NSObject new], &stop), YES);
 }
 
-RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
+RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 	return each != nil;
 };
 
-bool RXRejectNilFilterFunction(id each) {
+bool RXRejectNilFilterFunction(id each, bool *stop) {
 	return each != nil;
 }
 
 
-static bool itemsPrefixedWithA(id each) {
+static bool itemsPrefixedWithA(id each, bool *stop) {
 	return [each hasPrefix:@"A"];
 }
 
 @l3_test("filters a collection with the piecewise results of its block") {
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
-	l3_assert(RXConstructArray(RXFilter(unfiltered, ^bool(id each) {
+	l3_assert(RXConstructArray(RXFilter(unfiltered, ^bool(id each, bool *stop) {
 		return [each hasPrefix:@"A"];
 	})), l3_equals(@[@"Ancestral", @"Azimuth"]));
 	
 	l3_assert(RXConstructArray(RXFilterF(unfiltered, itemsPrefixedWithA)), l3_equals(@[@"Ancestral", @"Azimuth"]));
 }
 
-static bool itemsPrefixedWithS(id each) {
+static bool itemsPrefixedWithS(id each, bool *stop) {
 	return [each hasPrefix:@"S"];
 }
 
 @l3_test("produces a traversal of the elements of its enumeration which are matched by its block") {
 	NSArray *unfiltered = @[@"Sanguinary", @"Inspirational", @"Susurrus"];
-	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(NSString *each) {
+	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(NSString *each, bool *stop) {
 		return [each hasPrefix:@"S"];
 	}));
 	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
@@ -118,12 +124,12 @@ id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterF
 
 @l3_suite("RXLinearSearch");
 
-static bool itemIsPrefixedWithB(id each) {
+static bool itemIsPrefixedWithB(id each, bool *stop) {
 	return [each hasPrefix:@"B"];
 }
 
 @l3_test("returns the first encountered object for which its block returns true") {
-	l3_assert(RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each) {
+	l3_assert(RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each, bool *stop) {
 		return [each hasPrefix:@"B"];
 	}), @"Belligerent");
 	
@@ -131,12 +137,11 @@ static bool itemIsPrefixedWithB(id each) {
 }
 
 id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
-	id needle = nil;
-	for (needle in collection) {
-		if (block(needle))
-			break;
-	}
-	return needle;
+	return RXFold(collection, nil, ^(id memo, id each, bool *stop) {
+		return block(each, stop) && (*stop = YES)?
+			each
+		:	nil;
+	});
 }
 
 id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
@@ -148,5 +153,5 @@ id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearch
 
 
 static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
-	return ^(id each){ return function(each); };
+	return ^(id each, bool *stop){ return function(each, stop); };
 };

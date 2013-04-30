@@ -26,7 +26,7 @@
 		bool exhausted = self.traversal.isExhausted;
 		if (!exhausted) {
 			id each = [self.traversal consume];
-			if(!self.filter || self.filter(each))
+			if(!self.filter || (self.filter(each, &exhausted) && !exhausted))
 				[traversal produce:self.map? self.map(each, &exhausted) : each];
 		}
 		return exhausted;

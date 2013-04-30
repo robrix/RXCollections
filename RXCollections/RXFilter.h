@@ -4,8 +4,8 @@
 
 #import <RXCollections/RXTraversal.h>
 
-typedef bool (^RXFilterBlock)(id each);
-typedef bool (*RXFilterFunction)(id each);
+typedef bool (^RXFilterBlock)(id each, bool *stop);
+typedef bool (*RXFilterFunction)(id each, bool *stop);
 
 /**
  RXFilterBlock const RXAcceptFilterBlock
@@ -14,7 +14,7 @@ typedef bool (*RXFilterFunction)(id each);
  A filter which accepts all objects.
  */
 extern RXFilterBlock const RXAcceptFilterBlock;
-extern bool RXAcceptFilterFunction(id each);
+extern bool RXAcceptFilterFunction(id each, bool *stop);
 
 /**
  RXFilterBlock const RXRejectFilterBlock
@@ -23,7 +23,7 @@ extern bool RXAcceptFilterFunction(id each);
  A filter which rejects all objects.
  */
 extern RXFilterBlock const RXRejectFilterBlock;
-extern bool RXRejectFilterFunction(id each);
+extern bool RXRejectFilterFunction(id each, bool *stop);
 
 /**
  RXFilterBlock const RXAcceptNilFilterBlock
@@ -32,7 +32,7 @@ extern bool RXRejectFilterFunction(id each);
  A filter which accepts only nil.
  */
 extern RXFilterBlock const RXAcceptNilFilterBlock;
-extern bool RXAcceptNilFilterFunction(id each);
+extern bool RXAcceptNilFilterFunction(id each, bool *stop);
 
 /**
  RXFilterBlock const RXRejectNilFilterBlock
@@ -41,7 +41,7 @@ extern bool RXAcceptNilFilterFunction(id each);
  A filter which rejects only nil.
  */
 extern RXFilterBlock const RXRejectNilFilterBlock;
-extern bool RXRejectNilFilterFunction(id each);
+extern bool RXRejectNilFilterFunction(id each, bool *stop);
 
 /**
  id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
