@@ -119,10 +119,10 @@ id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction function)
 }
 
 
-static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
+static inline RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
 	return ^(id memo, id each, bool *stop){ return function(memo, each, stop); };
 }
 
-static RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
+static inline RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
 	return ^(id each, bool *stop){ return function(each, stop); };
 }

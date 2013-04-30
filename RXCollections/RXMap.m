@@ -15,16 +15,11 @@ static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 @l3_test("identity map block returns its argument") {
 	__block bool stop = NO;
 	l3_assert(RXIdentityMapBlock(@"Equestrian", &stop), @"Equestrian");
-	l3_assert(RXIdentityMapFunction(@"Equestrian", &stop), @"Equestrian");
 }
 
 RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 	return x;
 };
-
-id RXIdentityMapFunction(id x, bool *stop) {
-	return x;
-}
 
 
 static NSString *accumulate(NSString *each, bool *stop) {
@@ -50,10 +45,14 @@ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunctio
 
 @l3_suite("RXMapBlockWithFunction");
 
+static id identityFunction(id each, bool *stop) {
+	return each;
+}
+
 @l3_test("identity function to block returns an identity block") {
 	NSObject *object = [NSObject new];
 	__block bool stop = NO;
-	l3_assert(RXMapBlockWithFunction(RXIdentityMapFunction)(object, &stop), object);
+	l3_assert(RXMapBlockWithFunction(identityFunction)(object, &stop), object);
 }
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {

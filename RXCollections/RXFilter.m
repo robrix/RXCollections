@@ -16,73 +16,49 @@ static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
 @l3_test("accept filters return YES") {
 	__block bool stop = NO;
 	l3_assert(RXAcceptFilterBlock(nil, &stop), YES);
-	l3_assert(RXAcceptFilterFunction(nil, &stop), YES);
 }
 
 RXFilterBlock const RXAcceptFilterBlock = ^bool(id each, bool *stop) {
 	return YES;
 };
 
-bool RXAcceptFilterFunction(id each, bool *stop) {
-	return YES;
-}
-
-
 @l3_test("reject filters return NO") {
 	__block bool stop = NO;
 	l3_assert(RXRejectFilterBlock(nil, &stop), NO);
-	l3_assert(RXRejectFilterFunction(nil, &stop), NO);
 }
 
 RXFilterBlock const RXRejectFilterBlock = ^bool(id each, bool *stop) {
 	return NO;
 };
 
-bool RXRejectFilterFunction(id each, bool *stop) {
-	return NO;
-}
-
-
 @l3_test("accept nil filters accept nil") {
 	__block bool stop = NO;
 	l3_assert(RXAcceptNilFilterBlock(nil, &stop), YES);
-	l3_assert(RXAcceptNilFilterFunction(nil, &stop), YES);
 }
 
 @l3_test("accept nil filters reject non-nil") {
 	__block bool stop = NO;
 	l3_assert(RXAcceptNilFilterBlock([NSObject new], &stop), NO);
-	l3_assert(RXAcceptNilFilterFunction([NSObject new], &stop), NO);
 }
 
 RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each, bool *stop) {
 	return each == nil;
 };
 
-bool RXAcceptNilFilterFunction(id each, bool *stop) {
-	return each == nil;
-}
-
 
 @l3_test("reject nil filters reject nil") {
 	__block bool stop = NO;
 	l3_assert(RXRejectNilFilterBlock(nil, &stop), NO);
-	l3_assert(RXRejectNilFilterFunction(nil, &stop), NO);
 }
 
 @l3_test("reject nil filters accept non-nil") {
 	__block bool stop = NO;
 	l3_assert(RXRejectNilFilterBlock([NSObject new], &stop), YES);
-	l3_assert(RXRejectNilFilterFunction([NSObject new], &stop), YES);
 }
 
 RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 	return each != nil;
 };
-
-bool RXRejectNilFilterFunction(id each, bool *stop) {
-	return each != nil;
-}
 
 
 static bool itemsPrefixedWithA(id each, bool *stop) {
@@ -159,6 +135,6 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
 
 
-static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
+static inline RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
 	return ^(id each, bool *stop){ return function(each, stop); };
 };

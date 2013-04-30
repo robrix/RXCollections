@@ -9,13 +9,11 @@ typedef id (*RXMapFunction)(id each, bool *stop);
 
 /**
  RXMapBlock const RXIdentityMapBlock
- id RXIdentityMapFunction(id x)
  
  Returns its argument.
  */
 
 extern RXMapBlock const RXIdentityMapBlock;
-extern id RXIdentityMapFunction(id x, bool *stop);
 
 /**
  id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block)
