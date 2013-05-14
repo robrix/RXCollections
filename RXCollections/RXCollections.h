@@ -5,7 +5,6 @@
 #pragma mark Traversals
 
 #import <RXCollections/RXGenerator.h>
-#import <RXCollections/RXRangeTraversal.h>
 #import <RXCollections/RXRecursiveEnumerator.h>
 #import <RXCollections/RXTraversal.h>
 
