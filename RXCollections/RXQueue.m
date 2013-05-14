@@ -7,66 +7,16 @@
 #import "RXEquating.h"
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXStream");
+//@class RXQueueNode;
+//typedef RXQueueNode *(^RXLazyQueueNode)();
 
-@class RXStreamNode;
-typedef RXStreamNode *(^RXLazyStreamNode)();
+@interface RXQueueNode : NSObject
 
-#define RXDelay(x) ^{return (x);}
-#define RXForce(x) (x)()
++(instancetype)nodeWithObject:(id)object;
++(instancetype)nodeWithObject:(id)object next:(RXQueueNode *)next;
 
-@interface RXStreamNode : NSObject
-
-+(instancetype)nodeWithValue:(id)value next:(RXLazyStreamNode)next;
-
-@property (nonatomic, strong, readonly) id value;
-@property (nonatomic, strong, readonly) RXStreamNode *nextNode;
-
--(instancetype)append:(RXStreamNode *)node;
-
-@end
-
-@interface RXStreamNode ()
-@property (nonatomic, strong, readwrite) RXStreamNode *nextNode;
-@property (nonatomic, copy) RXLazyStreamNode lazyNext;
-@end
-
-@implementation RXStreamNode
-
-+(instancetype)nodeWithValue:(id)value next:(RXLazyStreamNode)next {
-	return [[self alloc] initWithValue:value next:next];
-}
-
--(instancetype)initWithValue:(id)value next:(RXLazyStreamNode)next {
-	if ((self = [super init])) {
-		_value = value;
-		_lazyNext = [next copy];
-	}
-	return self;
-}
-
-
--(RXStreamNode *)forceNextNode {
-	RXStreamNode *nextNode = self.lazyNext();
-	self.lazyNext = nil;
-	return nextNode;
-}
-
--(RXStreamNode *)nextNode {
-	return _nextNode ?: (self.nextNode = [self forceNextNode]);
-}
-
-
-// fixme: this does not need to delay the appended thing
--(instancetype)append:(RXStreamNode *)node {
-	return [RXStreamNode nodeWithValue:self.value next:RXDelay([self.nextNode append:node])];
-}
-
-
-/*
--(BOOL)isEqual:(id)other
--(id)description
- */
+@property (nonatomic) id object;
+@property (nonatomic) RXQueueNode *next;
 
 @end
 
@@ -78,52 +28,14 @@ typedef RXStreamNode *(^RXLazyStreamNode)();
 }
 
 @interface RXQueue ()
-
-@property (nonatomic, strong, readonly) RXStreamNode *forward;
-@property (nonatomic, readonly) NSUInteger forwardLength;
-@property (nonatomic, strong, readonly) RXStreamNode *reverse;
-@property (nonatomic, readonly) NSUInteger reverseLength;
-
+@property (nonatomic) RXQueueNode *headNode;
+@property (nonatomic) RXQueueNode *tailNode;
 @end
 
 @implementation RXQueue
 
-+(instancetype)empty {
-	static RXQueue *empty = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		empty = [[RXQueue alloc] initWithForward:nil length:0 reverse:nil length:0];
-	});
-	return empty;
-}
-
-+(instancetype)queueWithForward:(RXStreamNode *)forward length:(NSUInteger)forwardLength reverse:(RXStreamNode *)reverse length:(NSUInteger)reverseLength {
-	return [[self alloc] initWithForward:forward length:forwardLength reverse:reverse length:reverseLength];
-}
-
--(instancetype)initWithForward:(RXStreamNode *)forward length:(NSUInteger)forwardLength reverse:(RXStreamNode *)reverse length:(NSUInteger)reverseLength {
-	if ((self = [super init])) {
-		if (reverseLength > forwardLength) {
-			_forward = [forward append:reverse];
-			_forwardLength = forwardLength + reverseLength;
-		} else {
-			_forward = forward;
-			_forwardLength = forwardLength;
-			_reverse = reverse;
-			_reverseLength = reverseLength;
-		}
-	}
-	return self;
-}
-
--(instancetype)init {
-	return [self.class empty];
-}
-
-
-// should this block…?
 -(id)consume {
-	return nil;
+	return [self dequeueObject];
 }
 
 @l3_test("cannot be exhausted") {
@@ -137,50 +49,66 @@ typedef RXStreamNode *(^RXLazyStreamNode)();
 @l3_step("enqueue an object") {
 	RXQueue *queue = test[@"queue"];
 	NSString *object = test[@"object"] = @"Sesquipedalian";
-	test[@"queue"] = [queue enqueueObject:object];
+	[queue enqueueObject:object];
 }
 
-@l3_test("enqueueing an object on the empty queue returns a queue with that as its head") {
+@l3_test("enqueueing an object on an empty queue sets it as the head and tail") {
 	l3_perform_step("enqueue an object");
 	RXQueue *queue = test[@"queue"];
 	l3_assert(queue.head, test[@"object"]);
 }
 
-@l3_test("enqueueing an object on a queue appends it to the reverse stream") {
+@l3_test("enqueueing an object on a queue appends it to the tail node") {
 	l3_perform_step("enqueue an object");
 	RXQueue *queue = test[@"queue"];
 	NSString *object = @"Parsimony";
-	queue = [queue enqueueObject:object];
-	l3_assert(queue.reverse.value, object);
+	[queue enqueueObject:object];
+	l3_assert(queue.tailNode.object, object);
 }
 
--(instancetype)enqueueObject:(id)object {
-	return self.forward?
-		[self.class queueWithForward:self.forward length:self.forwardLength reverse:[RXStreamNode nodeWithValue:object next:RXDelay(self.reverse)] length:self.reverseLength + 1]
-	:	[self.class queueWithForward:[RXStreamNode nodeWithValue:object next:nil] length:1 reverse:nil length:0];
+-(void)enqueueObject:(id)object {
+	self.tailNode = [RXQueueNode nodeWithObject:object next:self.tailNode];
+	if (!self.headNode)
+		self.headNode = self.tailNode;
 }
 
--(instancetype)enqueueTraversal:(id<RXTraversal>)traversal {
-	return nil;
-}
-
-
-@l3_test("dequeueing the empty queue returns the empty queue") {
-	RXQueue *empty = [RXQueue empty];
-	l3_assert([empty dequeue], empty);
-}
-
--(instancetype)dequeue {
-	return [self.class queueWithForward:self.forward.nextNode length:self.forwardLength - 1 reverse:self.reverse length:self.reverseLength];
+-(void)enqueueTraversal:(id<RXTraversal>)traversal {
+	
 }
 
 
-@l3_test("the head of the empty queue is nil") {
-	l3_assert([RXQueue empty].head, nil);
+@l3_test("dequeueing from an empty queue blocks until something is added") {
+	// fixme: figure out how best to test this
+}
+
+@l3_test("dequeuing returns the head object") {
+	l3_perform_step("enqueue an object");
+	l3_assert([test[@"queue"] dequeueObject], test[@"object"]);
+}
+
+@l3_test("dequeueing removes the head object") {
+	l3_perform_step("enqueue an object");
+	RXQueue *queue = test[@"queue"];
+	[queue dequeueObject];
+	l3_assert(queue.headNode, nil);
+	l3_assert(queue.tailNode, nil);
+}
+
+-(id)dequeueObject {
+	id object = self.headNode.object;
+	self.headNode = self.headNode.next;
+	if (!self.headNode)
+		self.tailNode = nil;
+	return object;
+}
+
+
+@l3_test("the head of an empty queue is nil") {
+	l3_assert([RXQueue new].head, nil);
 }
 
 -(id)head {
-	return self.forward.value;
+	return self.headNode.object;
 }
 
 
@@ -189,15 +117,14 @@ typedef RXStreamNode *(^RXLazyStreamNode)();
 -(bool)isEqualToQueue:(RXQueue *)queue {
 	return
 		[queue isKindOfClass:[RXQueue class]]
-	&&	(queue.forwardLength == self.forwardLength)
-	&&	(queue.reverseLength == self.reverseLength)
-	&&	RXEqual(queue.forward, self.forward)
-	&&	RXEqual(queue.reverse, self.reverse);
+	&&	NO;
 }
 
 -(BOOL)isEqual:(id)object {
 	return [self isEqualToQueue:object];
 }
+
+// fixme: -description and -debugDescription
 
 
 #pragma mark NSCopying
@@ -211,6 +138,40 @@ typedef RXStreamNode *(^RXLazyStreamNode)();
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	return 0;
+}
+
+@end
+
+@implementation RXQueueNode
+
++(instancetype)nodeWithObject:(id)object {
+	return [self nodeWithObject:object next:nil];
+}
+
++(instancetype)nodeWithObject:(id)object next:(RXQueueNode *)next {
+	return [[self alloc] initWithObject:object next:next];
+}
+
+-(instancetype)initWithObject:(id)object next:(RXQueueNode *)next {
+	if ((self = [super init])) {
+		_object = object;
+		_next = next;
+	}
+	return self;
+}
+
+
+#pragma mark NSObject
+
+-(bool)isEqualToQueueNode:(RXQueueNode *)node {
+	return
+		[node isKindOfClass:[RXQueueNode class]]
+	&&	RXEqual(self.object, node.object)
+	&&	RXEqual(self.next, node.next);
+}
+
+-(BOOL)isEqual:(id)object {
+	return [self isEqualToQueueNode:object];
 }
 
 @end

@@ -4,21 +4,12 @@
 
 #import <RXCollections/RXTraversal.h>
 
-/*
- is a queue a traversal? or is it traversable?
- are all traversals queues? is queue a better noun than traversal?
- should it be thread-safe?
- should it be purely functional?
- */
-
 @interface RXQueue : NSObject <RXTraversal>
 
-+(instancetype)empty;
+-(void)enqueueObject:(id)object;
+-(void)enqueueTraversal:(id<RXTraversal>)traversal;
 
--(instancetype)enqueueObject:(id)object;
--(instancetype)enqueueTraversal:(id<RXTraversal>)traversal;
-
--(instancetype)dequeue;
+-(id)dequeueObject;
 
 @property (nonatomic, readonly) id head;
 
