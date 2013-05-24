@@ -10,13 +10,13 @@
 //@class RXQueueNode;
 //typedef RXQueueNode *(^RXLazyQueueNode)();
 
-@interface RXQueueNode : NSObject
+@interface RXQueueNode : NSObject <RXLinkedListNode>
 
-+(instancetype)nodeWithObject:(id)object;
-+(instancetype)nodeWithObject:(id)object next:(RXQueueNode *)next;
++(instancetype)nodeWithFirst:(id)first;
++(instancetype)nodeWithFirst:(id)first rest:(RXQueueNode *)rest;
 
-@property (nonatomic) id object;
-@property (nonatomic) RXQueueNode *next;
+@property (nonatomic) id first;
+@property (nonatomic) RXQueueNode *rest;
 
 @end
 
@@ -63,11 +63,11 @@
 	RXQueue *queue = test[@"queue"];
 	NSString *object = @"Parsimony";
 	[queue enqueueObject:object];
-	l3_assert(queue.tailNode.object, object);
+	l3_assert(queue.tailNode.first, object);
 }
 
 -(void)enqueueObject:(id)object {
-	self.tailNode = [RXQueueNode nodeWithObject:object next:self.tailNode];
+	self.tailNode = [RXQueueNode nodeWithFirst:object rest:self.tailNode];
 	if (!self.headNode)
 		self.headNode = self.tailNode;
 }
@@ -95,8 +95,8 @@
 }
 
 -(id)dequeueObject {
-	id object = self.headNode.object;
-	self.headNode = self.headNode.next;
+	id object = self.headNode.first;
+	self.headNode = self.headNode.rest;
 	if (!self.headNode)
 		self.tailNode = nil;
 	return object;
@@ -108,7 +108,7 @@
 }
 
 -(id)head {
-	return self.headNode.object;
+	return self.headNode.first;
 }
 
 
@@ -144,18 +144,18 @@
 
 @implementation RXQueueNode
 
-+(instancetype)nodeWithObject:(id)object {
-	return [self nodeWithObject:object next:nil];
++(instancetype)nodeWithFirst:(id)first {
+	return [self nodeWithFirst:first rest:nil];
 }
 
-+(instancetype)nodeWithObject:(id)object next:(RXQueueNode *)next {
-	return [[self alloc] initWithObject:object next:next];
++(instancetype)nodeWithFirst:(id)first rest:(RXQueueNode *)rest {
+	return [[self alloc] initWithObject:first rest:rest];
 }
 
--(instancetype)initWithObject:(id)object next:(RXQueueNode *)next {
+-(instancetype)initWithObject:(id)first rest:(RXQueueNode *)rest {
 	if ((self = [super init])) {
-		_object = object;
-		_next = next;
+		_first = first;
+		_rest = rest;
 	}
 	return self;
 }
@@ -166,8 +166,8 @@
 -(bool)isEqualToQueueNode:(RXQueueNode *)node {
 	return
 		[node isKindOfClass:[RXQueueNode class]]
-	&&	RXEqual(self.object, node.object)
-	&&	RXEqual(self.next, node.next);
+	&&	RXEqual(self.first, node.first)
+	&&	RXEqual(self.rest, node.rest);
 }
 
 -(BOOL)isEqual:(id)object {

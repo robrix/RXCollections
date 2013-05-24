@@ -6,14 +6,14 @@
 
 @protocol RXPair <NSObject>
 
-+(instancetype)tupleWithLeft:(id)left right:(id)right;
-
 @property (nonatomic, strong, readonly) id left;
 @property (nonatomic, strong, readonly) id right;
 
 @end
 
 @interface RXTuple (RXPair) <RXPair>
+
++(instancetype)tupleWithLeft:(id)left right:(id)right;
 
 @end
 
