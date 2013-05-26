@@ -76,10 +76,10 @@ id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
 		bool exhausted = NO;
 		for (id<RXTraversal> sequence in self.sequences) {
 			exhausted = exhausted || sequence.isExhausted;
-			objects[i++] = [sequence consume];
+			objects[i++] = [sequence nextObject];
 		}
 		if (!exhausted)
-			[traversal produce:self.block(arity, objects, &exhausted)];
+			[traversal addObject:self.block(arity, objects, &exhausted)];
 		return exhausted;
 	}];
 }

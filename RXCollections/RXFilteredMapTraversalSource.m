@@ -25,9 +25,9 @@
 	[traversal refillWithBlock:^{
 		bool exhausted = self.traversal.isExhausted;
 		if (!exhausted) {
-			id each = [self.traversal consume];
+			id each = [self.traversal nextObject];
 			if(!self.filter || (self.filter(each, &exhausted) && !exhausted))
-				[traversal produce:self.map? self.map(each, &exhausted) : each];
+				[traversal addObject:self.map? self.map(each, &exhausted) : each];
 		}
 		return exhausted;
 	}];

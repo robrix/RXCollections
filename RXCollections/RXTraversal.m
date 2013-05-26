@@ -51,11 +51,11 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	return self.count <= self.current;
 }
 
--(id)consume {
-	id consumed = nil;
+-(id)nextObject {
+	id nextObject = nil;
 	if (!self.isExhausted)
-		consumed = self.objects[self.current++];
-	return consumed;
+		nextObject = self.objects[self.current++];
+	return nextObject;
 }
 
 
@@ -140,7 +140,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	}
 }
 
--(void)produce:(id)object {
+-(void)addObject:(id)object {
 	_objects[self.count++] = object;
 	self.countProduced++;
 }
@@ -190,19 +190,19 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @l3_step("copy") {
 	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] consume];
+	[test[@"original"] nextObject];
 	test[@"copy"] = [test[@"original"] copy];
 }
 
 @l3_test("copies traverse from the current location") {
 	l3_perform_step("copy");
-	l3_assert([test[@"copy"] consume], @2);
+	l3_assert([test[@"copy"] nextObject], @2);
 }
 
 @l3_test("copies are independently traversed") {
 	l3_perform_step("copy");
-	[test[@"copy"] consume];
-	l3_assert([test[@"original"] consume], @2);
+	[test[@"copy"] nextObject];
+	l3_assert([test[@"original"] nextObject], @2);
 }
 
 -(instancetype)copyWithZone:(NSZone *)zone {
@@ -247,19 +247,19 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @l3_step("copy") {
 	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] consume];
+	[test[@"original"] nextObject];
 	test[@"copy"] = [test[@"original"] copy];
 }
 
 @l3_test("copies traverse from the current location") {
 	l3_perform_step("copy");
-	l3_assert([test[@"copy"] consume], @2);
+	l3_assert([test[@"copy"] nextObject], @2);
 }
 
 @l3_test("copies are independently traversed") {
 	l3_perform_step("copy");
-	[test[@"copy"] consume];
-	l3_assert([test[@"original"] consume], @2);
+	[test[@"copy"] nextObject];
+	l3_assert([test[@"original"] nextObject], @2);
 }
 
 -(instancetype)copyWithZone:(NSZone *)zone {

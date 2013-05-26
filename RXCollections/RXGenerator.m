@@ -85,7 +85,7 @@
 
 -(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
 	[traversal refillWithBlock:^bool{
-		[traversal produce:[self nextObject]];
+		[traversal addObject:[self nextObject]];
 		return self.isComplete;
 	}];
 }
