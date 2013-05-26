@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- RXTraversal
+ @protocol RXTraversal
  
  Defines the interface for traversing some collection of objects in sequence.
 */
@@ -27,6 +27,11 @@
 @end
 
 
+/**
+ @protocol RXRefillableTraversal
+ 
+ Refillable traversals can be refilled by an RXTraversalSource-conformant object. That object receives a reference to the refillable traversal, and can use the traversal’s methods to add objects to it.
+ */
 @protocol RXRefillableTraversal <RXTraversal>
 
 -(void)refillWithBlock:(bool(^)())block;
@@ -37,6 +42,12 @@
 @property (nonatomic, assign, readonly) NSUInteger countProduced;
 
 @end
+
+/**
+ @protocol RXTraversalSource
+ 
+ A traversal source is an object which is prompted to refill a traversal when it becomes empty.
+ */
 
 @protocol RXTraversalSource <NSObject>
 
