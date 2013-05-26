@@ -3,6 +3,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXTuple.h>
+#import <RXCollections/RXEquating.h>
 
 @protocol RXPair <NSObject>
 
@@ -32,15 +33,15 @@
 @end
 
 
-@protocol RXLinkedListNode <NSObject>
+@protocol RXLinkedListNode <NSObject, RXEquating>
 
 @property (nonatomic, strong, readonly) id first;
-@property (nonatomic, strong, readonly) id rest;
+@property (nonatomic, strong, readonly) id<RXLinkedListNode> rest;
 
 @end
 
 @interface RXTuple (RXLinkedListNode) <RXLinkedListNode>
 
-+(instancetype)tupleWithFirst:(id)first rest:(id)rest;
++(instancetype)tupleWithFirst:(id)first rest:(id<RXLinkedListNode>)rest;
 
 @end

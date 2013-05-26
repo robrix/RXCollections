@@ -7,16 +7,20 @@
 #import "RXEquating.h"
 #import <Lagrangian/Lagrangian.h>
 
-//@class RXQueueNode;
-//typedef RXQueueNode *(^RXLazyQueueNode)();
-
 @interface RXQueueNode : NSObject <RXLinkedListNode>
 
-+(instancetype)nodeWithFirst:(id)first;
-+(instancetype)nodeWithFirst:(id)first rest:(RXQueueNode *)rest;
++(instancetype)nodeWithFirst:(id)first rest:(id<RXLinkedListNode>)rest;
 
-@property (nonatomic) id first;
-@property (nonatomic) RXQueueNode *rest;
+@property (nonatomic, readonly) id first;
+@property (nonatomic, readonly) id<RXLinkedListNode> rest;
+
+@end
+
+@interface RXTraversalQueueNode : RXQueueNode
+
++(instancetype)nodeWithFirst:(id<RXTraversal>)traversal rest:(id<RXLinkedListNode>)rest;
+
+@property (nonatomic, readonly) id<RXTraversal> first;
 
 @end
 
@@ -28,13 +32,13 @@
 }
 
 @interface RXQueue ()
-@property (nonatomic) RXQueueNode *headNode;
-@property (nonatomic) RXQueueNode *tailNode;
+@property (nonatomic) id<RXLinkedListNode> headNode;
+@property (nonatomic) id<RXLinkedListNode> tailNode;
 @end
 
 @implementation RXQueue
 
--(id)consume {
+-(id)nextObject {
 	return [self dequeueObject];
 }
 
@@ -66,14 +70,18 @@
 	l3_assert(queue.tailNode.first, object);
 }
 
--(void)enqueueObject:(id)object {
-	self.tailNode = [RXQueueNode nodeWithFirst:object rest:self.tailNode];
+-(void)appendNode:(id<RXLinkedListNode>)node {
+	self.tailNode = node;
 	if (!self.headNode)
 		self.headNode = self.tailNode;
 }
 
+-(void)enqueueObject:(id)object {
+	[self appendNode:[RXQueueNode nodeWithFirst:object rest:self.tailNode]];
+}
+
 -(void)enqueueTraversal:(id<RXTraversal>)traversal {
-	
+	[self appendNode:[RXTraversalQueueNode nodeWithFirst:traversal rest:self.tailNode]];
 }
 
 
@@ -117,19 +125,20 @@
 -(bool)isEqualToQueue:(RXQueue *)queue {
 	return
 		[queue isKindOfClass:[RXQueue class]]
-	&&	NO;
+	&&	RXEqual(self.headNode, queue.headNode);
 }
 
 -(BOOL)isEqual:(id)object {
 	return [self isEqualToQueue:object];
 }
 
+
 // fixme: -description and -debugDescription
 
 
 #pragma mark NSCopying
 
--(id)copyWithZone:(NSZone *)zone {
+-(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
 }
 
@@ -137,6 +146,7 @@
 #pragma mark NSFastEnumeration
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	// fixme: implement this
 	return 0;
 }
 
@@ -144,15 +154,11 @@
 
 @implementation RXQueueNode
 
-+(instancetype)nodeWithFirst:(id)first {
-	return [self nodeWithFirst:first rest:nil];
-}
-
-+(instancetype)nodeWithFirst:(id)first rest:(RXQueueNode *)rest {
++(instancetype)nodeWithFirst:(id)first rest:(id<RXLinkedListNode>)rest {
 	return [[self alloc] initWithObject:first rest:rest];
 }
 
--(instancetype)initWithObject:(id)first rest:(RXQueueNode *)rest {
+-(instancetype)initWithObject:(id)first rest:(id<RXLinkedListNode>)rest {
 	if ((self = [super init])) {
 		_first = first;
 		_rest = rest;
@@ -161,7 +167,7 @@
 }
 
 
-#pragma mark NSObject
+#pragma mark RXEquating
 
 -(bool)isEqualToQueueNode:(RXQueueNode *)node {
 	return
@@ -172,6 +178,24 @@
 
 -(BOOL)isEqual:(id)object {
 	return [self isEqualToQueueNode:object];
+}
+
+
+// fixme: -description, -debugDescription
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
+@end
+
+@implementation RXTraversalQueueNode
+
++(instancetype)nodeWithFirst:(id<RXTraversal>)traversal rest:(id<RXLinkedListNode>)rest {
+	return [[self alloc] initWithObject:traversal rest:rest];
 }
 
 @end
