@@ -4,6 +4,7 @@
 
 #import "RXConvolution.h"
 #import "RXFold.h"
+#import "RXInterval.h"
 #import "RXTuple.h"
 #import "RXMap.h"
 
@@ -66,6 +67,13 @@ id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
 	source.sequences = sequences;
 	source.block = block;
 	return source;
+}
+
+
+@l3_test("enumerates the sequences correctly across multiple refills") {
+	id<RXInterval> interval = RXIntervalByCount(0, 1, 128);
+	NSArray *convoluted = RXConstructArray(RXConvolve(@[interval.traversal, interval.traversal]));
+	l3_assert(convoluted.lastObject, l3_is([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]));
 }
 
 -(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
