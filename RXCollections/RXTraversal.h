@@ -36,8 +36,6 @@
 
 -(void)addObject:(id)object;
 
-@property (nonatomic, assign, readonly) NSUInteger countProduced;
-
 @end
 
 

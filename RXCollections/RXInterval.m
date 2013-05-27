@@ -110,9 +110,10 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 -(id<RXTraversal>)traversal {
+	__block NSUInteger count = 0;
 	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
-		[traversal addObject:@(self.from + (self.stride * traversal.countProduced))];
-		return traversal.countProduced >= self.count;
+		[traversal addObject:@(self.from + (self.stride * count++))];
+		return count >= self.count;
 	});
 }
 
