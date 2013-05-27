@@ -34,9 +34,6 @@
  */
 @protocol RXRefillableTraversal <RXTraversal>
 
--(void)refillWithBlock:(bool(^)())block;
-
--(void)empty;
 -(void)addObject:(id)object;
 
 @property (nonatomic, assign, readonly) NSUInteger countProduced;

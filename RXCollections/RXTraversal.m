@@ -121,6 +121,11 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 }
 
 
+-(void)empty {
+	self.count = 0;
+	self.current = 0;
+}
+
 -(void)refill {
 	[self empty];
 	
@@ -130,20 +135,6 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	}
 }
 
-
--(void)empty {
-	self.count = 0;
-	self.current = 0;
-}
-
--(void)refillWithBlock:(bool(^)())block {
-	[self empty];
-	
-	while ((self.source != nil) && (self.count < self.capacity)) {
-		if (block())
-			self.source = nil;
-	}
-}
 
 -(void)addObject:(id)object {
 	_objects[self.count++] = object;
