@@ -10,22 +10,22 @@
 
 @l3_suite("RXGenerator");
 
-@interface RXGeneratorTraversalSource : NSObject <RXGenerator>
+@interface RXGeneratorTraversable : NSObject <RXGenerator>
 
-+(instancetype)sourceWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block;
++(instancetype)generatorWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block;
 
 @property (nonatomic, readonly) id nextObject;
 @property (nonatomic, getter = isComplete, readwrite) bool complete;
 @property (nonatomic, copy, readonly) RXGeneratorBlock block;
 @end
 
-@implementation RXGeneratorTraversalSource
+@implementation RXGeneratorTraversable
 
 @synthesize context = _context;
 
 #pragma mark Construction
 
-+(instancetype)sourceWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block {
++(instancetype)generatorWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block {
 	return [[self alloc] initWithContext:context block:block];
 }
 
@@ -38,7 +38,7 @@
 }
 
 @l3_test("enumerates generated objects") {
-	RXGeneratorBlock fibonacci = ^(RXGeneratorTraversalSource *self) {
+	RXGeneratorBlock fibonacci = ^(RXGeneratorTraversable *self) {
 		NSNumber *previous = self.context[1], *next = @([self.context[0] unsignedIntegerValue] + [previous unsignedIntegerValue]);
 		self.context = (id)[RXTuple tupleWithArray:@[previous, next]];
 		return previous;
@@ -54,7 +54,7 @@
 
 @l3_test("stops enumerating when requested to by the generator") {
 	NSUInteger n = 3;
-	RXGeneratorBlock block = ^(RXGeneratorTraversalSource *self) {
+	RXGeneratorBlock block = ^(RXGeneratorTraversable *self) {
 		NSUInteger current = [(NSNumber *)self.context unsignedIntegerValue];
 		self.context = @(current + 1);
 		if (current >= n)
@@ -89,5 +89,5 @@
 @end
 
 id<RXGenerator> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
-	return [RXGeneratorTraversalSource sourceWithContext:context block:block];
+	return [RXGeneratorTraversable generatorWithContext:context block:block];
 }
