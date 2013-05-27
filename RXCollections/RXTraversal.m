@@ -156,8 +156,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXSourcedTraversal *copy = [super copyWithZone:zone];
 	copy.source = self.source;
-	copy.countProduced = self.countProduced;
-	for (NSUInteger i = 0; i < self.countProduced; i++) {
+	for (NSUInteger i = 0; i < self.count; i++) {
 		copy->_objects[i] = _objects[i];
 	}
 	return copy;
