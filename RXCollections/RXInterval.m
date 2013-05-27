@@ -9,7 +9,7 @@
 
 @l3_suite("RXInterval");
 
-@interface RXIntervalTraversalSource : NSObject <RXInterval, RXTraversalSource>
+@interface RXIntervalTraversable : NSObject <RXInterval>
 -(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count;
 
 @property (nonatomic, readonly) RXMagnitude from;
@@ -60,7 +60,7 @@ id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude 
 	NSCParameterAssert(absoluteStride > 0.0);
 	
 	RXMagnitude length = RXIntervalGetLength(from, to);
-	return [[RXIntervalTraversalSource alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
+	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
 }
 
 
@@ -77,11 +77,11 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 		length / (RXMagnitude)(count - 1)
 	:	length;
 	
-	return [[RXIntervalTraversalSource alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:count];
+	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:count];
 }
 
 
-@implementation RXIntervalTraversalSource
+@implementation RXIntervalTraversable
 
 #pragma mark Construction
 
@@ -99,7 +99,7 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 
-#pragma mark RXTraversalSource
+#pragma mark RXTraversable
 
 @l3_test("traverses the values in its interval at a given number of steps of a given stride") {
 	l3_assert(RXConstructArray(RXIntervalByCount(-M_PI, M_PI, 3).traversal), l3_is(@[@-M_PI, @0, @M_PI]));
@@ -110,14 +110,10 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 -(id<RXTraversal>)traversal {
-	return RXTraversalWithSource(self);
-}
-
--(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
-	[traversal refillWithBlock:^bool{
+	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
 		[traversal addObject:@(self.from + (self.stride * traversal.countProduced))];
 		return traversal.countProduced >= self.count;
-	}];
+	});
 }
 
 @end

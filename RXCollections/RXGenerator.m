@@ -10,7 +10,7 @@
 
 @l3_suite("RXGenerator");
 
-@interface RXGeneratorTraversalSource : NSObject <RXGenerator, RXTraversalSource>
+@interface RXGeneratorTraversalSource : NSObject <RXGenerator>
 
 +(instancetype)sourceWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block;
 
@@ -67,7 +67,10 @@
 
 
 -(id<RXTraversal>)traversal {
-	return RXTraversalWithSource(self);
+	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
+		[traversal addObject:[self nextObject]];
+		return self.isComplete;
+	});
 }
 
 
@@ -81,13 +84,6 @@
 
 -(void)complete {
 	self.complete = YES;
-}
-
--(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
-	[traversal refillWithBlock:^bool{
-		[traversal addObject:[self nextObject]];
-		return self.isComplete;
-	}];
 }
 
 @end

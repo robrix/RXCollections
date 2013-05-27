@@ -43,21 +43,12 @@
 
 @end
 
-/**
- @protocol RXTraversalSource
- 
- A traversal source is an object which is prompted to refill a traversal when it becomes empty.
- */
 
-@protocol RXTraversalSource <NSObject>
-
--(void)refillTraversal:(id<RXRefillableTraversal>)traversal;
-
-@end
+typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal);
 
 
 extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
-extern id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source);
+extern id<RXTraversal> RXTraversalWithSource(RXTraversalSource source);
 extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
 
 

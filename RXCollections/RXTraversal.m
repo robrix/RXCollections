@@ -19,9 +19,9 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 @interface RXSourcedTraversal : RXRefillingTraversal <RXRefillableTraversal>
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source;
++(instancetype)traversalWithSource:(RXTraversalSource)source;
 
-@property (nonatomic, strong) id<RXTraversalSource> source;
+@property (nonatomic, copy) RXTraversalSource source;
 @property (nonatomic, readonly) NSUInteger capacity;
 @property (nonatomic) NSUInteger countProduced;
 @end
@@ -103,7 +103,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	id __strong _objects[16];
 }
 
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source {
++(instancetype)traversalWithSource:(RXTraversalSource)source {
 	NSParameterAssert(source != nil);
 	
 	RXSourcedTraversal *traversal = [self new];
@@ -122,7 +122,12 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 
 -(void)refill {
-	[self.source refillTraversal:self];
+	[self empty];
+	
+	while ((self.source != nil) && (self.count < self.capacity)) {
+		if (self.source(self))
+			self.source = nil;
+	}
 }
 
 
@@ -276,7 +281,7 @@ id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger c
 	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
 }
 
-id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source) {
+id<RXTraversal> RXTraversalWithSource(RXTraversalSource source) {
 	return [RXSourcedTraversal traversalWithSource:source];
 }
 
