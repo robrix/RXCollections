@@ -30,7 +30,7 @@
 /**
  @protocol RXRefillableTraversal
  
- Refillable traversals can be refilled by an RXTraversalSource-conformant object. That object receives a reference to the refillable traversal, and can use the traversal’s methods to add objects to it.
+ A traversal created with a source is refilled by calling its source block, which in turn receives an RXRefillableTraversal-conformant object as its argument. This protocol is not expected to be implemented by third parties.
  */
 @protocol RXRefillableTraversal <RXTraversal>
 
@@ -39,6 +39,13 @@
 @end
 
 
+/**
+ typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal)
+ 
+ An RXTraversalSource is a block which a refillable traversal will call, passing itself as the argument, when it needs to be refilled. The block can maintain any state it requires simply by closing over it.
+ 
+ Its return value is a boolean indicating whether or not it has been exhausted; YES indicates it will not produce further objects, and NO indicates that it will. After it has returned YES, the block will not be called again.
+ */
 typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal);
 
 
