@@ -12,6 +12,10 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, assign, readonly) id const *objects; // subclass responsibility
 @property (nonatomic, assign) NSUInteger count;
 @property (nonatomic, assign) NSUInteger current;
+
+@property (nonatomic, readonly) id currentObject;
+-(id)objectByAdvancingCursor;
+
 @end
 
 @interface RXRefillingTraversal : RXTraversal
@@ -23,6 +27,13 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @property (nonatomic, copy) RXTraversalSource source;
 @property (nonatomic, readonly) NSUInteger capacity;
+@end
+
+@interface RXCompositeTraversal : RXSourcedTraversal <RXCompositeTraversal>
++(instancetype)traversalWithSource:(RXCompositeTraversalSource)source;
+
+@property (nonatomic, readonly) id<RXTraversal> currentObject;
+@property (nonatomic, copy) RXCompositeTraversalSource source;
 @end
 
 @interface RXFastEnumerationTraversal : RXRefillingTraversal
@@ -59,8 +70,17 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 -(id)nextObject {
 	id nextObject = nil;
 	if (!self.isExhausted)
-		nextObject = self.objects[self.current++];
+		nextObject = [self objectByAdvancingCursor];
 	return nextObject;
+}
+
+
+-(id)currentObject {
+	return self.objects[self.current];
+}
+
+-(id)objectByAdvancingCursor {
+	return self.objects[self.current++];
 }
 
 
@@ -155,6 +175,40 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 		copy->_objects[i] = _objects[i];
 	}
 	return copy;
+}
+
+@end
+
+
+@implementation RXCompositeTraversal
+
+@dynamic source;
+@dynamic currentObject;
+
++(instancetype)traversalWithSource:(RXCompositeTraversalSource)source {
+	return [super traversalWithSource:source];
+}
+
+
+#pragma mark RXTraversal
+
+-(id)objectByAdvancingCursor {
+	id<RXTraversal> currentObject = self.currentObject;
+	while (currentObject.isExhausted) {
+		currentObject = [super objectByAdvancingCursor];
+	}
+	return [currentObject nextObject];
+}
+
+
+#pragma mark RXCompositeTraversal
+
+-(void)addObject:(id)object {
+	[super addObject:RXTraversalWithObject(object)];
+}
+
+-(void)addTraversal:(id<RXTraversal>)traversal {
+	[super addObject:traversal];
 }
 
 @end
@@ -325,6 +379,10 @@ id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger c
 
 id<RXTraversal> RXTraversalWithSource(RXTraversalSource source) {
 	return [RXSourcedTraversal traversalWithSource:source];
+}
+
+id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source) {
+	return [RXCompositeTraversal traversalWithSource:source];
 }
 
 id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration) {
