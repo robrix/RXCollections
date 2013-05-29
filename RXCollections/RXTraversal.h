@@ -52,6 +52,7 @@ typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal);
 extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
 extern id<RXTraversal> RXTraversalWithSource(RXTraversalSource source);
 extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
+extern id<RXTraversal> RXTraversalWithObject(id object);
 
 
 @interface NSEnumerator (RXTraversal) <RXTraversal>

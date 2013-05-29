@@ -38,6 +38,12 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, strong) id owner;
 @end
 
+@interface RXUnaryTraversal : NSObject <RXTraversal>
++(instancetype)traversalWithObject:(id)object;
+
+@property (nonatomic, strong) id object;
+@end
+
 @implementation RXTraversal
 
 -(id const __unsafe_unretained *)objects {
@@ -265,6 +271,54 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 
+@implementation RXUnaryTraversal
+
+static id RXUnaryTraversalExhaustionMarker() {
+	static NSObject *marker = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		marker = [NSObject new];
+	});
+	return marker;
+}
+
++(instancetype)traversalWithObject:(id)object {
+	RXUnaryTraversal *traversal = [self new];
+	traversal.object = object;
+	return traversal;
+}
+
+
+-(id)nextObject {
+	id object = self.object;
+	self.object = RXUnaryTraversalExhaustionMarker();
+	return object;
+}
+
+-(bool)isExhausted {
+	return self.object == RXUnaryTraversalExhaustionMarker();
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return [self.class traversalWithObject:self.object];
+}
+
+
+#pragma mark NSFastEnumeration
+
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	state->mutationsPtr = state->extra;
+	const id *object = &_object;
+	state->itemsPtr = (__unsafe_unretained id *)object;
+	return self.isExhausted? 0 : 1;
+}
+
+@end
+
+
 id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count) {
 	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
 }
@@ -277,4 +331,8 @@ id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enume
 	return [enumeration isKindOfClass:[RXTraversal class]]?
 		(RXTraversal *)enumeration
 	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
+}
+
+id<RXTraversal> RXTraversalWithObject(id object) {
+	return [RXUnaryTraversal traversalWithObject:object];
 }
