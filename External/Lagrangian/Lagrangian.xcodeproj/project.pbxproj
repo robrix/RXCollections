@@ -146,6 +146,12 @@
 		D4CA699E1685611F00CE6DA0 /* L3TRDynamicLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */; };
 		D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E394C31650C2BC00C72FBD /* L3TestResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E394C61650C2BC00C72FBD /* L3TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E394C41650C2BC00C72FBD /* L3TestResult.m */; };
+		D4EA374A17586532003C6F23 /* L3Mock.h in Headers */ = {isa = PBXBuildFile; fileRef = D4EA374817586532003C6F23 /* L3Mock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4EA374B17586532003C6F23 /* L3Mock.h in Headers */ = {isa = PBXBuildFile; fileRef = D4EA374817586532003C6F23 /* L3Mock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4EA374C17586532003C6F23 /* L3Mock.h in Headers */ = {isa = PBXBuildFile; fileRef = D4EA374817586532003C6F23 /* L3Mock.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4EA374D17586532003C6F23 /* L3Mock.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA374917586532003C6F23 /* L3Mock.m */; };
+		D4EA374E17586532003C6F23 /* L3Mock.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA374917586532003C6F23 /* L3Mock.m */; };
+		D4EA374F17586532003C6F23 /* L3Mock.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA374917586532003C6F23 /* L3Mock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -237,6 +243,8 @@
 		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
 		D4E394C31650C2BC00C72FBD /* L3TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestResult.h; sourceTree = "<group>"; };
 		D4E394C41650C2BC00C72FBD /* L3TestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestResult.m; sourceTree = "<group>"; };
+		D4EA374817586532003C6F23 /* L3Mock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Mock.h; sourceTree = "<group>"; };
+		D4EA374917586532003C6F23 /* L3Mock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Mock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,6 +455,8 @@
 				D4B21CB8168924A500D5986E /* L3Configuration.h */,
 				D4A5B2D6164BF15400338EB4 /* L3Types.h */,
 				D40DE66F164EE5F20033DE88 /* L3PreprocessorUtilities.h */,
+				D4EA374817586532003C6F23 /* L3Mock.h */,
+				D4EA374917586532003C6F23 /* L3Mock.m */,
 				D40DE69616501B000033DE88 /* Tests */,
 				D4AC431C1648B5D300C0A25B /* Supporting Files */,
 			);
@@ -517,6 +527,7 @@
 				D473F5FB16DA71ED000FCD8D /* RXFold.h in Headers */,
 				D473F5FC16DA71ED000FCD8D /* RXInterpolation.h in Headers */,
 				D473F5FD16DA71ED000FCD8D /* RXPaste.h in Headers */,
+				D4EA374C17586532003C6F23 /* L3Mock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +564,7 @@
 				D473F5DE16DA71C6000FCD8D /* L3Test.h in Headers */,
 				D473F5DF16DA71C6000FCD8D /* L3TestVisitor.h in Headers */,
 				D473F5E016DA71C6000FCD8D /* L3TestResultFormatter.h in Headers */,
+				D4EA374B17586532003C6F23 /* L3Mock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,6 +600,7 @@
 				D4B62B8916A15A1900E42C84 /* RXFold.h in Headers */,
 				D4B62B8A16A15A1900E42C84 /* RXInterpolation.h in Headers */,
 				D4B62B8B16A15A1900E42C84 /* RXPaste.h in Headers */,
+				D4EA374A17586532003C6F23 /* L3Mock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,6 +771,7 @@
 				D473F60916DA726F000FCD8D /* L3TestResult.m in Sources */,
 				D473F60A16DA726F000FCD8D /* L3TestResultBuilder.m in Sources */,
 				D473F60B16DA726F000FCD8D /* L3OCUnitTestResultFormatter.m in Sources */,
+				D4EA374F17586532003C6F23 /* L3Mock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +803,7 @@
 				D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */,
 				D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */,
 				D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */,
+				D4EA374E17586532003C6F23 /* L3Mock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,6 +825,7 @@
 				D4B62B6C16A159FA00E42C84 /* L3TestResult.m in Sources */,
 				D4B62B6D16A159FA00E42C84 /* L3TestResultBuilder.m in Sources */,
 				D4B62B6E16A159FA00E42C84 /* L3OCUnitTestResultFormatter.m in Sources */,
+				D4EA374D17586532003C6F23 /* L3Mock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,6 +1054,7 @@
 				D473F5D816DA713E000FCD8D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4A5B2CC164B4FAF00338EB4 /* Build configuration list for PBXNativeTarget "lagrangian" */ = {
 			isa = XCConfigurationList;
