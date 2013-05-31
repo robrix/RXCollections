@@ -12,6 +12,7 @@
 #import <Lagrangian/L3TestState.h>
 #import <Lagrangian/L3TestStep.h>
 #import <Lagrangian/L3TestSuite.h>
+#import <Lagrangian/L3Mock.h>
 
 #import <Lagrangian/RXCount.h>
 
