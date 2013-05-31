@@ -27,23 +27,8 @@
 @end
 
 
-/**
- @protocol RXRefillableTraversal
- 
- A traversal created with a source is refilled by calling its source block, which in turn receives an RXRefillableTraversal-conformant object as its argument. This protocol is not expected to be implemented by third parties.
- */
-@protocol RXRefillableTraversal <RXTraversal>
-
--(void)addObject:(id)object;
-
-@end
-
-@protocol RXCompositeTraversal <RXRefillableTraversal>
-
--(void)addTraversal:(id<RXTraversal>)traversal;
-
-@end
-
+@protocol RXRefillableTraversal;
+@protocol RXCompositeTraversal;
 
 /**
  typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal)
@@ -55,6 +40,28 @@
 typedef bool(^RXTraversalSource)(id<RXRefillableTraversal> traversal);
 
 typedef bool(^RXCompositeTraversalSource)(id<RXCompositeTraversal> traversal);
+
+
+/**
+ @protocol RXRefillableTraversal
+ 
+ A traversal created with a source is refilled by calling its source block, which in turn receives an RXRefillableTraversal-conformant object as its argument. This protocol is not expected to be implemented by third parties.
+ */
+@protocol RXRefillableTraversal <RXTraversal>
+
+@property (nonatomic, copy) RXTraversalSource source;
+
+-(void)addObject:(id)object;
+
+@end
+
+@protocol RXCompositeTraversal <RXRefillableTraversal>
+
+@property (nonatomic, copy) RXCompositeTraversalSource source;
+
+-(void)addTraversal:(id<RXTraversal>)traversal;
+
+@end
 
 
 extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
