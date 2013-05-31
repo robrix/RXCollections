@@ -13,6 +13,9 @@
 		D4078DC516E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
 		D4078DC616E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
 		D4078DC716E124490005B4C8 /* RXInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = D4078DC116E124490005B4C8 /* RXInterval.m */; };
+		D4416E141755BAB90081D480 /* RXTree.m in Sources */ = {isa = PBXBuildFile; fileRef = D4416E131755BAB90081D480 /* RXTree.m */; };
+		D4416E151755BAB90081D480 /* RXTree.m in Sources */ = {isa = PBXBuildFile; fileRef = D4416E131755BAB90081D480 /* RXTree.m */; };
+		D4416E161755BAB90081D480 /* RXTree.m in Sources */ = {isa = PBXBuildFile; fileRef = D4416E131755BAB90081D480 /* RXTree.m */; };
 		D44C5B1A16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXEnumerationArray.h */; };
 		D44C5B1B16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXEnumerationArray.h */; };
 		D44C5B1C16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D44C5B1816E3B4FC00A2A350 /* RXEnumerationArray.h */; };
@@ -184,6 +187,7 @@
 /* Begin PBXFileReference section */
 		D4078DC016E124490005B4C8 /* RXInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXInterval.h; sourceTree = "<group>"; };
 		D4078DC116E124490005B4C8 /* RXInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXInterval.m; sourceTree = "<group>"; };
+		D4416E131755BAB90081D480 /* RXTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTree.m; sourceTree = "<group>"; };
 		D44C5B1816E3B4FC00A2A350 /* RXEnumerationArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXEnumerationArray.h; sourceTree = "<group>"; };
 		D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXEnumerationArray.m; sourceTree = "<group>"; };
 		D473F63616DA7E5D000FCD8D /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,6 +351,7 @@
 				D4BC9F9A1734AA1500D33495 /* RXQueue.h */,
 				D4BC9F9B1734AA1500D33495 /* RXQueue.m */,
 				D4BC9F8A1734A4D700D33495 /* RXTree.h */,
+				D4416E131755BAB90081D480 /* RXTree.m */,
 				D4C01DF116E8169B00C17FF6 /* RXTuple.h */,
 				D4C01DF216E8169B00C17FF6 /* RXTuple.m */,
 			);
@@ -650,6 +655,7 @@
 				D4ADB68F16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D4B5CA5D171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9FA11734AA1500D33495 /* RXQueue.m in Sources */,
+				D4416E161755BAB90081D480 /* RXTree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +676,7 @@
 				D4ADB68D16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D4B5CA5B171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9F9F1734AA1500D33495 /* RXQueue.m in Sources */,
+				D4416E141755BAB90081D480 /* RXTree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +697,7 @@
 				D4ADB68E16F039D300C732A0 /* RXTraversal.m in Sources */,
 				D4B5CA5C171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9FA01734AA1500D33495 /* RXQueue.m in Sources */,
+				D4416E151755BAB90081D480 /* RXTree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

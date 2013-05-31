@@ -6,6 +6,8 @@
 
 @protocol RXTreeNode <NSObject>
 
--(id<RXTraversal>)depthFirstTraversal;
+-(id<RXTraversal>)nodeTraversal;
 
 @end
+
+extern id<RXTraversal> RXTreeDepthFirstTraversal(id<RXTreeNode> tree);
