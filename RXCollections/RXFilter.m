@@ -97,7 +97,7 @@ static bool itemsPrefixedWithS(id each, bool *stop) {
 }
 
 id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:block map:nil]);
+	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
 }
 
 id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {

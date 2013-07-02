@@ -4,6 +4,7 @@
 
 #import "RXConvolution.h"
 #import "RXFold.h"
+#import "RXInterval.h"
 #import "RXTuple.h"
 #import "RXMap.h"
 
@@ -11,18 +12,23 @@
 
 @l3_suite("RXConvolutionTraversal");
 
-@interface RXConvolutionTraversalSource : NSObject <RXTraversalSource>
-+(instancetype)sourceWithSequences:(RXTuple *)sequences block:(RXConvolutionBlock)block;
-
-@property (nonatomic, strong, readonly) RXTuple *sequences;
-@property (nonatomic, copy, readonly) RXConvolutionBlock block;
-@end
-
-
 id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	return RXTraversalWithSource([RXConvolutionTraversalSource sourceWithSequences:RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each, bool *stop) {
+	RXTuple *sequenceTraversals = RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each, bool *stop) {
 		return RXTraversalWithEnumeration(each);
-	})) block:block]);
+	}));
+	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
+		size_t arity = sequenceTraversals.count;
+		id objects[arity];
+		NSUInteger i = 0;
+		bool exhausted = NO;
+		for (id<RXTraversal> sequence in sequenceTraversals) {
+			exhausted = exhausted || sequence.isExhausted;
+			objects[i++] = [sequence nextObject];
+		}
+		if (!exhausted)
+			[traversal addObject:block(arity, objects, &exhausted)];
+		return exhausted;
+	});
 }
 
 id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function) {
@@ -45,6 +51,12 @@ id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction) 
 	l3_assert(convoluted.count, 2);
 }
 
+@l3_test("enumerates the sequences correctly across multiple refills") {
+	id<RXInterval> interval = RXIntervalByCount(0, 1, 128);
+	NSArray *convoluted = RXConstructArray(RXConvolve(@[interval.traversal, interval.traversal]));
+	l3_assert(convoluted.lastObject, l3_is([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]));
+}
+
 id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count], bool *stop) {
 		return [RXTuple tupleWithObjects:objects count:count];
@@ -52,36 +64,3 @@ id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
 }
 
 id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
-
-
-@interface RXConvolutionTraversalSource ()
-@property (nonatomic, strong, readwrite) RXTuple *sequences;
-@property (nonatomic, copy, readwrite) RXConvolutionBlock block;
-@end
-
-@implementation RXConvolutionTraversalSource
-
-+(instancetype)sourceWithSequences:(RXTuple *)sequences block:(RXConvolutionBlock)block {
-	RXConvolutionTraversalSource *source = [self new];
-	source.sequences = sequences;
-	source.block = block;
-	return source;
-}
-
--(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
-	[traversal refillWithBlock:^{
-		size_t arity = self.sequences.count;
-		id objects[arity];
-		NSUInteger i = 0;
-		bool exhausted = NO;
-		for (id<RXTraversal> sequence in self.sequences) {
-			exhausted = exhausted || sequence.isExhausted;
-			objects[i++] = [sequence consume];
-		}
-		if (!exhausted)
-			[traversal produce:self.block(arity, objects, &exhausted)];
-		return exhausted;
-	}];
-}
-
-@end

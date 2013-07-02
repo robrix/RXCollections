@@ -195,13 +195,22 @@
 	l3_assert([left isEqualToTuple:right], YES);
 }
 
+@l3_test("equality allows for nil values") {
+	const id objects[2] = { nil, [NSObject new] };
+	RXTuple *left = [RXTuple tupleWithObjects:objects count:2];
+	RXTuple *right = [RXTuple tupleWithObjects:objects count:2];
+	l3_assert([left isEqualToTuple:right], YES);
+}
+
 -(bool)isEqualToTuple:(RXTuple *)tuple {
 	bool isEqual =
 		[tuple isKindOfClass:self.class]
 	&&	tuple.count == self.count;
 	
 	for (NSUInteger index = 0; index < self.count; index++) {
-		isEqual &= [tuple[index] isEqual:self[index]];
+		id theirs = tuple[index];
+		id mine = self[index];
+		isEqual &= (theirs == mine) || [theirs isEqual:mine];
 		if (!isEqual)
 			break;
 	}

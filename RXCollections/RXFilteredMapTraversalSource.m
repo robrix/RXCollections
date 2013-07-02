@@ -3,34 +3,17 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilteredMapTraversalSource.h"
+#import "RXTraversal.h"
 
-@interface RXFilteredMapTraversalSource ()
-@property (nonatomic, strong) id<RXTraversal> traversal;
-@property (nonatomic, copy) RXFilterBlock filter;
-@property (nonatomic, copy) RXMapBlock map;
-@end
-
-@implementation RXFilteredMapTraversalSource
-
-+(instancetype)sourceWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration filter:(RXFilterBlock)filter map:(RXMapBlock)map {
-	RXFilteredMapTraversalSource *source = [self new];
-	source.traversal = RXTraversalWithEnumeration(enumeration);
-	source.filter = filter;
-	source.map = map;
-	return source;
-}
-
-
--(void)refillTraversal:(id<RXRefillableTraversal>)traversal {
-	[traversal refillWithBlock:^{
-		bool exhausted = self.traversal.isExhausted;
+RXTraversalSource RXFilteredMapTraversalSource(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock filter, RXMapBlock map) {
+	id<RXTraversal> enumerationTraversal = RXTraversalWithEnumeration(enumeration);
+	return ^bool(id<RXRefillableTraversal> traversal) {
+		bool exhausted = enumerationTraversal.isExhausted;
 		if (!exhausted) {
-			id each = [self.traversal consume];
-			if(!self.filter || (self.filter(each, &exhausted) && !exhausted))
-				[traversal produce:self.map? self.map(each, &exhausted) : each];
+			id each = [enumerationTraversal nextObject];
+			if(!filter || (filter(each, &exhausted) && !exhausted))
+				[traversal addObject:map? map(each, &exhausted) : each];
 		}
 		return exhausted;
-	}];
+	};
 }
-
-@end

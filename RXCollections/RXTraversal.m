@@ -12,6 +12,10 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, assign, readonly) id const *objects; // subclass responsibility
 @property (nonatomic, assign) NSUInteger count;
 @property (nonatomic, assign) NSUInteger current;
+
+@property (nonatomic, readonly) id currentObject;
+-(id)objectByAdvancingCursor;
+
 @end
 
 @interface RXRefillingTraversal : RXTraversal
@@ -19,11 +23,17 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 @interface RXSourcedTraversal : RXRefillingTraversal <RXRefillableTraversal>
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source;
++(instancetype)traversalWithSource:(RXTraversalSource)source;
 
-@property (nonatomic, strong) id<RXTraversalSource> source;
+@property (nonatomic, copy) RXTraversalSource source;
 @property (nonatomic, readonly) NSUInteger capacity;
-@property (nonatomic) NSUInteger countProduced;
+@end
+
+@interface RXCompositeTraversal : RXSourcedTraversal <RXCompositeTraversal>
++(instancetype)traversalWithSource:(RXCompositeTraversalSource)source;
+
+@property (nonatomic, readonly) id<RXTraversal> currentObject;
+@property (nonatomic, copy) RXCompositeTraversalSource source;
 @end
 
 @interface RXFastEnumerationTraversal : RXRefillingTraversal
@@ -39,6 +49,12 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @property (nonatomic, strong) id owner;
 @end
 
+@interface RXUnaryTraversal : NSObject <RXTraversal>
++(instancetype)traversalWithObject:(id)object;
+
+@property (nonatomic, strong) id object;
+@end
+
 @implementation RXTraversal
 
 -(id const __unsafe_unretained *)objects {
@@ -51,11 +67,20 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	return self.count <= self.current;
 }
 
--(id)consume {
-	id consumed = nil;
+-(id)nextObject {
+	id nextObject = nil;
 	if (!self.isExhausted)
-		consumed = self.objects[self.current++];
-	return consumed;
+		nextObject = [self objectByAdvancingCursor];
+	return nextObject;
+}
+
+
+-(id)currentObject {
+	return self.objects[self.current];
+}
+
+-(id)objectByAdvancingCursor {
+	return self.objects[self.current++];
 }
 
 
@@ -103,7 +128,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	id __strong _objects[16];
 }
 
-+(instancetype)traversalWithSource:(id<RXTraversalSource>)source {
++(instancetype)traversalWithSource:(RXTraversalSource)source {
 	NSParameterAssert(source != nil);
 	
 	RXSourcedTraversal *traversal = [self new];
@@ -121,28 +146,23 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 }
 
 
--(void)refill {
-	[self.source refillTraversal:self];
-}
-
-
 -(void)empty {
 	self.count = 0;
 	self.current = 0;
 }
 
--(void)refillWithBlock:(bool(^)())block {
+-(void)refill {
 	[self empty];
 	
 	while ((self.source != nil) && (self.count < self.capacity)) {
-		if (block())
+		if (self.source(self))
 			self.source = nil;
 	}
 }
 
--(void)produce:(id)object {
+
+-(void)addObject:(id)object {
 	_objects[self.count++] = object;
-	self.countProduced++;
 }
 
 
@@ -151,11 +171,44 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXSourcedTraversal *copy = [super copyWithZone:zone];
 	copy.source = self.source;
-	copy.countProduced = self.countProduced;
-	for (NSUInteger i = 0; i < self.countProduced; i++) {
+	for (NSUInteger i = 0; i < self.count; i++) {
 		copy->_objects[i] = _objects[i];
 	}
 	return copy;
+}
+
+@end
+
+
+@implementation RXCompositeTraversal
+
+@dynamic source;
+@dynamic currentObject;
+
++(instancetype)traversalWithSource:(RXCompositeTraversalSource)source {
+	return [super traversalWithSource:source];
+}
+
+
+#pragma mark RXTraversal
+
+-(id)objectByAdvancingCursor {
+	id<RXTraversal> currentObject = self.currentObject;
+	while (currentObject.isExhausted) {
+		currentObject = [super objectByAdvancingCursor];
+	}
+	return [currentObject nextObject];
+}
+
+
+#pragma mark RXCompositeTraversal
+
+-(void)addObject:(id)object {
+	[super addObject:RXTraversalWithObject(object)];
+}
+
+-(void)addTraversal:(id<RXTraversal>)traversal {
+	[super addObject:traversal];
 }
 
 @end
@@ -190,19 +243,19 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @l3_step("copy") {
 	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] consume];
+	[test[@"original"] nextObject];
 	test[@"copy"] = [test[@"original"] copy];
 }
 
 @l3_test("copies traverse from the current location") {
 	l3_perform_step("copy");
-	l3_assert([test[@"copy"] consume], @2);
+	l3_assert([test[@"copy"] nextObject], @2);
 }
 
 @l3_test("copies are independently traversed") {
 	l3_perform_step("copy");
-	[test[@"copy"] consume];
-	l3_assert([test[@"original"] consume], @2);
+	[test[@"copy"] nextObject];
+	l3_assert([test[@"original"] nextObject], @2);
 }
 
 -(instancetype)copyWithZone:(NSZone *)zone {
@@ -247,19 +300,19 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @l3_step("copy") {
 	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] consume];
+	[test[@"original"] nextObject];
 	test[@"copy"] = [test[@"original"] copy];
 }
 
 @l3_test("copies traverse from the current location") {
 	l3_perform_step("copy");
-	l3_assert([test[@"copy"] consume], @2);
+	l3_assert([test[@"copy"] nextObject], @2);
 }
 
 @l3_test("copies are independently traversed") {
 	l3_perform_step("copy");
-	[test[@"copy"] consume];
-	l3_assert([test[@"original"] consume], @2);
+	[test[@"copy"] nextObject];
+	l3_assert([test[@"original"] nextObject], @2);
 }
 
 -(instancetype)copyWithZone:(NSZone *)zone {
@@ -272,16 +325,72 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 
+@implementation RXUnaryTraversal
+
+static id RXUnaryTraversalExhaustionMarker() {
+	static NSObject *marker = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		marker = [NSObject new];
+	});
+	return marker;
+}
+
++(instancetype)traversalWithObject:(id)object {
+	RXUnaryTraversal *traversal = [self new];
+	traversal.object = object;
+	return traversal;
+}
+
+
+-(id)nextObject {
+	id object = self.object;
+	self.object = RXUnaryTraversalExhaustionMarker();
+	return object;
+}
+
+-(bool)isExhausted {
+	return self.object == RXUnaryTraversalExhaustionMarker();
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return [self.class traversalWithObject:self.object];
+}
+
+
+#pragma mark NSFastEnumeration
+
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	state->mutationsPtr = state->extra;
+	const id *object = &_object;
+	state->itemsPtr = (__unsafe_unretained id *)object;
+	return self.isExhausted? 0 : 1;
+}
+
+@end
+
+
 id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count) {
 	return [RXInteriorTraversal traversalWithInteriorObjects:objects count:count owner:owner];
 }
 
-id<RXTraversal> RXTraversalWithSource(id<RXTraversalSource> source) {
+id<RXTraversal> RXTraversalWithSource(RXTraversalSource source) {
 	return [RXSourcedTraversal traversalWithSource:source];
+}
+
+id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source) {
+	return [RXCompositeTraversal traversalWithSource:source];
 }
 
 id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration) {
 	return [enumeration isKindOfClass:[RXTraversal class]]?
 		(RXTraversal *)enumeration
 	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
+}
+
+id<RXTraversal> RXTraversalWithObject(id object) {
+	return [RXUnaryTraversal traversalWithObject:object];
 }

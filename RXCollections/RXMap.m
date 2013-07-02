@@ -35,7 +35,7 @@ static NSString *accumulate(NSString *each, bool *stop) {
 }
 
 id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
-	return RXTraversalWithSource([RXFilteredMapTraversalSource sourceWithEnumeration:enumeration filter:nil map:block]);
+	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, nil, block));
 }
 
 id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
