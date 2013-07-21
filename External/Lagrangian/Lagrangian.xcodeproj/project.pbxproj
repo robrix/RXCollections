@@ -200,7 +200,7 @@
 		D426E49F165294C1001C9105 /* L3FunctionalUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3FunctionalUtilities.m; sourceTree = "<group>"; };
 		D431E9DC165874F40033BCC8 /* L3TestStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3TestStep.h; sourceTree = "<group>"; };
 		D431E9DD165874F40033BCC8 /* L3TestStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3TestStep.m; sourceTree = "<group>"; };
-		D43D8B721654C27000E6DE07 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = Lagrangian.octest; path = "Lagrangian tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D43D8B721654C27000E6DE07 /* Lagrangian tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lagrangian tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43D8DA416575E9A00E6DE07 /* L3Collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Collection.h; sourceTree = "<group>"; };
 		D43D8DA516575E9A00E6DE07 /* L3Collection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Collection.m; sourceTree = "<group>"; };
 		D457D677165094F100340DAC /* L3SourceReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3SourceReference.h; sourceTree = "<group>"; };
@@ -427,7 +427,7 @@
 			children = (
 				D4AC43121648B5D300C0A25B /* Lagrangian.dylib */,
 				D4A5B2C1164B4FAF00338EB4 /* lagrangian */,
-				D43D8B721654C27000E6DE07 /* Lagrangian.octest */,
+				D43D8B721654C27000E6DE07 /* Lagrangian tests.octest */,
 				D4B62B4C16A1581700E42C84 /* Lagrangian.framework */,
 				D473F5CC16DA713E000FCD8D /* libLagrangian.a */,
 			);
@@ -618,7 +618,7 @@
 			);
 			name = "Lagrangian tests";
 			productName = Lagrangian;
-			productReference = D43D8B721654C27000E6DE07 /* Lagrangian.octest */;
+			productReference = D43D8B721654C27000E6DE07 /* Lagrangian tests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		D473F5CB16DA713E000FCD8D /* Lagrangian (iOS static framework) */ = {
