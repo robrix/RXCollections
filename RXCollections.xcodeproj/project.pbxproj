@@ -51,9 +51,9 @@
 		D49C72BE179C262D0037626A /* RXAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72BA179C262D0037626A /* RXAllocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D49C72BF179C262D0037626A /* RXAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72BA179C262D0037626A /* RXAllocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D49C72C0179C262D0037626A /* RXAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72BA179C262D0037626A /* RXAllocation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D49C72CB179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; };
-		D49C72CC179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; };
-		D49C72CD179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; };
+		D49C72CB179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D49C72CC179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D49C72CD179C402C0037626A /* RXNilArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D49C72C9179C402C0037626A /* RXNilArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D49C72CE179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
 		D49C72CF179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
 		D49C72D0179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
@@ -420,7 +420,7 @@
 				D4B62B3616A1177B00E42C84 /* Lagrangian.dylib */,
 				D473F5AB16D8D42B000FCD8D /* libLagrangian.a */,
 				D4B62B3816A1177B00E42C84 /* lagrangian */,
-				D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */,
+				D4B62B3A16A1177B00E42C84 /* Lagrangian tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -639,10 +639,9 @@
 			remoteRef = D4B62B3716A1177B00E42C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D4B62B3A16A1177B00E42C84 /* Lagrangian.octest */ = {
+		D4B62B3A16A1177B00E42C84 /* Lagrangian tests.octest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			name = Lagrangian.octest;
 			path = "Lagrangian tests.octest";
 			remoteRef = D4B62B3916A1177B00E42C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;

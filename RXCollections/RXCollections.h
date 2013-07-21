@@ -21,6 +21,7 @@
 
 #import <RXCollections/RXEnumerationArray.h>
 #import <RXCollections/RXInterval.h>
+#import <RXCollections/RXNilArray.h>
 #import <RXCollections/RXPair.h>
 #import <RXCollections/RXTree.h>
 #import <RXCollections/RXTuple.h>
