@@ -3,6 +3,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFold.h"
+#import "RXNilArray.h"
 #import "RXTuple.h"
 #import <objc/runtime.h>
 
@@ -122,12 +123,16 @@
 
 #pragma mark Access
 
-@l3_test("can return its contents as an array") {
+@l3_test("returns its contents as an array") {
 	l3_assert(([[RXTuple tupleWithArray:@[@1, @2]] allObjects]), (@[@1, @2]));
 }
 
+@l3_test("safely returns nil contents") {
+	l3_assert([[RXTuple tupleWithObjects:(const id[]){nil} count:1] allObjects][0], nil);
+}
+
 -(NSArray *)allObjects {
-	return [NSArray arrayWithObjects:self.elements count:self.count];
+	return [RXNilArray arrayWithObjects:self.elements count:self.count];
 }
 
 

@@ -39,6 +39,16 @@
 	return self;
 }
 
+/*
+ Since this the extra space associated with instances is not managed by ARC at compile-time, it does not have the information necessary to release it. Therefore, we assign nil to each element to allow ARC to manage lifetimes explicitly, per http://clang.llvm.org/docs/AutomaticReferenceCounting.html#conversion-of-pointers-to-ownership-qualified-types
+ */
+-(void)dealloc {
+	id __strong *contents = (id __strong *)self.extraSpace;
+	for (NSUInteger i = 0; i < _count; i++) {
+		contents[i] = nil;
+	}
+}
+
 
 #pragma mark NSArray
 
