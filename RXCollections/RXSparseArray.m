@@ -108,4 +108,27 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 	return self;
 }
 
+
+#pragma mark NSFastEnumeration
+
+@l3_test("implements fast enumeration over its elements") {
+	NSMutableArray *indices = [NSMutableArray new];
+	NSArray *array = [[RXSparseArray alloc] initWithObjects:(const id[]){@1, @2, @3, @4} atIndices:(const NSUInteger[]){1, 2, 3, 5} count:4];
+	for (NSNumber *index in array) { [indices addObject:index]; }
+	l3_assert(indices, (@[@1, @2, @3, @4]));
+}
+
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+	state->mutationsPtr = state->extra;
+	state->itemsPtr = buffer;
+	
+	NSUInteger produced = 0;
+	if (state->state < _elementCount) {
+		buffer[0] = RXSparseArrayGetSlot(self.extraSpace, state->state)->object;
+		produced = 1;
+		state->state += produced;
+	}
+	return produced;
+}
+
 @end
