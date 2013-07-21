@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RXNilArray : NSArray
+@interface RXNilArray : NSArray <NSCopying>
 
 -(instancetype)initWithObjects:(const id [])objects count:(NSUInteger)count;
 
