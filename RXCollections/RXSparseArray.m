@@ -87,7 +87,7 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 }
 
 
-@l3_test("retrieves objects by index") {
+@l3_test("returns objects by index") {
 	NSArray *array = [[RXSparseArray alloc] initWithObjects:(const id []){ @1, @2, @3, @4 } atIndices:(const NSUInteger []){ 10, 20, 30, 40 } count:4];
 	l3_assert(array[30], @3);
 }
@@ -99,6 +99,48 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 		object = slot->object;
 	}
 	return object;
+}
+
+
+@l3_test("enumerates sparsely") {
+	RXSparseArray *array = [[RXSparseArray alloc] initWithObjects:(const id[]){ @1, @2 } atIndices:(const NSUInteger[]){ 10, 20 } count:2];
+	NSMutableDictionary *enumerated = [NSMutableDictionary new];
+	[array enumerateObjectsWithOptions:0 usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		enumerated[@(index)] = object;
+	}];
+	l3_assert(enumerated, (@{ @10: @1, @20: @2 }));
+}
+
+@l3_test("can enumerate in reverse") {
+	RXSparseArray *array = [[RXSparseArray alloc] initWithObjects:(const id[]){ @1, @2 } atIndices:(const NSUInteger[]){ 10, 20 } count:2];
+	NSMutableArray *indices = [NSMutableArray new];
+	[array enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+		[indices addObject:@(index)];
+	}];
+	l3_assert(indices, (@[@20, @10]));
+}
+
+-(void)enumerateObjectsWithOptions:(NSEnumerationOptions)opts usingBlock:(void (^)(id, NSUInteger, BOOL *))block {
+	NSParameterAssert(block != nil);
+	
+	void *contents = self.extraSpace;
+	__block BOOL stop = NO;
+	if (opts & NSEnumerationConcurrent) {
+		dispatch_queue_t queue = dispatch_queue_create("com.antitypical.RXSparseArray.enumerateObjectsWithOptions", DISPATCH_QUEUE_CONCURRENT);
+		dispatch_apply(_elementCount, queue, ^(size_t i) {
+			if (!stop) {
+				RXSparseArraySlot *slot = RXSparseArrayGetSlot(contents, i);
+				block(slot->object, slot->index, &stop);
+			}
+		});
+	} else {
+		for (NSUInteger i = 0; i < _elementCount; i++) {
+			RXSparseArraySlot *slot = RXSparseArrayGetSlot(contents, opts & NSEnumerationReverse? _elementCount - 1 - i : i);
+			block(slot->object, slot->index, &stop);
+			if (stop) break;
+		}
+	}
+	
 }
 
 
