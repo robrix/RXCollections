@@ -101,4 +101,11 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 	return object;
 }
 
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
 @end
