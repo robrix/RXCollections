@@ -10,6 +10,7 @@
  This function is thread-safe.
  
  @param singletonClass The class to get a singleton instance of.
+ @param initializer A block which produces the singleton instance when required.
  @return A shared instance of this class.
  */
-extern id RXSingleton(Class singletonClass);
+extern id RXSingleton(Class singletonClass, id(^initializer)());
