@@ -2,6 +2,7 @@
 //  Created by Rob Rix on 7/21/2013.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
+#import "RXAllocation.h"
 #import "RXSingleton.h"
 
 id RXSingleton(Class class) {
@@ -12,7 +13,7 @@ id RXSingleton(Class class) {
 	});
 	id singleton = nil;
 	@synchronized (singletonsByClass) {
-		singleton = singletonsByClass[(id)class] ?: (singletonsByClass[(id)class] = class);
+		singleton = singletonsByClass[(id)class] ?: (singletonsByClass[(id)class] = [class allocateWithExtraSize:0]);
 	}
 	return singleton;
 }
