@@ -8,6 +8,11 @@
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
 
+#import "NSException+L3OCUnitCompatibility.h"
+
+#define EXP_SHORTHAND
+#import <Expecta.h>
+
 @l3_suite_interface(L3TestCase, "Test cases") <L3EventObserver>
 
 @property NSMutableArray *events;
@@ -21,12 +26,12 @@
 
 @interface L3TestCase ()
 
+@property (nonatomic) L3TestState *state;
+
 @property (copy, nonatomic, readwrite) NSString *name;
 
 @property (copy, nonatomic, readwrite) NSString *file;
 @property (assign, nonatomic, readwrite) NSUInteger line;
-
-@property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
 
 @property (assign, nonatomic, readwrite) NSUInteger failedAssertionCount;
 
@@ -63,6 +68,18 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 #pragma mark Steps
+
+-(void)setUp:(L3TestStep *)step withState:(L3TestState *)state {
+	self.state = state;
+	if (step)
+		[self performStep:step withState:state];
+}
+
+-(void)tearDown:(L3TestStep *)step withState:(L3TestState *)state {
+	if (step)
+		[self performStep:step withState:state];
+	self.state = nil;
+}
 
 -(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state {
 	NSParameterAssert(step != nil);
@@ -145,6 +162,15 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 -(void)acceptVisitor:(id<L3TestVisitor>)visitor {
 	[self acceptVisitor:visitor inTestSuite:nil];
+}
+
+
+#pragma mark Expecta
+
+-(void)failWithException:(NSException *)exception {
+	L3SourceReference *reference = [L3SourceReference referenceWithFile:exception.filename line:exception.lineNumber.unsignedIntegerValue reason:exception.reason];
+	[self.state.eventObserver assertionFailureWithSourceReference:reference date:[NSDate date]];
+	self.failedAssertionCount++;
 }
 
 @end

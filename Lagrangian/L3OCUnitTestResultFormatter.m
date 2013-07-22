@@ -63,13 +63,11 @@
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
-	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : '%@' was '%@' but should have matched '%@'",
+	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : %@",
 						   sourceReference.file,
 						   (unsigned long)sourceReference.line,
 						   [self methodNameForTestResult:result],
-						   sourceReference.subjectSource,
-						   sourceReference.subject,
-						   sourceReference.patternSource];
+						   sourceReference.reason];
 	[self.delegate formatter:self didFormatResult:result asString:formatted];
 }
 

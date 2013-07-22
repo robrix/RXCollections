@@ -237,18 +237,14 @@ static void asynchronousTest(L3TestState *test, L3TestCase *self) {
 		
 		L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite eventObserver:self.eventObserver];
 		
-		L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
-		if (setUp)
-			[testCase performStep:setUp withState:state];
+		[testCase setUp:suite.steps[L3TestSuiteSetUpStepName] withState:state];
 		
 		testCase.function(state, testCase);
 		
 		if (state.isDeferred)
 			[testCase assertThat:l3_to_object([state wait]) matches:l3_to_pattern(YES) sourceReference:testCase.sourceReferenceForCaseEvents eventObserver:self.eventObserver];
 		
-		L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
-		if (tearDown)
-			[testCase performStep:tearDown withState:state];
+		[testCase tearDown:suite.steps[L3TestSuiteTearDownStepName] withState:state];
 		
 		[self.eventObserver testEndEventWithTest:testCase date:[NSDate date]];
 	}];

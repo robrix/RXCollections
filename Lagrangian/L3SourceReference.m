@@ -12,10 +12,21 @@
 	return [[self alloc] initWithFile:file line:line subjectSource:subjectSource subject:subject patternSource:patternSource];
 }
 
--(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
++(instancetype)referenceWithFile:(NSString *)file line:(NSUInteger)line reason:(NSString *)reason {
+	return [[self alloc] initWithFile:file line:line reason:reason];
+}
+
+-(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line reason:(NSString *)reason {
 	if ((self = [super init])) {
 		_file = [file copy];
 		_line = line;
+		_reason = [reason copy];
+	}
+	return self;
+}
+
+-(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource {
+	if ((self = [self initWithFile:file line:line reason:[NSString stringWithFormat:@"'%@' was '%@' but should have matched '%@'", subjectSource, subject, patternSource]])) {
 		_subjectSource = [subjectSource copy];
 		_subject = subject;
 		_patternSource = [patternSource copy];

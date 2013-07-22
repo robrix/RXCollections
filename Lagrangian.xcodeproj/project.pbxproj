@@ -34,6 +34,12 @@
 		D472C83E179DB6BE00FD2F41 /* libExpecta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C837179DB6A200FD2F41 /* libExpecta.a */; };
 		D472C83F179DB6C300FD2F41 /* libExpecta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C837179DB6A200FD2F41 /* libExpecta.a */; };
 		D472C840179DB6C700FD2F41 /* libExpecta-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C839179DB6A200FD2F41 /* libExpecta-iOS.a */; };
+		D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
+		D472C848179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
+		D472C849179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
+		D472C84A179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */; };
+		D472C84B179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */; };
+		D472C84C179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */; };
 		D473F5CE16DA713E000FCD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D473F5CD16DA713E000FCD8D /* Foundation.framework */; };
 		D473F5D916DA71C6000FCD8D /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D473F5DA16DA71C6000FCD8D /* L3Configuration.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B21CB8168924A500D5986E /* L3Configuration.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -241,6 +247,8 @@
 		D457D678165094F100340DAC /* L3SourceReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3SourceReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
 		D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Expecta.xcodeproj; path = External/Expecta/Expecta.xcodeproj; sourceTree = "<group>"; };
+		D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+L3OCUnitCompatibility.h"; sourceTree = "<group>"; };
+		D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSException+L3OCUnitCompatibility.m"; sourceTree = "<group>"; };
 		D473F56B16D8CC89000FCD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D473F56E16D8CD03000FCD8D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		D473F5CC16DA713E000FCD8D /* libLagrangian.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libLagrangian.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -395,6 +403,8 @@
 				D4B152B31653969E002858C3 /* L3StringInflections.m */,
 				D43D8DA416575E9A00E6DE07 /* L3Collection.h */,
 				D43D8DA516575E9A00E6DE07 /* L3Collection.m */,
+				D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */,
+				D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -566,6 +576,7 @@
 				D473F5E816DA71ED000FCD8D /* L3Types.h in Headers */,
 				D473F5E916DA71ED000FCD8D /* L3PreprocessorUtilities.h in Headers */,
 				D473F5EA16DA71ED000FCD8D /* L3SourceReference.h in Headers */,
+				D472C849179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 				D473F5EB16DA71ED000FCD8D /* L3Assertions.h in Headers */,
 				D473F5EC16DA71ED000FCD8D /* L3TestCase.h in Headers */,
 				D473F5ED16DA71ED000FCD8D /* L3TestStep.h in Headers */,
@@ -621,6 +632,7 @@
 				D473F5DD16DA71C6000FCD8D /* L3Assertions.h in Headers */,
 				D473F5DE16DA71C6000FCD8D /* L3Test.h in Headers */,
 				D473F5DF16DA71C6000FCD8D /* L3TestVisitor.h in Headers */,
+				D472C848179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 				D473F5E016DA71C6000FCD8D /* L3TestResultFormatter.h in Headers */,
 				D4EA374B17586532003C6F23 /* L3Mock.h in Headers */,
 			);
@@ -639,6 +651,7 @@
 				D4B62B7616A15A1900E42C84 /* L3Types.h in Headers */,
 				D4B62B7716A15A1900E42C84 /* L3PreprocessorUtilities.h in Headers */,
 				D4B62B7816A15A1900E42C84 /* L3SourceReference.h in Headers */,
+				D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 				D4B62B7916A15A1900E42C84 /* L3Assertions.h in Headers */,
 				D4B62B7A16A15A1900E42C84 /* L3TestCase.h in Headers */,
 				D4B62B7B16A15A1900E42C84 /* L3TestStep.h in Headers */,
@@ -856,6 +869,7 @@
 				D473F5FF16DA726F000FCD8D /* L3FunctionalUtilities.m in Sources */,
 				D473F60016DA726F000FCD8D /* L3StringInflections.m in Sources */,
 				D473F60116DA726F000FCD8D /* L3Collection.m in Sources */,
+				D472C84C179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */,
 				D473F60216DA726F000FCD8D /* Lagrangian.m in Sources */,
 				D473F60316DA726F000FCD8D /* L3SourceReference.m in Sources */,
 				D473F60416DA726F000FCD8D /* L3TestCase.m in Sources */,
@@ -898,6 +912,7 @@
 				D43D8DA716575E9A00E6DE07 /* L3Collection.m in Sources */,
 				D431E9DF165874F40033BCC8 /* L3TestStep.m in Sources */,
 				D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */,
+				D472C84B179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */,
 				D4EA374E17586532003C6F23 /* L3Mock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -910,6 +925,7 @@
 				D4B62B6216A159FA00E42C84 /* L3FunctionalUtilities.m in Sources */,
 				D4B62B6316A159FA00E42C84 /* L3StringInflections.m in Sources */,
 				D4B62B6416A159FA00E42C84 /* L3Collection.m in Sources */,
+				D472C84A179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m in Sources */,
 				D4B62B6516A159FA00E42C84 /* Lagrangian.m in Sources */,
 				D4B62B6616A159FA00E42C84 /* L3SourceReference.m in Sources */,
 				D4B62B6716A159FA00E42C84 /* L3TestCase.m in Sources */,
@@ -1059,6 +1075,7 @@
 				HEADER_SEARCH_PATHS = "External/Expecta/src/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1086,6 +1103,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "External/Expecta/src/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
 			};
 			name = Release;
