@@ -31,9 +31,6 @@
 		D457D679165094F100340DAC /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D457D67A165094F100340DAC /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
 		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D472C83E179DB6BE00FD2F41 /* libExpecta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C837179DB6A200FD2F41 /* libExpecta.a */; };
-		D472C83F179DB6C300FD2F41 /* libExpecta.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C837179DB6A200FD2F41 /* libExpecta.a */; };
-		D472C840179DB6C700FD2F41 /* libExpecta-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D472C839179DB6A200FD2F41 /* libExpecta-iOS.a */; };
 		D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
 		D472C848179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
 		D472C849179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
@@ -163,37 +160,6 @@
 		D4EA374F17586532003C6F23 /* L3Mock.m in Sources */ = {isa = PBXBuildFile; fileRef = D4EA374917586532003C6F23 /* L3Mock.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D472C836179DB6A200FD2F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E9ACDF0C13B2DD520010F4D7;
-			remoteInfo = Expecta;
-		};
-		D472C838179DB6A200FD2F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E93067CE13B2E6D100EA26FF;
-			remoteInfo = "Expecta-iOS";
-		};
-		D472C83A179DB6A200FD2F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E9ACDF1D13B2DD520010F4D7;
-			remoteInfo = ExpectaTests;
-		};
-		D472C83C179DB6A200FD2F41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E93067DA13B2E6D100EA26FF;
-			remoteInfo = "Expecta-iOSTests";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		D473F5CA16DA713E000FCD8D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -246,7 +212,6 @@
 		D457D677165094F100340DAC /* L3SourceReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3SourceReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3SourceReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3SourceReference.m; sourceTree = "<group>"; };
 		D457D67B165097CA00340DAC /* L3EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3EventObserver.h; sourceTree = "<group>"; };
-		D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Expecta.xcodeproj; path = External/Expecta/Expecta.xcodeproj; sourceTree = "<group>"; };
 		D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSException+L3OCUnitCompatibility.h"; sourceTree = "<group>"; };
 		D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSException+L3OCUnitCompatibility.m"; sourceTree = "<group>"; };
 		D473F56B16D8CC89000FCD8D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -296,7 +261,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D473F5CE16DA713E000FCD8D /* Foundation.framework in Frameworks */,
-				D472C840179DB6C700FD2F41 /* libExpecta-iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +279,6 @@
 			files = (
 				D4BFD44D1689FC0B0056FDA2 /* AppKit.framework in Frameworks */,
 				D4BFD44C1689FBFF0056FDA2 /* Foundation.framework in Frameworks */,
-				D472C83F179DB6C300FD2F41 /* libExpecta.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +288,6 @@
 			files = (
 				D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */,
 				D4B62B6F16A15A0400E42C84 /* Foundation.framework in Frameworks */,
-				D472C83E179DB6BE00FD2F41 /* libExpecta.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,7 +318,6 @@
 		D4223BDE16A0A94B00AE32D5 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				D472C82E179DB69100FD2F41 /* Expecta */,
 				D4223BE016A0A95E00AE32D5 /* RXPreprocessing */,
 			);
 			name = External;
@@ -417,25 +378,6 @@
 				D40DE670164F18AF0033DE88 /* L3Assertions.h */,
 			);
 			name = Assertions;
-			sourceTree = "<group>";
-		};
-		D472C82E179DB69100FD2F41 /* Expecta */ = {
-			isa = PBXGroup;
-			children = (
-				D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */,
-			);
-			name = Expecta;
-			sourceTree = "<group>";
-		};
-		D472C830179DB6A200FD2F41 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D472C837179DB6A200FD2F41 /* libExpecta.a */,
-				D472C839179DB6A200FD2F41 /* libExpecta-iOS.a */,
-				D472C83B179DB6A200FD2F41 /* ExpectaTests.octest */,
-				D472C83D179DB6A200FD2F41 /* Expecta-iOSTests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D473F57116D8CD17000FCD8D /* iOS */ = {
@@ -783,12 +725,6 @@
 			mainGroup = D4AC43071648B5D300C0A25B;
 			productRefGroup = D4AC43131648B5D300C0A25B /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D472C830179DB6A200FD2F41 /* Products */;
-					ProjectRef = D472C82F179DB6A200FD2F41 /* Expecta.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D4B62B4B16A1581700E42C84 /* Lagrangian (Mac OS X framework) */,
@@ -799,37 +735,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D472C837179DB6A200FD2F41 /* libExpecta.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libExpecta.a;
-			remoteRef = D472C836179DB6A200FD2F41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D472C839179DB6A200FD2F41 /* libExpecta-iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libExpecta-iOS.a";
-			remoteRef = D472C838179DB6A200FD2F41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D472C83B179DB6A200FD2F41 /* ExpectaTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ExpectaTests.octest;
-			remoteRef = D472C83A179DB6A200FD2F41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D472C83D179DB6A200FD2F41 /* Expecta-iOSTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Expecta-iOSTests.octest";
-			remoteRef = D472C83C179DB6A200FD2F41 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D4B62B4A16A1581700E42C84 /* Resources */ = {
@@ -1072,7 +977,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "External/Expecta/src/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1101,7 +1005,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "External/Expecta/src/**";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;

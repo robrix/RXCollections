@@ -10,9 +10,6 @@
 
 #import "NSException+L3OCUnitCompatibility.h"
 
-#define EXP_SHORTHAND
-#import <Expecta.h>
-
 @l3_suite_interface(L3TestCase, "Test cases") <L3EventObserver>
 
 @property NSMutableArray *events;
