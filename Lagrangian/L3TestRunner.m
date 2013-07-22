@@ -208,8 +208,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
-static void asynchronousTest(L3TestState *test, L3TestCase *_case);
-static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
+static void asynchronousTest(L3TestState *test, L3TestCase *self);
+static void asynchronousTest(L3TestState *test, L3TestCase *self) {
 	test.timeout = 0;
 	l3_defer();
 }
@@ -256,7 +256,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 
 
 @l3_test("generates start events for suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", self.name]];
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
@@ -270,7 +270,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 }
 
 @l3_test("generates end events after running suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", self.name]];
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	

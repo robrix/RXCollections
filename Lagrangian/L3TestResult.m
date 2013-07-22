@@ -11,8 +11,8 @@
 @end
 
 @l3_set_up {
-	test.result = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
-	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
+	test.result = [L3TestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate date]];
 }
 
 

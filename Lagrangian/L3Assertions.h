@@ -15,7 +15,7 @@
 	^bool{ \
 		id subject_ = l3_to_object(subject); \
 		L3Pattern pattern_ = l3_to_pattern(pattern); \
-		return [_case assertThat:subject_ matches:pattern_ sourceReference:l3_sourceReference(subject_, #subject, #pattern) eventObserver:test.eventObserver]; \
+		return [self assertThat:subject_ matches:pattern_ sourceReference:l3_sourceReference(subject_, #subject, #pattern) eventObserver:test.eventObserver]; \
 	}()
 
 

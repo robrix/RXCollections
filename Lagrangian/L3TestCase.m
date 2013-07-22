@@ -101,25 +101,25 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];
+	bool matched = [self assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } sourceReference:l3_sourceReference(@"a", @"a", @"!") eventObserver:nil];
+	bool matched = [self assertThat:@"a" matches:^bool(id obj){ return NO; } sourceReference:l3_sourceReference(@"a", @"a", @"!") eventObserver:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
 	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @".");
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } sourceReference:sourceReference eventObserver:test];
+	[self assertThat:@"a" matches:^bool(id x) { return YES; } sourceReference:sourceReference eventObserver:test];
 	
 	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
 	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @"!");
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } sourceReference:sourceReference eventObserver:test];
+	[self assertThat:@"a" matches:^bool(id x) { return NO; } sourceReference:sourceReference eventObserver:test];
 	
 	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }

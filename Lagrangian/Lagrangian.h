@@ -141,7 +141,7 @@
 #define l3_step(str) \
 	class L3TestStep; \
 	\
-	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step); \
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *self, L3TestStep *step); \
 	\
 	__attribute__((constructor)) static void l3_identifier(test_step_loader, __COUNTER__)() { \
 		@autoreleasepool { \
@@ -149,7 +149,7 @@
 		} \
 	} \
 	\
-	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case, L3TestStep *step)
+	static void l3_identifier(test_step_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *self, L3TestStep *step)
 
 #define l3_set_up \
 	l3_step("set up")
@@ -160,15 +160,15 @@
 #define l3_test(str) \
 	class L3TestSuite, L3TestCase; \
 	\
-	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *testCase); \
+	static void l3_identifier(testself_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *testCase); \
 	\
-	__attribute__((constructor)) static void l3_identifier(test_case_loader_, __COUNTER__)() { \
+	__attribute__((constructor)) static void l3_identifier(testself_loader_, __COUNTER__)() { \
 		@autoreleasepool { \
-			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:[L3TestCase testCaseWithName:@"" str file:@"" __FILE__ line:__LINE__ function:l3_identifier(test_case_impl_, __LINE__)]]; \
+			[l3_current_suite ?: [L3TestSuite defaultSuite] addTest:[L3TestCase testCaseWithName:@"" str file:@"" __FILE__ line:__LINE__ function:l3_identifier(testself_impl_, __LINE__)]]; \
 		} \
 	} \
 	\
-	static void l3_identifier(test_case_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *_case)
+	static void l3_identifier(testself_impl_, __LINE__)(l3_type_of_state_class __strong test, L3TestCase *self)
 
 #else
 
@@ -184,13 +184,13 @@
 #define l3_test(str) \
 	class NSObject; \
 	__attribute__((unused)) \
-	static void l3_identifier(ignored_test_case_, __COUNTER__)(L3TestState *test, L3TestCase *_case, L3TestStep *step)
+	static void l3_identifier(ignored_testself_, __COUNTER__)(L3TestState *test, L3TestCase *self, L3TestStep *step)
 
 #endif
 
 
 #define l3_perform_step(str) \
-	[_case performStep:test.suite.steps[@"" str] withState:test]
+	[self performStep:test.suite.steps[@"" str] withState:test]
 
 
 #pragma mark State types
