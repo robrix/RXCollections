@@ -20,11 +20,11 @@
 	// give it a library
 	// assert that the library’s tests were run
 	
-	NSLog(@"running a test: %@", _case.name);
+	NSLog(@"running a test: %@", self.name);
 }
 
 @l3_test("runs tests in applications") {
-	NSLog(@"running a test: %@", _case.name);
+	NSLog(@"running a test: %@", self.name);
 }
 
 static void L3TRLogString(FILE *file, NSString *string) {

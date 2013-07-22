@@ -37,7 +37,7 @@
 @l3_set_up {
 	test.builder = [L3TestResultBuilder new];
 	test.builder.delegate = test;
-	test.name = _case.name;
+	test.name = self.name;
 	test.sourceReference = l3_sourceReference(@"subject", @"subjectSource", @"patternSource");
 }
 
@@ -65,14 +65,14 @@
 	[test.builder testStartEventWithTest:test date:date];
 	L3TestResult *testResult = [test.builder testResultStack].topObject;
 	
-	l3_assert(testResult.name, l3_equals(_case.name));
+	l3_assert(testResult.name, l3_equals(self.name));
 	l3_assert(testResult.startDate, l3_equals(date));
 }
 
 @l3_test("notify their delegates when starting tests") {
 	[test.builder testStartEventWithTest:test date:[NSDate date]];
 	
-	l3_assert(test.builtResult.name, l3_equals(_case.name));
+	l3_assert(test.builtResult.name, l3_equals(self.name));
 }
 
 @l3_test("set new test results’ parent relationships when pushing them") {
@@ -91,25 +91,25 @@
 
 
 @l3_test("pop a result when ending tests") {
-	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeIntervalSinceNow:-10]];
+	L3TestResult *testResult = [L3TestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate dateWithTimeIntervalSinceNow:-10]];
 	[[test.builder testResultStack] pushObject:testResult];
-	L3TestSuite *suite = [L3TestSuite testSuiteWithName:_case.name];
+	L3TestSuite *suite = [L3TestSuite testSuiteWithName:self.name];
 	[test.builder testEndEventWithTest:suite date:[NSDate date]];
 	l3_assert([test.builder testResultStack].objects, l3_equals(@[]));
 }
 
 @l3_test("set returned results’ end dates when ending tests") {
 	NSDate *now = [NSDate date];
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:now]]];
 	L3TestResult *testResult = test.builder.testResultStack.topObject;
 	[test.builder testEndEventWithTest:test date:now];
 	l3_assert(testResult.endDate, l3_equals(now));
 }
 
 @l3_test("notify their delegates when ending tests") {
-	L3TestResult *testResult = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:[NSDate date]]];
+	L3TestResult *testResult = [L3TestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate dateWithTimeInterval:-10 sinceDate:[NSDate date]]];
 	[test.builder.testResultStack pushObject:testResult];
-	[test.builder testEndEventWithTest:_case date:[NSDate date]];
+	[test.builder testEndEventWithTest:self date:[NSDate date]];
 	l3_assert(test.builtResult, l3_equals(testResult));
 }
 
@@ -130,7 +130,7 @@
 }
 
 @l3_test("increment the current test result’s assertion count when assertions succeed") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:self.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionSuccessWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
@@ -149,14 +149,14 @@
 }
 
 @l3_test("increment the current test result’s assertion count when assertions fail") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:self.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionCount, l3_equals(1));
 }
 
 @l3_test("increment the current test result’s assertion failure count when assertions fail") {
-	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:_case.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
+	[test.builder.testResultStack pushObject:[L3TestResult testResultWithName:self.name file:@"" __FILE__ line:__LINE__ startDate:[NSDate date]]];
 	[test.builder assertionFailureWithSourceReference:test.sourceReference date:[NSDate date]];
 	
 	l3_assert(test.builtResult.assertionFailureCount, l3_equals(1));

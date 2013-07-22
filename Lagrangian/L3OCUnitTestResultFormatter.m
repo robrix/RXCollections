@@ -31,8 +31,8 @@
 	test.formatter = [L3OCUnitTestResultFormatter new];
 	test.formatter.delegate = test;
 	
-	test.result = [L3TestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
-	test.compositeResult = [L3CompositeTestResult testResultWithName:_case.name file:_case.file line:_case.line startDate:[NSDate date]];
+	test.result = [L3TestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate date]];
+	test.compositeResult = [L3CompositeTestResult testResultWithName:self.name file:self.file line:self.line startDate:[NSDate date]];
 }
 
 
@@ -59,17 +59,15 @@
 	L3SourceReference *sourceReference = [L3SourceReference referenceWithFile:@"/foo/bar/file.m" line:42 subjectSource:@"x" subject:@"y" patternSource:@"src"];
 	test.result.parent = test.compositeResult;
 	[test.formatter testResultBuilder:nil testResult:test.result assertionDidFailWithSourceReference:sourceReference];
-	l3_assert(test.formattedString, l3_equals([NSString stringWithFormat:@"/foo/bar/file.m:42: error: -[%1$@ %1$@] : 'x' was 'y' but should have matched 'src'", [test.formatter formatTestName:_case.name]]));
+	l3_assert(test.formattedString, l3_equals([NSString stringWithFormat:@"/foo/bar/file.m:42: error: -[%1$@ %1$@] : 'x' was 'y' but should have matched 'src'", [test.formatter formatTestName:self.name]]));
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResult:(L3TestResult *)result assertionDidFailWithSourceReference:(L3SourceReference *)sourceReference {
-	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : '%@' was '%@' but should have matched '%@'",
+	NSString *formatted = [NSString stringWithFormat:@"%@:%lu: error: %@ : %@",
 						   sourceReference.file,
 						   (unsigned long)sourceReference.line,
 						   [self methodNameForTestResult:result],
-						   sourceReference.subjectSource,
-						   sourceReference.subject,
-						   sourceReference.patternSource];
+						   sourceReference.reason];
 	[self.delegate formatter:self didFormatResult:result asString:formatted];
 }
 
@@ -104,7 +102,7 @@
 
 @l3_test("format test case endings with a warning if the case performed no assertions (either directly or indirectly, via steps)") {
 	[test.formatter testResultBuilder:nil testResultDidFinish:test.result];
-	l3_assert([test.formattedString componentsSeparatedByString:@"\n"][0], l3_equals([NSString stringWithFormat:@"%@:%lu: note: -[%@ %@] : test case '%@' performed no assertions", _case.file, (unsigned long)_case.line, nil, [test.formatter formatTestName:_case.name], _case.name]));
+	l3_assert([test.formattedString componentsSeparatedByString:@"\n"][0], l3_equals([NSString stringWithFormat:@"%@:%lu: note: -[%@ %@] : test case '%@' performed no assertions", self.file, (unsigned long)self.line, nil, [test.formatter formatTestName:self.name], self.name]));
 }
 
 -(void)testResultBuilder:(L3TestResultBuilder *)builder testResultDidFinish:(L3TestResult *)result {

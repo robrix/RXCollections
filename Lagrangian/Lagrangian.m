@@ -6,7 +6,7 @@
 
 @l3_suite("Lagrangian");
 
-static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
+static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *self);
 
 
 #pragma mark Suites
@@ -23,18 +23,18 @@ static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 
 
 @l3_test("set up functions are used to define state to be available during each test") {
-	l3_assert(test[@"case"], l3_equalTo(_case));
+	l3_assert(test[@"case"], l3_equalTo(self));
 }
 
 @l3_set_up {
-	test[@"case"] = _case;
+	test[@"case"] = self;
 }
 
 
 #pragma mark Cases
 
 @l3_test("test cases take a reference to their test case") {
-	l3_assert(_case, l3_not(nil));
+	l3_assert(self, l3_not(nil));
 }
 
 @l3_test("test cases take a reference to their test state") {
@@ -66,17 +66,17 @@ static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 }
 
 @l3_test("steps can be performed individually") {
-	[_case performStep:test.suite.steps[@"Create a step"] withState:test];
+	[self performStep:test.suite.steps[@"Create a step"] withState:test];
 	l3_assert([test[@"step"] name], l3_equals(@"Create a step"));
 }
 
 
 @l3_step("Create a step indirectly") {
-	[_case performStep:test.suite.steps[@"Create a step"] withState:test];
+	[self performStep:test.suite.steps[@"Create a step"] withState:test];
 }
 
 @l3_test("steps can perform other steps") {
-	[_case performStep:test.suite.steps[@"Create a step indirectly"] withState:test];
+	[self performStep:test.suite.steps[@"Create a step indirectly"] withState:test];
 	l3_assert([test[@"step"] name], @"Create a step");
 }
 
@@ -122,4 +122,4 @@ static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case);
 //	
 //}
 
-static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *_case) {}
+static void l3_dummy_test_case_function(L3TestState *test, L3TestCase *self) {}

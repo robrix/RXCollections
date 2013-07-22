@@ -21,6 +21,8 @@
 
 #pragma mark Steps
 
+-(void)setUp:(L3TestStep *)step withState:(L3TestState *)state;
+-(void)tearDown:(L3TestStep *)step withState:(L3TestState *)state;
 -(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state;
 
 

@@ -208,8 +208,8 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 	l3_assert(event[@"type"], l3_equals(@"end"));
 }
 
-static void asynchronousTest(L3TestState *test, L3TestCase *_case);
-static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
+static void asynchronousTest(L3TestState *test, L3TestCase *self);
+static void asynchronousTest(L3TestState *test, L3TestCase *self) {
 	test.timeout = 0;
 	l3_defer();
 }
@@ -237,18 +237,14 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 		
 		L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite eventObserver:self.eventObserver];
 		
-		L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
-		if (setUp)
-			[testCase performStep:setUp withState:state];
+		[testCase setUp:suite.steps[L3TestSuiteSetUpStepName] withState:state];
 		
 		testCase.function(state, testCase);
 		
 		if (state.isDeferred)
 			[testCase assertThat:l3_to_object([state wait]) matches:l3_to_pattern(YES) sourceReference:testCase.sourceReferenceForCaseEvents eventObserver:self.eventObserver];
 		
-		L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
-		if (tearDown)
-			[testCase performStep:tearDown withState:state];
+		[testCase tearDown:suite.steps[L3TestSuiteTearDownStepName] withState:state];
 		
 		[self.eventObserver testEndEventWithTest:testCase date:[NSDate date]];
 	}];
@@ -256,7 +252,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 
 
 @l3_test("generates start events for suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", self.name]];
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	
@@ -270,7 +266,7 @@ static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
 }
 
 @l3_test("generates end events after running suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", self.name]];
 	
 	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
 	

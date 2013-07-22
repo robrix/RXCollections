@@ -36,8 +36,8 @@
 #pragma mark Public methods
 
 @l3_test("push objects by adding them to the end of their arrays") {
-	[test[@"stack"] pushObject:_case.name];
-	l3_assert([test[@"stack"] mutableObjects], l3_is(@[_case.name]));
+	[test[@"stack"] pushObject:self.name];
+	l3_assert([test[@"stack"] mutableObjects], l3_is(@[self.name]));
 }
 
 -(void)pushObject:(id)object {
@@ -45,8 +45,8 @@
 }
 
 @l3_test("pop objects by removing them from the end of their arrays and returning them") {
-	[test[@"stack"] pushObject:_case.name];
-	l3_assert([test[@"stack"] popObject], l3_is(_case.name));
+	[test[@"stack"] pushObject:self.name];
+	l3_assert([test[@"stack"] popObject], l3_is(self.name));
 	l3_assert([test[@"stack"] mutableObjects], @[]);
 }
 
@@ -58,8 +58,8 @@
 
 
 @l3_test("use the last object in their arrays as the top object") {
-	[test[@"stack"] pushObject:_case.name];
-	l3_assert([test[@"stack"] topObject], _case.name);
+	[test[@"stack"] pushObject:self.name];
+	l3_assert([test[@"stack"] topObject], self.name);
 }
 
 -(id)topObject {
@@ -68,9 +68,9 @@
 
 
 @l3_test("return their contents") {
-	[test[@"stack"] pushObject:_case.name];
-	[test[@"stack"] pushObject:_case.name];
-	l3_assert([test[@"stack"] objects], l3_equals(@[_case.name, _case.name]));
+	[test[@"stack"] pushObject:self.name];
+	[test[@"stack"] pushObject:self.name];
+	l3_assert([test[@"stack"] objects], l3_equals(@[self.name, self.name]));
 }
 
 -(NSArray *)objects {

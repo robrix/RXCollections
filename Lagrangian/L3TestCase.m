@@ -8,6 +8,8 @@
 #import "L3TestSuite.h"
 #import "Lagrangian.h"
 
+#import "NSException+L3OCUnitCompatibility.h"
+
 @l3_suite_interface(L3TestCase, "Test cases") <L3EventObserver>
 
 @property NSMutableArray *events;
@@ -21,12 +23,12 @@
 
 @interface L3TestCase ()
 
+@property (nonatomic) L3TestState *state;
+
 @property (copy, nonatomic, readwrite) NSString *name;
 
 @property (copy, nonatomic, readwrite) NSString *file;
 @property (assign, nonatomic, readwrite) NSUInteger line;
-
-@property (weak, nonatomic, readwrite) id<L3EventObserver> eventObserver;
 
 @property (assign, nonatomic, readwrite) NSUInteger failedAssertionCount;
 
@@ -63,6 +65,18 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 #pragma mark Steps
+
+-(void)setUp:(L3TestStep *)step withState:(L3TestState *)state {
+	self.state = state;
+	if (step)
+		[self performStep:step withState:state];
+}
+
+-(void)tearDown:(L3TestStep *)step withState:(L3TestState *)state {
+	if (step)
+		[self performStep:step withState:state];
+	self.state = nil;
+}
 
 -(bool)performStep:(L3TestStep *)step withState:(L3TestState *)state {
 	NSParameterAssert(step != nil);
@@ -101,25 +115,25 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 
 @l3_test("return true for passing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];
+	bool matched = [self assertThat:@"a" matches:^bool(id obj) { return YES; } sourceReference:l3_sourceReference(@"a", @"a", @".") eventObserver:nil];
 	l3_assert(matched, l3_is(YES));
 }
 
 @l3_test("return false for failing assertions") {
-	bool matched = [_case assertThat:@"a" matches:^bool(id obj){ return NO; } sourceReference:l3_sourceReference(@"a", @"a", @"!") eventObserver:nil];
+	bool matched = [self assertThat:@"a" matches:^bool(id obj){ return NO; } sourceReference:l3_sourceReference(@"a", @"a", @"!") eventObserver:nil];
 	l3_assert(matched, l3_is(NO));
 }
 
 @l3_test("generate assertion succeeded events for successful assertions") {
 	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @".");
-	[_case assertThat:@"a" matches:^bool(id x) { return YES; } sourceReference:sourceReference eventObserver:test];
+	[self assertThat:@"a" matches:^bool(id x) { return YES; } sourceReference:sourceReference eventObserver:test];
 	
 	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }
 
 @l3_test("generate assertion failed events for failed assertions") {
 	L3SourceReference *sourceReference = l3_sourceReference(@"a", @"a", @"!");
-	[_case assertThat:@"a" matches:^bool(id x) { return NO; } sourceReference:sourceReference eventObserver:test];
+	[self assertThat:@"a" matches:^bool(id x) { return NO; } sourceReference:sourceReference eventObserver:test];
 	
 	l3_assert(test.events.lastObject[@"sourceReference"], l3_equals(sourceReference));
 }
@@ -145,6 +159,15 @@ static void test_function(L3TestState *state, L3TestCase *testCase) {}
 
 -(void)acceptVisitor:(id<L3TestVisitor>)visitor {
 	[self acceptVisitor:visitor inTestSuite:nil];
+}
+
+
+#pragma mark Expecta
+
+-(void)failWithException:(NSException *)exception {
+	L3SourceReference *reference = [L3SourceReference referenceWithFile:exception.filename line:exception.lineNumber.unsignedIntegerValue reason:exception.reason];
+	[self.state.eventObserver assertionFailureWithSourceReference:reference date:[NSDate date]];
+	self.failedAssertionCount++;
 }
 
 @end
