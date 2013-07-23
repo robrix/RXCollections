@@ -12,6 +12,13 @@
 
 #define L3_PASTE(a, b) a##b
 
+#define L3_HEAD(head, ...) \
+	head
+
+#define L3_TAIL(head, ...) \
+	__VA_ARGS__
+
+
 
 #pragma mark Configuration
 

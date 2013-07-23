@@ -9,6 +9,7 @@
 	NSMutableArray *_preconditions;
 	NSMutableArray *_steps;
 	NSMutableArray *_expectations;
+	NSMutableArray *_children;
 }
 
 -(instancetype)init {
@@ -16,6 +17,7 @@
 		_preconditions = [NSMutableArray new];
 		_steps = [NSMutableArray new];
 		_expectations = [NSMutableArray new];
+		_children = [NSMutableArray new];
 	}
 	return self;
 }
@@ -33,6 +35,11 @@
 
 -(void)addExpectation:(id)expectation {
 	[_expectations addObject:expectation];
+}
+
+
+-(void)addChild:(L3Test *)test {
+	[_children addObject:test];
 }
 
 
@@ -60,8 +67,24 @@ l3_test(^{
 		[array addObject:@0];
 	});
 	
-	//	expect(@(array.count)).to.equal(@1);
+//	expect(@(array.count)).to.equal(@1);
 });
+
+
+
+l3_test(^{
+	
+});
+
+-(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context {
+	NSMutableArray *children = [NSMutableArray new];
+	for (L3Test *child in self.children) {
+		id visited = [child acceptVisitor:visitor context:context];
+		if (visited)
+			[children addObject:visited];
+	}
+	return [visitor visitTest:self children:children context:context];
+}
 
 @end
 

@@ -25,6 +25,12 @@
 		D4391696179E49C20002EDCA /* L3Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391695179E49B40002EDCA /* L3Defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4391697179E49C30002EDCA /* L3Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391695179E49B40002EDCA /* L3Defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4391698179E49C40002EDCA /* L3Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391695179E49B40002EDCA /* L3Defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D439169B179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391699179E4C090002EDCA /* L3ExpectationBuilder.h */; };
+		D439169C179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391699179E4C090002EDCA /* L3ExpectationBuilder.h */; };
+		D439169D179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391699179E4C090002EDCA /* L3ExpectationBuilder.h */; };
+		D439169E179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D439169A179E4C090002EDCA /* L3ExpectationBuilder.m */; };
+		D439169F179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D439169A179E4C090002EDCA /* L3ExpectationBuilder.m */; };
+		D43916A0179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D439169A179E4C090002EDCA /* L3ExpectationBuilder.m */; };
 		D457D679165094F100340DAC /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D67B165097CA00340DAC /* L3EventObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
@@ -123,6 +129,8 @@
 		D439168D179E49600002EDCA /* L3Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
 		D439168E179E49600002EDCA /* L3Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Test.m; sourceTree = "<group>"; };
 		D4391695179E49B40002EDCA /* L3Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Defines.h; sourceTree = "<group>"; };
+		D4391699179E4C090002EDCA /* L3ExpectationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3ExpectationBuilder.h; sourceTree = "<group>"; };
+		D439169A179E4C090002EDCA /* L3ExpectationBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3ExpectationBuilder.m; sourceTree = "<group>"; };
 		D43D8B721654C27000E6DE07 /* Lagrangian tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lagrangian tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D457D677165094F100340DAC /* L3SourceReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3SourceReference.h; sourceTree = "<group>"; };
 		D457D678165094F100340DAC /* L3SourceReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3SourceReference.m; sourceTree = "<group>"; };
@@ -352,9 +360,11 @@
 			children = (
 				D4AC431E1648B5D300C0A25B /* Lagrangian.h */,
 				D4AC431F1648B5D300C0A25B /* Lagrangian.m */,
+				D4391695179E49B40002EDCA /* L3Defines.h */,
 				D439168D179E49600002EDCA /* L3Test.h */,
 				D439168E179E49600002EDCA /* L3Test.m */,
-				D4391695179E49B40002EDCA /* L3Defines.h */,
+				D4391699179E4C090002EDCA /* L3ExpectationBuilder.h */,
+				D439169A179E4C090002EDCA /* L3ExpectationBuilder.m */,
 				D4EA374817586532003C6F23 /* L3Mock.h */,
 				D4EA374917586532003C6F23 /* L3Mock.m */,
 				D40DE69616501B000033DE88 /* Tests */,
@@ -414,6 +424,7 @@
 				D473F5F716DA71ED000FCD8D /* L3OCUnitTestResultFormatter.h in Headers */,
 				D473F5F816DA71ED000FCD8D /* _RXFold.h in Headers */,
 				D473F5F916DA71ED000FCD8D /* _RXInterpolation.h in Headers */,
+				D439169D179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */,
 				D473F5FA16DA71ED000FCD8D /* RXCount.h in Headers */,
 				D473F5FB16DA71ED000FCD8D /* RXFold.h in Headers */,
 				D473F5FC16DA71ED000FCD8D /* RXInterpolation.h in Headers */,
@@ -430,6 +441,7 @@
 				D40DE69D165037BA0033DE88 /* L3OCUnitTestResultFormatter.h in Headers */,
 				D457D679165094F100340DAC /* L3SourceReference.h in Headers */,
 				D457D67C165097CA00340DAC /* L3EventObserver.h in Headers */,
+				D439169C179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */,
 				D4E394C51650C2BC00C72FBD /* L3TestResult.h in Headers */,
 				D426E49316527B8D001C9105 /* L3TestResultBuilder.h in Headers */,
 				D4B152B41653969E002858C3 /* L3StringInflections.h in Headers */,
@@ -467,6 +479,7 @@
 				D4B62B8516A15A1900E42C84 /* L3OCUnitTestResultFormatter.h in Headers */,
 				D4B62B8616A15A1900E42C84 /* _RXFold.h in Headers */,
 				D4B62B8716A15A1900E42C84 /* _RXInterpolation.h in Headers */,
+				D439169B179E4C090002EDCA /* L3ExpectationBuilder.h in Headers */,
 				D4B62B8816A15A1900E42C84 /* RXCount.h in Headers */,
 				D4B62B8916A15A1900E42C84 /* RXFold.h in Headers */,
 				D4B62B8A16A15A1900E42C84 /* RXInterpolation.h in Headers */,
@@ -630,6 +643,7 @@
 			files = (
 				D4391694179E49600002EDCA /* L3Test.m in Sources */,
 				D473F60216DA726F000FCD8D /* Lagrangian.m in Sources */,
+				D43916A0179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,6 +663,7 @@
 				D4AC43201648B5D300C0A25B /* Lagrangian.m in Sources */,
 				D4391693179E49600002EDCA /* L3Test.m in Sources */,
 				D4223BF016A0A95E00AE32D5 /* RXPreprocessingTests.m in Sources */,
+				D439169F179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +673,7 @@
 			files = (
 				D4391692179E49600002EDCA /* L3Test.m in Sources */,
 				D4B62B6516A159FA00E42C84 /* Lagrangian.m in Sources */,
+				D439169E179E4C090002EDCA /* L3ExpectationBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,7 +21,7 @@
  \c expect
  */
 #define l3_test(...) \
-_l3_test(__COUNTER__, __VA_ARGS__)
+	_l3_test(__COUNTER__, __VA_ARGS__)
 
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
@@ -62,6 +62,9 @@ typedef void(^L3WhenBlock)(L3TestBlock block);
 typedef void(^L3ExpectBlock)(id subject);
 
 
+@protocol L3TestVisitor;
+
+
 @interface L3Test : NSObject
 
 @property (nonatomic, copy) L3TestBlock block;
@@ -74,6 +77,18 @@ typedef void(^L3ExpectBlock)(id subject);
 
 @property (nonatomic, readonly) NSArray *expectations;
 -(void)addExpectation:(id)expectation;
+
+@property (nonatomic, readonly) NSArray *children;
+-(void)addChild:(L3Test *)test;
+
+-(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context;
+
+@end
+
+
+@protocol L3TestVisitor <NSObject>
+
+-(id)visitTest:(L3Test *)test children:(NSMutableArray *)children context:(id)context;
 
 @end
 
