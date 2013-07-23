@@ -1,10 +1,19 @@
-//  L3Configuration.h
-//  Created by Rob Rix on 2012-12-24.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
+#ifndef L3_DEFINES
+#define L3_DEFINES
 
-#import <Foundation/Foundation.h>
+#pragma mark Declaration
 
-#pragma mark Configuration macros
+#define L3_OVERLOADABLE __attribute__((overloadable)) static inline
+#define L3_CONSTRUCTOR __attribute((constructor)) static inline
+#define L3_EXTERN extern
+
+
+#pragma mark Metapreprocessing
+
+#define L3_PASTE(a, b) a##b
+
+
+#pragma mark Configuration
 
 #if DEBUG
 
@@ -13,7 +22,7 @@
 #define L3_DEBUG 1
 #endif
 
-#endif
+#endif // DEBUG
 
 /*
  L3_DEBUG is intended to be defined in a Debug build configuration, for example when DEBUG=1 is defined (as is Xcode’s default).
@@ -27,4 +36,6 @@
 #define L3_INCLUDE_TESTS 1
 #endif
 
-#endif
+#endif // L3_DEBUG
+
+#endif // L3_DEFINES

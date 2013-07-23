@@ -1,32 +1,97 @@
-//  L3Test.h
-//  Created by Rob Rix on 2012-11-11.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
+#ifndef L3_TEST
+#define L3_TEST
 
-#import <Lagrangian/L3EventObserver.h>
-#import <Lagrangian/L3TestVisitor.h>
+#import <Foundation/Foundation.h>
 
-@class L3TestSuite;
-
-@protocol L3Test <NSObject>
-
-@property (copy, nonatomic, readonly) NSString *name;
+#import <Lagrangian/L3Defines.h>
 
 
-#pragma mark Source reference
+#pragma mark API
 
-@property (copy, nonatomic, readonly) NSString *file;
-@property (assign, nonatomic, readonly) NSUInteger line;
+#if L3_INCLUDE_TESTS
+
+/**
+ Declares a test case.
+ 
+ Blocks passed to this macro will have several variables available to them in the surrounding scope when they are created:
+ 
+ \c test The test case.
+ \c given
+ \c when
+ \c expect
+ */
+#define l3_test(...) \
+_l3_test(__COUNTER__, __VA_ARGS__)
+
+#define _l3_test(uid, ...) \
+	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
+		L3Test *test = [L3Test new]; \
+		L3ExpectBlock expect = L3ExpectBlockForTest(test); \
+		L3GivenBlock given = L3GivenBlockForTest(test); \
+		L3WhenBlock when = L3WhenBlockForTest(test); \
+		_Pragma("unused (expect, given, when)") \
+		L3TestInitialize(test, __VA_ARGS__); \
+	}
+
+#define l3_state(declaration, ...) \
+	declaration;
+
+#define l3_setup(symbol, ...) \
+	L3TestBlock symbol = __VA_ARGS__
+
+#define l3_step(symbol, ...) \
+	L3TestBlock symbol = __VA_ARGS__
 
 
-#pragma mark Test composition
+#else // L3_INCLUDE_TESTS
 
-@property (nonatomic, readonly, getter = isComposite) bool composite;
+#define l3_test(...)
+
+#define l3_state(...)
+
+#define l3_setup(...)
+
+#define l3_step(...)
+
+#endif // L3_INCLUDE_TESTS
 
 
-#pragma mark Visiting
+typedef void(^L3TestBlock)(void);
+typedef void(^L3GivenBlock)(L3TestBlock block);
+typedef void(^L3WhenBlock)(L3TestBlock block);
+typedef void(^L3ExpectBlock)(id subject);
 
--(void)acceptVisitor:(id<L3TestVisitor>)visitor inTestSuite:(L3TestSuite *)parentSuite;
-// assumes nil parent
--(void)acceptVisitor:(id<L3TestVisitor>)visitor;
+
+@interface L3Test : NSObject
+
+@property (nonatomic, copy) L3TestBlock block;
+
+@property (nonatomic, readonly) NSArray *preconditions;
+-(void)addPrecondition:(L3TestBlock)block;
+
+@property (nonatomic, readonly) NSArray *steps;
+-(void)addStep:(L3TestBlock)block;
+
+@property (nonatomic, readonly) NSArray *expectations;
+-(void)addExpectation:(id)expectation;
 
 @end
+
+
+L3_EXTERN L3WhenBlock L3WhenBlockForTest(L3Test *test);
+L3_EXTERN L3GivenBlock L3GivenBlockForTest(L3Test *test);
+L3_EXTERN L3ExpectBlock L3ExpectBlockForTest(L3Test *test);
+
+
+L3_OVERLOADABLE void L3TestInitialize(L3Test *test, L3TestBlock block);
+L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo);
+
+L3_OVERLOADABLE void L3TestInitialize(L3Test *test, L3TestBlock block) {
+	block();
+}
+
+L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo) {
+	
+}
+
+#endif // L3_TEST
