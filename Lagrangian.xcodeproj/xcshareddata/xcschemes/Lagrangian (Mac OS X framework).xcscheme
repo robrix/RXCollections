@@ -20,20 +20,6 @@
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D43D8B711654C27000E6DE07"
-               BuildableName = "Lagrangian tests.octest"
-               BlueprintName = "Lagrangian tests"
-               ReferencedContainer = "container:Lagrangian.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -46,22 +32,13 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D43D8B711654C27000E6DE07"
-               BuildableName = "Lagrangian tests.octest"
-               BlueprintName = "Lagrangian tests"
+               BlueprintIdentifier = "D4D47E5F17A0DE6E00B789A4"
+               BuildableName = "Lagrangian.octest"
+               BlueprintName = "Lagrangian"
                ReferencedContainer = "container:Lagrangian.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D4B62B4B16A1581700E42C84"
-            BuildableName = "Lagrangian.framework"
-            BlueprintName = "Lagrangian (Mac OS X framework)"
-            ReferencedContainer = "container:Lagrangian.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
             argument = "-framework $(BUILT_PRODUCTS_DIR)/Lagrangian.framework"
