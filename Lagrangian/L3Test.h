@@ -30,18 +30,11 @@
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
 		L3Test *test = [L3Test new]; \
-		_Pragma("clang diagnostic push") \
-		_Pragma("clang diagnostic ignored \"-Wused-but-marked-unused\"") \
-		L3ExpectBlock l3_expect = L3ExpectBlockForTest(test); \
-		L3GivenBlock l3_given = L3GivenBlockForTest(test); \
-		L3WhenBlock l3_when = L3WhenBlockForTest(test); \
-		_Pragma("unused (l3_expect, l3_given, l3_when)") \
 		L3TestInitialize(test, __VA_ARGS__); \
-		_Pragma("clang diagnostic pop") \
 	}
 
-#define l3_state(declaration, ...) \
-	declaration;
+//#define l3_state(declaration, ...) \
+//	declaration
 
 #define l3_setup(symbol, ...) \
 	L3TestBlock symbol = __VA_ARGS__
@@ -49,12 +42,11 @@
 #define l3_step(symbol, ...) \
 	L3TestBlock symbol = __VA_ARGS__
 
-
 #else // L3_INCLUDE_TESTS
 
 #define l3_test(...)
 
-#define l3_state(...)
+//#define l3_state(...)
 
 #define l3_setup(...)
 
@@ -64,11 +56,9 @@
 
 
 typedef void(^L3TestBlock)(void);
-typedef void(^L3GivenBlock)(L3TestBlock block);
-typedef void(^L3WhenBlock)(L3TestBlock block);
-typedef void(^L3ExpectBlock)(id subject);
 
 
+@class L3Expectation;
 @protocol L3TestVisitor;
 
 
@@ -76,43 +66,31 @@ typedef void(^L3ExpectBlock)(id subject);
 
 @property (nonatomic, copy) L3TestBlock block;
 
-@property (nonatomic, readonly) NSArray *preconditions;
--(void)addPrecondition:(L3TestBlock)block;
-
 @property (nonatomic, readonly) NSArray *steps;
 -(void)addStep:(L3TestBlock)block;
 
-@property (nonatomic, readonly) NSArray *expectations;
--(void)addExpectation:(id)expectation;
+@property (nonatomic, readonly) NSDictionary *expectations;
+-(void)addExpectation:(L3Expectation *)expectation forIdentifier:(id)identifier;
 
 @property (nonatomic, readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;
 
--(void)runPreconditions;
 -(void)runSteps;
 
--(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context;
+-(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context;
 
 @end
 
 
 @protocol L3TestVisitor <NSObject>
 
--(id)visitTest:(L3Test *)test children:(NSMutableArray *)children context:(id)context;
+-(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context;
 
 @end
 
 
-L3_EXTERN L3WhenBlock L3WhenBlockForTest(L3Test *test);
-L3_EXTERN L3GivenBlock L3GivenBlockForTest(L3Test *test);
-L3_EXTERN L3ExpectBlock L3ExpectBlockForTest(L3Test *test);
-
-
-L3_OVERLOADABLE void L3TestInitialize(L3Test *test, L3TestBlock block);
-L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo);
-
 L3_OVERLOADABLE void L3TestInitialize(L3Test *test, L3TestBlock block) {
-	block();
+	test.block = block;
 }
 
 L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo) {

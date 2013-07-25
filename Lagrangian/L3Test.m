@@ -4,37 +4,23 @@
 
 @interface L3Test ()
 
-@property (nonatomic, readonly) NSMutableArray *mutablePreconditions;
 @property (nonatomic, readonly) NSMutableArray *mutableSteps;
-@property (nonatomic, readonly) NSMutableArray *mutableExpectations;
+@property (nonatomic, readonly) NSMutableArray *mutableExpectationIdentifiers;
+@property (nonatomic, readonly) NSMutableDictionary *mutableExpectations;
 @property (nonatomic, readonly) NSMutableArray *mutableChildren;
 
 @end
 
-@implementation L3Test {
-	NSMutableArray *_preconditions;
-	NSMutableArray *_steps;
-	NSMutableArray *_expectations;
-	NSMutableArray *_children;
-}
+@implementation L3Test
 
 -(instancetype)init {
 	if ((self = [super init])) {
-		_preconditions = [NSMutableArray new];
-		_steps = [NSMutableArray new];
-		_expectations = [NSMutableArray new];
-		_children = [NSMutableArray new];
+		_mutableSteps = [NSMutableArray new];
+		_mutableExpectationIdentifiers = [NSMutableArray new];
+		_mutableExpectations = [NSMutableDictionary new];
+		_mutableChildren = [NSMutableArray new];
 	}
 	return self;
-}
-
-
--(NSArray *)preconditions {
-	return self.mutablePreconditions;
-}
-
--(void)addPrecondition:(L3TestBlock)block {
-	[self.mutablePreconditions addObject:block];
 }
 
 
@@ -47,12 +33,15 @@
 }
 
 
--(NSArray *)expectations {
+-(NSDictionary *)expectations {
 	return self.mutableExpectations;
 }
 
--(void)addExpectation:(id)expectation {
-	[self.mutableExpectations addObject:expectation];
+-(void)addExpectation:(L3Expectation *)expectation forIdentifier:(id)identifier {
+	if (![self.expectations objectForKey:identifier]) {
+		[self.mutableExpectationIdentifiers addObject:identifier];
+		[self.mutableExpectations setObject:expectation forKey:identifier];
+	}
 }
 
 
@@ -69,12 +58,6 @@ l3_test(^{
 	
 })
 
--(void)runPreconditions {
-	for (L3TestBlock precondition in self.preconditions) {
-		precondition();
-	}
-}
-
 -(void)runSteps {
 	for (L3TestBlock step in self.steps) {
 		step();
@@ -83,13 +66,10 @@ l3_test(^{
 
 
 l3_test(^{
-	__block NSMutableArray *array;
-	l3_given(^{ array = [NSMutableArray new]; });
-	l3_when(^{
-		[array addObject:@0];
-	});
+	NSMutableArray *array = [NSMutableArray new];
+	[array addObject:@0];
 	
-//	expect(@(array.count)).to.equal(@1);
+	l3_expect(array.count).to.equal(@1);
 })
 
 
@@ -98,36 +78,17 @@ l3_test(^{
 	
 })
 
--(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context {
+-(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context {
 	NSMutableArray *children = [NSMutableArray new];
+	NSArray *childParents = parents?
+		[parents arrayByAddingObject:self]
+	:	@[self];
 	for (L3Test *child in self.children) {
-		id visited = [child acceptVisitor:visitor context:context];
+		id visited = [child acceptVisitor:visitor parents:childParents context:context];
 		if (visited)
 			[children addObject:visited];
 	}
-	return [visitor visitTest:self children:children context:context];
+	return [visitor visitTest:self parents:parents children:children context:context];
 }
 
 @end
-
-
-L3WhenBlock L3WhenBlockForTest(L3Test *test) {
-	return ^(L3TestBlock block){
-		if (block)
-			[test addStep:block];
-	};
-}
-
-L3GivenBlock L3GivenBlockForTest(L3Test *test) {
-	return ^(L3TestBlock block){
-		if (block)
-			[test addPrecondition:block];
-	};
-}
-
-L3ExpectBlock L3ExpectBlockForTest(L3Test *test) {
-	return ^(id subject){
-		if (subject)
-			[test addExpectation:subject];
-	};
-}

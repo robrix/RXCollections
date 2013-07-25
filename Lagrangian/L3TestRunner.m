@@ -127,13 +127,13 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 -(void)runTest:(L3Test *)test {
 	NSParameterAssert(test != nil);
 	
-	[test acceptVisitor:self context:nil];
+	[test acceptVisitor:self parents:nil context:nil];
 }
 
 
 #pragma mark L3TestVisitor
 
--(id)visitTest:(L3Test *)test children:(NSMutableArray *)children context:(id)context {
+-(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context {
 	return nil;
 }
 
