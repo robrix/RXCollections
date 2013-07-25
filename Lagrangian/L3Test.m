@@ -4,6 +4,8 @@
 
 @interface L3Test ()
 
+@property (nonatomic, readonly) L3TestBlock block;
+
 @property (nonatomic, readonly) NSMutableArray *mutableSteps;
 @property (nonatomic, readonly) NSMutableArray *mutableExpectationIdentifiers;
 @property (nonatomic, readonly) NSMutableDictionary *mutableExpectations;
@@ -13,8 +15,13 @@
 
 @implementation L3Test
 
--(instancetype)init {
+-(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line block:(L3TestBlock)block {
 	if ((self = [super init])) {
+		_file = [file copy];
+		_line = line;
+		
+		_block = [block copy];
+		
 		_mutableSteps = [NSMutableArray new];
 		_mutableExpectationIdentifiers = [NSMutableArray new];
 		_mutableExpectations = [NSMutableDictionary new];
@@ -33,12 +40,13 @@
 }
 
 
--(NSDictionary *)expectations {
-	return self.mutableExpectations;
+-(NSArray *)expectations {
+	return [self.mutableExpectations objectsForKeys:self.mutableExpectationIdentifiers notFoundMarker:[NSNull null]];
 }
 
--(void)addExpectation:(L3Expectation *)expectation forIdentifier:(id)identifier {
-	if (![self.expectations objectForKey:identifier]) {
+-(void)addExpectation:(L3Expectation *)expectation {
+	id identifier = expectation.identifier;
+	if (![self.mutableExpectations objectForKey:identifier]) {
 		[self.mutableExpectationIdentifiers addObject:identifier];
 		[self.mutableExpectations setObject:expectation forKey:identifier];
 	}
@@ -64,12 +72,21 @@ l3_test(^{
 	}
 }
 
+-(void)assertExpectation:(L3Expectation *)expectation {
+	self.block();
+	
+	if (!expectation.wasMet) {
+		
+	}
+}
+
 
 l3_test(^{
 	NSMutableArray *array = [NSMutableArray new];
 	[array addObject:@0];
 	
 	l3_expect(array.count).to.equal(@1);
+	l3_expect(array.lastObject).to.equal(@0);
 })
 
 
@@ -79,7 +96,7 @@ l3_test(^{
 })
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context {
-	NSMutableArray *children = [NSMutableArray new];
+	NSMutableArray *children = self.children.count? [NSMutableArray new] : nil;
 	NSArray *childParents = parents?
 		[parents arrayByAddingObject:self]
 	:	@[self];

@@ -134,6 +134,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 #pragma mark L3TestVisitor
 
 -(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context {
+	
 	return nil;
 }
 

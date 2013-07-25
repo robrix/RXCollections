@@ -7,17 +7,16 @@
 
 @interface L3Expectation ()
 
-@property (nonatomic, readonly) NSPredicate *predicate;
-@property (nonatomic, weak, readonly) L3Expectation *parent;
 @property (nonatomic, strong) L3Expectation *child;
 
 @end
 
 @implementation L3Expectation
 
--(instancetype)initWithSubject:(id)subject parent:(L3Expectation *)parent predicate:(NSPredicate *)predicate {
+-(instancetype)initWithSubject:(id)subject identifier:(id)identifier parent:(L3Expectation *)parent predicate:(NSPredicate *)predicate {
 	if ((self = [super init])) {
 		_subject = subject;
+		_identifier = identifier;
 		_parent = parent;
 		_predicate = predicate ? predicate : [NSPredicate predicateWithFormat:@"childValue == YES"];
 	}
@@ -30,26 +29,26 @@
 }
 
 -(L3Expectation *)not {
-	return self.child = [[L3Expectation alloc] initWithSubject:self.subject parent:self predicate:[NSPredicate predicateWithFormat:@"childValue == NO"]];
+	return self.child = [[L3Expectation alloc] initWithSubject:self.subject identifier:nil parent:self predicate:[NSPredicate predicateWithFormat:@"childValue == NO"]];
 }
 
 -(L3Expectation *(^)(id))equal {
 	return ^(id object){
-		return self.child = [[L3Expectation alloc] initWithSubject:self.subject parent:self predicate:[NSPredicate predicateWithFormat:@"subject == %@", object]];
+		return self.child = [[L3Expectation alloc] initWithSubject:self.subject identifier:nil parent:self predicate:[NSPredicate predicateWithFormat:@"subject == %@", object]];
 	};
 }
 
 
--(bool)valueWithSubject:(id)subject {
-	bool childValue = [self.child valueWithSubject:subject];
-	return [self.predicate evaluateWithObject:subject substitutionVariables:@{@"subject": subject, @"expectation": self, @"childValue": @(childValue) }];
+-(bool)wasMet {
+	bool childValue = [self.child wasMet];
+	return [self.predicate evaluateWithObject:self.subject substitutionVariables:@{@"subject": self.subject, @"expectation": self, @"childValue": @(childValue) }];
 }
 
 @end
 
 
 L3Expectation *L3Expect(L3Test *test, int identifier, id subject) {
-	L3Expectation *expectation = [[L3Expectation alloc] initWithSubject:subject parent:nil predicate:nil];
-	[test addExpectation:expectation forIdentifier:@(identifier)];
+	L3Expectation *expectation = [[L3Expectation alloc] initWithSubject:subject identifier:@(identifier) parent:nil predicate:nil];
+	[test addExpectation:expectation];
 	return expectation;
 }

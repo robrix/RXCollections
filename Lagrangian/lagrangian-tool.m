@@ -2,37 +2,28 @@
 //  Created by Rob Rix on 2012-11-07.
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
+#if __has_feature(modules)
+@import Foundation;
+@import Darwin.POSIX.dlfcn;
+@import Darwin.C.stdio;
+@import Darwin.C.stdlib;
+#else
 #import <Foundation/Foundation.h>
 #import <dlfcn.h>
 #import <stdio.h>
 #import <stdlib.h>
+#endif
 
 #import "L3TRDynamicLibrary.h"
 
 #import "Lagrangian.h"
-
-@l3_suite("lagrangian");
-
-@l3_test("runs tests in dynamic libraries") {
-	// give it a library
-	// assert that it was loaded
-	
-	// give it a library
-	// assert that the library’s tests were run
-	
-	NSLog(@"running a test: %@", self.name);
-}
-
-@l3_test("runs tests in applications") {
-	NSLog(@"running a test: %@", self.name);
-}
 
 static void L3TRLogString(FILE *file, NSString *string) {
 	fprintf(file, "%s", [string UTF8String]);
 	fflush(stderr);
 }
 
-static void L3TRFailWithError(NSError *error) {
+static __attribute__((noreturn)) void L3TRFailWithError(NSError *error) {
 	L3TRLogString(stderr, @"lagrangian: fatal error: ");
 	L3TRLogString(stderr, error.localizedDescription);
 	L3TRLogString(stderr, @"\n");
@@ -45,9 +36,9 @@ static NSString *L3TRPathListByAddingPath(NSString *list, NSString *path) {
 	:	path;
 }
 
-NSString * const L3TRLagrangianFrameworkPathArgumentName = @"lagrangian-framework-path";
+static NSString * const L3TRLagrangianFrameworkPathArgumentName = @"lagrangian-framework-path";
 
-NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_LIBRARY_PATH";
+static NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_LIBRARY_PATH";
 
 #define L3TRTry(x) \
 	(^{ \
@@ -87,7 +78,7 @@ int main(int argc, const char *argv[]) {
 			
 			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
 			
-			[runner run];
+//			[runner run];
 			
 			[runner waitForTestsToComplete];
 		} else if (libraryPath) {
@@ -97,7 +88,7 @@ int main(int argc, const char *argv[]) {
 			
 			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
 			
-			[runner run];
+//			[runner run];
 			
 			[runner waitForTestsToComplete];
 		} else if (command) {

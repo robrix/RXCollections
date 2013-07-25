@@ -18,11 +18,16 @@
 
 @interface L3Expectation : NSObject
 
+@property (nonatomic, readonly) id subject;
+@property (nonatomic, readonly) id identifier;
+@property (nonatomic, weak, readonly) L3Expectation *parent;
+@property (nonatomic, readonly) NSPredicate *predicate;
+
 @property (nonatomic, readonly) L3Expectation *to;
 
 @property (nonatomic, readonly) L3Expectation *(^equal)(id object);
 
-@property (nonatomic, readonly) id subject;
+-(bool)wasMet;
 
 @end
 

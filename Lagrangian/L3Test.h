@@ -14,23 +14,13 @@
 
 #if L3_INCLUDE_TESTS
 
-/**
- Declares a test case.
- 
- Blocks passed to this macro will have several variables available to them in the surrounding scope when they are created:
- 
- \c test The test case.
- \c given
- \c when
- \c expect
- */
 #define l3_test(...) \
 	_l3_test(__COUNTER__, __VA_ARGS__)
 
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
-		L3Test *test = [L3Test new]; \
-		L3TestInitialize(test, __VA_ARGS__); \
+		__block L3Test *test = [[L3Test alloc] initWithFile:@(__FILE__) line:__LINE__ block:__VA_ARGS__]; \
+		"add test to the runner and immediately prior registered test (i.e. its suite)"; \
 	}
 
 //#define l3_state(declaration, ...) \
@@ -64,13 +54,16 @@ typedef void(^L3TestBlock)(void);
 
 @interface L3Test : NSObject
 
-@property (nonatomic, copy) L3TestBlock block;
+-(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line block:(L3TestBlock)block;
+
+@property (nonatomic, readonly) NSString *file;
+@property (nonatomic, readonly) NSUInteger line;
 
 @property (nonatomic, readonly) NSArray *steps;
 -(void)addStep:(L3TestBlock)block;
 
-@property (nonatomic, readonly) NSDictionary *expectations;
--(void)addExpectation:(L3Expectation *)expectation forIdentifier:(id)identifier;
+@property (nonatomic, readonly) NSArray *expectations;
+-(void)addExpectation:(L3Expectation *)expectation;
 
 @property (nonatomic, readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;
@@ -87,14 +80,5 @@ typedef void(^L3TestBlock)(void);
 -(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context;
 
 @end
-
-
-L3_OVERLOADABLE void L3TestInitialize(L3Test *test, L3TestBlock block) {
-	test.block = block;
-}
-
-L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo) {
-	
-}
 
 #endif // L3_TEST_H
