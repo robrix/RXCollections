@@ -69,23 +69,23 @@ l3_test(^{
 	
 })
 
--(void)run {
+-(void)runPreconditions {
 	for (L3TestBlock precondition in self.preconditions) {
 		precondition();
 	}
-	
+}
+
+-(void)runSteps {
 	for (L3TestBlock step in self.steps) {
 		step();
 	}
-	
-	//	for ()
 }
 
 
 l3_test(^{
 	__block NSMutableArray *array;
-	given(^{ array = [NSMutableArray new]; });
-	when(^{
+	l3_given(^{ array = [NSMutableArray new]; });
+	l3_when(^{
 		[array addObject:@0];
 	});
 	

@@ -61,7 +61,7 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 	return runner;
 }
 
-static void __attribute__((constructor)) L3TestRunnerLoader() {
+L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	L3TestRunner *runner = [L3TestRunner runner];
 	
 	if ([L3TestRunner shouldRunTestsAtLaunch]) {

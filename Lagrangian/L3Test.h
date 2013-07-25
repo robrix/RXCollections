@@ -28,17 +28,17 @@
 	_l3_test(__COUNTER__, __VA_ARGS__)
 
 #define _l3_test(uid, ...) \
-	_Pragma("clang diagnostic push") \
-	_Pragma("clang diagnostic ignored \"-Wused-but-marked-unused\"") \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
 		L3Test *test = [L3Test new]; \
-		L3ExpectBlock expect = L3ExpectBlockForTest(test); \
-		L3GivenBlock given = L3GivenBlockForTest(test); \
-		L3WhenBlock when = L3WhenBlockForTest(test); \
-		_Pragma("unused (expect, given, when)") \
+		_Pragma("clang diagnostic push") \
+		_Pragma("clang diagnostic ignored \"-Wused-but-marked-unused\"") \
+		L3ExpectBlock l3_expect = L3ExpectBlockForTest(test); \
+		L3GivenBlock l3_given = L3GivenBlockForTest(test); \
+		L3WhenBlock l3_when = L3WhenBlockForTest(test); \
+		_Pragma("unused (l3_expect, l3_given, l3_when)") \
 		L3TestInitialize(test, __VA_ARGS__); \
-	} \
-	_Pragma("clang diagnostic pop")
+		_Pragma("clang diagnostic pop") \
+	}
 
 #define l3_state(declaration, ...) \
 	declaration;
@@ -87,6 +87,9 @@ typedef void(^L3ExpectBlock)(id subject);
 
 @property (nonatomic, readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;
+
+-(void)runPreconditions;
+-(void)runSteps;
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context;
 
