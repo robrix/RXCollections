@@ -1,10 +1,9 @@
-#ifndef LAGRANGIAN
-#define LAGRANGIAN
+#ifndef LAGRANGIAN_H
+#define LAGRANGIAN_H
 
-#import <Foundation/Foundation.h>
-
-#import <Lagrangian/L3Configuration.h>
 #import <Lagrangian/L3Defines.h>
-#import <Lagrangian/L3Test.h>
 
-#endif // LAGRANGIAN
+#import <Lagrangian/L3Test.h>
+#import <Lagrangian/L3TestRunner.h>
+
+#endif // LAGRANGIAN_H

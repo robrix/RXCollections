@@ -3,6 +3,12 @@
 #import "Lagrangian.h"
 
 @interface L3Test ()
+
+@property (nonatomic, readonly) NSMutableArray *mutablePreconditions;
+@property (nonatomic, readonly) NSMutableArray *mutableSteps;
+@property (nonatomic, readonly) NSMutableArray *mutableExpectations;
+@property (nonatomic, readonly) NSMutableArray *mutableChildren;
+
 @end
 
 @implementation L3Test {
@@ -23,29 +29,45 @@
 }
 
 
--(void)addPrecondition:(L3TestBlock)block {
-	[_preconditions addObject:block];
+-(NSArray *)preconditions {
+	return self.mutablePreconditions;
 }
 
+-(void)addPrecondition:(L3TestBlock)block {
+	[self.mutablePreconditions addObject:block];
+}
+
+
+-(NSArray *)steps {
+	return self.mutableSteps;
+}
 
 -(void)addStep:(L3TestBlock)block {
-	[_steps addObject:block];
+	[self.mutableSteps addObject:block];
 }
 
+
+-(NSArray *)expectations {
+	return self.mutableExpectations;
+}
 
 -(void)addExpectation:(id)expectation {
-	[_expectations addObject:expectation];
+	[self.mutableExpectations addObject:expectation];
 }
 
 
+-(NSArray *)children {
+	return self.mutableChildren;
+}
+
 -(void)addChild:(L3Test *)test {
-	[_children addObject:test];
+	[self.mutableChildren addObject:test];
 }
 
 
 l3_test(^{
 	
-});
+})
 
 -(void)run {
 	for (L3TestBlock precondition in self.preconditions) {
@@ -68,13 +90,13 @@ l3_test(^{
 	});
 	
 //	expect(@(array.count)).to.equal(@1);
-});
+})
 
 
 
 l3_test(^{
 	
-});
+})
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor context:(id)context {
 	NSMutableArray *children = [NSMutableArray new];

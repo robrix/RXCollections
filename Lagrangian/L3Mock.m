@@ -1,7 +1,3 @@
-//  L3Mock.m
-//  Created by Rob Rix on 2013-05-30.
-//  Copyright (c) 2013 Rob Rix. All rights reserved.
-
 #import "L3Mock.h"
 
 #import <Lagrangian/Lagrangian.h>

@@ -1,8 +1,12 @@
-//  L3Mock.h
-//  Created by Rob Rix on 2013-05-30.
-//  Copyright (c) 2013 Rob Rix. All rights reserved.
+#ifndef L3_MOCK_H
+#define L3_MOCK_H
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
+
 #import <Lagrangian/RXFold.h>
 
 @protocol L3Mock;
@@ -22,3 +26,5 @@
 #define L3TypeSignatureEncode(_, type) @encode(type)
 #define L3TypeSignature(...) rx_fold(L3TypeSignatureEncode, _, __VA_ARGS__)
 const char *L3ConstructTypeSignature(char type[], ...);
+
+#endif // L3_MOCK_H

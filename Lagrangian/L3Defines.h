@@ -1,5 +1,5 @@
-#ifndef L3_DEFINES
-#define L3_DEFINES
+#ifndef L3_DEFINES_H
+#define L3_DEFINES_H
 
 #pragma mark Declaration
 
@@ -45,4 +45,4 @@
 
 #endif // L3_DEBUG
 
-#endif // L3_DEFINES
+#endif // L3_DEFINES_H

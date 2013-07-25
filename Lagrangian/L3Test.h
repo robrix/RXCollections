@@ -1,7 +1,11 @@
-#ifndef L3_TEST
-#define L3_TEST
+#ifndef L3_TEST_H
+#define L3_TEST_H
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
 
 #import <Lagrangian/L3Defines.h>
 
@@ -24,6 +28,8 @@
 	_l3_test(__COUNTER__, __VA_ARGS__)
 
 #define _l3_test(uid, ...) \
+	_Pragma("clang diagnostic push") \
+	_Pragma("clang diagnostic ignored \"-Wused-but-marked-unused\"") \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
 		L3Test *test = [L3Test new]; \
 		L3ExpectBlock expect = L3ExpectBlockForTest(test); \
@@ -31,7 +37,8 @@
 		L3WhenBlock when = L3WhenBlockForTest(test); \
 		_Pragma("unused (expect, given, when)") \
 		L3TestInitialize(test, __VA_ARGS__); \
-	}
+	} \
+	_Pragma("clang diagnostic pop")
 
 #define l3_state(declaration, ...) \
 	declaration;
@@ -109,4 +116,4 @@ L3_OVERLOADABLE void L3TestInitialize(L3Test *test, NSString *todo) {
 	
 }
 
-#endif // L3_TEST
+#endif // L3_TEST_H
