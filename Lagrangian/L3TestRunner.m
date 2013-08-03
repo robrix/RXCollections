@@ -1,3 +1,5 @@
+#import "L3Expectation.h"
+#import "L3SourceReference.h"
 #import "L3Test.h"
 #import "L3TestRunner.h"
 
@@ -17,14 +19,13 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 
 @property (nonatomic, readonly) NSOperationQueue *queue;
 
+@property (nonatomic, readonly) NSMutableArray *mutableTests;
+
 -(void)runAtLaunch;
 
 @end
 
-@implementation L3TestRunner {
-	NSMutableArray *_tests;
-	NSMutableDictionary *_testsByName;
-}
+@implementation L3TestRunner
 
 +(bool)shouldRunTestsAtLaunch {
 	return [[NSProcessInfo processInfo].environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] boolValue];
@@ -71,13 +72,12 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 
 -(instancetype)init {
 	if ((self = [super init])) {
-		_tests = [NSMutableArray new];
-		_testsByName = [NSMutableDictionary new];
+		_mutableTests = [NSMutableArray new];
 		
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
 		
-		_testSuitePredicate = [self.class defaultPredicate];
+		_testPredicate = [self.class defaultPredicate];
 	}
 	return self;
 }
@@ -91,7 +91,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
-			[self run];
+			[self runTests];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 			
@@ -101,7 +101,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{
-			[self run];
+			[self runTests];
 			
 			[self.queue addOperationWithBlock:^{
 				system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
@@ -116,8 +116,10 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 #endif
 }
 
--(void)run {
-//	[self runTest:self.test];
+-(void)runTests {
+	for (L3Test *test in self.tests) {
+		[self runTest:test];
+	}
 }
 
 -(void)waitForTestsToComplete {
@@ -131,9 +133,91 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 }
 
 
+-(NSArray *)tests {
+	return self.mutableTests;
+}
+
+-(void)addTest:(L3Test *)test {
+	[self.mutableTests addObject:test];
+}
+
+
 #pragma mark L3TestVisitor
 
--(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context {
+-(void)write:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2) {
+	va_list arguments;
+	va_start(arguments, format);
+	NSString *string = [[NSString alloc] initWithFormat:format arguments:arguments];
+	fprintf(stdout, "%s", string.UTF8String);
+	va_end(arguments);
+}
+
+-(NSString *)cardinalizeNoun:(NSString *)noun forCount:(NSInteger)count {
+	return [NSString stringWithFormat:@"%li %@%@", count, noun, count == 1? @"" : @"s"];
+}
+
+-(NSString *)formatStringAsTestName:(NSString *)string {
+	NSMutableString *mutable = [string mutableCopy];
+	[[NSRegularExpression regularExpressionWithPattern:@"[^\\w]+" options:NSRegularExpressionCaseInsensitive error:NULL] replaceMatchesInString:mutable options:NSMatchingWithTransparentBounds range:(NSRange){0, mutable.length} withTemplate:@"_"];
+//	[mutable insertString:@"test_" atIndex:0];
+	return [mutable copy];
+}
+
+-(NSString *)caseNameWithSuiteName:(NSString *)suiteName assertivePhrase:(NSString *)phrase {
+	return [NSString stringWithFormat:@"-[%@ %@]", suiteName, [self formatStringAsTestName:phrase]];
+}
+
+-(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context {
+	NSString *suiteName = [test.sourceReference.file.lastPathComponent stringByDeletingPathExtension];
+	NSDate *testSuiteStart = [NSDate date];
+	[self write:@"Test Suite '%@' started at %@\n", suiteName, testSuiteStart];
+	
+	// fixme: can failures happen in test steps?
+//	[test runSteps];
+	
+	__block unsigned long testCaseCount = 0;
+	__block unsigned long assertionFailureCount = 0;
+	__block unsigned long exceptionCount = 0;
+	__block NSTimeInterval duration = 0;
+	[test run:^(id<L3Expectation> expectation, bool wasMet) {
+		NSDate *testCaseStart = [NSDate date];
+		testCaseCount++;
+		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:expectation.assertivePhrase];
+		[self write:@"Test Case '%@' started.\n", caseName];
+		if (wasMet) {
+			
+		} else {
+//			NSLog(@"error: %@", expectation.indicativePhrase);
+			id<L3SourceReference> reference = expectation.subjectReference;
+			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, expectation.indicativePhrase];
+			
+			assertionFailureCount++;
+			if (expectation.exception != nil)
+				exceptionCount++;
+		}
+		NSTimeInterval interval = -[testCaseStart timeIntervalSinceNow];
+		duration += interval;
+		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
+	}];
+	
+	// fixme: run the assertions
+//	for (id<L3Expectation> expectation in test.expectations) {
+//		NSError *error;
+//		if ([test assertExpectation:expectation error:&error]) {
+//			NSLog(@"%@", expectation.assertivePhrase);
+//		} else {
+//			NSLog(@"%@: %@", expectation.indicativePhrase, error);
+//		}
+//	}
+	
+	// fixme: run the children
+//	for (id(^lazyChild)() in lazyChildren) {
+//		
+//	}
+	
+	// fixme: report errors
+	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, [NSDate date]];
+	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:testCaseCount], [self cardinalizeNoun:@"failure" forCount:assertionFailureCount], exceptionCount, duration, -[testSuiteStart timeIntervalSinceNow]];
 	
 	return nil;
 }

@@ -12,8 +12,6 @@
 extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
 extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
-@class L3TestSuite;
-
 #if L3_DEBUG
 
 #define l3_main(argc, argv) \
@@ -30,6 +28,8 @@ extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
 #endif
 
+@class L3Test;
+
 @interface L3TestRunner : NSObject
 
 +(bool)shouldRunTestsAtLaunch;
@@ -37,10 +37,14 @@ extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
 +(instancetype)runner;
 
-@property (strong, nonatomic) NSPredicate *testSuitePredicate;
+@property (nonatomic) NSPredicate *testPredicate;
 
-//-(void)runTests:(NSArray *)tests; // starts running asynchronously
+-(void)runTests; // starts running asynchronously
 -(void)waitForTestsToComplete;
+
+
+@property (nonatomic, readonly) NSArray *tests;
+-(void)addTest:(L3Test *)test;
 
 @end
 

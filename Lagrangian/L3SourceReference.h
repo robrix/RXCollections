@@ -1,21 +1,31 @@
-//  L3SourceReference.h
-//  Created by Rob Rix on 2012-11-11.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
+#ifndef L3_SOURCE_REFERENCE_H
+#define L3_SOURCE_REFERENCE_H
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
 
-@interface L3SourceReference : NSObject <NSCopying>
+#import <Lagrangian/L3Defines.h>
 
-+(instancetype)referenceWithFile:(NSString *)file line:(NSUInteger)line subjectSource:(NSString *)subjectSource subject:(id)subject patternSource:(NSString *)patternSource;
-+(instancetype)referenceWithFile:(NSString *)file line:(NSUInteger)line reason:(NSString *)reason;
 
-@property (copy, nonatomic, readonly) NSString *file;
-@property (assign, nonatomic, readonly) NSUInteger line;
+@protocol L3SourceReference <NSObject, NSCopying>
 
-@property (copy, nonatomic, readonly) NSString *reason;
+@property (nonatomic, readonly) id identifier;
 
-@property (copy, nonatomic, readonly) NSString *subjectSource;
-@property (strong, nonatomic, readonly) id subject;
-@property (copy, nonatomic, readonly) NSString *patternSource;
+@property (nonatomic, readonly) NSString *file;
+@property (nonatomic, readonly) NSUInteger line;
+
+@property (nonatomic, readonly) NSString *subjectSource;
+@property (nonatomic, readonly) id subject;
 
 @end
+
+
+#define l3_source_reference(...) \
+	L3SourceReferenceCreate(@(__COUNTER__), @(__FILE__), __LINE__, @(#__VA_ARGS__), L3Box(__VA_ARGS__))
+
+L3_EXTERN id<L3SourceReference> L3SourceReferenceCreate(id identifier, NSString *file, NSUInteger line, NSString *subjectSource, id subject);
+
+#endif // L3_SOURCE_REFERENCE_H

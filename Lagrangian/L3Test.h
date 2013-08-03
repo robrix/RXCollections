@@ -8,6 +8,8 @@
 #endif
 
 #import <Lagrangian/L3Defines.h>
+#import <Lagrangian/L3Expectation.h>
+#import <Lagrangian/L3SourceReference.h>
 
 
 #pragma mark API
@@ -19,8 +21,9 @@
 
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
-		__block L3Test *test = [[L3Test alloc] initWithFile:@(__FILE__) line:__LINE__ block:__VA_ARGS__]; \
-		"add test to the runner and immediately prior registered test (i.e. its suite)"; \
+		id<L3SourceReference> reference = L3SourceReferenceCreate(@(__COUNTER__), @(__FILE__), __LINE__, nil, nil); \
+		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
+		[[L3TestRunner runner] addTest:test]; \
 	}
 
 //#define l3_state(declaration, ...) \
@@ -45,39 +48,56 @@
 #endif // L3_INCLUDE_TESTS
 
 
-typedef void(^L3TestBlock)(void);
+typedef void(^L3TestExpectationBlock)(id<L3Expectation> expectation, bool wasMet);
+typedef void(^L3TestBlock)(L3TestExpectationBlock withExpectations);
+typedef void(^L3TestBodyBlock)(void);
+
+enum {
+	L3AssertionFailedError
+};
+
+extern NSString * const L3ErrorDomain;
+
+extern NSString * const L3TestErrorKey;
+extern NSString * const L3ExpectationErrorKey;
 
 
-@class L3Expectation;
 @protocol L3TestVisitor;
-
 
 @interface L3Test : NSObject
 
--(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line block:(L3TestBlock)block;
+-(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 
-@property (nonatomic, readonly) NSString *file;
-@property (nonatomic, readonly) NSUInteger line;
+@property (nonatomic, readonly) id<L3SourceReference> sourceReference;
 
-@property (nonatomic, readonly) NSArray *steps;
--(void)addStep:(L3TestBlock)block;
+//@property (nonatomic, readonly) NSArray *steps;
+//-(void)addStep:(L3TestBlock)block;
 
-@property (nonatomic, readonly) NSArray *expectations;
--(void)addExpectation:(L3Expectation *)expectation;
+//@property (nonatomic, readonly) NSArray *expectations;
+//-(void)addExpectation:(id<L3Expectation>)expectation;
 
-@property (nonatomic, readonly) NSArray *children;
--(void)addChild:(L3Test *)test;
+//@property (nonatomic, readonly) NSArray *children;
+//-(void)addChild:(L3Test *)test;
 
--(void)runSteps;
+//-(void)runSteps;
+//-(bool)assertExpectation:(id<L3Expectation>)expectation error:(NSError * __autoreleasing *)error;
+
+-(void)run:(L3TestExpectationBlock)callback;
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context;
+
+@end
+
+@protocol L3TestDelegate <NSObject>
+
+-(void)test:(L3Test *)test expectation:(id<L3Expectation>)expectation;
 
 @end
 
 
 @protocol L3TestVisitor <NSObject>
 
--(id)visitTest:(L3Test *)test parents:(NSArray *)parents children:(NSMutableArray *)children context:(id)context;
+-(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context;
 
 @end
 

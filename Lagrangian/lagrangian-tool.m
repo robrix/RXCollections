@@ -70,15 +70,16 @@ int main(int argc, const char *argv[]) {
 		NSString *libraryPath = [defaults stringForKey:@"library"];
 		NSString *command = [defaults stringForKey:@"command"];
 		
+		// fixme: abstract these into classes or something
 		if (frameworkPath) {
 			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
 			L3TRTry([frameworkBundle loadAndReturnError:&error]);
 			
-			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
+			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") runner];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
+			runner.testPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
 			
-//			[runner run];
+			[runner runTests];
 			
 			[runner waitForTestsToComplete];
 		} else if (libraryPath) {
@@ -86,15 +87,16 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testSuitePredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
+			runner.testPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
 			
-//			[runner run];
+			[runner runTests];
 			
 			[runner waitForTestsToComplete];
 		} else if (command) {
 			NSTask *task = [NSTask new];
 			
 			task.launchPath = command; // fixme: this should probably include args or something
+			// fixme: should know something about the calling environment
 			
 			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
@@ -108,6 +110,7 @@ int main(int argc, const char *argv[]) {
 			[task launch];
 			[task waitUntilExit];
 		}
+		// fixme: return to Xcode if launched by Xcode
 	}
 	return result;
 }

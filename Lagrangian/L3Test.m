@@ -2,82 +2,88 @@
 
 #import "Lagrangian.h"
 
+NSString * const L3ErrorDomain = @"com.antitypical.lagrangian";
+
+NSString * const L3ExpectationErrorKey = @"L3ExpectationErrorKey";
+NSString * const L3TestErrorKey = @"L3TestErrorKey";
+
 @interface L3Test ()
 
 @property (nonatomic, readonly) L3TestBlock block;
 
-@property (nonatomic, readonly) NSMutableArray *mutableSteps;
-@property (nonatomic, readonly) NSMutableArray *mutableExpectationIdentifiers;
-@property (nonatomic, readonly) NSMutableDictionary *mutableExpectations;
-@property (nonatomic, readonly) NSMutableArray *mutableChildren;
+//@property (nonatomic, readonly) NSMutableArray *mutableSteps;
+@property (nonatomic, readonly) NSMutableArray *mutableExpectations;
+//@property (nonatomic, readonly) NSMutableArray *mutableChildren;
 
 @end
 
 @implementation L3Test
 
--(instancetype)initWithFile:(NSString *)file line:(NSUInteger)line block:(L3TestBlock)block {
+-(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block {
 	if ((self = [super init])) {
-		_file = [file copy];
-		_line = line;
+		_sourceReference = sourceReference;
 		
 		_block = [block copy];
 		
-		_mutableSteps = [NSMutableArray new];
-		_mutableExpectationIdentifiers = [NSMutableArray new];
-		_mutableExpectations = [NSMutableDictionary new];
-		_mutableChildren = [NSMutableArray new];
+//		_mutableSteps = [NSMutableArray new];
+		_mutableExpectations = [NSMutableArray new];
+//		_mutableChildren = [NSMutableArray new];
 	}
 	return self;
 }
 
 
--(NSArray *)steps {
-	return self.mutableSteps;
-}
-
--(void)addStep:(L3TestBlock)block {
-	[self.mutableSteps addObject:block];
-}
-
-
--(NSArray *)expectations {
-	return [self.mutableExpectations objectsForKeys:self.mutableExpectationIdentifiers notFoundMarker:[NSNull null]];
-}
-
--(void)addExpectation:(L3Expectation *)expectation {
-	id identifier = expectation.identifier;
-	if (![self.mutableExpectations objectForKey:identifier]) {
-		[self.mutableExpectationIdentifiers addObject:identifier];
-		[self.mutableExpectations setObject:expectation forKey:identifier];
-	}
-}
+//-(NSArray *)steps {
+//	return self.mutableSteps;
+//}
+//
+//-(void)addStep:(L3TestBlock)block {
+//	[self.mutableSteps addObject:block];
+//}
 
 
--(NSArray *)children {
-	return self.mutableChildren;
-}
+//-(NSArray *)expectations {
+//	return self.mutableExpectations;
+//}
+//
+//-(void)addExpectation:(id<L3Expectation>)expectation {
+//	[self.mutableExpectations addObject:expectation];
+//}
 
--(void)addChild:(L3Test *)test {
-	[self.mutableChildren addObject:test];
-}
+
+//-(NSArray *)children {
+//	return self.mutableChildren;
+//}
+//
+//-(void)addChild:(L3Test *)test {
+//	[self.mutableChildren addObject:test];
+//}
 
 
-l3_test(^{
-	
-})
+//-(void)runSteps {
+//	for (L3TestBlock step in self.steps) {
+//		step();
+//	}
+//}
 
--(void)runSteps {
-	for (L3TestBlock step in self.steps) {
-		step();
-	}
-}
+//-(bool)assertExpectation:(id<L3Expectation>)expectation error:(NSError * __autoreleasing *)error {
+//	NSParameterAssert(expectation != nil);
+//	
+//	self.block();
+//	
+//	bool wasMet = [expectation test];
+//	if (!wasMet && error) {
+//		NSDictionary *userInfo = @{
+//								   L3TestErrorKey: self,
+//								   L3ExpectationErrorKey: expectation,
+//								   };
+//		*error = [NSError errorWithDomain:L3ErrorDomain code:L3AssertionFailedError userInfo:userInfo];
+//	}
+//	return wasMet;
+//}
 
--(void)assertExpectation:(L3Expectation *)expectation {
-	self.block();
-	
-	if (!expectation.wasMet) {
-		
-	}
+-(void)run:(L3TestExpectationBlock)callback {
+	self.block(callback);
 }
 
 
@@ -90,22 +96,15 @@ l3_test(^{
 })
 
 
-
-l3_test(^{
-	
-})
-
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context {
-	NSMutableArray *children = self.children.count? [NSMutableArray new] : nil;
-	NSArray *childParents = parents?
-		[parents arrayByAddingObject:self]
-	:	@[self];
-	for (L3Test *child in self.children) {
-		id visited = [child acceptVisitor:visitor parents:childParents context:context];
-		if (visited)
-			[children addObject:visited];
-	}
-	return [visitor visitTest:self parents:parents children:children context:context];
+	NSMutableArray *lazyChildren = /*self.children.count? [NSMutableArray new] : */nil;
+//	NSArray *childParents = parents?
+//		[parents arrayByAddingObject:self]
+//	:	@[self];
+//	for (L3Test *child in self.children) {
+//		[lazyChildren addObject:^{ return [child acceptVisitor:visitor parents:childParents context:context]; }];
+//	}
+	return [visitor visitTest:self parents:parents lazyChildren:lazyChildren context:context];
 }
 
 @end
