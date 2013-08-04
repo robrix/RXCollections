@@ -167,7 +167,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 }
 
 -(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context {
-	NSString *suiteName = [test.sourceReference.file.lastPathComponent stringByDeletingPathExtension];
+	NSString *suiteName = [self formatStringAsTestName:[test.sourceReference.subject description]];
 	NSDate *testSuiteStart = [NSDate date];
 	[self write:@"Test Suite '%@' started at %@\n", suiteName, testSuiteStart];
 	[self write:@"\n"];
