@@ -180,8 +180,8 @@ rx_static_test(rx_foldr(_rx_subtract, 0, 1, 2, 3, 4, 5) == (1 - (2 - (3 - (4 - (
 rx_static_test(rx_foldl(_rx_subtract, 0, 1, 2, 3, 4, 5) == -15);
 rx_static_test(rx_foldl(_rx_subtract, 0, 1, 2, 3, 4, 5) == (((((0 - 1) - 2) - 3) - 4) - 5));
 
-rx_static_test(rx_foldr(_rx_subtract, 0) == 0);
-rx_static_test(rx_foldl(_rx_subtract, 0) == 0);
+rx_static_test(rx_foldr(_rx_subtract, 0, 0) == 0);
+rx_static_test(rx_foldl(_rx_subtract, 0, 0) == 0);
 
 #undef _rx_add
 #undef _rx_subtract

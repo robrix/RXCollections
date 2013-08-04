@@ -45,9 +45,9 @@
 #define rx_full(...) rx_not(rx_empty(__VA_ARGS__))
 
 rx_static_test(rx_empty(/**/) == 1);
-rx_static_test(rx_empty() == 1, "not empty!");
-rx_static_test(rx_empty(a) == 0, "empty!");
-rx_static_test(rx_empty(b, c) == 0, "empty!");
+rx_static_test(rx_empty() == 1);
+rx_static_test(rx_empty(a) == 0);
+rx_static_test(rx_empty(b, c) == 0);
 
 /**
  Returns the count of the (up to 32) arguments passed.
@@ -55,11 +55,11 @@ rx_static_test(rx_empty(b, c) == 0, "empty!");
 #define rx_count(...) \
 	rx_if_else(rx_empty(__VA_ARGS__), 0, rx_at(31, __VA_ARGS__, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0))
 
-rx_static_test(rx_count() == 0, "count was incorrect");
-rx_static_test(rx_count(a) == 1, "count was incorrect");
-rx_static_test(rx_count(a, b) == 2, "count was incorrect");
-rx_static_test(rx_count(a, b, c) == 3, "count was incorrect");
-rx_static_test(rx_count(a, b, c, d, e) == 5, "count was incorrect");
-rx_static_test(rx_count(a, (b, c), d, e) == 4, "count was incorrect");
+rx_static_test(rx_count() == 0);
+rx_static_test(rx_count(a) == 1);
+rx_static_test(rx_count(a, b) == 2);
+rx_static_test(rx_count(a, b, c) == 3);
+rx_static_test(rx_count(a, b, c, d, e) == 5);
+rx_static_test(rx_count(a, (b, c), d, e) == 4);
 
 #endif // __rx_count__

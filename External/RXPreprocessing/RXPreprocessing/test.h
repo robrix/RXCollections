@@ -4,7 +4,8 @@
 #if __has_feature(c_static_assert) || __has_extension(c_static_assert)
 
 #define rx_static_test(...) _rx_static_test(__VA_ARGS__)
-#define _rx_static_test(cond, ...) _Static_assert(cond, #cond " " __VA_ARGS__)
+#define _rx_static_test(...) _Static_assert(__VA_ARGS__, "" #__VA_ARGS__)
+
 rx_static_test(1 == 1);
 
 #else
