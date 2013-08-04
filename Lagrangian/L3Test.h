@@ -21,9 +21,10 @@
 
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
+		L3Test *suite = [L3Test suiteForFile:@(__FILE__)]; \
 		id<L3SourceReference> reference = L3SourceReferenceCreate(@(__COUNTER__), @(__FILE__), __LINE__, nil, nil); \
 		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
-		[[L3TestRunner runner] addTest:test]; \
+		[suite addChild:test]; \
 	}
 
 //#define l3_state(declaration, ...) \
@@ -66,6 +67,8 @@ extern NSString * const L3ExpectationErrorKey;
 
 @interface L3Test : NSObject
 
++(instancetype)suiteForFile:(NSString *)file;
+
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 
 @property (nonatomic, readonly) id<L3SourceReference> sourceReference;
@@ -76,11 +79,10 @@ extern NSString * const L3ExpectationErrorKey;
 //@property (nonatomic, readonly) NSArray *expectations;
 //-(void)addExpectation:(id<L3Expectation>)expectation;
 
-//@property (nonatomic, readonly) NSArray *children;
-//-(void)addChild:(L3Test *)test;
+@property (nonatomic, readonly) NSArray *children;
+-(void)addChild:(L3Test *)test;
 
 //-(void)runSteps;
-//-(bool)assertExpectation:(id<L3Expectation>)expectation error:(NSError * __autoreleasing *)error;
 
 -(void)run:(L3TestExpectationBlock)callback;
 

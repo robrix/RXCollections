@@ -198,10 +198,9 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
 	}];
 	
-	// fixme: run the children
-//	for (id(^lazyChild)() in lazyChildren) {
-//		
-//	}
+	for (id(^lazyChild)() in lazyChildren) {
+		lazyChild();
+	}
 	
 	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, [NSDate date]];
 	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:testCaseCount], [self cardinalizeNoun:@"failure" forCount:assertionFailureCount], exceptionCount, duration, -[testSuiteStart timeIntervalSinceNow]];
