@@ -26,9 +26,13 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 		suites = [NSMutableDictionary new];
 	});
 	L3Test *suite = suites[file];
-	return suite?
-		suite
-	:	(suites[file] = (block? block() : nil));
+	if (!suite) {
+		suite = block? block() : nil;
+		if (suite) {
+			suites[file] = suite;
+		}
+	}
+	return suite;
 }
 
 +(instancetype)suiteForFile:(NSString *)file {
