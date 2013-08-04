@@ -159,7 +159,6 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 -(NSString *)formatStringAsTestName:(NSString *)string {
 	NSMutableString *mutable = [string mutableCopy];
 	[[NSRegularExpression regularExpressionWithPattern:@"[^\\w]+" options:NSRegularExpressionCaseInsensitive error:NULL] replaceMatchesInString:mutable options:NSMatchingWithTransparentBounds range:(NSRange){0, mutable.length} withTemplate:@"_"];
-//	[mutable insertString:@"test_" atIndex:0];
 	return [mutable copy];
 }
 
@@ -187,7 +186,6 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		if (wasMet) {
 			
 		} else {
-//			NSLog(@"error: %@", expectation.indicativePhrase);
 			id<L3SourceReference> reference = expectation.subjectReference;
 			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, expectation.indicativePhrase];
 			
@@ -200,22 +198,11 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
 	}];
 	
-	// fixme: run the assertions
-//	for (id<L3Expectation> expectation in test.expectations) {
-//		NSError *error;
-//		if ([test assertExpectation:expectation error:&error]) {
-//			NSLog(@"%@", expectation.assertivePhrase);
-//		} else {
-//			NSLog(@"%@: %@", expectation.indicativePhrase, error);
-//		}
-//	}
-	
 	// fixme: run the children
 //	for (id(^lazyChild)() in lazyChildren) {
 //		
 //	}
 	
-	// fixme: report errors
 	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, [NSDate date]];
 	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:testCaseCount], [self cardinalizeNoun:@"failure" forCount:assertionFailureCount], exceptionCount, duration, -[testSuiteStart timeIntervalSinceNow]];
 	

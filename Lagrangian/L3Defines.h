@@ -22,7 +22,7 @@
 
 #pragma mark Configuration
 
-#if DEBUG
+#if defined(DEBUG)
 
 // DEBUG=1 implies L3_DEBUG=1, unless L3_DEBUG has already been set (e.g. in a -D compiler flag)
 #ifndef L3_DEBUG
@@ -36,7 +36,7 @@
  
  It automatically enables the compilation of tests.
  */
-#if L3_DEBUG
+#if defined(L3_DEBUG)
 
 // L3_DEBUG=1 implies L3_INCLUDE_TESTS=1, unless L3_INCLUDE_TESTS has already been set (e.g. in a -D compiler flag)
 #ifndef L3_INCLUDE_TESTS

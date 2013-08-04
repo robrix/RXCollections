@@ -30,10 +30,10 @@
 
 -(bool)testWithSubject:(id)subject {
 	NSDictionary *evaluatedObject = @{
-									  @"subject": subject,
-									  @"expectation": self.expectation,
-									  @"nextPredicate": @([self.nextPredicate testWithSubject:subject])
-									  };
+		@"subject": subject,
+		@"expectation": self.expectation,
+		@"nextPredicate": @([self.nextPredicate testWithSubject:subject])
+	};
 	return [self.predicate evaluateWithObject:evaluatedObject];
 }
 
@@ -112,7 +112,5 @@
 
 
 L3Expectation *L3Expect(L3Test *test, void(^callback)(id<L3Expectation> expectation, bool wasMet), id<L3SourceReference> subjectReference) {
-	L3Expectation *expectation = [[L3Expectation alloc] initWithSubjectReference:subjectReference completionHandler:callback];
-//	[test addExpectation:expectation];
-	return expectation;
+	return [[L3Expectation alloc] initWithSubjectReference:subjectReference completionHandler:callback];
 }

@@ -12,7 +12,7 @@
 extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
 extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
-#if L3_DEBUG
+#if defined(L3_DEBUG)
 
 #define l3_main(argc, argv) \
 	do { \

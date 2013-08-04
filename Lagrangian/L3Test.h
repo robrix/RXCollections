@@ -14,7 +14,7 @@
 
 #pragma mark API
 
-#if L3_INCLUDE_TESTS
+#if defined(L3_INCLUDE_TESTS)
 
 #define l3_test(...) \
 	_l3_test(__COUNTER__, __VA_ARGS__)
