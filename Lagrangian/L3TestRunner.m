@@ -170,6 +170,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	NSString *suiteName = [test.sourceReference.file.lastPathComponent stringByDeletingPathExtension];
 	NSDate *testSuiteStart = [NSDate date];
 	[self write:@"Test Suite '%@' started at %@\n", suiteName, testSuiteStart];
+	[self write:@"\n"];
 	
 	// fixme: can failures happen in test steps?
 //	[test runSteps];
@@ -196,6 +197,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		NSTimeInterval interval = -[testCaseStart timeIntervalSinceNow];
 		duration += interval;
 		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
+		[self write:@"\n"];
 	}];
 	
 	for (id(^lazyChild)() in lazyChildren) {
@@ -204,6 +206,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	
 	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, [NSDate date]];
 	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:testCaseCount], [self cardinalizeNoun:@"failure" forCount:assertionFailureCount], exceptionCount, duration, -[testSuiteStart timeIntervalSinceNow]];
+	[self write:@"\n"];
 	
 	return nil;
 }
