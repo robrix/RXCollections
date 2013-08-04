@@ -13,16 +13,6 @@ Metaprogramming and metapreprocessing utilities for the enterprising developer. 
 
 Except where otherwise noted, these utilities are standard, cross-platform use of the C preprocessor, and do not rely on e.g. GNU extensions.
 
-## RXFold.h
-
-Folding a macro over a variadic list. This can make it easier to build variadic macros which do not need to defer their arguments to a function or method for processing.
-
-This is incredibly useful when you want to do something using a macro over a variable number of arguments:
-
-	#define add(x, y) y + x
-	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5 + 6;
-
-
 ## RXInterpolation.h
 
 Preprocessor-based interpolation of NSStrings. This allows you to interpolate complex strings without requiring you to remember which format specifier you want for each. You can still, however, customize the formatting of each individual parameter to specify precision or width.
