@@ -36,7 +36,8 @@
 
 #pragma mark Boxing
 
-L3_OVERLOADABLE id L3Box(id x) { return x; }
+L3_OVERLOADABLE id L3Box(id v) { return v; }
+L3_OVERLOADABLE id L3Box(SEL v) { return NSStringFromSelector(v); }
 
 L3_OVERLOADABLE id L3Box(uint64_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(uint32_t v) { return @(v); }
