@@ -7,13 +7,13 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#import <Lagrangian/RXFold.h>
+#import <RXPreprocessing/fold.h>
 
 @protocol L3Mock;
 
 @interface L3Mock : NSObject
 
-+(id)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer;
++(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer;
 
 @end
 

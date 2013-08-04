@@ -1,16 +1,18 @@
 #import "L3Mock.h"
 
 #import <Lagrangian/Lagrangian.h>
+#if __has_feature(modules)
+@import ObjectiveC.runtime;
+#else
 #import <objc/runtime.h>
-
-@l3_suite("L3Mock");
+#endif
 
 @interface L3Mock () <L3Mock>
 @end
 
 @implementation L3Mock
 
-+(id)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer {
++(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer {
 	return [[self alloc] initWithName:name initializer:initializer];
 }
 
@@ -34,14 +36,14 @@
 }
 
 
-@l3_test("mocking creates a class at runtime and adds methods to it, which are then available on the instance") {
+l3_test(^{
 	L3Mock *mock = [L3Mock mockNamed:@"Mock" initializer:^(id<L3Mock> mock) {
 		[mock addMethodWithSelector:@selector(description) types:L3TypeSignature(id, id, SEL) block:^{
 			return @"test";
 		}];
 	}];
-	l3_assert(mock.description, @"test");
-}
+	l3_expect(mock.description).to.equal(@"test");
+})
 
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block {
 	IMP implementation = imp_implementationWithBlock(block);

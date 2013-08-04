@@ -9,4 +9,6 @@
 #import <Lagrangian/L3Test.h>
 #import <Lagrangian/L3TestRunner.h>
 
+#import <Lagrangian/L3Mock.h>
+
 #endif // LAGRANGIAN_H
