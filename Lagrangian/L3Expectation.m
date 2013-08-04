@@ -112,5 +112,7 @@
 
 
 L3Expectation *L3Expect(L3Test *test, void(^callback)(id<L3Expectation> expectation, bool wasMet), id<L3SourceReference> subjectReference) {
-	return [[L3Expectation alloc] initWithSubjectReference:subjectReference completionHandler:callback];
+	L3Expectation *expectation = [[L3Expectation alloc] initWithSubjectReference:subjectReference completionHandler:callback];
+	[test addExpectation:expectation];
+	return expectation;
 }

@@ -76,8 +76,8 @@ extern NSString * const L3ExpectationErrorKey;
 //@property (nonatomic, readonly) NSArray *steps;
 //-(void)addStep:(L3TestBlock)block;
 
-//@property (nonatomic, readonly) NSArray *expectations;
-//-(void)addExpectation:(id<L3Expectation>)expectation;
+@property (nonatomic, readonly) NSArray *expectations;
+-(void)addExpectation:(id<L3Expectation>)expectation;
 
 @property (nonatomic, readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;

@@ -62,13 +62,13 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 //}
 
 
-//-(NSArray *)expectations {
-//	return self.mutableExpectations;
-//}
-//
-//-(void)addExpectation:(id<L3Expectation>)expectation {
-//	[self.mutableExpectations addObject:expectation];
-//}
+-(NSArray *)expectations {
+	return self.mutableExpectations;
+}
+
+-(void)addExpectation:(id<L3Expectation>)expectation {
+	[self.mutableExpectations addObject:expectation];
+}
 
 
 -(NSArray *)children {
