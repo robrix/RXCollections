@@ -11,6 +11,8 @@
 #import <Lagrangian/L3Expectation.h>
 #import <Lagrangian/L3SourceReference.h>
 
+#import <RXPreprocessing/concat.h>
+
 
 #pragma mark API
 
@@ -20,7 +22,7 @@
 	_l3_test(__COUNTER__, __VA_ARGS__)
 
 #define _l3_test(uid, ...) \
-	L3_CONSTRUCTOR void L3_PASTE(L3Test, uid)(void) { \
+	L3_CONSTRUCTOR void rx_concat(L3Test, uid)(void) { \
 		L3Test *suite = [L3Test suiteForFile:@(__FILE__)]; \
 		id<L3SourceReference> reference = L3SourceReferenceCreate(@(__COUNTER__), @(__FILE__), __LINE__, nil, nil); \
 		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
