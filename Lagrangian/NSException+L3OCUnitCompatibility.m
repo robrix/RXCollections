@@ -25,9 +25,9 @@
 	}
 	
 	return [NSException exceptionWithName:@"L3Exception" reason:description userInfo:@{
-																					   @"filename": filename,
-																					   @"lineNumber": @(lineNumber),
-																					   }];
+		@"filename": filename,
+		@"lineNumber": @(lineNumber),
+	}];
 }
 
 @end
