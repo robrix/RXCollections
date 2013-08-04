@@ -20,7 +20,7 @@ Folding a macro over a variadic list. This can make it easier to build variadic 
 This is incredibly useful when you want to do something using a macro over a variable number of arguments:
 
 	#define add(x, y) y + x
-	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5 + 6;
+	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5;
 
 
 ## RXInterpolation.h

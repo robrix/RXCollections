@@ -13,7 +13,7 @@ Folds the varargs with the macro specified as the first argument. This macro mus
 Use it like this:
 
 	#define add(x, y) y + x
-	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5 + 6;
+	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5;
 */
 
 #define rx_fold(f, initial, ...) \
