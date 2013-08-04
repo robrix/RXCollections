@@ -71,7 +71,7 @@
 }
 
 
-l3_test(^{
+l3_test("interpolation", ^{
 	NSString *interpolationWithNoValue = L3InterpolateString(@"{xyz}", @{});
 	l3_expect(interpolationWithNoValue).to.equal(@"xyz");
 	NSString *interpolationWithMultipleValues = L3InterpolateString(@"one {two} three {four} five {six}", @{@"two": @2, @"four": @"quattro", @"six": @6.0});

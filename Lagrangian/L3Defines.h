@@ -42,15 +42,20 @@ L3_OVERLOADABLE id L3Box(uint64_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(uint32_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(uint16_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(uint8_t v) { return @(v); }
+
 L3_OVERLOADABLE id L3Box(int64_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(int32_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(int16_t v) { return @(v); }
 L3_OVERLOADABLE id L3Box(int8_t v) { return @(v); }
+
 L3_OVERLOADABLE id L3Box(unsigned long v) { return @(v); }
 L3_OVERLOADABLE id L3Box(signed long v) { return @(v); }
+
 L3_OVERLOADABLE id L3Box(double v) { return @(v); }
 L3_OVERLOADABLE id L3Box(float v) { return @(v); }
+
 L3_OVERLOADABLE id L3Box(bool v) { return @(v); }
+
 L3_OVERLOADABLE id L3Box(char *v) { return @(v); }
 
 #endif // L3_DEFINES_H

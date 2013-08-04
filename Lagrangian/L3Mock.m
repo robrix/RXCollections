@@ -36,7 +36,7 @@
 }
 
 
-l3_test(^{
+l3_test(@selector(addMethodWithSelector:types:block:), ^{
 	L3Mock *mock = [L3Mock mockNamed:@"Mock" initializer:^(id<L3Mock> mock) {
 		[mock addMethodWithSelector:@selector(description) types:L3TypeSignature(id, id, SEL) block:^{
 			return @"test";

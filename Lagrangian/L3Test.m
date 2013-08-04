@@ -121,7 +121,7 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 }
 
 
-l3_test(^{
+l3_test(@selector(addObject:), ^{
 	NSMutableArray *array = [NSMutableArray new];
 	[array addObject:@0];
 	

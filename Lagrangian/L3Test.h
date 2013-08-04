@@ -19,12 +19,12 @@
 #if defined(L3_INCLUDE_TESTS)
 
 #define l3_test(...) \
-	_l3_test(__COUNTER__, __VA_ARGS__)
+	_l3_test(__VA_ARGS__)
 
-#define _l3_test(uid, ...) \
+#define _l3_test(subject, ...) \
 	L3_CONSTRUCTOR void rx_concat(L3Test, uid)(void) { \
 		L3Test *suite = [L3Test suiteForFile:@(__FILE__) inImageForAddress:rx_concat(L3Test, uid)]; \
-		id<L3SourceReference> reference = L3SourceReferenceCreate(@(uid), @(__FILE__), __LINE__, nil, nil); \
+		id<L3SourceReference> reference = l3_source_reference(subject); \
 		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
 		[suite addChild:test]; \
 	}
