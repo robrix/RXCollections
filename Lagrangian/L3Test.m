@@ -2,6 +2,12 @@
 
 #import "Lagrangian.h"
 
+#if __has_feature(modules)
+@import Darwin.POSIX.dlfcn;
+#else
+#import <dlfcn.h>
+#endif
+
 NSString * const L3ErrorDomain = @"com.antitypical.lagrangian";
 
 NSString * const L3ExpectationErrorKey = @"L3ExpectationErrorKey";
@@ -35,10 +41,29 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 	return suite;
 }
 
-+(instancetype)suiteForFile:(NSString *)file {
+static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
+	NSString *path = nil;
+	Dl_info info = {0};
+	if (dladdr((void *)address, &info)) {
+		path = @(info.dli_fname);
+	}
+	return path;
+}
+
++(instancetype)suiteForImageWithAddress:(void(*)(void))address {
+	NSString *file = L3PathForImageWithAddress(address);
 	return [self suiteForFile:file initializer:^L3Test *{
 		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, nil) block:nil];
 		[[L3TestRunner runner] addTest:suite];
+		return suite;
+	}];
+}
+
++(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address {
+	return [self suiteForFile:file initializer:^L3Test *{
+		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, nil) block:nil];
+		L3Test *imageSuite = [self suiteForImageWithAddress:address];
+		[imageSuite addChild:suite];
 		return suite;
 	}];
 }

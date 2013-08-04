@@ -23,8 +23,8 @@
 
 #define _l3_test(uid, ...) \
 	L3_CONSTRUCTOR void rx_concat(L3Test, uid)(void) { \
-		L3Test *suite = [L3Test suiteForFile:@(__FILE__)]; \
-		id<L3SourceReference> reference = L3SourceReferenceCreate(@(__COUNTER__), @(__FILE__), __LINE__, nil, nil); \
+		L3Test *suite = [L3Test suiteForFile:@(__FILE__) inImageForAddress:rx_concat(L3Test, uid)]; \
+		id<L3SourceReference> reference = L3SourceReferenceCreate(@(uid), @(__FILE__), __LINE__, nil, nil); \
 		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
 		[suite addChild:test]; \
 	}
@@ -69,7 +69,7 @@ extern NSString * const L3ExpectationErrorKey;
 
 @interface L3Test : NSObject
 
-+(instancetype)suiteForFile:(NSString *)file;
++(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address;
 
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 
