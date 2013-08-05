@@ -107,13 +107,8 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		[self.queue addOperationWithBlock:^{
 			[self enqueueTests:tests];
 			
-			[self.queue addOperationWithBlock:^{
-				system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
-				
-				if ([self.class isRunningInApplication])
-					[[NSApplication sharedApplication] terminate:nil];
-				else
-					exit(0);
+			[self.queue addOperationWithBlock:^__attribute__((noreturn)){
+				exit(self.statistics.assertionFailureCount == 0);
 			}];
 		}];
 	}

@@ -3,15 +3,17 @@
 //  Copyright (c) 2012 Rob Rix. All rights reserved.
 
 #if __has_feature(modules)
-@import Foundation;
+@import Cocoa;
 @import Darwin.POSIX.dlfcn;
 @import Darwin.C.stdio;
 @import Darwin.C.stdlib;
+@import Darwin.sys.sysctl;
 #else
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import <dlfcn.h>
 #import <stdio.h>
 #import <stdlib.h>
+#import <sys/sysctl.h>
 #endif
 
 #import "L3TRDynamicLibrary.h"
@@ -48,6 +50,28 @@ static NSString * const L3TRDynamicLibraryPathEnvironmentVariableName = @"DYLD_L
 			L3TRFailWithError(error); \
 		return _result; \
 	}())
+
+static inline pid_t parentProcessOfProcess(pid_t process) {
+	pid_t parentIdentifier = 0;
+	struct kinfo_proc info;
+	size_t length = sizeof(struct kinfo_proc);
+	int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, process };
+	if (sysctl(mib, 4, &info, &length, NULL, 0) == 0) {
+		parentIdentifier = info.kp_eproc.e_ppid;
+	}
+	return parentIdentifier;
+}
+
+static inline bool processIsAncestorOfProcess(pid_t maybeAncestor, pid_t process) {
+	bool isAncestor = NO;
+	if (maybeAncestor > 0) {
+		pid_t parent = parentProcessOfProcess(process);
+		isAncestor =
+			(maybeAncestor == parent)
+		||	processIsAncestorOfProcess(maybeAncestor, parent);
+	}
+	return isAncestor;
+}
 
 int main(int argc, const char *argv[]) {
 	int result = EXIT_SUCCESS;
@@ -114,8 +138,17 @@ int main(int argc, const char *argv[]) {
 			
 			[task launch];
 			[task waitUntilExit];
+			return [task terminationStatus] == EXIT_SUCCESS?
+				EXIT_SUCCESS
+			:	EXIT_FAILURE;
 		}
-		// fixme: return to Xcode if launched by Xcode
+		
+		for (NSRunningApplication *xcode in [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.dt.Xcode"]) {
+			if (processIsAncestorOfProcess(xcode.processIdentifier, getpid())) {
+				[xcode activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+				break;
+			}
+		}
 	}
 	return result;
 }
