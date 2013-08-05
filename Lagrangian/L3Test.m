@@ -25,20 +25,32 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 
 @implementation L3Test
 
-+(instancetype)suiteForFile:(NSString *)file initializer:(L3Test *(^)())block {
++(NSMutableDictionary *)mutableRegisteredSuites {
 	static NSMutableDictionary *suites = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		suites = [NSMutableDictionary new];
 	});
-	L3Test *suite = suites[file];
+	return suites;
+}
+
++(NSDictionary *)registeredSuites {
+	return self.mutableRegisteredSuites;
+}
+
++(instancetype)suiteForFile:(NSString *)file initializer:(L3Test *(^)())block {
+	L3Test *suite = self.mutableRegisteredSuites[file];
 	if (!suite) {
 		suite = block? block() : nil;
 		if (suite) {
-			suites[file] = suite;
+			self.mutableRegisteredSuites[file] = suite;
 		}
 	}
 	return suite;
+}
+
++(instancetype)registeredSuiteForFile:(NSString *)file {
+	return self.mutableRegisteredSuites[file];
 }
 
 static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
@@ -53,9 +65,7 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 +(instancetype)suiteForImageWithAddress:(void(*)(void))address {
 	NSString *file = L3PathForImageWithAddress(address);
 	return [self suiteForFile:file initializer:^L3Test *{
-		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file lastPathComponent]) block:nil];
-		[[L3TestRunner runner] addTest:suite];
-		return suite;
+		return [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file lastPathComponent]) block:nil];
 	}];
 }
 

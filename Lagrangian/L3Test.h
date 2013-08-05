@@ -69,6 +69,9 @@ extern NSString * const L3ExpectationErrorKey;
 
 @interface L3Test : NSObject
 
++(NSDictionary *)registeredSuites;
+
++(instancetype)registeredSuiteForFile:(NSString *)file;
 +(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address;
 
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;

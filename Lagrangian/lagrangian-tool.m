@@ -75,11 +75,13 @@ int main(int argc, const char *argv[]) {
 			NSBundle *frameworkBundle = [NSBundle bundleWithPath:frameworkPath];
 			L3TRTry([frameworkBundle loadAndReturnError:&error]);
 			
-			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") runner];
+			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", frameworkPath.lastPathComponent];
-			
-			[runner runTests];
+			for (NSString *path in [L3Test registeredSuites]) {
+				if ([path hasPrefix:frameworkPath]) {
+					[runner enqueueTest:[L3Test registeredSuites][path]];
+				}
+			}
 			
 			[runner waitForTestsToComplete];
 		} else if (libraryPath) {
@@ -87,9 +89,9 @@ int main(int argc, const char *argv[]) {
 			
 			L3TestRunner *runner = [NSClassFromString(@"L3TestRunner") new];
 			
-			runner.testPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] %@)", libraryPath.lastPathComponent];
-			
-			[runner runTests];
+			L3Test *test = [L3Test registeredSuiteForFile:libraryPath];
+			if (test)
+				[runner enqueueTest:test];
 			
 			[runner waitForTestsToComplete];
 		} else if (command) {
@@ -101,9 +103,8 @@ int main(int argc, const char *argv[]) {
 			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
 			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
-			environment[@"L3_RUN_TESTS_ON_LAUNCH"] = @"YES";
-			// fixme: there’s no possible way that passing the predicate format as the literal body of an environment variable could ever go wrong
-			environment[@"L3_SUITE_PREDICATE"] = [NSString stringWithFormat:@"(imagePath = NULL) || (imagePath ENDSWITH[cd] '%@')", command.lastPathComponent];
+			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
+			environment[L3TestRunnerSubjectEnvironmentVariableName] = command;
 			
 			task.environment = environment;
 			

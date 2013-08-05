@@ -12,14 +12,12 @@
 #endif
 
 NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
-NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_PREDICATE";
+NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_SUBJECT";
 
 
 @interface L3TestRunner () <L3TestVisitor>
 
 @property (nonatomic, readonly) NSOperationQueue *queue;
-
-@property (nonatomic, readonly) NSMutableArray *mutableTests;
 
 -(void)runAtLaunch;
 
@@ -41,29 +39,19 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 #endif
 }
 
-+(NSPredicate *)defaultPredicate {
-	NSString *environmentPredicateFormat = [NSProcessInfo processInfo].environment[L3TestRunnerSuitePredicateEnvironmentVariableName];
-	NSPredicate *applicationPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", [NSBundle mainBundle].bundlePath.lastPathComponent];
-	NSPredicate *predicate = (environmentPredicateFormat? [NSPredicate predicateWithFormat:environmentPredicateFormat] : nil);
-	return predicate?
-		predicate
-	:	(self.isRunningInApplication? applicationPredicate : nil);
++(NSString *)subjectPath {
+	NSString *path = [NSProcessInfo processInfo].environment[L3TestRunnerSubjectEnvironmentVariableName];
+	if (!path && self.isRunningInApplication) {
+		path = [NSBundle mainBundle].bundlePath;
+	}
+	return path;
 }
 
 
 #pragma mark Constructors
 
-+(instancetype)runner {
-	static L3TestRunner *runner = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		runner = [self new];
-	});
-	return runner;
-}
-
 L3_CONSTRUCTOR void L3TestRunnerLoader() {
-	L3TestRunner *runner = [L3TestRunner runner];
+	L3TestRunner *runner = [L3TestRunner new];
 	
 	if ([L3TestRunner shouldRunTestsAtLaunch]) {
 		[runner runAtLaunch];
@@ -72,12 +60,8 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 
 -(instancetype)init {
 	if ((self = [super init])) {
-		_mutableTests = [NSMutableArray new];
-		
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
-		
-		_testPredicate = [self.class defaultPredicate];
 	}
 	return self;
 }
@@ -86,12 +70,18 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
+	NSArray *tests = [[L3Test registeredSuites] allValues];
+	if ([self.class subjectPath]) {
+		L3Test *suite = [L3Test registeredSuiteForFile:[self.class subjectPath]];
+		if (suite)
+			tests = @[suite];
+	}
 #if TARGET_OS_IPHONE
 #else
 	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
-			[self runTests];
+			[self enqueueTests:tests];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 			
@@ -101,7 +91,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{
-			[self runTests];
+			[self enqueueTests:tests];
 			
 			[self.queue addOperationWithBlock:^{
 				system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
@@ -116,29 +106,21 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 #endif
 }
 
--(void)runTests {
-	for (L3Test *test in self.tests) {
-		[self runTest:test];
+-(void)enqueueTests:(NSArray *)tests {
+	for (L3Test *test in tests) {
+		[self enqueueTest:test];
 	}
+}
+
+-(void)enqueueTest:(L3Test *)test {
+	NSParameterAssert(test != nil);
+	[self.queue addOperationWithBlock:^{
+		[test acceptVisitor:self parents:nil context:nil];
+	}];
 }
 
 -(void)waitForTestsToComplete {
 	[self.queue waitUntilAllOperationsAreFinished];
-}
-
--(void)runTest:(L3Test *)test {
-	NSParameterAssert(test != nil);
-	
-	[test acceptVisitor:self parents:nil context:nil];
-}
-
-
--(NSArray *)tests {
-	return self.mutableTests;
-}
-
--(void)addTest:(L3Test *)test {
-	[self.mutableTests addObject:test];
 }
 
 
@@ -184,9 +166,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		testCaseCount++;
 		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:expectation.assertivePhrase];
 		[self write:@"Test Case '%@' started.\n", caseName];
-		if (wasMet) {
-			
-		} else {
+		if (!wasMet) {
 			id<L3SourceReference> reference = expectation.subjectReference;
 			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, expectation.indicativePhrase];
 			

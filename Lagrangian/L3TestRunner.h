@@ -10,7 +10,7 @@
 #import <Lagrangian/L3Defines.h>
 
 extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
-extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
+extern NSString * const L3TestRunnerSubjectEnvironmentVariableName;
 
 #if defined(L3_DEBUG)
 
@@ -35,16 +35,9 @@ extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 +(bool)shouldRunTestsAtLaunch;
 +(bool)isRunningInApplication;
 
-+(instancetype)runner;
-
-@property (nonatomic) NSPredicate *testPredicate;
-
--(void)runTests; // starts running asynchronously
+-(void)enqueueTests:(NSArray *)tests;
+-(void)enqueueTest:(L3Test *)test;
 -(void)waitForTestsToComplete;
-
-
-@property (nonatomic, readonly) NSArray *tests;
--(void)addTest:(L3Test *)test;
 
 @end
 
