@@ -83,7 +83,9 @@ int main(int argc, const char *argv[]) {
 				}
 			}
 			
-			[runner waitForTestsToComplete];
+			result = [runner waitForTestsToComplete]?
+				EXIT_SUCCESS
+			:	EXIT_FAILURE;
 		} else if (libraryPath) {
 			L3TRTry([L3TRDynamicLibrary openLibraryAtPath:libraryPath error:&error]);
 			
@@ -93,7 +95,9 @@ int main(int argc, const char *argv[]) {
 			if (test)
 				[runner enqueueTest:test];
 			
-			[runner waitForTestsToComplete];
+			result = [runner waitForTestsToComplete]?
+				EXIT_SUCCESS
+			:	EXIT_FAILURE;
 		} else if (command) {
 			NSTask *task = [NSTask new];
 			

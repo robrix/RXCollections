@@ -29,6 +29,7 @@ NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_S
 @interface L3TestRunner () <L3TestVisitor>
 
 @property (nonatomic, readonly) NSOperationQueue *queue;
+@property (nonatomic, readonly) L3TestStatistics *statistics;
 
 -(void)runAtLaunch;
 
@@ -73,6 +74,8 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	if ((self = [super init])) {
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
+		
+		_statistics = [L3TestStatistics new];
 	}
 	return self;
 }
@@ -126,12 +129,13 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 -(void)enqueueTest:(L3Test *)test {
 	NSParameterAssert(test != nil);
 	[self.queue addOperationWithBlock:^{
-		[test acceptVisitor:self parents:nil context:nil];
+		[self.statistics addStatistics:[test acceptVisitor:self parents:nil context:nil]];
 	}];
 }
 
--(void)waitForTestsToComplete {
+-(bool)waitForTestsToComplete {
 	[self.queue waitUntilAllOperationsAreFinished];
+	return self.statistics.assertionFailureCount == 0;
 }
 
 

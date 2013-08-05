@@ -37,7 +37,13 @@ extern NSString * const L3TestRunnerSubjectEnvironmentVariableName;
 
 -(void)enqueueTests:(NSArray *)tests;
 -(void)enqueueTest:(L3Test *)test;
--(void)waitForTestsToComplete;
+
+/**
+ Blocks until all tests have completed.
+ 
+ @return True if the tests completed successfully, and false otherwise.
+ */
+-(bool)waitForTestsToComplete;
 
 @end
 
