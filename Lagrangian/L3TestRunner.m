@@ -15,6 +15,17 @@ NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_
 NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_SUBJECT";
 
 
+@interface L3TestStatistics : NSObject
+@property (nonatomic) NSDate *startDate;
+@property (nonatomic) NSDate *endDate;
+@property (nonatomic) unsigned long testCount;
+@property (nonatomic) unsigned long assertionFailureCount;
+@property (nonatomic) unsigned long exceptionCount;
+@property (nonatomic) NSTimeInterval duration;
+
+-(void)addStatistics:(L3TestStatistics *)statistics;
+@end
+
 @interface L3TestRunner () <L3TestVisitor>
 
 @property (nonatomic, readonly) NSOperationQueue *queue;
@@ -149,46 +160,62 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 }
 
 -(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context {
+	L3TestStatistics *statistics = [L3TestStatistics new];
 	NSString *suiteName = [self formatStringAsTestName:[test.sourceReference.subject description]];
-	NSDate *testSuiteStart = [NSDate date];
-	[self write:@"Test Suite '%@' started at %@\n", suiteName, testSuiteStart];
+	[self write:@"Test Suite '%@' started at %@\n", suiteName, statistics.startDate];
 	[self write:@"\n"];
 	
 	// fixme: can failures happen in test steps?
 //	[test runSteps];
 	
-	__block unsigned long testCaseCount = 0;
-	__block unsigned long assertionFailureCount = 0;
-	__block unsigned long exceptionCount = 0;
-	__block NSTimeInterval duration = 0;
 	[test run:^(id<L3Expectation> expectation, bool wasMet) {
 		NSDate *testCaseStart = [NSDate date];
-		testCaseCount++;
+		statistics.testCount++;
 		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:expectation.assertivePhrase];
 		[self write:@"Test Case '%@' started.\n", caseName];
 		if (!wasMet) {
 			id<L3SourceReference> reference = expectation.subjectReference;
 			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, expectation.indicativePhrase];
 			
-			assertionFailureCount++;
+			statistics.assertionFailureCount++;
 			if (expectation.exception != nil)
-				exceptionCount++;
+				statistics.exceptionCount++;
 		}
 		NSTimeInterval interval = -[testCaseStart timeIntervalSinceNow];
-		duration += interval;
+		statistics.duration += interval;
 		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
 		[self write:@"\n"];
 	}];
 	
 	for (id(^lazyChild)() in lazyChildren) {
-		lazyChild();
+		[statistics addStatistics:lazyChild()];
 	}
 	
-	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, [NSDate date]];
-	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:testCaseCount], [self cardinalizeNoun:@"failure" forCount:assertionFailureCount], exceptionCount, duration, -[testSuiteStart timeIntervalSinceNow]];
+	statistics.endDate = [NSDate date];
+	
+	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, statistics.endDate];
+	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:statistics.testCount], [self cardinalizeNoun:@"failure" forCount:statistics.assertionFailureCount], statistics.exceptionCount, statistics.duration, [statistics.endDate timeIntervalSinceDate:statistics.startDate]];
 	[self write:@"\n"];
 	
-	return nil;
+	return statistics;
+}
+
+@end
+
+@implementation L3TestStatistics
+
+-(instancetype)init {
+	if ((self = [super init])) {
+		_startDate = [NSDate date];
+	}
+	return self;
+}
+
+-(void)addStatistics:(L3TestStatistics *)statistics {
+	self.testCount += statistics.testCount;
+	self.assertionFailureCount += statistics.assertionFailureCount;
+	self.exceptionCount += statistics.exceptionCount;
+	self.duration += statistics.duration;
 }
 
 @end
