@@ -52,9 +52,7 @@
 #endif // L3_INCLUDE_TESTS
 
 
-typedef void(^L3TestExpectationBlock)(id<L3Expectation> expectation, bool wasMet);
-typedef void(^L3TestBlock)(L3TestExpectationBlock withExpectations);
-typedef void(^L3TestBodyBlock)(void);
+typedef void(^L3TestBlock)(void);
 
 enum {
 	L3AssertionFailedError
@@ -94,6 +92,8 @@ extern NSString * const L3ExpectationErrorKey;
 -(void)run:(L3TestExpectationBlock)callback;
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context;
+
+-(void)expectation:(id<L3Expectation>)expectation producedResult:(id<L3TestResult>)result;
 
 @end
 

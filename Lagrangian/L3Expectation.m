@@ -2,6 +2,21 @@
 #import "L3SourceReference.h"
 #import "L3Test.h"
 
+#import "NSException+L3OCUnitCompatibility.h"
+
+@interface L3TestResult : NSObject <L3TestResult>
+
+@property (nonatomic) id<L3SourceReference> subjectReference;
+
+@property (nonatomic) NSString *hypothesisString;
+@property (nonatomic) NSString *observationString;
+
+@property (nonatomic) bool wasMet;
+@property (nonatomic) NSException *exception;
+
+@end
+
+
 @interface L3Predicate : NSObject <L3Predicate>
 
 @property (nonatomic, strong) id<L3Predicate> nextPredicate;
@@ -42,8 +57,9 @@
 
 @interface L3Expectation : NSObject <L3Expectation>
 
-@property (nonatomic, strong) id<L3Predicate> nextPredicate;
-@property (nonatomic, strong) NSException *exception;
+@property (nonatomic, weak) L3Test *test;
+
+@property (nonatomic) id<L3Predicate> nextPredicate;
 
 @property (nonatomic, copy) void(^completionHandler)(id<L3Expectation>, bool wasMet);
 
@@ -51,10 +67,9 @@
 
 @implementation L3Expectation
 
--(instancetype)initWithSubjectReference:(id<L3SourceReference>)subjectReference completionHandler:(void(^)(id<L3Expectation>, bool wasMet))completionHandler {
+-(instancetype)initWithSubjectReference:(id<L3SourceReference>)subjectReference {
 	if ((self = [super init])) {
 		_subjectReference = subjectReference;
-		_completionHandler = [completionHandler copy];
 	}
 	return self;
 }
@@ -62,16 +77,19 @@
 
 #pragma mark L3Expectation
 
-@synthesize
-	subjectReference = _subjectReference,
-	nextPredicate = _nextPredicate;
+@synthesize subjectReference = _subjectReference;
 
 -(id<L3Expectation>)to {
 	return self;
 }
 
+//-(id<L3Expectation>)notTo {
+//	return nil;
+//}
 
-l3_test("interpolation", ^{
+
+static inline NSString *L3InterpolateString(NSString *format, NSDictionary *values);
+l3_test(&L3InterpolateString, ^{
 	NSString *interpolationWithNoValue = L3InterpolateString(@"{xyz}", @{});
 	l3_expect(interpolationWithNoValue).to.equal(@"xyz");
 	NSString *interpolationWithMultipleValues = L3InterpolateString(@"one {two} three {four} five {six}", @{@"two": @2, @"four": @"quattro", @"six": @6.0});
@@ -88,7 +106,7 @@ static inline NSString *L3InterpolateString(NSString *format, NSDictionary *valu
 		range.location += offset;
 		NSString *replacement = values[placeholder]? [values[placeholder] description] : placeholder;
 		[interpolated replaceCharactersInRange:range withString:replacement];
-		offset +=  ((NSInteger)replacement.length) - ((NSInteger)result.range.length);
+		offset += ((NSInteger)replacement.length) - ((NSInteger)result.range.length);
 	}];
 	return [interpolated copy];
 }
@@ -98,23 +116,28 @@ static inline NSString *L3InterpolateString(NSString *format, NSDictionary *valu
 		NSString * const format = NSLocalizedString(@"equal {object}", @"Format string for predicates' imperative phrases. {object} is a placeholder for the object.");
 		NSString *imperativePhrase = L3InterpolateString(format, @{@"object": object});
 		self.nextPredicate = [[L3Predicate alloc] initWithExpectation:self predicate:[NSPredicate predicateWithFormat:@"subject == %@", object] imperativePhrase:imperativePhrase];
-		return [self test];
+		return [self testExpectation];
 	};
 }
 
 
--(bool)test {
+-(bool)testExpectation {
 	bool wasMet = NO;
+	NSException *unexpectedException = nil;
 	@try {
 		wasMet = [self.nextPredicate testWithSubject:self.subjectReference.subject];
 	}
 	@catch (NSException *exception) {
-		self.exception = exception;
+		unexpectedException = exception;
 	}
 	@finally {
-		self.completionHandler(self, wasMet);
-		self.completionHandler = nil;
-		self.exception = nil;
+		L3TestResult *result = [L3TestResult new];
+		result.subjectReference = self.subjectReference;
+		result.hypothesisString = self.assertivePhrase;
+		result.observationString = self.indicativePhrase;
+		result.wasMet = wasMet;
+		result.exception = unexpectedException;
+		[self.test expectation:self producedResult:result];
 	}
 	return wasMet;
 }
@@ -133,8 +156,23 @@ static inline NSString *L3InterpolateString(NSString *format, NSDictionary *valu
 @end
 
 
-L3Expectation *L3Expect(L3Test *test, void(^callback)(id<L3Expectation> expectation, bool wasMet), id<L3SourceReference> subjectReference) {
-	L3Expectation *expectation = [[L3Expectation alloc] initWithSubjectReference:subjectReference completionHandler:callback];
+@implementation L3TestResult
+@end
+
+
+id<L3Expectation> L3Expect(L3Test *test, id<L3SourceReference> subjectReference) {
+	L3Expectation *expectation = [[L3Expectation alloc] initWithSubjectReference:subjectReference];
+	expectation.test = test;
 	[test addExpectation:expectation];
 	return expectation;
+}
+
+id<L3TestResult> L3TestResultCreateWithException(NSException *exception) {
+	L3TestResult *result = [L3TestResult new];
+	result.subjectReference = L3SourceReferenceCreate(nil, exception.filename, exception.lineNumber, nil, nil);
+	result.hypothesisString = exception.reason;
+	result.observationString = exception.reason;
+	result.wasMet = NO;
+	result.exception = nil;
+	return result;
 }

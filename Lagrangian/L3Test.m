@@ -21,6 +21,8 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 @property (nonatomic, readonly) NSMutableArray *mutableExpectations;
 @property (nonatomic, readonly) NSMutableArray *mutableChildren;
 
+@property (nonatomic, copy) L3TestExpectationBlock expectationCallback;
+
 @end
 
 @implementation L3Test
@@ -129,9 +131,19 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 //	}
 //}
 
--(void)run:(L3TestExpectationBlock)callback {
+-(void)run:(L3TestExpectationBlock)expectationCallback {
+	self.expectationCallback = expectationCallback;
 	if (self.block)
-		self.block(callback);
+		self.block();
+}
+
+-(void)expectation:(id<L3Expectation>)expectation producedResult:(id<L3TestResult>)result {
+	if (self.expectationCallback)
+		self.expectationCallback(expectation, result);
+}
+
+-(void)failWithException:(NSException *)exception {
+	[self expectation:nil producedResult:L3TestResultCreateWithException(exception)];
 }
 
 

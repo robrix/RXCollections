@@ -167,22 +167,22 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	// fixme: can failures happen in test steps?
 //	[test runSteps];
 	
-	[test run:^(id<L3Expectation> expectation, bool wasMet) {
+	[test run:^(id<L3Expectation> expectation, id<L3TestResult> result) {
 		NSDate *testCaseStart = [NSDate date];
 		statistics.testCount++;
-		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:expectation.assertivePhrase];
+		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:result.hypothesisString];
 		[self write:@"Test Case '%@' started.\n", caseName];
-		if (!wasMet) {
-			id<L3SourceReference> reference = expectation.subjectReference;
-			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, expectation.indicativePhrase];
+		if (!result.wasMet) {
+			id<L3SourceReference> reference = result.subjectReference;
+			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, result.observationString];
 			
 			statistics.assertionFailureCount++;
-			if (expectation.exception != nil)
+			if (result.exception != nil)
 				statistics.exceptionCount++;
 		}
 		NSTimeInterval interval = -[testCaseStart timeIntervalSinceNow];
 		statistics.duration += interval;
-		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, wasMet? @"passed" : @"failed", interval];
+		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, result.wasMet? @"passed" : @"failed", interval];
 		[self write:@"\n"];
 	}];
 	
