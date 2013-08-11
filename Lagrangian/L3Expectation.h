@@ -17,26 +17,12 @@
 	L3Expect(self, l3_source_reference(__VA_ARGS__))
 
 
-@protocol L3Expectation;
-
-@protocol L3Predicate <NSObject>
-
-@property (nonatomic, weak, readonly) id<L3Expectation> expectation;
-@property (nonatomic, readonly) NSPredicate *predicate;
-
--(bool)testWithSubject:(id)subject;
-
-@property (nonatomic, readonly) NSString *imperativePhrase;
-
-@end
-
-
 @protocol L3Expectation <NSObject>
 
 @property (nonatomic, readonly) id<L3SourceReference> subjectReference;
 
 @property (nonatomic, readonly) id<L3Expectation> to;
-//@property (nonatomic, readonly) id<L3Expectation> notTo;
+//@property (nonatomic, readonly) id<L3Expectation> not;
 
 @property (nonatomic, readonly) bool (^equal)(id object);
 

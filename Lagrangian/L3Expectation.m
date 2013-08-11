@@ -17,39 +17,37 @@
 @end
 
 
-@interface L3Predicate : NSObject <L3Predicate>
+@class L3Predicate;
+typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
-@property (nonatomic, strong) id<L3Predicate> nextPredicate;
+@interface L3Predicate : NSObject
+
+@property (nonatomic, weak, readonly) id<L3Expectation> expectation;
+@property (nonatomic, readonly) NSString *description;
+@property (nonatomic, readonly) L3PredicateBlock block;
+
+@property (nonatomic, strong) L3Predicate *next;
+
+-(bool)testWithSubject:(id)subject;
 
 @end
 
 @implementation L3Predicate
 
--(instancetype)initWithExpectation:(id<L3Expectation>)expectation predicate:(NSPredicate *)predicate imperativePhrase:(NSString *)imperativePhrase {
+-(instancetype)initWithExpectation:(id<L3Expectation>)expectation description:(NSString *)description block:(L3PredicateBlock)block {
+	NSParameterAssert(block != nil);
+	
 	if ((self = [super init])) {
 		_expectation = expectation;
-		_predicate = predicate;
-		_imperativePhrase = imperativePhrase;
+		_description = [description copy];
+		_block = [block copy];
 	}
 	return self;
 }
 
 
-#pragma mark L3Predicate
-
-@synthesize
-	expectation = _expectation,
-	predicate = _predicate,
-	imperativePhrase = _imperativePhrase;
-
-
 -(bool)testWithSubject:(id)subject {
-	NSDictionary *evaluatedObject = @{
-		@"subject": subject,
-		@"expectation": self.expectation,
-		@"nextPredicate": @([self.nextPredicate testWithSubject:subject])
-	};
-	return [self.predicate evaluateWithObject:evaluatedObject];
+	return self.block(self, subject);
 }
 
 @end
@@ -59,7 +57,7 @@
 
 @property (nonatomic, weak) L3Test *test;
 
-@property (nonatomic) id<L3Predicate> nextPredicate;
+@property (nonatomic) L3Predicate *predicate;
 
 @property (nonatomic, copy) void(^completionHandler)(id<L3Expectation>, bool wasMet);
 
@@ -83,15 +81,16 @@
 	return self;
 }
 
-//-(id<L3Expectation>)notTo {
-//	return nil;
+//-(id<L3Expectation>)not {
+//	return self;
 //}
 
 
 -(bool(^)(id object))equal {
 	return ^bool(id object){
-		NSString *imperativePhrase = [NSString stringWithFormat:@"equal %@", object];
-		self.nextPredicate = [[L3Predicate alloc] initWithExpectation:self predicate:[NSPredicate predicateWithFormat:@"subject == %@", object] imperativePhrase:imperativePhrase];
+		self.predicate = [[L3Predicate alloc] initWithExpectation:self description:[NSString stringWithFormat:@"equal %@", object] block:^bool(L3Predicate *predicate, id subject) {
+			return (subject == object) || [subject isEqual:object];
+		}];
 		return [self testExpectation];
 	};
 }
@@ -101,7 +100,7 @@
 	bool wasMet = NO;
 	NSException *unexpectedException = nil;
 	@try {
-		wasMet = [self.nextPredicate testWithSubject:self.subjectReference.subject];
+		wasMet = [self.predicate testWithSubject:self.subjectReference.subject];
 	}
 	@catch (NSException *exception) {
 		unexpectedException = exception;
@@ -120,11 +119,11 @@
 
 
 -(NSString *)assertivePhrase {
-	return [NSString stringWithFormat:@"%@ should %@", self.subjectReference.subjectSource, self.nextPredicate.imperativePhrase];
+	return [NSString stringWithFormat:@"%@ should %@", self.subjectReference.subjectSource, self.predicate];
 }
 
 -(NSString *)indicativePhrase {
-	return [NSString stringWithFormat:@"%@ (%@) does not %@", self.subjectReference.subjectSource, [self.subjectReference.subject description], self.nextPredicate.imperativePhrase];
+	return [NSString stringWithFormat:@"%@ (%@) does not %@", self.subjectReference.subjectSource, self.subjectReference.subject, self.predicate];
 }
 
 @end
