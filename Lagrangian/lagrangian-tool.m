@@ -82,7 +82,7 @@ int main(int argc, const char *argv[]) {
 		NSProcessInfo *processInfo = [NSProcessInfo processInfo];
 		
 		[defaults registerDefaults:@{
-		 L3TRLagrangianFrameworkPathArgumentName: [[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.framework"]
+		 L3TRLagrangianFrameworkPathArgumentName: [[[processInfo.arguments[0] stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Lagrangian.framework"]
 		 }];
 		
 		if (!NSClassFromString(@"L3TestRunner")) {
@@ -130,7 +130,7 @@ int main(int argc, const char *argv[]) {
 			
 			NSMutableDictionary *environment = [processInfo.environment mutableCopy];
 			
-			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [NSFileManager defaultManager].currentDirectoryPath);
+			environment[L3TRDynamicLibraryPathEnvironmentVariableName] = L3TRPathListByAddingPath(environment[L3TRDynamicLibraryPathEnvironmentVariableName], [[[NSUserDefaults standardUserDefaults] stringForKey:L3TRLagrangianFrameworkPathArgumentName] stringByDeletingLastPathComponent]);
 			environment[L3TestRunnerRunTestsOnLaunchEnvironmentVariableName] = @"YES";
 			environment[L3TestRunnerSubjectEnvironmentVariableName] = command;
 			

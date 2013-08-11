@@ -15,7 +15,7 @@
 		D4391698179E49C40002EDCA /* L3Defines.h in Headers */ = {isa = PBXBuildFile; fileRef = D4391695179E49B40002EDCA /* L3Defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D44AA23C17A56F5B00B9F9B3 /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
 		D44AA23D17A56F5C00B9F9B3 /* L3SourceReference.m in Sources */ = {isa = PBXBuildFile; fileRef = D457D678165094F100340DAC /* L3SourceReference.m */; };
-		D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
+		D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D472C849179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */; };
 		D473F5CE16DA713E000FCD8D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D473F5CD16DA713E000FCD8D /* Foundation.framework */; };
 		D473F5E616DA71ED000FCD8D /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,17 +28,20 @@
 		D4A5B2C7164B4FAF00338EB4 /* lagrangian-tool.m in Sources */ = {isa = PBXBuildFile; fileRef = D4A5B2C6164B4FAF00338EB4 /* lagrangian-tool.m */; };
 		D4A5B2CB164B4FAF00338EB4 /* lagrangian.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = D4A5B2CA164B4FAF00338EB4 /* lagrangian.1 */; };
 		D4ABA9E4168617520049C6CE /* L3TRDynamicLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */; };
+		D4B53EA017B2892C00D70297 /* NSException+L3OCUnitCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */; };
+		D4B53EA617B2892C00D70297 /* NSException+L3OCUnitCompatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */; };
 		D4B62B5816A1581700E42C84 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D4B62B5616A1581700E42C84 /* InfoPlist.strings */; };
 		D4B62B6F16A15A0400E42C84 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B5216A1581700E42C84 /* Foundation.framework */; };
 		D4B62B7416A15A1900E42C84 /* Lagrangian.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AC431E1648B5D300C0A25B /* Lagrangian.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B7816A15A1900E42C84 /* L3SourceReference.h in Headers */ = {isa = PBXBuildFile; fileRef = D457D677165094F100340DAC /* L3SourceReference.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B7D16A15A1900E42C84 /* L3TestRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC3A5D164D483E003AD167 /* L3TestRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B62B8C16A15A2C00E42C84 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4D16A1581700E42C84 /* Cocoa.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */; };
+		D4B62BD016A164A600E42C84 /* Lagrangian.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B62B4C16A1581700E42C84 /* Lagrangian.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		D4BEDF2B17A0F10A00DCFF57 /* L3Expectation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BEDF2917A0F10A00DCFF57 /* L3Expectation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4BEDF2C17A0F10A00DCFF57 /* L3Expectation.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BEDF2917A0F10A00DCFF57 /* L3Expectation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4BEDF2D17A0F10A00DCFF57 /* L3Expectation.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BEDF2A17A0F10A00DCFF57 /* L3Expectation.m */; };
 		D4BEDF2E17A0F10A00DCFF57 /* L3Expectation.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BEDF2A17A0F10A00DCFF57 /* L3Expectation.m */; };
+		D4D5445D17B05571001FF25F /* lagrangian in Resources */ = {isa = PBXBuildFile; fileRef = D4A5B2C1164B4FAF00338EB4 /* lagrangian */; };
 		D4EA374A17586532003C6F23 /* L3Mock.h in Headers */ = {isa = PBXBuildFile; fileRef = D4EA374817586532003C6F23 /* L3Mock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4EA374C17586532003C6F23 /* L3Mock.h in Headers */ = {isa = PBXBuildFile; fileRef = D4EA374817586532003C6F23 /* L3Mock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4FEC500179F4E0700356BA3 /* L3TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D4BC3A5E164D483E003AD167 /* L3TestRunner.m */; };
@@ -67,18 +70,44 @@
 			remoteGlobalIDString = D475266917ADE0520001FA73;
 			remoteInfo = RXPreprocessing;
 		};
+		D4D543D817B046E9001FF25F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E9ACDF0C13B2DD520010F4D7;
+			remoteInfo = Expecta;
+		};
+		D4D543DA17B046E9001FF25F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E93067CE13B2E6D100EA26FF;
+			remoteInfo = "Expecta-iOS";
+		};
+		D4D543DC17B046E9001FF25F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E9ACDF1D13B2DD520010F4D7;
+			remoteInfo = ExpectaTests;
+		};
+		D4D543DE17B046E9001FF25F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E93067DA13B2E6D100EA26FF;
+			remoteInfo = "Expecta-iOSTests";
+		};
+		D4D5445E17B05578001FF25F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4AC43091648B5D300C0A25B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4A5B2C0164B4FAF00338EB4;
+			remoteInfo = lagrangian;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D473F5CA16DA713E000FCD8D /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D47526BE17AE30700001FA73 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,6 +168,7 @@
 		D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = L3TRDynamicLibrary.h; path = Lagrangian/L3TRDynamicLibrary.h; sourceTree = SOURCE_ROOT; };
 		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
 		D4D47E6017A0DE6E00B789A4 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4D5436717B046E8001FF25F /* Expecta.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Expecta.xcodeproj; sourceTree = "<group>"; };
 		D4EA374817586532003C6F23 /* L3Mock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Mock.h; sourceTree = "<group>"; };
 		D4EA374917586532003C6F23 /* L3Mock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Mock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,9 +216,10 @@
 		D4223BDE16A0A94B00AE32D5 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				D4D5436317B046E8001FF25F /* Expecta */,
 				D4223BE016A0A95E00AE32D5 /* RXPreprocessing */,
 			);
-			name = External;
+			path = External;
 			sourceTree = "<group>";
 		};
 		D4223BE016A0A95E00AE32D5 /* RXPreprocessing */ = {
@@ -196,8 +227,7 @@
 			children = (
 				D47526B217AE30390001FA73 /* RXPreprocessing.xcodeproj */,
 			);
-			name = RXPreprocessing;
-			path = External/RXPreprocessing;
+			path = RXPreprocessing;
 			sourceTree = "<group>";
 		};
 		D426E495165286F3001C9105 /* Utilities */ = {
@@ -350,6 +380,25 @@
 			path = Lagrangian;
 			sourceTree = "<group>";
 		};
+		D4D5436317B046E8001FF25F /* Expecta */ = {
+			isa = PBXGroup;
+			children = (
+				D4D5436717B046E8001FF25F /* Expecta.xcodeproj */,
+			);
+			path = Expecta;
+			sourceTree = "<group>";
+		};
+		D4D5436817B046E8001FF25F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4D543D917B046E9001FF25F /* libExpecta.a */,
+				D4D543DB17B046E9001FF25F /* libExpecta-iOS.a */,
+				D4D543DD17B046E9001FF25F /* ExpectaTests.octest */,
+				D4D543DF17B046E9001FF25F /* Expecta-iOSTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -375,11 +424,11 @@
 				D4BEDF2B17A0F10A00DCFF57 /* L3Expectation.h in Headers */,
 				D4B62B7416A15A1900E42C84 /* Lagrangian.h in Headers */,
 				D4B62B7816A15A1900E42C84 /* L3SourceReference.h in Headers */,
-				D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 				D4B62B7D16A15A1900E42C84 /* L3TestRunner.h in Headers */,
 				D4391696179E49C20002EDCA /* L3Defines.h in Headers */,
 				D439168F179E49600002EDCA /* L3Test.h in Headers */,
 				D4EA374A17586532003C6F23 /* L3Mock.h in Headers */,
+				D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +441,6 @@
 			buildPhases = (
 				D473F5C816DA713E000FCD8D /* Sources */,
 				D473F5C916DA713E000FCD8D /* Frameworks */,
-				D473F5CA16DA713E000FCD8D /* CopyFiles */,
 				D473F5E116DA71DF000FCD8D /* Headers */,
 				D473F60C16DA72C1000FCD8D /* Prepare Framework */,
 			);
@@ -435,6 +483,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D4D5445F17B05578001FF25F /* PBXTargetDependency */,
 				D47526BC17AE304F0001FA73 /* PBXTargetDependency */,
 			);
 			name = "Lagrangian (Mac OS X framework)";
@@ -478,6 +527,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D4D5436817B046E8001FF25F /* Products */;
+					ProjectRef = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
+				},
+				{
 					ProductGroup = D47526B317AE30390001FA73 /* Products */;
 					ProjectRef = D47526B217AE30390001FA73 /* RXPreprocessing.xcodeproj */;
 				},
@@ -507,6 +560,34 @@
 			remoteRef = D47526B917AE303A0001FA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D4D543D917B046E9001FF25F /* libExpecta.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libExpecta.a;
+			remoteRef = D4D543D817B046E9001FF25F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4D543DB17B046E9001FF25F /* libExpecta-iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libExpecta-iOS.a";
+			remoteRef = D4D543DA17B046E9001FF25F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4D543DD17B046E9001FF25F /* ExpectaTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ExpectaTests.octest;
+			remoteRef = D4D543DC17B046E9001FF25F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4D543DF17B046E9001FF25F /* Expecta-iOSTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Expecta-iOSTests.octest";
+			remoteRef = D4D543DE17B046E9001FF25F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -514,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4D5445D17B05571001FF25F /* lagrangian in Resources */,
 				D4B62B5816A1581700E42C84 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4B53EA617B2892C00D70297 /* NSException+L3OCUnitCompatibility.m in Sources */,
 				D475264C17AD5B280001FA73 /* L3Mock.m in Sources */,
 				D44AA23C17A56F5B00B9F9B3 /* L3SourceReference.m in Sources */,
 				D4FEC500179F4E0700356BA3 /* L3TestRunner.m in Sources */,
@@ -564,6 +647,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4B53EA017B2892C00D70297 /* NSException+L3OCUnitCompatibility.m in Sources */,
 				D475264B17AD5B280001FA73 /* L3Mock.m in Sources */,
 				D44AA23D17A56F5C00B9F9B3 /* L3SourceReference.m in Sources */,
 				D4FEC502179F4E0900356BA3 /* L3TestRunner.m in Sources */,
@@ -579,6 +663,11 @@
 			isa = PBXTargetDependency;
 			name = RXPreprocessing;
 			targetProxy = D47526BB17AE304F0001FA73 /* PBXContainerItemProxy */;
+		};
+		D4D5445F17B05578001FF25F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4A5B2C0164B4FAF00338EB4 /* lagrangian */;
+			targetProxy = D4D5445E17B05578001FF25F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -766,7 +855,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = Lagrangian;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -775,7 +864,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = Lagrangian;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lagrangian";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lagrangian.framework/Resources/lagrangian";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
