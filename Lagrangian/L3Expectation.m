@@ -88,33 +88,9 @@
 //}
 
 
-static inline NSString *L3InterpolateString(NSString *format, NSDictionary *values);
-l3_test(&L3InterpolateString, ^{
-	NSString *interpolationWithNoValue = L3InterpolateString(@"{xyz}", @{});
-	l3_expect(interpolationWithNoValue).to.equal(@"xyz");
-	NSString *interpolationWithMultipleValues = L3InterpolateString(@"one {two} three {four} five {six}", @{@"two": @2, @"four": @"quattro", @"six": @6.0});
-	l3_expect(interpolationWithMultipleValues).to.equal(@"one 2 three quattro five 6");
-})
-
-static inline NSString *L3InterpolateString(NSString *format, NSDictionary *values) {
-	NSRegularExpression *regularExpression = [NSRegularExpression regularExpressionWithPattern:@"\\{([\\w]+)\\}" options:NSRegularExpressionCaseInsensitive error:NULL];
-	NSMutableString *interpolated = [format mutableCopy];
-	__block NSInteger offset = 0;
-	[regularExpression enumerateMatchesInString:format options:NSMatchingWithTransparentBounds range:(NSRange){0, format.length} usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-		NSString *placeholder = [regularExpression replacementStringForResult:result inString:format offset:0 template:@"$1"];
-		NSRange range = result.range;
-		range.location += offset;
-		NSString *replacement = values[placeholder]? [values[placeholder] description] : placeholder;
-		[interpolated replaceCharactersInRange:range withString:replacement];
-		offset += ((NSInteger)replacement.length) - ((NSInteger)result.range.length);
-	}];
-	return [interpolated copy];
-}
-
 -(bool(^)(id object))equal {
 	return ^bool(id object){
-		NSString * const format = NSLocalizedString(@"equal {object}", @"Format string for predicates' imperative phrases. {object} is a placeholder for the object.");
-		NSString *imperativePhrase = L3InterpolateString(format, @{@"object": object});
+		NSString *imperativePhrase = [NSString stringWithFormat:@"equal %@", object];
 		self.nextPredicate = [[L3Predicate alloc] initWithExpectation:self predicate:[NSPredicate predicateWithFormat:@"subject == %@", object] imperativePhrase:imperativePhrase];
 		return [self testExpectation];
 	};
@@ -144,13 +120,11 @@ static inline NSString *L3InterpolateString(NSString *format, NSDictionary *valu
 
 
 -(NSString *)assertivePhrase {
-	NSString * const format = NSLocalizedString(@"{subjectSource} should {imperativePhrase}", @"Format string for expectations' assertive phrases. {subjectSource} is a placeholder for the source code of the subject. {imperativePhrase} is a placeholder for the predicate's imperative phrase.");
-	return L3InterpolateString(format, @{@"subjectSource": self.subjectReference.subjectSource, @"imperativePhrase": self.nextPredicate.imperativePhrase});
+	return [NSString stringWithFormat:@"%@ should %@", self.subjectReference.subjectSource, self.nextPredicate.imperativePhrase];
 }
 
 -(NSString *)indicativePhrase {
-	NSString * const format = NSLocalizedString(@"{subjectSource} ({subject}) does not {imperativePhrase}", @"Format string for expectations' indicative phrases (when failing). {subjectSource} is a placeholder for the subject's source code. {subject} is a placeholder for the subject. {imperativePhrase} is a placeholder for the predicate's imperative phrase.");
-	return L3InterpolateString(format, @{@"subjectSource": self.subjectReference.subjectSource, @"subject": [self.subjectReference.subject description], @"imperativePhrase": self.nextPredicate.imperativePhrase});
+	return [NSString stringWithFormat:@"%@ (%@) does not %@", self.subjectReference.subjectSource, [self.subjectReference.subject description], self.nextPredicate.imperativePhrase];
 }
 
 @end
