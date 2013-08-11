@@ -78,6 +78,10 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 	}];
 }
 
++(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block {
+	return [[self alloc] initWithSourceReference:sourceReference block:block];
+}
+
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block {
 	if ((self = [super init])) {
 		_sourceReference = sourceReference;

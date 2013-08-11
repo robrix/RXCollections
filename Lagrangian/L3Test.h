@@ -3,8 +3,10 @@
 
 #if __has_feature(modules)
 @import Foundation;
+@import Darwin.POSIX.dlfcn;
 #else
 #import <Foundation/Foundation.h>
+#import <dlfcn.h>
 #endif
 
 #import <Lagrangian/L3Defines.h>
@@ -19,14 +21,13 @@
 #if defined(L3_INCLUDE_TESTS)
 
 #define l3_test(...) \
-	_l3_test(__VA_ARGS__)
+	_l3_test(__FILE__, __LINE__, __COUNTER__, __VA_ARGS__)
 
-#define _l3_test(subject, ...) \
+#define _l3_test(file, line, uid, ...) \
 	L3_CONSTRUCTOR void rx_concat(L3Test, uid)(void) { \
-		L3Test *suite = [L3Test suiteForFile:@(__FILE__) inImageForAddress:rx_concat(L3Test, uid)]; \
-		id<L3SourceReference> reference = l3_source_reference(subject); \
-		__block L3Test *test = [[L3Test alloc] initWithSourceReference:reference block:^(L3TestExpectationBlock withExpectations) { (__VA_ARGS__)(); }]; \
-		[suite addChild:test]; \
+		L3Test *suite = [L3Test suiteForFile:@(file) inImageForAddress:rx_concat(L3Test, uid)]; \
+		__block L3Test *self = L3TestDefine(@(file), line, __VA_ARGS__); \
+		[suite addChild:self]; \
 	}
 
 //#define l3_state(declaration, ...) \
@@ -74,6 +75,7 @@ extern NSString * const L3ExpectationErrorKey;
 +(instancetype)registeredSuiteForFile:(NSString *)file;
 +(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address;
 
++(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 
 @property (nonatomic, readonly) id<L3SourceReference> sourceReference;
@@ -107,5 +109,22 @@ extern NSString * const L3ExpectationErrorKey;
 -(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context;
 
 @end
+
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
+}
+
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char *subject, L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, @(subject)) block:block];
+}
+
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
+	NSString *symbol;
+	Dl_info info = {0};
+	if (dladdr((void *)subject, &info)) {
+		symbol = @(info.dli_sname);
+	}
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, symbol) block:block];
+}
 
 #endif // L3_TEST_H
