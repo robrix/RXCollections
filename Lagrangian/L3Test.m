@@ -67,13 +67,13 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 +(instancetype)suiteForImageWithAddress:(void(*)(void))address {
 	NSString *file = L3PathForImageWithAddress(address);
 	return [self suiteForFile:file initializer:^L3Test *{
-		return [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file lastPathComponent]) block:nil];
+		return [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, file.lastPathComponent) block:nil];
 	}];
 }
 
 +(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address {
 	return [self suiteForFile:file initializer:^L3Test *{
-		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [[file lastPathComponent] stringByDeletingPathExtension]) block:nil];
+		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file.lastPathComponent stringByDeletingPathExtension]) block:nil];
 		L3Test *imageSuite = [self suiteForImageWithAddress:address];
 		[imageSuite addChild:suite];
 		return suite;
