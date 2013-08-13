@@ -36,29 +36,30 @@
 
 #pragma mark Boxing
 
+#import <RXPreprocessing/fold.h>
+
 L3_OVERLOADABLE id L3Box(id v) { return v; }
 L3_OVERLOADABLE id L3Box(SEL v) { return NSStringFromSelector(v); }
 
-L3_OVERLOADABLE id L3Box(uint64_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(uint32_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(uint16_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(uint8_t v) { return @(v); }
+#define l3_box_type_with_expression_literal(memo, type) \
+	L3_OVERLOADABLE id L3Box(type v) { return @(v); } \
+	memo
+rx_fold(l3_box_type_with_expression_literal, ,
+		uint64_t, uint32_t, uint16_t, uint8_t,
+		int64_t, int32_t, int16_t, int8_t,
+		unsigned long,
+		signed long,
+		double, float,
+		bool,
+		const char *)
+#undef l3_box_type_with_expression_literal
 
-L3_OVERLOADABLE id L3Box(int64_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(int32_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(int16_t v) { return @(v); }
-L3_OVERLOADABLE id L3Box(int8_t v) { return @(v); }
-
-L3_OVERLOADABLE id L3Box(unsigned long v) { return @(v); }
-L3_OVERLOADABLE id L3Box(signed long v) { return @(v); }
-
-L3_OVERLOADABLE id L3Box(double v) { return @(v); }
-L3_OVERLOADABLE id L3Box(float v) { return @(v); }
-
-L3_OVERLOADABLE id L3Box(bool v) { return @(v); }
-
-L3_OVERLOADABLE id L3Box(const char *v) { return @(v); }
-
-L3_OVERLOADABLE id L3Box(NSFastEnumerationState v) { return [NSValue valueWithBytes:&v objCType:@encode(__typeof__(v))]; }
+#define l3_box_type_with_NSValue(memo, type) \
+	L3_OVERLOADABLE id L3Box(type v) { return [NSValue valueWithBytes:&v objCType:@encode(__typeof__(v))]; } \
+	memo
+rx_fold(l3_box_type_with_NSValue, ,
+		NSFastEnumerationState,
+		CGRect, CGSize, CGPoint, CGAffineTransform)
+#undef l3_box_type_with_NSValue
 
 #endif // L3_DEFINES_H
