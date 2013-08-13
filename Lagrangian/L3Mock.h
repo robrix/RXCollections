@@ -9,15 +9,15 @@
 
 #import <RXPreprocessing/fold.h>
 
-@protocol L3Mock;
+@protocol L3MockBuilder;
 
 @interface L3Mock : NSObject
 
-+(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer;
++(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer;
 
 @end
 
-@protocol L3Mock <NSObject>
+@protocol L3MockBuilder <NSObject>
 
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block;
 

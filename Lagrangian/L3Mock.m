@@ -7,40 +7,50 @@
 #import <objc/runtime.h>
 #endif
 
-@interface L3Mock () <L3Mock>
+@interface L3MockBuilder : NSObject <L3MockBuilder>
 
-@property (nonatomic, readonly) Class customClass;
++(Class)classWithName:(const char *)className initializer:(void(^)(id<L3MockBuilder> mock))initializer;
+
+@property (nonatomic, readonly) Class targetClass;
 
 @end
 
 @implementation L3Mock
 
-+(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer {
-	return [[self alloc] initWithName:name initializer:initializer];
++(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer {
+	return [[L3MockBuilder classWithName:[self classNameForName:name].UTF8String initializer:initializer] init];
 }
 
 +(NSString *)classNameForName:(NSString *)name {
 	return [NSStringFromClass(self.class) stringByAppendingFormat:@"_%@", name];
 }
 
--(instancetype)initWithName:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer {
+@end
+
+@implementation L3MockBuilder
+
++(Class)classWithName:(const char *)className initializer:(void(^)(id<L3MockBuilder> mock))initializer {
+	Class class = objc_getClass(className);
+	if (!class) {
+		class = objc_allocateClassPair([L3Mock class], className, 0);
+		
+		initializer([[self alloc] initWithClass:class]);
+		
+		objc_registerClassPair(class);
+	}
+	return class;
+}
+
+-(instancetype)initWithClass:(Class)class {
 	if ((self = [super init])) {
-		_customClass = objc_getClass([self.class classNameForName:name].UTF8String);
-		if (!_customClass) {
-			_customClass = objc_allocateClassPair(object_getClass(self), [self.class classNameForName:name].UTF8String, 0);
-			
-			initializer(self);
-			
-			objc_registerClassPair(_customClass);
-		}
-		object_setClass(self, _customClass);
+		_targetClass = class;
 	}
 	return self;
 }
 
 
 l3_test(@selector(addMethodWithSelector:types:block:), ^{
-	L3Mock *mock = [L3Mock mockNamed:@"Mock" initializer:^(id<L3Mock> mock) {
+	L3Mock *mock = [L3Mock mockNamed:@"Mock" initializer:^(id<L3MockBuilder> mock) {
 		[mock addMethodWithSelector:@selector(description) types:L3TypeSignature(id, id, SEL) block:^{
 			return @"test";
 		}];
@@ -50,7 +60,7 @@ l3_test(@selector(addMethodWithSelector:types:block:), ^{
 
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block {
 	IMP implementation = imp_implementationWithBlock(block);
-	class_addMethod(self.customClass, selector, implementation, types);
+	class_addMethod(self.targetClass, selector, implementation, types);
 }
 
 @end
