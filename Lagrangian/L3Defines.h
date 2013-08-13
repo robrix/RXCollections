@@ -57,6 +57,8 @@ L3_OVERLOADABLE id L3Box(float v) { return @(v); }
 
 L3_OVERLOADABLE id L3Box(bool v) { return @(v); }
 
-L3_OVERLOADABLE id L3Box(char *v) { return @(v); }
+L3_OVERLOADABLE id L3Box(const char *v) { return @(v); }
+
+L3_OVERLOADABLE id L3Box(NSFastEnumerationState v) { return [NSValue valueWithBytes:&v objCType:@encode(__typeof__(v))]; }
 
 #endif // L3_DEFINES_H
