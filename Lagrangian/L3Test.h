@@ -30,26 +30,11 @@
 		[suite addChild:self]; \
 	}
 
-//#define l3_state(declaration, ...) \
-//	declaration
-
-#define l3_setup(symbol, ...) \
-	L3TestBlock symbol = __VA_ARGS__
-
-#define l3_step(symbol, ...) \
-	L3TestBlock symbol = __VA_ARGS__
-
-#else // L3_INCLUDE_TESTS
+#else // defined(L3_INCLUDE_TESTS)
 
 #define l3_test(...)
 
-//#define l3_state(...)
-
-#define l3_setup(...)
-
-#define l3_step(...)
-
-#endif // L3_INCLUDE_TESTS
+#endif // defined(L3_INCLUDE_TESTS)
 
 
 typedef void(^L3TestBlock)(void);
