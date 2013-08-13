@@ -74,34 +74,6 @@
 			remoteGlobalIDString = D475266917ADE0520001FA73;
 			remoteInfo = RXPreprocessing;
 		};
-		D4D543D817B046E9001FF25F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E9ACDF0C13B2DD520010F4D7;
-			remoteInfo = Expecta;
-		};
-		D4D543DA17B046E9001FF25F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E93067CE13B2E6D100EA26FF;
-			remoteInfo = "Expecta-iOS";
-		};
-		D4D543DC17B046E9001FF25F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E9ACDF1D13B2DD520010F4D7;
-			remoteInfo = ExpectaTests;
-		};
-		D4D543DE17B046E9001FF25F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E93067DA13B2E6D100EA26FF;
-			remoteInfo = "Expecta-iOSTests";
-		};
 		D4D5445E17B05578001FF25F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4AC43091648B5D300C0A25B /* Project object */;
@@ -174,7 +146,6 @@
 		D4CA699C1685611E00CE6DA0 /* L3TRDynamicLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = L3TRDynamicLibrary.h; path = Lagrangian/L3TRDynamicLibrary.h; sourceTree = SOURCE_ROOT; };
 		D4CA699D1685611E00CE6DA0 /* L3TRDynamicLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = L3TRDynamicLibrary.m; path = Lagrangian/L3TRDynamicLibrary.m; sourceTree = SOURCE_ROOT; };
 		D4D47E6017A0DE6E00B789A4 /* Lagrangian.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lagrangian.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4D5436717B046E8001FF25F /* Expecta.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Expecta.xcodeproj; sourceTree = "<group>"; };
 		D4EA374817586532003C6F23 /* L3Mock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Mock.h; sourceTree = "<group>"; };
 		D4EA374917586532003C6F23 /* L3Mock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Mock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -222,7 +193,6 @@
 		D4223BDE16A0A94B00AE32D5 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				D4D5436317B046E8001FF25F /* Expecta */,
 				D4223BE016A0A95E00AE32D5 /* RXPreprocessing */,
 			);
 			path = External;
@@ -388,25 +358,6 @@
 			path = Lagrangian;
 			sourceTree = "<group>";
 		};
-		D4D5436317B046E8001FF25F /* Expecta */ = {
-			isa = PBXGroup;
-			children = (
-				D4D5436717B046E8001FF25F /* Expecta.xcodeproj */,
-			);
-			path = Expecta;
-			sourceTree = "<group>";
-		};
-		D4D5436817B046E8001FF25F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D4D543D917B046E9001FF25F /* libExpecta.a */,
-				D4D543DB17B046E9001FF25F /* libExpecta-iOS.a */,
-				D4D543DD17B046E9001FF25F /* ExpectaTests.octest */,
-				D4D543DF17B046E9001FF25F /* Expecta-iOSTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -537,10 +488,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = D4D5436817B046E8001FF25F /* Products */;
-					ProjectRef = D4D5436717B046E8001FF25F /* Expecta.xcodeproj */;
-				},
-				{
 					ProductGroup = D47526B317AE30390001FA73 /* Products */;
 					ProjectRef = D47526B217AE30390001FA73 /* RXPreprocessing.xcodeproj */;
 				},
@@ -568,34 +515,6 @@
 			fileType = wrapper.cfbundle;
 			path = RXPreprocessingTests.xctest;
 			remoteRef = D47526B917AE303A0001FA73 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D4D543D917B046E9001FF25F /* libExpecta.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libExpecta.a;
-			remoteRef = D4D543D817B046E9001FF25F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D4D543DB17B046E9001FF25F /* libExpecta-iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libExpecta-iOS.a";
-			remoteRef = D4D543DA17B046E9001FF25F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D4D543DD17B046E9001FF25F /* ExpectaTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ExpectaTests.octest;
-			remoteRef = D4D543DC17B046E9001FF25F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D4D543DF17B046E9001FF25F /* Expecta-iOSTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Expecta-iOSTests.octest";
-			remoteRef = D4D543DE17B046E9001FF25F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
