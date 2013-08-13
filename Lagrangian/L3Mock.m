@@ -8,6 +8,9 @@
 #endif
 
 @interface L3Mock () <L3Mock>
+
+@property (nonatomic, readonly) Class customClass;
+
 @end
 
 @implementation L3Mock
@@ -22,15 +25,15 @@
 
 -(instancetype)initWithName:(NSString *)name initializer:(void(^)(id<L3Mock> mock))initializer {
 	if ((self = [super init])) {
-		Class class = objc_getClass([self.class classNameForName:name].UTF8String);
-		if (!class) {
-			class = objc_allocateClassPair(object_getClass(self), [self.class classNameForName:name].UTF8String, 0);
+		_customClass = objc_getClass([self.class classNameForName:name].UTF8String);
+		if (!_customClass) {
+			_customClass = objc_allocateClassPair(object_getClass(self), [self.class classNameForName:name].UTF8String, 0);
 			
 			initializer(self);
 			
-			objc_registerClassPair(class);
+			objc_registerClassPair(_customClass);
 		}
-		object_setClass(self, class);
+		object_setClass(self, _customClass);
 	}
 	return self;
 }
@@ -47,7 +50,7 @@ l3_test(@selector(addMethodWithSelector:types:block:), ^{
 
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block {
 	IMP implementation = imp_implementationWithBlock(block);
-	class_addMethod(self.class, selector, implementation, types);
+	class_addMethod(self.customClass, selector, implementation, types);
 }
 
 @end
