@@ -1,6 +1,5 @@
 #import "L3SourceReference.h"
 
-
 @interface L3SourceReference : NSObject <L3SourceReference>
 @end
 
