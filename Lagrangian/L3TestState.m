@@ -135,7 +135,9 @@ l3_test(@selector(forwardInvocation:), ^{
 	L3TestState<L3TestStateProtocolTest> *state = (L3TestState<L3TestStateProtocolTest> *)[L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest)];
 	
 	l3_expect(state.string).to.equal(nil);
-	state.string = @"phrenology";
+	@autoreleasepool {
+		state.string = [NSString stringWithFormat:@"phrenolo%@y", @"g"];
+	}
 	l3_expect(state.string).to.equal(@"phrenology");
 	
 	l3_expect(state.floatValue).to.equal(@0.0);
@@ -151,18 +153,28 @@ l3_test(@selector(forwardInvocation:), ^{
 	NSString *selectorString = NSStringFromSelector(invocation.selector);
 	NSString *propertyName = self.propertyNamesBySelectorString[selectorString];
 	
-	if ([self.class selectorStringIsSetter:selectorString]) {
-		uint8_t bytes[invocation.methodSignature.frameLength - [self methodSignatureForSelector:@selector(description)].frameLength];
+	
+	
+	if (L3TestStateSelectorStringIsSetter(selectorString)) {
+		bool isObject = L3TestStateTypeStringRepresentsObject([invocation.methodSignature getArgumentTypeAtIndex:2]);
+		intptr_t bytes[(invocation.methodSignature.frameLength - [self methodSignatureForSelector:@selector(description)].frameLength) / sizeof(intptr_t)];
 		[invocation getArgument:bytes atIndex:2];
-		self.properties[propertyName] = [NSValue valueWithBytes:bytes objCType:[invocation.methodSignature getArgumentTypeAtIndex:2]];
+		self.properties[propertyName] = isObject?
+			(__bridge id)*(void **)bytes
+		:	[NSValue valueWithBytes:bytes objCType:[invocation.methodSignature getArgumentTypeAtIndex:2]];
 	} else {
+		bool isObject = L3TestStateTypeStringRepresentsObject(invocation.methodSignature.methodReturnType);
 		id value = self.properties[propertyName];
-		uint8_t bytes[invocation.methodSignature.methodReturnLength];
-		if (value)
-			[value getValue:&bytes];
-		else
-			memset(bytes, 0, sizeof bytes);
-		[invocation setReturnValue:bytes];
+		if (isObject) {
+			[invocation setReturnValue:&value];
+		} else {
+			intptr_t bytes[invocation.methodSignature.methodReturnLength];
+			if (value)
+				[value getValue:&bytes];
+			else
+				memset(bytes, 0, sizeof bytes);
+			[invocation setReturnValue:bytes];
+		}
 	}
 }
 
@@ -170,18 +182,22 @@ l3_test(@selector(forwardInvocation:), ^{
 #pragma mark Categorizing
 
 l3_test(@selector(selectorStringIsSetter:), ^{
-	l3_expect([L3TestState selectorStringIsSetter:@"setFoo:"]).to.equal(@YES);
-	l3_expect([L3TestState selectorStringIsSetter:@"setF:"]).to.equal(@YES);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setFoo:")).to.equal(@YES);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setF:")).to.equal(@YES);
 	
-	l3_expect([L3TestState selectorStringIsSetter:@"set:"]).to.equal(@NO);
-	l3_expect([L3TestState selectorStringIsSetter:@"set"]).to.equal(@NO);
-	l3_expect([L3TestState selectorStringIsSetter:@"setfoo:"]).to.equal(@NO);
-	l3_expect([L3TestState selectorStringIsSetter:@"setFoo"]).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"set:")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"set")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setfoo:")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setFoo")).to.equal(@NO);
 })
 
-+(bool)selectorStringIsSetter:(NSString *)selectorString {
+static inline bool L3TestStateSelectorStringIsSetter(NSString *selectorString) {
 	NSRegularExpression *setterExpression = [NSRegularExpression regularExpressionWithPattern:@"^set[A-Z_][a-zA-Z_]*:$" options:NSRegularExpressionDotMatchesLineSeparators error:NULL];
 	return [setterExpression numberOfMatchesInString:selectorString options:NSMatchingAnchored range:(NSRange){0, selectorString.length}];
+}
+
+static inline bool L3TestStateTypeStringRepresentsObject(const char *type) {
+	return strncmp(type, @encode(id), 1) == 0;
 }
 
 @end
