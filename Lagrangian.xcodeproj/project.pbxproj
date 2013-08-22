@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D42B169417C5B0F000C5CA29 /* L3Block.m in Sources */ = {isa = PBXBuildFile; fileRef = D42B169217C5B0F000C5CA29 /* L3Block.m */; };
+		D42B169517C5B0F000C5CA29 /* L3Block.m in Sources */ = {isa = PBXBuildFile; fileRef = D42B169217C5B0F000C5CA29 /* L3Block.m */; };
+		D42B169617C5B0F000C5CA29 /* L3Block.h in Headers */ = {isa = PBXBuildFile; fileRef = D42B169317C5B0F000C5CA29 /* L3Block.h */; };
+		D42B169717C5B0F000C5CA29 /* L3Block.h in Headers */ = {isa = PBXBuildFile; fileRef = D42B169317C5B0F000C5CA29 /* L3Block.h */; };
 		D439168F179E49600002EDCA /* L3Test.h in Headers */ = {isa = PBXBuildFile; fileRef = D439168D179E49600002EDCA /* L3Test.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4391691179E49600002EDCA /* L3Test.h in Headers */ = {isa = PBXBuildFile; fileRef = D439168D179E49600002EDCA /* L3Test.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4391692179E49600002EDCA /* L3Test.m in Sources */ = {isa = PBXBuildFile; fileRef = D439168E179E49600002EDCA /* L3Test.m */; };
@@ -109,6 +113,8 @@
 
 /* Begin PBXFileReference section */
 		D403A78417A0DC710049B869 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D42B169217C5B0F000C5CA29 /* L3Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Block.m; sourceTree = "<group>"; };
+		D42B169317C5B0F000C5CA29 /* L3Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Block.h; sourceTree = "<group>"; };
 		D439168D179E49600002EDCA /* L3Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = L3Test.h; sourceTree = "<group>"; };
 		D439168E179E49600002EDCA /* L3Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = L3Test.m; sourceTree = "<group>"; };
 		D4391695179E49B40002EDCA /* L3Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = L3Defines.h; sourceTree = "<group>"; };
@@ -211,6 +217,8 @@
 			children = (
 				D472C845179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h */,
 				D472C846179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.m */,
+				D42B169317C5B0F000C5CA29 /* L3Block.h */,
+				D42B169217C5B0F000C5CA29 /* L3Block.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -374,6 +382,7 @@
 				D4391691179E49600002EDCA /* L3Test.h in Headers */,
 				D4EA374C17586532003C6F23 /* L3Mock.h in Headers */,
 				D4BD3F3717B9DFFD00D513D8 /* L3TestState.h in Headers */,
+				D42B169717C5B0F000C5CA29 /* L3Block.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +399,7 @@
 				D4EA374A17586532003C6F23 /* L3Mock.h in Headers */,
 				D472C847179DC4EC00FD2F41 /* NSException+L3OCUnitCompatibility.h in Headers */,
 				D4BD3F3617B9DFFD00D513D8 /* L3TestState.h in Headers */,
+				D42B169617C5B0F000C5CA29 /* L3Block.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +568,7 @@
 				D475264C17AD5B280001FA73 /* L3Mock.m in Sources */,
 				D44AA23C17A56F5B00B9F9B3 /* L3SourceReference.m in Sources */,
 				D4FEC500179F4E0700356BA3 /* L3TestRunner.m in Sources */,
+				D42B169517C5B0F000C5CA29 /* L3Block.m in Sources */,
 				D4BEDF2E17A0F10A00DCFF57 /* L3Expectation.m in Sources */,
 				D4391694179E49600002EDCA /* L3Test.m in Sources */,
 				D4BD3F3917B9DFFD00D513D8 /* L3TestState.m in Sources */,
@@ -581,6 +592,7 @@
 				D475264B17AD5B280001FA73 /* L3Mock.m in Sources */,
 				D44AA23D17A56F5C00B9F9B3 /* L3SourceReference.m in Sources */,
 				D4FEC502179F4E0900356BA3 /* L3TestRunner.m in Sources */,
+				D42B169417C5B0F000C5CA29 /* L3Block.m in Sources */,
 				D4BEDF2D17A0F10A00DCFF57 /* L3Expectation.m in Sources */,
 				D4391692179E49600002EDCA /* L3Test.m in Sources */,
 				D4BD3F3817B9DFFD00D513D8 /* L3TestState.m in Sources */,

@@ -1,6 +1,7 @@
+#import "Lagrangian.h"
+#import "L3Block.h"
 #import "L3Mock.h"
 
-#import <Lagrangian/Lagrangian.h>
 #if __has_feature(modules)
 @import ObjectiveC.runtime;
 #else
@@ -9,7 +10,7 @@
 
 @interface L3MockBuilder : NSObject <L3MockBuilder>
 
-+(Class)classWithName:(const char *)className initializer:(void(^)(id<L3MockBuilder> mock))initializer;
++(Class)classWithName:(const char *)className initializer:(L3MockInitializer)initializer;
 
 @property (nonatomic, readonly) Class targetClass;
 
@@ -17,7 +18,16 @@
 
 @implementation L3Mock
 
-+(id)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer {
++(NSString *)uniqueMockClassName {
+	NSUUID *UUID = [NSUUID UUID];
+	return [@"L3Mock_" stringByAppendingString:[[UUID UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@"_"]];
+}
+
++(id)mockWithInitializer:(L3MockInitializer)initializer {
+	return [self mockNamed:[self uniqueMockClassName] initializer:initializer];
+}
+
++(id)mockNamed:(NSString *)name initializer:(L3MockInitializer)initializer {
 	return [[[L3MockBuilder classWithName:[self classNameForName:name].UTF8String initializer:initializer] alloc] init];
 }
 
@@ -29,7 +39,7 @@
 
 @implementation L3MockBuilder
 
-+(Class)classWithName:(const char *)className initializer:(void(^)(id<L3MockBuilder> mock))initializer {
++(Class)classWithName:(const char *)className initializer:(L3MockInitializer)initializer {
 	Class class = objc_getClass(className);
 	if (!class) {
 		class = objc_allocateClassPair([L3Mock class], className, 0);
@@ -49,8 +59,32 @@
 }
 
 
+l3_test(@selector(addMethodWithSelector:block:), ^{
+	__block NSString *test;
+	L3Mock *mock = [L3Mock mockWithInitializer:^(id<L3MockBuilder> mock) {
+		[mock addMethodWithSelector:@selector(description) block:^{
+			return test;
+		}];
+		
+		[mock addMethodWithSelector:@selector(isEqual:) block:^BOOL (L3Mock *self, id other) {
+			NSLog(@"self: %@ other: %@", self, other);
+			return [[other description] isEqualToString:self.description];
+		}];
+	}];
+	l3_expect(mock.description).to.equal(nil);
+	
+	test = @"test";
+	l3_expect(mock.description).to.equal(@"test");
+	
+	l3_expect(mock).to.equal(@"test");
+})
+
+-(void)addMethodWithSelector:(SEL)selector block:(id)block {
+	[self addMethodWithSelector:selector types:L3BlockGetSignature(block) block:block];
+}
+
 l3_test(@selector(addMethodWithSelector:types:block:), ^{
-	L3Mock *mock = [L3Mock mockNamed:@"Mock" initializer:^(id<L3MockBuilder> mock) {
+	L3Mock *mock = [L3Mock mockWithInitializer:^(id<L3MockBuilder> mock) {
 		[mock addMethodWithSelector:@selector(description) types:L3TypeSignature(id, id, SEL) block:^{
 			return @"test";
 		}];
