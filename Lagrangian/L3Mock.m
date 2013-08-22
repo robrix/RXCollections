@@ -17,8 +17,8 @@
 
 @implementation L3Mock
 
-+(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer {
-	return [[L3MockBuilder classWithName:[self classNameForName:name].UTF8String initializer:initializer] init];
++(id)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer {
+	return [[[L3MockBuilder classWithName:[self classNameForName:name].UTF8String initializer:initializer] alloc] init];
 }
 
 +(NSString *)classNameForName:(NSString *)name {
@@ -61,6 +61,10 @@ l3_test(@selector(addMethodWithSelector:types:block:), ^{
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block {
 	IMP implementation = imp_implementationWithBlock(block);
 	class_addMethod(self.targetClass, selector, implementation, types);
+}
+
+-(void)addProtocol:(Protocol *)protocol {
+	class_addProtocol(self.targetClass, protocol);
 }
 
 @end

@@ -13,13 +13,14 @@
 
 @interface L3Mock : NSObject
 
-+(instancetype)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer;
++(id)mockNamed:(NSString *)name initializer:(void(^)(id<L3MockBuilder> mock))initializer;
 
 @end
 
 @protocol L3MockBuilder <NSObject>
 
 -(void)addMethodWithSelector:(SEL)selector types:(const char *)types block:(id)block;
+-(void)addProtocol:(Protocol *)protocol;
 
 @end
 
