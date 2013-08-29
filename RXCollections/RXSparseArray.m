@@ -16,16 +16,27 @@ typedef struct {
 	__unsafe_unretained id object;
 } RXSparseArraySlot;
 
+/**
+ Casts a value to a given type by embedding it in a union. This algebraic data type–esque approach is safe in the presence of strict aliasing.
+ */
 #define RXUnionCast(value, type) ((union{__typeof__(value) from; type to; })value).to
 
-static inline RXSparseArraySlot *RXSparseArrayGetSlot(void *buffer, NSUInteger index) {
-	return RXUnionCast(buffer, RXSparseArraySlot *) + index;
+static inline RXSparseArraySlot *RXSparseArrayGetSlot(RXSparseArraySlot *slots, NSUInteger index) {
+	return slots + index;
 }
 
-static inline void RXSparseArraySlotSetIndexAndObject(RXSparseArraySlot *slot, NSUInteger index, id object) {
+static inline void RXSparseArraySlotSetIndex(RXSparseArraySlot *slot, NSUInteger index) {
 	slot->index = index;
+}
+
+static inline void RXSparseArraySlotSetObject(RXSparseArraySlot *slot, id object) {
 	id __strong *strongObject = (id __strong *)(void *)&slot->object;
 	*strongObject = object;
+}
+
+static inline void RXSparseArraySetSlot(RXSparseArraySlot *from, RXSparseArraySlot *to) {
+	RXSparseArraySlotSetIndex(from, to->index);
+	RXSparseArraySlotSetObject(from, to->object);
 }
 
 static inline NSComparisonResult _RXSparseArraySlotCompare(const NSUInteger *left, const NSUInteger *right) {
@@ -41,6 +52,39 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 	return _RXSparseArraySlotCompare(left, right);
 }
 
+
+static inline RXSparseArraySlot *RXSparseArrayGetSlotAtIndex(RXSparseArraySlot *slots, NSUInteger elementCount, NSUInteger index) {
+	return bsearch(&index, slots, elementCount, sizeof(RXSparseArraySlot), RXSparseArraySlotCompare);
+}
+
+static inline id RXSparseArrayGetObjectAtIndex(RXSparseArraySlot *slots, NSUInteger elementCount, NSUInteger index) {
+	RXSparseArraySlot *slot = RXSparseArrayGetSlotAtIndex(slots, elementCount, index);
+	return slot? slot->object : nil;
+}
+
+static inline NSUInteger RXSparseArrayGetCount(RXSparseArraySlot *slots, NSUInteger elementCount) {
+	return (slots + elementCount - 1)->index + 1;
+}
+
+static inline NSUInteger RXSparseArraySortAndCount(RXSparseArraySlot *slots, NSUInteger elementCount) {
+	qsort(slots, elementCount, sizeof(RXSparseArraySlot), RXSparseArraySlotCompare);
+	return RXSparseArrayGetCount(slots, elementCount);
+}
+
+
+static inline NSUInteger RXSparseArrayCopyObjectsAndIndices(RXSparseArraySlot *slots, NSUInteger elementCount, const id objects[elementCount], const NSUInteger indices[elementCount]) {
+	for (NSUInteger i = 0; i < elementCount; i++) {
+		RXSparseArraySlotSetIndex(RXSparseArrayGetSlot(slots, i), indices[i]);
+		RXSparseArraySlotSetObject(RXSparseArrayGetSlot(slots, i), objects[i]);
+	}
+	
+	return RXSparseArraySortAndCount(slots, elementCount);
+}
+
+
+static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) {
+	return count + ((count + 1) % 8);
+}
 
 
 @implementation RXSparseArray
@@ -68,7 +112,7 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 -(void)dealloc {
 	void *contents = self.extraSpace;
 	for (NSUInteger i = 0; i < _elementCount; i++) {
-		RXSparseArraySlotSetIndexAndObject(RXSparseArrayGetSlot(contents, i), 0, nil);
+		RXSparseArraySlotSetObject(RXSparseArrayGetSlot(contents, i), nil);
 	}
 }
 
@@ -91,12 +135,7 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 }
 
 -(id)objectAtIndex:(NSUInteger)index {
-	RXSparseArraySlot *slot = NULL;
-	id object;
-	if ((slot = bsearch(&index, self.extraSpace, _elementCount, sizeof(RXSparseArraySlot), RXSparseArraySlotCompare))) {
-		object = slot->object;
-	}
-	return object;
+	return RXSparseArrayGetObjectAtIndex(self.extraSpace, _elementCount, index);
 }
 
 
@@ -169,6 +208,124 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 		state->state += produced;
 	}
 	return produced;
+}
+
+@end
+
+
+@l3_suite("RXMutableSparseArray");
+
+@implementation RXMutableSparseArray {
+	NSUInteger _capacity;
+	RXSparseArraySlot *_contents;
+}
+
++(instancetype)arrayWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
+	return [[self alloc] initWithObjects:objects atIndices:indices count:count];
+}
+
+-(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
+	if ((self = [super init])) {
+		_contents = calloc(count, sizeof(RXSparseArraySlot));
+		_elementCount = count;
+		_count = RXSparseArrayCopyObjectsAndIndices(_contents, _elementCount, objects, indices);
+	}
+	return self;
+}
+
+-(void)dealloc {
+	for (NSUInteger i = 0; i < _elementCount; i++) {
+		RXSparseArraySlotSetObject(RXSparseArrayGetSlot(_contents, i), nil);
+	}
+	free(_contents);
+}
+
+
+-(void)resizeForElementCount:(NSUInteger)count {
+	NSUInteger newCapacity = RXMutableSparseArrayCapacityForCount(count);
+	if (_capacity < newCapacity) {
+		_contents = realloc(_contents, newCapacity);
+	}
+}
+
+
+-(id)objectAtIndex:(NSUInteger)index {
+	return RXSparseArrayGetObjectAtIndex(_contents, _elementCount, index);
+}
+
+
+-(void)insertObject:(id)object atIndex:(NSUInteger)index {
+	[self resizeForElementCount:_elementCount + 1];
+}
+
+@l3_test("removing an element reduces the indices of later elements") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
+	
+	[array removeObjectAtIndex:100];
+	
+	l3_assert(array[199], @2);
+}
+
+@l3_test("removing an element reduces the element count accordingly") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
+	
+	[array removeObjectAtIndex:100];
+	
+	l3_assert(array.elementCount, 1);
+}
+
+@l3_test("removing an element reduces the count accordingly") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
+	
+	[array removeObjectAtIndex:100];
+	
+	l3_assert(array.count, 200);
+}
+
+-(void)removeObjectAtIndex:(NSUInteger)index {
+	NSParameterAssert(_elementCount > 0);
+	
+	[self resizeForElementCount:_elementCount - 1];
+	
+	RXSparseArraySlot *slot = RXSparseArrayGetSlotAtIndex(_contents, _elementCount, index);
+	if (slot) {
+		RXSparseArraySlot *previous = slot;
+		while (slot < _contents + _elementCount) {
+			RXSparseArraySlotSetIndex(slot, slot->index - 1);
+			
+			RXSparseArraySetSlot(previous, slot);
+			
+			previous = slot;
+			slot++;
+		}
+		_elementCount--;
+		_count--;
+	}
+}
+
+-(void)addObject:(id)object {
+	[self resizeForElementCount:_elementCount + 1];
+	
+	RXSparseArraySlotSetObject(RXSparseArrayGetSlot(_contents, _elementCount), object);
+	_elementCount++;
+}
+
+-(void)removeLastObject {
+	NSParameterAssert(_elementCount > 0);
+	
+	[self resizeForElementCount:_elementCount - 1];
+	
+	RXSparseArraySlotSetObject(RXSparseArrayGetSlot(_contents, _elementCount - 1), nil);
+	_elementCount--;
+}
+
+-(void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)object {
+	RXSparseArraySlot *slot = RXSparseArrayGetSlotAtIndex(_contents, _elementCount, index);
+	if (slot) {
+		RXSparseArraySlotSetObject(slot, object);
+	} else {
+		[self insertObject:object atIndex:index];
+	}
 }
 
 @end

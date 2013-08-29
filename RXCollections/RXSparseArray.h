@@ -35,3 +35,23 @@
 -(id)objectAtIndex:(NSUInteger)index;
 
 @end
+
+
+@interface RXMutableSparseArray : NSMutableArray
+
++(instancetype)arrayWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count;
+
+-(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count;
+
+@property (nonatomic, readonly) NSUInteger count;
+@property (nonatomic, readonly) NSUInteger elementCount;
+
+-(id)objectAtIndex:(NSUInteger)index;
+
+-(void)insertObject:(id)anObject atIndex:(NSUInteger)index;
+-(void)removeObjectAtIndex:(NSUInteger)index;
+-(void)addObject:(id)anObject;
+-(void)removeLastObject;
+-(void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
+
+@end
