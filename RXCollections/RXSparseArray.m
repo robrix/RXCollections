@@ -49,17 +49,15 @@ static inline int RXSparseArraySlotCompare(const void *left, const void *right) 
 	return RXSingleton(self, ^id{ return [[self allocateWithExtraSize:0] init]; });
 }
 
+
++(instancetype)arrayWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
+	return [[self alloc] initWithObjects:objects atIndices:indices count:count];
+}
+
 -(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
 	if ((self = [[self.class allocateWithExtraSize:sizeof(RXSparseArraySlot) * count] init])) {
 		_elementCount = count;
-		void *contents = self.extraSpace;
-		for (NSUInteger i = 0; i < _elementCount; i++) {
-			RXSparseArraySlotSetIndexAndObject(RXSparseArrayGetSlot(contents, i), indices[i], objects[i]);
-		}
-		
-		qsort(contents, _elementCount, sizeof(RXSparseArraySlot), RXSparseArraySlotCompare);
-		
-		_count = RXSparseArrayGetSlot(contents, _elementCount - 1)->index + 1;
+		_count = RXSparseArrayCopyObjectsAndIndices(self.extraSpace, _elementCount, objects, indices);
 	}
 	return self;
 }

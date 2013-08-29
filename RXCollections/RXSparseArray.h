@@ -6,6 +6,8 @@
 
 @interface RXSparseArray : NSArray <NSCopying, NSMutableCopying, NSFastEnumeration>
 
++(instancetype)arrayWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count;
+
 /**
  Creates a sparse array with the given objects at the specific indices.
  */
