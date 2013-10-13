@@ -263,11 +263,56 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 }
 
 
--(void)insertObject:(id)object atIndex:(NSUInteger)index {
-	[self resizeForElementCount:_elementCount + 1];
+@l3_test("inserting an element increments the indices of later elements") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
+	
+	[array insertObject:@1 atIndex:50];
+
+	l3_assert(array[101], @2);
 }
 
-@l3_test("removing an element reduces the indices of later elements") {
+@l3_test("inserting an element increments the element count") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
+	
+	[array insertObject:@1 atIndex:50];
+	
+	l3_assert(array.elementCount, 2);
+}
+
+@l3_test("inserting an element increments the count") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
+	
+//	[array resizeForElementCount:200];
+	
+	[array insertObject:@1 atIndex:50];
+	
+	l3_assert(array.count, 102);
+}
+
+-(void)insertObject:(id)object atIndex:(NSUInteger)index {
+	[self resizeForElementCount:_elementCount + 1];
+	
+	RXSparseArraySlot *next = RXSparseArrayGetSlot(_contents, _elementCount);
+	RXSparseArraySlot *slot = (next > _contents)? next - 1 : next;
+	while ((slot >= _contents) && (slot->index >= index))
+	{
+		RXSparseArraySlotSetIndex(slot, slot->index + 1);
+		
+		RXSparseArraySetSlot(next, slot);
+		
+		next = slot;
+		slot--;
+	}
+	
+	RXSparseArraySlotSetIndex(next, index);
+	RXSparseArraySlotSetObject(next, object);
+	
+	_elementCount++;
+	_count++;
+}
+
+
+@l3_test("removing an element decrements the indices of later elements") {
 	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
 	
 	[array removeObjectAtIndex:100];
@@ -275,7 +320,7 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	l3_assert(array[199], @2);
 }
 
-@l3_test("removing an element reduces the element count accordingly") {
+@l3_test("removing an element decrements the element count accordingly") {
 	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
 	
 	[array removeObjectAtIndex:100];
@@ -283,7 +328,7 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	l3_assert(array.elementCount, 1);
 }
 
-@l3_test("removing an element reduces the count accordingly") {
+@l3_test("removing an element decrements the count accordingly") {
 	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @1, @2 } atIndices:(const NSUInteger[]){ 100, 200 } count:2];
 	
 	[array removeObjectAtIndex:100];
