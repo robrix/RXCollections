@@ -234,6 +234,14 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	return self;
 }
 
+-(instancetype)init {
+	if ((self = [super init])) {
+		_contents = calloc(8, sizeof(RXSparseArraySlot));
+		_capacity = 8;
+	}
+	return self;
+}
+
 -(void)dealloc {
 	for (NSUInteger i = 0; i < _elementCount; i++) {
 		RXSparseArraySlotSetObject(RXSparseArrayGetSlot(_contents, i), nil);
