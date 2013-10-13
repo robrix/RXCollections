@@ -83,7 +83,8 @@ static inline NSUInteger RXSparseArrayCopyObjectsAndIndices(RXSparseArraySlot *s
 
 
 static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) {
-	return count + ((count + 1) % 8);
+	const CGFloat bySteps = 8;
+	return ceilf(((CGFloat)count) / bySteps) * 8;
 }
 
 
