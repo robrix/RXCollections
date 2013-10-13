@@ -253,7 +253,13 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 -(void)resizeForElementCount:(NSUInteger)count {
 	NSUInteger newCapacity = RXMutableSparseArrayCapacityForCount(count);
 	if (_capacity < newCapacity) {
-		_contents = realloc(_contents, newCapacity);
+		RXSparseArraySlot *newContents = calloc(newCapacity, sizeof(RXSparseArraySlot));
+		memcpy(newContents, _contents, _capacity * sizeof(RXSparseArraySlot));
+		free(_contents);
+		_contents = newContents;
+//		_contents = realloc(_contents, newCapacity);
+//		memset((_contents + _capacity), 0, (newCapacity - _capacity) * sizeof(RXSparseArraySlot));
+		_capacity = newCapacity;
 	}
 }
 
