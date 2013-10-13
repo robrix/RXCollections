@@ -178,7 +178,6 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 			if (stop) break;
 		}
 	}
-	
 }
 
 
@@ -228,6 +227,7 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 -(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_contents = calloc(count, sizeof(RXSparseArraySlot));
+		_capacity = count;
 		_elementCount = count;
 		_count = RXSparseArrayCopyObjectsAndIndices(_contents, _elementCount, objects, indices);
 	}
