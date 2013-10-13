@@ -285,14 +285,28 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	l3_assert(array.elementCount, 2);
 }
 
-@l3_test("inserting an element increments the count") {
+@l3_test("inserting an element in the interior of the array adjusts the count") {
 	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
-	
-//	[array resizeForElementCount:200];
 	
 	[array insertObject:@1 atIndex:50];
 	
 	l3_assert(array.count, 102);
+}
+
+@l3_test("inserting an element at the end of the array adjusts the count") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
+	
+	[array insertObject:@1 atIndex:299];
+	
+	l3_assert(array.count, 300);
+}
+
+@l3_test("inserting an element at an extant index inserts before that element") {
+	RXMutableSparseArray *array = [RXMutableSparseArray arrayWithObjects:(const id []){ @2 } atIndices:(const NSUInteger []){ 100 } count:1];
+	
+	[array insertObject:@1 atIndex:100];
+	
+	l3_assert(array[100], @1);
 }
 
 -(void)insertObject:(id)object atIndex:(NSUInteger)index {
@@ -313,8 +327,8 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	RXSparseArraySlotSetIndex(next, index);
 	RXSparseArraySlotSetObject(next, object);
 	
+	_count = RXSparseArrayGetSlot(_contents, _elementCount)->index + 1;
 	_elementCount++;
-	_count++;
 }
 
 
