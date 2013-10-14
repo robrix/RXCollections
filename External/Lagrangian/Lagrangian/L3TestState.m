@@ -13,7 +13,7 @@ const NSTimeInterval L3TestStateDefaultTimeout = 5.;
 
 @property (nonatomic, readonly) NSMutableDictionary *contents;
 
-@property (strong, nonatomic, readonly) dispatch_semaphore_t completionSemaphore;
+@property (strong, nonatomic, readonly) __attribute__((NSObject)) dispatch_semaphore_t completionSemaphore;
 
 @property (assign, nonatomic, readwrite, getter = isDeferred) bool deferred;
 
