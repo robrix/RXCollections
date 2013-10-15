@@ -255,12 +255,8 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 -(void)resizeForElementCount:(NSUInteger)count {
 	NSUInteger newCapacity = RXMutableSparseArrayCapacityForCount(count);
 	if (_capacity < newCapacity) {
-		RXSparseArraySlot *newContents = calloc(newCapacity, sizeof(RXSparseArraySlot));
-		memcpy(newContents, _contents, _capacity * sizeof(RXSparseArraySlot));
-		free(_contents);
-		_contents = newContents;
-//		_contents = realloc(_contents, newCapacity);
-//		memset((_contents + _capacity), 0, (newCapacity - _capacity) * sizeof(RXSparseArraySlot));
+		_contents = realloc(_contents, newCapacity * sizeof(RXSparseArraySlot));
+		memset((_contents + _capacity), 0, (newCapacity - _capacity) * sizeof(RXSparseArraySlot));
 		_capacity = newCapacity;
 	}
 }
@@ -316,8 +312,7 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 	
 	RXSparseArraySlot *next = RXSparseArrayGetSlot(_contents, _elementCount);
 	RXSparseArraySlot *slot = (next > _contents)? next - 1 : next;
-	while ((slot >= _contents) && (slot->index >= index))
-	{
+	while ((slot >= _contents) && (slot->index >= index)) {
 		RXSparseArraySlotSetIndex(slot, slot->index + 1);
 		
 		RXSparseArraySetSlot(next, slot);
