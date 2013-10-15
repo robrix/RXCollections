@@ -225,21 +225,23 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 }
 
 -(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
-	if ((self = [super init])) {
-		_contents = calloc(count, sizeof(RXSparseArraySlot));
-		_capacity = count;
-		_elementCount = count;
+	if ((self = [self initWithCapacity:count])) {
 		_count = RXSparseArrayCopyObjectsAndIndices(_contents, _elementCount, objects, indices);
+		_elementCount = count;
+	}
+	return self;
+}
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity {
+	if ((self = [super init])) {
+		_capacity = capacity;
+		_contents = calloc(_capacity, sizeof(RXSparseArraySlot));
 	}
 	return self;
 }
 
 -(instancetype)init {
-	if ((self = [super init])) {
-		_contents = calloc(8, sizeof(RXSparseArraySlot));
-		_capacity = 8;
-	}
-	return self;
+	return [self initWithCapacity:8];
 }
 
 -(void)dealloc {
