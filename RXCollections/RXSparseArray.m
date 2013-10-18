@@ -226,8 +226,8 @@ static inline NSUInteger RXMutableSparseArrayCapacityForCount(NSUInteger count) 
 
 -(instancetype)initWithObjects:(const id [])objects atIndices:(const NSUInteger [])indices count:(NSUInteger)count {
 	if ((self = [self initWithCapacity:count])) {
-		_count = RXSparseArrayCopyObjectsAndIndices(_contents, _elementCount, objects, indices);
 		_elementCount = count;
+		_count = RXSparseArrayCopyObjectsAndIndices(_contents, _elementCount, objects, indices);
 	}
 	return self;
 }
