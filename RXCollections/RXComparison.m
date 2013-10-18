@@ -14,33 +14,31 @@ static RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 @l3_suite("RXMin");
 
 @l3_test("finds the minimum value among a collection") {
-	l3_assert(RXMin(@[@3, @1, @2], nil, nil), @1);
-	l3_assert(RXMinF(@[@3, @1, @2], nil, nil), @1);
+	l3_assert(RXMin(@[@3, @1, @2], nil), @1);
+	l3_assert(RXMinF(@[@3, @1, @2], NULL), @1);
 }
 
-@l3_test("considers the initial value if provided") {
-	l3_assert(RXMin(@[@3, @1, @2], @0, nil), @0);
-	l3_assert(RXMinF(@[@3, @1, @2], @0, nil), @0);
-}
-
-static id minLength(NSString *each, bool *stop) { return @(each.length); }
+static id stringLength(NSString *each, bool *stop) { return @(each.length); }
 
 @l3_test("compares the value provided by the block if provided") {
-	l3_assert(RXMin(@[@"123", @"1", @"12"], nil, ^(NSString *each, bool *stop) { return @(each.length); }), @1);
-	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength), @1);
+	l3_assert(RXMin(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); }), @"1");
+	l3_assert(RXMinF(@[@"123", @"1", @"12"], stringLength), @"1");
 }
 
-id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block) {
-	return RXFold(enumeration, initial, ^(id memo, id each, bool *stop) {
+id RXMin(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+	__block id minimum;
+	return RXFold(enumeration, nil, ^(id memo, id each, bool *stop) {
 		id value = block? block(each, stop) : each;
-		return [memo compare:value] == NSOrderedAscending?
+		NSComparisonResult order = [minimum compare:value];
+		minimum = order == NSOrderedAscending? minimum : value;
+		return order == NSOrderedAscending?
 			memo
-		:	value;
+		:	each;
 	});
 }
 
-id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction function) {
-	return RXMin(enumeration, initial, function? RXMapBlockWithFunction(function) : nil);
+id RXMinF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
+	return RXMin(enumeration, function? RXMapBlockWithFunction(function) : nil);
 }
 
 
@@ -49,21 +47,29 @@ id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction function)
 @l3_suite("RXMax");
 
 @l3_test("finds the maximum value among a collection") {
-	l3_assert(RXMax(@[@3, @1, @2], nil, nil), @3);
+	l3_assert(RXMax(@[@3, @1, @2], nil), @3);
+	l3_assert(RXMaxF(@[@3, @1, @2], NULL), @3);
 }
 
-@l3_test("considers the initial value if provided") {
-	l3_assert(RXMax(@[@3, @1, @2], @4, nil), @4);
+@l3_test("compares the value provided by the block if provided") {
+	l3_assert(RXMax(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); }), @"123");
+	l3_assert(RXMaxF(@[@"123", @"1", @"12"], stringLength), @"123");
 }
 
-
-id RXMax(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block) {
-	return RXFold(enumeration, initial, ^(id memo, id each, bool *stop) {
+id RXMax(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+	__block id maximum;
+	return RXFold(enumeration, nil, ^(id memo, id each, bool *stop) {
 		id value = block? block(each, stop) : each;
-		return [memo compare:value] == NSOrderedDescending?
+		NSComparisonResult order = [maximum compare:value];
+		maximum = order == NSOrderedDescending? maximum : value;
+		return order == NSOrderedDescending?
 			memo
-		:	value;
+		:	each;
 	});
+}
+
+id RXMaxF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
+	return RXMax(enumeration, function? RXMapBlockWithFunction(function) : nil);
 }
 
 
