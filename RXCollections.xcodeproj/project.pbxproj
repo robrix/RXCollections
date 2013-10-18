@@ -102,6 +102,12 @@
 		D4C8768D16A2172100208BE9 /* RXPair.h in Headers */ = {isa = PBXBuildFile; fileRef = D4C8768A16A2172100208BE9 /* RXPair.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8768E16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
 		D4C8768F16A2172100208BE9 /* RXPair.m in Sources */ = {isa = PBXBuildFile; fileRef = D4C8768B16A2172100208BE9 /* RXPair.m */; };
+		D4CBC66D1811B32E00265587 /* RXComparison.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CBC66B1811B32E00265587 /* RXComparison.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CBC66E1811B32E00265587 /* RXComparison.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CBC66B1811B32E00265587 /* RXComparison.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CBC66F1811B32E00265587 /* RXComparison.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CBC66B1811B32E00265587 /* RXComparison.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4CBC6701811B32E00265587 /* RXComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CBC66C1811B32E00265587 /* RXComparison.m */; };
+		D4CBC6711811B32E00265587 /* RXComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CBC66C1811B32E00265587 /* RXComparison.m */; };
+		D4CBC6721811B32E00265587 /* RXComparison.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CBC66C1811B32E00265587 /* RXComparison.m */; };
 		D4CF2C0416D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4CF2C0516D6FFFA005F5810 /* RXFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D4CF2C0216D6FFFA005F5810 /* RXFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4CF2C0616D6FFFA005F5810 /* RXFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D4CF2C0316D6FFFA005F5810 /* RXFilter.m */; };
@@ -239,6 +245,8 @@
 		D4C01DF216E8169B00C17FF6 /* RXTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTuple.m; sourceTree = "<group>"; };
 		D4C8768A16A2172100208BE9 /* RXPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXPair.h; sourceTree = "<group>"; };
 		D4C8768B16A2172100208BE9 /* RXPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPair.m; sourceTree = "<group>"; };
+		D4CBC66B1811B32E00265587 /* RXComparison.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXComparison.h; sourceTree = "<group>"; };
+		D4CBC66C1811B32E00265587 /* RXComparison.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXComparison.m; sourceTree = "<group>"; };
 		D4CF2C0216D6FFFA005F5810 /* RXFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXFilter.h; sourceTree = "<group>"; };
 		D4CF2C0316D6FFFA005F5810 /* RXFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXFilter.m; sourceTree = "<group>"; };
 		D4CF2C6016D7160C005F5810 /* RXMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMap.h; sourceTree = "<group>"; };
@@ -299,6 +307,8 @@
 		D496E85F171AFA390033792D /* Higher-order functions */ = {
 			isa = PBXGroup;
 			children = (
+				D4CBC66B1811B32E00265587 /* RXComparison.h */,
+				D4CBC66C1811B32E00265587 /* RXComparison.m */,
 				D4ADB68116F015FD00C732A0 /* RXConvolution.h */,
 				D4ADB68216F015FD00C732A0 /* RXConvolution.m */,
 				D4CF2C0216D6FFFA005F5810 /* RXFilter.h */,
@@ -433,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D473F64616DA81DD000FCD8D /* RXFilter.h in Headers */,
+				D4CBC66F1811B32E00265587 /* RXComparison.h in Headers */,
 				D473F64716DA81DD000FCD8D /* RXFold.h in Headers */,
 				D49C72CD179C402C0037626A /* RXNilArray.h in Headers */,
 				D473F64816DA81DD000FCD8D /* RXMap.h in Headers */,
@@ -459,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4B62B1E16A113C600E42C84 /* RXRecursiveEnumerator.h in Headers */,
+				D4CBC66D1811B32E00265587 /* RXComparison.h in Headers */,
 				D4C8768C16A2172100208BE9 /* RXPair.h in Headers */,
 				D49C72CB179C402C0037626A /* RXNilArray.h in Headers */,
 				D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */,
@@ -485,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4B62BC216A1611C00E42C84 /* RXRecursiveEnumerator.h in Headers */,
+				D4CBC66E1811B32E00265587 /* RXComparison.h in Headers */,
 				D4C8768D16A2172100208BE9 /* RXPair.h in Headers */,
 				D49C72CC179C402C0037626A /* RXNilArray.h in Headers */,
 				D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */,
@@ -702,6 +715,7 @@
 				D4EC50FB16EB15A700EB3B64 /* RXGenerator.m in Sources */,
 				D4ADB68816F015FD00C732A0 /* RXConvolution.m in Sources */,
 				D4ADB68F16F039D300C732A0 /* RXTraversal.m in Sources */,
+				D4CBC6721811B32E00265587 /* RXComparison.m in Sources */,
 				D4B5CA5D171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9FA11734AA1500D33495 /* RXQueue.m in Sources */,
 				D4416E161755BAB90081D480 /* RXTree.m in Sources */,
@@ -726,6 +740,7 @@
 				D4EC50F916EB15A700EB3B64 /* RXGenerator.m in Sources */,
 				D4ADB68616F015FD00C732A0 /* RXConvolution.m in Sources */,
 				D4ADB68D16F039D300C732A0 /* RXTraversal.m in Sources */,
+				D4CBC6701811B32E00265587 /* RXComparison.m in Sources */,
 				D4B5CA5B171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9F9F1734AA1500D33495 /* RXQueue.m in Sources */,
 				D4416E141755BAB90081D480 /* RXTree.m in Sources */,
@@ -750,6 +765,7 @@
 				D4EC50FA16EB15A700EB3B64 /* RXGenerator.m in Sources */,
 				D4ADB68716F015FD00C732A0 /* RXConvolution.m in Sources */,
 				D4ADB68E16F039D300C732A0 /* RXTraversal.m in Sources */,
+				D4CBC6711811B32E00265587 /* RXComparison.m in Sources */,
 				D4B5CA5C171A79ED00069C92 /* RXFilteredMapTraversalSource.m in Sources */,
 				D4BC9FA01734AA1500D33495 /* RXQueue.m in Sources */,
 				D4416E151755BAB90081D480 /* RXTree.m in Sources */,

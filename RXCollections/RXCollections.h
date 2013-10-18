@@ -11,6 +11,7 @@
 
 #pragma mark Higher-order functions
 
+#import <RXCollections/RXComparison.h>
 #import <RXCollections/RXConvolution.h>
 #import <RXCollections/RXFilter.h>
 #import <RXCollections/RXFold.h>
