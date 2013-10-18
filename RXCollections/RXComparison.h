@@ -6,14 +6,19 @@
 #import <RXCollections/RXMap.h>
 
 /**
- id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock minBlock)
- id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction minFunc)
+ Finds the minimum value returned by \c minBlock across \c enumeration.
  
- Finds the minimum value returned by `minBlock` across `enumeration`.
- 
- If `initial` is nil, it is ignored. If it is non-nil it is the initial point of comparison.
- 
- If `minBlock` or `minFunction` is nil, the objects themselves are compared, rather than the result of the block or function.
+ @param enumeration The enumeration to find a minimum across.
+ @param initial The initial point of comparison. Ignored if nil.
+ @param minBlock A block returning the object to compare given each element of \c enumeration. Nil is treated as the identity block.
  */
 extern id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMapBlock minBlock);
-extern id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction minFunc);
+
+/**
+ Finds the minimum value returned by \c minFunction across \c enumeration.
+ 
+ @param enumeration The enumeration to find a minimum across.
+ @param initial The initial point of comparison. Ignored if nil.
+ @param minFunction A pointer to a function returning the object to compare given each element of \c enumeration. NULL is treated as the identity function.
+ */
+extern id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction minFunction);
