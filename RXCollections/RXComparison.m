@@ -7,7 +7,7 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-static RXMinBlock RXMinBlockWithFunction(RXMinFunction function);
+static RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
 @l3_suite("RXMin");
 
@@ -28,20 +28,20 @@ static id minLength(NSString *each, bool *stop) { return @(each.length); }
 	l3_assert(RXMinF(@[@"123", @"1", @"12"], nil, minLength), @1);
 }
 
-id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMinBlock block) {
+id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block) {
 	return RXFold(enumeration, initial, ^(id memo, id each, bool *stop) {
 		id value = block? block(each, stop) : each;
 		return [memo compare:value] == NSOrderedAscending?
-		memo
+			memo
 		:	value;
 	});
 }
 
-id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMinFunction function) {
-	return RXMin(enumeration, initial, function? RXMinBlockWithFunction(function) : nil);
+id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction function) {
+	return RXMin(enumeration, initial, function? RXMapBlockWithFunction(function) : nil);
 }
 
 
-static inline RXMinBlock RXMinBlockWithFunction(RXMinFunction function) {
+static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
 	return ^(id each, bool *stop){ return function(each, stop); };
 }
