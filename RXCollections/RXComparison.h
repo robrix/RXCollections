@@ -6,19 +6,28 @@
 #import <RXCollections/RXMap.h>
 
 /**
- Finds the minimum value returned by \c minBlock across \c enumeration.
+ Finds the minimum value (as defined by `-compare:`) returned by \c block across \c enumeration.
  
  @param enumeration The enumeration to find a minimum across.
  @param initial The initial point of comparison. Ignored if nil.
- @param minBlock A block returning the object to compare given each element of \c enumeration. Nil is treated as the identity block.
+ @param block A block returning the object to compare given each element of \c enumeration. Nil is treated as the identity block.
  */
-extern id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMapBlock minBlock);
+extern id RXMin(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block);
 
 /**
- Finds the minimum value returned by \c minFunction across \c enumeration.
+ Finds the minimum value (as defined by `-compare:`) returned by \c function across \c enumeration.
  
  @param enumeration The enumeration to find a minimum across.
  @param initial The initial point of comparison. Ignored if nil.
- @param minFunction A pointer to a function returning the object to compare given each element of \c enumeration. NULL is treated as the identity function.
+ @param function A pointer to a function returning the object to compare given each element of \c enumeration. NULL is treated as the identity function.
  */
-extern id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction minFunction);
+extern id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction function);
+
+/**
+ Finds the maximum value (as defined by `-compare:`) returned by \c block across \c enumeration.
+ 
+ @param enumeration The enumeration to find a maximum across.
+ @param initial The initial point of comparison. Ignored if nil.
+ @param block A block returning the object to compare given each element of \c enumeration. Nil is treated as the identity block.
+ */
+extern id RXMax(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block);

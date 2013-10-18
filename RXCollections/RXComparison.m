@@ -9,6 +9,8 @@
 
 static RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
+#pragma mark Minima
+
 @l3_suite("RXMin");
 
 @l3_test("finds the minimum value among a collection") {
@@ -41,6 +43,31 @@ id RXMinF(id<NSFastEnumeration> enumeration, id initial, RXMapFunction function)
 	return RXMin(enumeration, initial, function? RXMapBlockWithFunction(function) : nil);
 }
 
+
+#pragma mark Maxima
+
+@l3_suite("RXMax");
+
+@l3_test("finds the maximum value among a collection") {
+	l3_assert(RXMax(@[@3, @1, @2], nil, nil), @3);
+}
+
+@l3_test("considers the initial value if provided") {
+	l3_assert(RXMax(@[@3, @1, @2], @4, nil), @4);
+}
+
+
+id RXMax(id<NSFastEnumeration> enumeration, id initial, RXMapBlock block) {
+	return RXFold(enumeration, initial, ^(id memo, id each, bool *stop) {
+		id value = block? block(each, stop) : each;
+		return [memo compare:value] == NSOrderedDescending?
+			memo
+		:	value;
+	});
+}
+
+
+#pragma mark Function pointer support
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
 	return ^(id each, bool *stop){ return function(each, stop); };
