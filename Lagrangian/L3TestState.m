@@ -8,7 +8,7 @@
 #import <objc/runtime.h>
 #endif
 
-l3_state((NSMutableArray *array, NSUInteger integerValue), ^{
+l3_setup((NSMutableArray *array, NSUInteger integerValue), ^{
 	
 })
 

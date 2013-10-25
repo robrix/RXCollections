@@ -775,7 +775,6 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
 				PRODUCT_NAME = Lagrangian;
 				TEST_RIG = "$(BUILT_PRODUCTS_DIR)/lagrangian";
@@ -788,7 +787,6 @@
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = "Lagrangian/Lagrangian-Info.plist";
 				PRODUCT_NAME = Lagrangian;
 				TEST_RIG = "$(BUILT_PRODUCTS_DIR)/lagrangian";
