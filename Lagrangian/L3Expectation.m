@@ -142,7 +142,7 @@ id<L3Expectation> L3Expect(L3Test *test, id<L3SourceReference> subjectReference)
 
 id<L3TestResult> L3TestResultCreateWithException(NSException *exception) {
 	L3TestResult *result = [L3TestResult new];
-	result.subjectReference = L3SourceReferenceCreate(nil, exception.filename, exception.lineNumber, nil, nil);
+	result.subjectReference = L3SourceReferenceCreate(nil, exception.filename, exception.lineNumber.unsignedIntegerValue, nil, nil);
 	result.hypothesisString = exception.reason;
 	result.observationString = exception.reason;
 	result.wasMet = NO;
