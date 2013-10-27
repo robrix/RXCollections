@@ -22,7 +22,7 @@
 @property (nonatomic, readonly) id<L3SourceReference> subjectReference;
 
 @property (nonatomic, readonly) id<L3Expectation> to;
-//@property (nonatomic, readonly) id<L3Expectation> not;
+@property (nonatomic, readonly) id<L3Expectation> not;
 
 @property (nonatomic, readonly) bool (^equal)(id object);
 

@@ -4,6 +4,8 @@
 
 #import "NSException+L3OCUnitCompatibility.h"
 
+#import "Lagrangian.h"
+
 @interface L3TestResult : NSObject <L3TestResult>
 
 @property (nonatomic) id<L3SourceReference> subjectReference;
@@ -59,6 +61,8 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
 @property (nonatomic) L3Predicate *predicate;
 
+@property (nonatomic, getter = isInverted) bool inverted;
+
 @property (nonatomic, copy) void(^completionHandler)(id<L3Expectation>, bool wasMet);
 
 @end
@@ -81,9 +85,14 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 	return self;
 }
 
-//-(id<L3Expectation>)not {
-//	return self;
-//}
+l3_test(@selector(not), ^{
+	l3_expect(@0).not.to.equal(@1);
+})
+
+-(id<L3Expectation>)not {
+	self.inverted = YES;
+	return self;
+}
 
 
 -(bool(^)(id object))equal {
@@ -101,6 +110,7 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 	NSException *unexpectedException = nil;
 	@try {
 		wasMet = [self.predicate testWithSubject:self.subjectReference.subject];
+		wasMet = self.isInverted? !wasMet : wasMet;
 	}
 	@catch (NSException *exception) {
 		unexpectedException = exception;
@@ -119,11 +129,11 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
 
 -(NSString *)assertivePhrase {
-	return [NSString stringWithFormat:@"%@ should %@", self.subjectReference.subjectSource, self.predicate];
+	return [NSString stringWithFormat:@"%@ should%@ %@", self.subjectReference.subjectSource, self.isInverted? @" not" : @"", self.predicate];
 }
 
 -(NSString *)indicativePhrase {
-	return [NSString stringWithFormat:@"%@ (%@) does not %@", self.subjectReference.subjectSource, self.subjectReference.subject, self.predicate];
+	return [NSString stringWithFormat:@"%@ (%@) does%@ %@", self.subjectReference.subjectSource, self.subjectReference.subject, self.isInverted? @"" : @" not", self.predicate];
 }
 
 @end
