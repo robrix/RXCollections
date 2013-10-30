@@ -153,8 +153,6 @@ l3_test(@selector(forwardInvocation:), ^{
 	NSString *selectorString = NSStringFromSelector(invocation.selector);
 	NSString *propertyName = self.propertyNamesBySelectorString[selectorString];
 	
-	
-	
 	if (L3TestStateSelectorStringIsSetter(selectorString)) {
 		bool isObject = L3TestStateTypeStringRepresentsObject([invocation.methodSignature getArgumentTypeAtIndex:2]);
 		intptr_t bytes[(invocation.methodSignature.frameLength - [self methodSignatureForSelector:@selector(description)].frameLength) / sizeof(intptr_t)];

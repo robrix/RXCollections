@@ -164,9 +164,6 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	[self write:@"Test Suite '%@' started at %@\n", suiteName, statistics.startDate];
 	[self write:@"\n"];
 	
-	// fixme: can failures happen in test steps?
-//	[test runSteps];
-	
 	[test run:^(id<L3Expectation> expectation, id<L3TestResult> result) {
 		NSDate *testCaseStart = [NSDate date];
 		statistics.testCount++;

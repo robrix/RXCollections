@@ -17,7 +17,6 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 
 @property (nonatomic, readonly) L3TestBlock block;
 
-//@property (nonatomic, readonly) NSMutableArray *mutableSteps;
 @property (nonatomic, readonly) NSMutableArray *mutableExpectations;
 @property (nonatomic, readonly) NSMutableArray *mutableChildren;
 
@@ -90,21 +89,11 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 		
 		_block = [block copy];
 		
-//		_mutableSteps = [NSMutableArray new];
 		_mutableExpectations = [NSMutableArray new];
 		_mutableChildren = [NSMutableArray new];
 	}
 	return self;
 }
-
-
-//-(NSArray *)steps {
-//	return self.mutableSteps;
-//}
-//
-//-(void)addStep:(L3TestBlock)block {
-//	[self.mutableSteps addObject:block];
-//}
 
 
 -(NSArray *)expectations {
@@ -124,12 +113,6 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 	[self.mutableChildren addObject:test];
 }
 
-
-//-(void)runSteps {
-//	for (L3TestBlock step in self.steps) {
-//		step();
-//	}
-//}
 
 -(void)run:(L3TestExpectationBlock)expectationCallback {
 	self.expectationCallback = expectationCallback;
