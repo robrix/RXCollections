@@ -155,7 +155,7 @@ l3_test(@selector(addObject:), ^{
 @end
 
 
-NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject) {
+NSString *L3TestSymbolForFunction(L3FunctionTestSubject subject) {
 	NSString *symbol;
 	Dl_info info = {0};
 	if (dladdr((void *)subject, &info)) {
@@ -164,6 +164,6 @@ NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject) {
 	return symbol;
 }
 
-L3BlockFunction L3TestFunctionForBlock(L3TestBlockSubject subject) {
+L3BlockFunction L3TestFunctionForBlock(L3BlockTestSubject subject) {
 	return L3BlockGetFunction(subject);
 }

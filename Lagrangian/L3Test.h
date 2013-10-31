@@ -90,10 +90,10 @@ L3_EXTERN NSString * const L3ExpectationErrorKey;
 
 @end
 
-typedef void (*L3TestFunctionSubject)(void *, ...);
-L3_EXTERN NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject);
-typedef id (^L3TestBlockSubject)();
-L3_EXTERN L3TestFunctionSubject L3TestFunctionForBlock(L3TestBlockSubject subject);
+typedef void (*L3FunctionTestSubject)(void *, ...);
+L3_EXTERN NSString *L3TestSymbolForFunction(L3FunctionTestSubject subject);
+typedef id (^L3BlockTestSubject)();
+L3_EXTERN L3FunctionTestSubject L3TestFunctionForBlock(L3BlockTestSubject subject);
 
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
@@ -111,11 +111,11 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char
  Due to the way this function is called from the \c l3_test() macro, any further overloads should ensure that the file and line parameters are present; however, both the subject and the test block can be varied as you need. This can be convenient for the creation of tests using e.g. tables of fixtures, functions, or commands instead of test blocks, so long as the function returns a correctly-configured \c L3Test instance.
  */
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3TestFunctionSubject)subject)) block:block];
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
 }
 
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id (^subject)(id), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3TestFunctionSubject)L3TestFunctionForBlock((L3TestBlockSubject)subject))) block:block];
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
 }
 
 #endif // L3_TEST_H
