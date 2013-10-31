@@ -9,8 +9,8 @@
 
 #import <Lagrangian/L3Defines.h>
 
-extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
-extern NSString * const L3TestRunnerSubjectEnvironmentVariableName;
+L3_EXTERN NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
+L3_EXTERN NSString * const L3TestRunnerSubjectEnvironmentVariableName;
 
 #if defined(L3_DEBUG)
 
