@@ -90,6 +90,9 @@ extern NSString * const L3ExpectationErrorKey;
 
 @end
 
+typedef id (*L3TestFunctionSubject)(id, ...);
+extern L3Test *L3TestDefineWithFunction(NSString *file, NSUInteger line, L3TestFunctionSubject subject, L3TestBlock block);
+
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
 }
@@ -99,12 +102,7 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char
 }
 
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
-	NSString *symbol;
-	Dl_info info = {0};
-	if (dladdr((void *)subject, &info)) {
-		symbol = @(info.dli_sname);
-	}
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, symbol) block:block];
+	return L3TestDefineWithFunction(file, line, (L3TestFunctionSubject)subject, block);
 }
 
 #endif // L3_TEST_H
