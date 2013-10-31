@@ -27,18 +27,22 @@ struct L3Block {
 	} *descriptor;
 };
 
-struct L3Block *L3BlockFromBlockObject(id block_object) {
-	return (__bridge struct L3Block *)block_object;
+struct L3Block *L3BlockFromBlockObject(id block) {
+	return (__bridge struct L3Block *)block;
 }
 
-const char *L3BlockGetSignature(id block_object) {
-	struct L3Block *block = L3BlockFromBlockObject(block_object);
+const char *L3BlockGetSignature(id block) {
+	struct L3Block *blockStructure = L3BlockFromBlockObject(block);
 	
-	NSCParameterAssert(block != nil);
-	NSCParameterAssert(block->flags & BLOCK_HAS_SIGNATURE);
-	NSCParameterAssert(block->descriptor != NULL);
+	NSCParameterAssert(blockStructure != nil);
+	NSCParameterAssert(blockStructure->flags & BLOCK_HAS_SIGNATURE);
+	NSCParameterAssert(blockStructure->descriptor != NULL);
 	
-	return block->flags & BLOCK_HAS_COPY_DISPOSE?
-		block->descriptor->signature_for_copy_dispose
-	:	block->descriptor->signature;
+	return blockStructure->flags & BLOCK_HAS_COPY_DISPOSE?
+		blockStructure->descriptor->signature_for_copy_dispose
+	:	blockStructure->descriptor->signature;
+}
+
+L3BlockFunction L3BlockGetFunction(id block) {
+	return L3BlockFromBlockObject(block)->invoke;
 }
