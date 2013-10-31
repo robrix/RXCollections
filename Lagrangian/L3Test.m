@@ -1,3 +1,4 @@
+#import "L3Block.h"
 #import "L3Test.h"
 
 #import "Lagrangian.h"
@@ -7,6 +8,7 @@
 #else
 #import <dlfcn.h>
 #endif
+
 
 NSString * const L3ErrorDomain = @"com.antitypical.lagrangian";
 
@@ -160,4 +162,8 @@ NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject) {
 		symbol = @(info.dli_sname);
 	}
 	return symbol;
+}
+
+L3BlockFunction L3TestFunctionForBlock(L3TestBlockSubject subject) {
+	return L3BlockGetFunction(subject);
 }
