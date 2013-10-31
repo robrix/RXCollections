@@ -1,34 +1,63 @@
-//  L3TestState.h
-//  Created by Rob Rix on 2012-11-10.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
+#ifndef L3_TEST_STATE_H
+#define L3_TEST_STATE_H
 
-#import <Lagrangian/L3EventObserver.h>
+#if __has_feature(modules)
+@import Foundation;
+#else
+#import <Foundation/Foundation.h>
+#endif
 
-extern const NSTimeInterval L3TestStateDefaultTimeout;
+#import <Lagrangian/L3Defines.h>
 
-@class L3TestSuite;
+#import <RXPreprocessing/concat.h>
+#import <RXPreprocessing/fold.h>
+
+
+#pragma mark API
+
+#if defined(L3_INCLUDE_TESTS)
+
+#define l3_setup(...) \
+	_l3_setup(__COUNTER__, __VA_ARGS__)
+
+#define _l3_setup(uid, declarations, ...) \
+	@protocol _l3_setup_protocol_name(uid) <NSObject> \
+	_l3_declarations_as_properties declarations \
+	@end \
+	__attribute__((unused)) static const L3TestState<_l3_setup_protocol_name(uid)> *L3TestStateVariable = nil; \
+	L3_CONSTRUCTOR void rx_concat(L3TestStateConstructor, uid)(void) { \
+		L3TestStateDefine(@protocol(_l3_setup_protocol_name(uid)), __VA_ARGS__); \
+	}
+
+#define _l3_declaration_as_property(memo, each) \
+	@property (nonatomic) each; \
+	memo
+
+#define _l3_declarations_as_properties(...) \
+	rx_fold(_l3_declaration_as_property, , __VA_ARGS__)
+
+#define _l3_setup_protocol_name(uid) \
+	rx_concat(L3TestStateProtocol_line_, rx_concat(__LINE__, rx_concat(_uid_, uid)))
+
+#else // defined(L3_INCLUDE_TESTS)
+
+#define l3_setup(...)
+
+#endif // defined(L3_INCLUDE_TESTS)
+
 
 @interface L3TestState : NSObject
 
--(instancetype)initWithSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver;
++(instancetype)stateWithProtocol:(Protocol *)stateProtocol;
 
-@property (strong, nonatomic, readonly) L3TestSuite *suite;
-@property (strong, nonatomic, readonly) id<L3EventObserver> eventObserver;
+@property (nonatomic, readonly) Protocol *stateProtocol;
 
-#pragma mark Test state
-
-// subscripting support for arbitrary object state
--(id)objectForKeyedSubscript:(NSString *)key;
--(void)setObject:(id)object forKeyedSubscript:(NSString *)key;
-
-
-#pragma mark Asynchrony
-
--(void)deferCompletion;
-@property (assign, nonatomic, readonly, getter = isDeferred) bool deferred;
-@property (assign, nonatomic) NSTimeInterval timeout;
--(void)complete;
--(bool)wait;
--(bool)waitWithTimeout:(NSTimeInterval)interval;
+@property (nonatomic, readonly) NSMutableDictionary *properties;
 
 @end
+
+L3_OVERLOADABLE L3TestState *L3TestStateDefine(Protocol *stateProtocol, void(^setUp)()) {
+	return nil;
+}
+
+#endif // L3_TEST_STATE_H

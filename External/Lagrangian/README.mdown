@@ -1,5 +1,7 @@
 # Lagrangian
 
+Lagrangian is an iconoclastic unit testing framework.
+
 Unit tests inextricably linked to your project’s mass.
 
 A function that summarizes the dynamics of the system.
