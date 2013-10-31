@@ -43,10 +43,10 @@ enum {
 	L3AssertionFailedError
 };
 
-extern NSString * const L3ErrorDomain;
+L3_EXTERN NSString * const L3ErrorDomain;
 
-extern NSString * const L3TestErrorKey;
-extern NSString * const L3ExpectationErrorKey;
+L3_EXTERN NSString * const L3TestErrorKey;
+L3_EXTERN NSString * const L3ExpectationErrorKey;
 
 
 @protocol L3TestVisitor;
@@ -90,8 +90,8 @@ extern NSString * const L3ExpectationErrorKey;
 
 @end
 
-typedef id (*L3TestFunctionSubject)(id, ...);
-extern NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject);
+typedef void (*L3TestFunctionSubject)(void *, ...);
+L3_EXTERN NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject);
 
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
