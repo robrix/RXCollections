@@ -153,11 +153,11 @@ l3_test(@selector(addObject:), ^{
 @end
 
 
-L3Test *L3TestDefineWithFunction(NSString *file, NSUInteger line, L3TestFunctionSubject subject, L3TestBlock block) {
+NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject) {
 	NSString *symbol;
 	Dl_info info = {0};
 	if (dladdr((void *)subject, &info)) {
 		symbol = @(info.dli_sname);
 	}
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, symbol) block:block];
+	return symbol;
 }

@@ -91,7 +91,7 @@ extern NSString * const L3ExpectationErrorKey;
 @end
 
 typedef id (*L3TestFunctionSubject)(id, ...);
-extern L3Test *L3TestDefineWithFunction(NSString *file, NSUInteger line, L3TestFunctionSubject subject, L3TestBlock block);
+extern NSString *L3TestSymbolForFunction(L3TestFunctionSubject subject);
 
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
@@ -101,8 +101,15 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, @(subject)) block:block];
 }
 
+/**
+ Defines a test using a function pointer as the subject.
+ 
+ Third parties should feel free to overload this function with their own fptr types to allow them to be used as the subjects of tests. This can be as simple as copying/pasting this fptr function and changing the type of the subject appropriately.
+ 
+ Due to the way this function is called from the \c l3_test() macro, any further overloads should ensure that the file and line parameters are present; however, both the subject and the test block can be varied as you need. This can be convenient for the creation of tests using e.g. tables of fixtures, functions, or commands instead of test blocks, so long as the function returns a correctly-configured \c L3Test instance.
+ */
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
-	return L3TestDefineWithFunction(file, line, (L3TestFunctionSubject)subject, block);
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3TestFunctionSubject)subject)) block:block];
 }
 
 #endif // L3_TEST_H
