@@ -3,10 +3,8 @@
 
 #if __has_feature(modules)
 @import Foundation;
-@import Darwin.POSIX.dlfcn;
 #else
 #import <Foundation/Foundation.h>
-#import <dlfcn.h>
 #endif
 
 #import <Lagrangian/L3Defines.h>
@@ -103,13 +101,6 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, @(subject)) block:block];
 }
 
-/**
- Defines a test using a function pointer as the subject.
- 
- Third parties should feel free to overload this function with their own fptr types to allow them to be used as the subjects of tests. This can be as simple as copying/pasting this fptr function and changing the type of the subject appropriately.
- 
- Due to the way this function is called from the \c l3_test() macro, any further overloads should ensure that the file and line parameters are present; however, both the subject and the test block can be varied as you need. This can be convenient for the creation of tests using e.g. tables of fixtures, functions, or commands instead of test blocks, so long as the function returns a correctly-configured \c L3Test instance.
- */
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
 }
@@ -117,5 +108,27 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *
 L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id (^subject)(id), L3TestBlock block) {
 	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
 }
+
+/**
+ Registers the type of the passed function as allowable as a test subject (i.e. the first parameter to \c l3_test).
+ 
+ Note that clang C function overloading seems to require that the address of the function be taken explicitly, e.g. `l3_test(&sinf, ^{})`.
+ 
+ \param functionSubject The function whose type should be valid as a test subject.
+ */
+#define l3_addTestSubjectTypeWithFunction(functionSubject) \
+	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, __typeof__(functionSubject) subject, L3TestBlock block) { \
+		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block]; \
+	}
+
+/**
+ Registers the type of the passed block as allowable as a test subject (i.e. the first parameter to \c l3_test).
+ 
+ \param blockSubject The block whose type should be valid as a test subject.
+ */
+#define l3_addTestSubjectTypeWithBlock(blockSubject) \
+	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, __typeof__(blockSubject) subject, L3TestBlock block) { \
+		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block]; \
+	}
 
 #endif // L3_TEST_H
