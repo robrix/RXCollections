@@ -4,7 +4,7 @@
 #pragma mark Declaration
 
 #define L3_OVERLOADABLE __attribute__((overloadable)) static inline
-#define L3_CONSTRUCTOR __attribute((constructor)) static inline
+#define L3_CONSTRUCTOR __attribute__((constructor)) static inline
 #define L3_EXTERN extern
 
 
