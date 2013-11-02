@@ -25,6 +25,7 @@
 	L3_CONSTRUCTOR void rx_concat(L3Test, uid)(void) { \
 		L3Test *suite = [L3Test suiteForFile:@(file) inImageForAddress:rx_concat(L3Test, uid)]; \
 		__block L3Test *self = L3TestDefine(@(file), line, __VA_ARGS__); \
+		self.statePrototype = suite.statePrototype; \
 		[suite addChild:self]; \
 	}
 
@@ -48,6 +49,7 @@ L3_EXTERN NSString * const L3ExpectationErrorKey;
 
 
 @protocol L3TestVisitor;
+@class L3TestStatePrototype;
 
 @interface L3Test : NSObject
 
@@ -67,6 +69,10 @@ L3_EXTERN NSString * const L3ExpectationErrorKey;
 @property (nonatomic, readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;
 
+@property (nonatomic) L3TestStatePrototype *statePrototype;
+
+-(void)setUp;
+-(void)tearDown;
 -(void)run:(L3TestExpectationBlock)callback;
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context;

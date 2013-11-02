@@ -164,12 +164,15 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	[self write:@"Test Suite '%@' started at %@\n", suiteName, statistics.startDate];
 	[self write:@"\n"];
 	
+	[test setUp];
+	
 	[test run:^(id<L3Expectation> expectation, id<L3TestResult> result) {
 		NSDate *testCaseStart = [NSDate date];
 		statistics.testCount++;
 		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:result.hypothesisString];
 		[self write:@"Test Case '%@' started.\n", caseName];
 		if (!result.wasMet) {
+			[test self];
 			id<L3SourceReference> reference = result.subjectReference;
 			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, result.observationString];
 			
@@ -186,6 +189,8 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 	for (id(^lazyChild)() in lazyChildren) {
 		[statistics addStatistics:lazyChild()];
 	}
+	
+	[test tearDown];
 	
 	statistics.endDate = [NSDate date];
 	

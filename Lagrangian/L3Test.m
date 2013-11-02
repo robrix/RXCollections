@@ -24,6 +24,8 @@ NSString * const L3TestErrorKey = @"L3TestErrorKey";
 
 @property (nonatomic, copy) L3TestExpectationBlock expectationCallback;
 
+@property (nonatomic) L3TestState *state;
+
 @end
 
 @implementation L3Test
@@ -116,6 +118,15 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 }
 
 
+-(void)setUp {
+	self.state = [self.statePrototype createState];
+	[self.state setUpWithTest:self];
+}
+
+-(void)tearDown {
+	self.state = nil;
+}
+
 -(void)run:(L3TestExpectationBlock)expectationCallback {
 	self.expectationCallback = expectationCallback;
 	if (self.block)
@@ -140,6 +151,8 @@ l3_test(@selector(addObject:), ^{
 	l3_expect(array.lastObject).to.equal(@0);
 })
 
+
+#pragma mark L3TestVisitor
 
 -(id)acceptVisitor:(id<L3TestVisitor>)visitor parents:(NSArray *)parents context:(id)context {
 	NSMutableArray *lazyChildren = self.children.count? [NSMutableArray new] : nil;

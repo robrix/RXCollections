@@ -8,8 +8,15 @@
 #import <objc/runtime.h>
 #endif
 
-l3_setup((NSMutableArray *array, NSUInteger integerValue), ^{
-	
+l3_setup((NSNumber *flag), ^{
+	NSLog(@"about to set the flag");
+	[self self];
+	self.state.flag = @YES;
+	[self self];
+})
+
+l3_test("l3_setup", ^{
+	l3_expect(self.state.flag).to.equal(@YES);
 })
 
 @protocol L3TestStateProtocolTest <NSObject>
@@ -47,11 +54,11 @@ static inline NSString *L3TestStateSetterForProperty(objc_property_t property) {
 	return setter;
 }
 
-+(instancetype)stateWithProtocol:(Protocol *)stateProtocol {
-	return [[self alloc] initWithProtocol:stateProtocol];
++(instancetype)stateWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	return [[self alloc] initWithProtocol:stateProtocol setUpBlock:setUpBlock];
 }
 
--(instancetype)initWithProtocol:(Protocol *)stateProtocol {
+-(instancetype)initWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
 	NSParameterAssert(stateProtocol != nil);
 	
 	if ((self = [super init])) {
@@ -59,6 +66,8 @@ static inline NSString *L3TestStateSetterForProperty(objc_property_t property) {
 		_properties = [NSMutableDictionary new];
 		
 		_propertyNamesBySelectorString = [NSMutableDictionary new];
+		
+		_setUpBlock = [setUpBlock copy];
 		
 		unsigned int propertyCount = 0;
 		objc_property_t *properties = protocol_copyPropertyList(self.stateProtocol, &propertyCount);
@@ -72,6 +81,14 @@ static inline NSString *L3TestStateSetterForProperty(objc_property_t property) {
 		free(properties);
 	}
 	return self;
+}
+
+
+#pragma mark Lifespan
+
+-(void)setUpWithTest:(L3Test *)test {
+	if (self.setUpBlock)
+		self.setUpBlock(test);
 }
 
 
@@ -90,7 +107,7 @@ enum L3ProtocolOptions : NSUInteger {
 }
 
 l3_test(@selector(typesForMethodInProtocolWithSelector:), ^{
-	L3TestState *state = [L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest)];
+	L3TestState *state = [L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest) setUpBlock:nil];
 	
 	l3_expect([state typesForMethodInProtocolWithSelector:@selector(string)]).to.equal(@"@16@0:8");
 	l3_expect([state typesForMethodInProtocolWithSelector:@selector(setString:)]).to.equal(@"v24@0:8@16");
@@ -132,7 +149,7 @@ l3_test(@selector(typesForMethodInProtocolWithSelector:), ^{
 #pragma mark Forwarding
 
 l3_test(@selector(forwardInvocation:), ^{
-	L3TestState<L3TestStateProtocolTest> *state = (L3TestState<L3TestStateProtocolTest> *)[L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest)];
+	L3TestState<L3TestStateProtocolTest> *state = (L3TestState<L3TestStateProtocolTest> *)[L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest) setUpBlock:nil];
 	
 	l3_expect(state.string).to.equal(nil);
 	@autoreleasepool {
@@ -196,6 +213,34 @@ static inline bool L3TestStateSelectorStringIsSetter(NSString *selectorString) {
 
 static inline bool L3TestStateTypeStringRepresentsObject(const char *type) {
 	return strncmp(type, @encode(id), 1) == 0;
+}
+
+@end
+
+
+@interface L3TestStatePrototype ()
+
+@property (nonatomic, readonly) Protocol *stateProtocol;
+@property (nonatomic, readonly) L3TestStateBlock setUpBlock;
+
+@end
+
+@implementation L3TestStatePrototype
+
++(instancetype)statePrototypeWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	return [[self alloc] initWithProtocol:stateProtocol setUpBlock:setUpBlock];
+}
+
+-(instancetype)initWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	if ((self = [super init])) {
+		_stateProtocol = stateProtocol;
+		_setUpBlock = [setUpBlock copy];
+	}
+	return self;
+}
+
+-(L3TestState *)createState {
+	return [[L3TestState alloc] initWithProtocol:self.stateProtocol setUpBlock:self.setUpBlock];
 }
 
 @end
