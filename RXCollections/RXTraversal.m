@@ -214,8 +214,6 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 
-@l3_suite("RXFastEnumerationTraversal");
-
 @implementation RXFastEnumerationTraversal {
 	NSFastEnumerationState _state;
 	id __unsafe_unretained _objects[16];
@@ -241,22 +239,14 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 #pragma mark NSCopying
 
-@l3_step("copy") {
-	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] nextObject];
-	test[@"copy"] = [test[@"original"] copy];
-}
-
-@l3_test("copies traverse from the current location") {
-	l3_perform_step("copy");
-	l3_assert([test[@"copy"] nextObject], @2);
-}
-
-@l3_test("copies are independently traversed") {
-	l3_perform_step("copy");
-	[test[@"copy"] nextObject];
-	l3_assert([test[@"original"] nextObject], @2);
-}
+l3_test(@selector(copyWithZone:), ^{
+	id<RXTraversal> original = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
+	[original nextObject];
+	id<RXTraversal> copy = [original copyWithZone:NULL];
+	
+	l3_expect([copy nextObject]).to.equal(@2);
+	l3_expect([original nextObject]).to.equal(@2);
+})
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXFastEnumerationTraversal *copy = [super copyWithZone:zone];
@@ -268,8 +258,6 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 @end
 
-
-@l3_suite("RXInteriorTraversal");
 
 @implementation RXInteriorTraversal
 
@@ -298,22 +286,14 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 #pragma mark NSCopying
 
-@l3_step("copy") {
-	test[@"original"] = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
-	[test[@"original"] nextObject];
-	test[@"copy"] = [test[@"original"] copy];
-}
-
-@l3_test("copies traverse from the current location") {
-	l3_perform_step("copy");
-	l3_assert([test[@"copy"] nextObject], @2);
-}
-
-@l3_test("copies are independently traversed") {
-	l3_perform_step("copy");
-	[test[@"copy"] nextObject];
-	l3_assert([test[@"original"] nextObject], @2);
-}
+l3_test(@selector(copyWithZone:), ^{
+	id<RXTraversal> original = [RXInteriorTraversal traversalWithInteriorObjects:(const __autoreleasing id []){ @1, @2, @3 } count:3 owner:[NSObject new]];
+	[original nextObject];
+	id<RXTraversal> copy = [original copyWithZone:NULL];
+	
+	l3_expect([copy nextObject]).to.equal(@2);
+	l3_expect([original nextObject]).to.equal(@2);
+})
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXInteriorTraversal *copy = [super copyWithZone:zone];

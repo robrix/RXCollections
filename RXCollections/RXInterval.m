@@ -7,8 +7,6 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXInterval");
-
 @interface RXIntervalTraversable : NSObject <RXInterval>
 -(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count;
 
@@ -20,40 +18,30 @@
 @end
 
 
-@l3_test("defaults to a stride of 1.0 if neither stride nor count is specified") {
-	id<RXInterval> interval = RXInterval(0, 1);
-	l3_assert(interval.stride, 1.0);
-}
+l3_addTestSubjectTypeWithFunction(RXInterval)
 
-@l3_test("intervals are closed under default stride") {
+l3_test(&RXInterval, ^{
 	id<RXInterval> interval = RXInterval(0, 1);
-	l3_assert(RXConstructArray(interval.traversal), (@[@0, @1]));
-}
-
-@l3_test("stride is positive when to is greater than from") {
-	id<RXInterval> interval = RXInterval(0, 1);
-	l3_assert(interval.stride, l3_greaterThan(0));
-}
-
-@l3_test("stride is negative when to is less than from") {
-	id<RXInterval> interval = RXInterval(1, 0);
-	l3_assert(interval.stride, l3_lessThan(0));
-}
+	l3_expect(interval.stride).to.equal(@1);
+	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @1]);
+	
+	interval = RXInterval(1, 0);
+	l3_expect(interval.stride).to.equal(@-1);
+})
 
 id<RXInterval> RXInterval(RXMagnitude from, RXMagnitude to) {
 	return RXIntervalByStride(from, to, 1.0);
 }
 
+l3_addTestSubjectTypeWithFunction(RXIntervalByStride)
 
-@l3_test("calculates count as the length divided by stride when stride is provided") {
+l3_test(&RXIntervalByStride, ^{
 	id<RXInterval> interval = RXIntervalByStride(0, 20, 5);
-	l3_assert(RXConstructArray(interval.traversal), (@[@0, @5, @10, @15, @20]));
-}
-
-@l3_test("intervals are closed when specifying stride") {
-	id<RXInterval> interval = RXIntervalByStride(0, 1, 0.5);
-	l3_assert(RXConstructArray(interval.traversal), (@[@0, @0.5, @1]));
-}
+	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @5, @10, @15, @20]);
+	
+	interval = RXIntervalByStride(0, 1, 0.5);
+	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @0.5, @1]);
+})
 
 id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude stride) {
 	RXMagnitude absoluteStride = RXMagnitudeGetAbsoluteValue(stride);
@@ -64,10 +52,12 @@ id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude 
 }
 
 
-@l3_test("calculates stride as the length required to take count steps across the closed interval when count is provided") {
+l3_addTestSubjectTypeWithFunction(RXIntervalByCount)
+
+l3_test(&RXIntervalByCount, ^{
 	id<RXInterval> interval = RXIntervalByCount(0, 10, 5);
-	l3_assert(interval.stride, 2.5f);
-}
+	l3_expect(interval.stride).to.equal(@2.5f);
+})
 
 id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger count) {
 	NSCParameterAssert(count > 0);
@@ -101,13 +91,10 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 
 #pragma mark RXTraversable
 
-@l3_test("traverses the values in its interval at a given number of steps of a given stride") {
-	l3_assert(RXConstructArray(RXIntervalByCount(-M_PI, M_PI, 3).traversal), l3_is(@[@-M_PI, @0, @M_PI]));
-}
-
-@l3_test("saves its place so it can traverse more values than fit in the buffer") {
-	l3_assert(RXConstructArray(RXIntervalByCount(0, 1, 32).traversal).count, 32);
-}
+l3_test(@selector(traversal), ^{
+	l3_expect(RXConstructArray(RXIntervalByCount(-M_PI, M_PI, 3).traversal)).to.equal(@[@-M_PI, @0, @M_PI]);
+	l3_expect(RXConstructArray(RXIntervalByCount(0, 1, 32).traversal).count).to.equal(@32);
+})
 
 -(id<RXTraversal>)traversal {
 	__block NSUInteger count = 0;
