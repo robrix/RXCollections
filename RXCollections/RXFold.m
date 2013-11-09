@@ -7,8 +7,6 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function);
-
 l3_test("RXFold", ^{
 	NSArray *collection = @[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"];
 	
@@ -26,10 +24,6 @@ id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 			break;
 	}
 	return initial;
-}
-
-id RXFoldF(id<NSFastEnumeration> enumeration, id initial, RXFoldFunction function) {
-	return RXFold(enumeration, initial, RXFoldBlockWithFunction(function));
 }
 
 
@@ -75,9 +69,4 @@ RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
 		return memo;
 	});
 	return [RXTuple tupleWithArray:objects];
-}
-
-
-static inline RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
-	return ^(id memo, id each, bool *stop){ return function(memo, each, stop); };
 }
