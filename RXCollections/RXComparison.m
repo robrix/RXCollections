@@ -1,13 +1,9 @@
-//  RXComparison.m
-//  Created by Rob Rix on 10/18/2013.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXComparison.h"
 #import "RXFold.h"
 
 #import <Lagrangian/Lagrangian.h>
-
-static RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
 #pragma mark Minima
 
@@ -30,10 +26,6 @@ id RXMin(id<NSFastEnumeration> enumeration, RXMapBlock block) {
 	});
 }
 
-id RXMinF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
-	return RXMin(enumeration, function? RXMapBlockWithFunction(function) : nil);
-}
-
 
 #pragma mark Maxima
 
@@ -52,15 +44,4 @@ id RXMax(id<NSFastEnumeration> enumeration, RXMapBlock block) {
 			memo
 		:	each;
 	});
-}
-
-id RXMaxF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
-	return RXMax(enumeration, function? RXMapBlockWithFunction(function) : nil);
-}
-
-
-#pragma mark Function pointer support
-
-static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
-	return ^(id each, bool *stop){ return function(each, stop); };
 }
