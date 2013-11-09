@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-05-08.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @protocol RXEquating <NSObject>
 
