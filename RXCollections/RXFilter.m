@@ -9,19 +9,9 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXFilterBlock subject, L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
-}
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id<RXTraversal>(*subject)(id<NSObject, NSFastEnumeration>, RXFilterBlock), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id(*subject)(id<NSFastEnumeration>, RXFilterBlock), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
+l3_addTestSubjectTypeWithBlock(RXFilterBlock)
+l3_addTestSubjectTypeWithFunction(RXFilter)
+l3_addTestSubjectTypeWithFunction(RXLinearSearch)
 
 l3_test(RXAcceptFilterBlock, ^{
 	bool stop = NO;
@@ -83,10 +73,6 @@ id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBl
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
 }
 
-id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {
-	return RXFilter(enumeration, RXFilterBlockWithFunction(function));
-}
-
 
 l3_test(&RXLinearSearch, ^{
 	id found = RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each, bool *stop) {
@@ -103,14 +89,4 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	});
 }
 
-id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
-	return RXLinearSearch(collection, RXFilterBlockWithFunction(function));
-}
-
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
-id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
-
-
-static inline RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
-	return ^(id each, bool *stop){ return function(each, stop); };
-};
