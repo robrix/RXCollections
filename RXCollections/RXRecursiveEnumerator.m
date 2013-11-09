@@ -2,16 +2,21 @@
 //  Created by Rob Rix on 2013-01-11.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXRecursiveEnumerator.h"
-#import "RXCollection.h"
+#import "RXFold.h"
 #import "RXPair.h"
+#import "RXRecursiveEnumerator.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-
-@l3_suite("RXRecursiveEnumerator");
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, void(*subject)(NSMutableArray *, id, NSString *), L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
+}
 
 static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, id target, NSString *keyPath);
+
+@interface RXRecursiveEnumerator ()
+@property (nonatomic, copy) NSArray *flattened;
+@end
 
 @implementation RXRecursiveEnumerator
 
@@ -27,13 +32,12 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 	return self;
 }
 
-
-@l3_test("accumulates the contents of homogeneous trees in depth-first order") {
-	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
+l3_test(&RXAccumulateRecursiveContentsOfTarget, ^{
+	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
 	NSMutableArray *flattened = [NSMutableArray new];
-	RXAccumulateRecursiveContentsOfTarget(flattened, tree, @"elements");
-	l3_assert(flattened, l3_equals(@[tree, tree.left, [tree.left left], [tree.left right], [[tree.left right] left], [[tree.left right] right], tree.right]));
-}
+	RXAccumulateRecursiveContentsOfTarget(flattened, tree, @"allObjects");
+	l3_expect(flattened).to.equal(@[tree, tree.left, [tree.left left], [tree.left right], [[tree.left right] left], [[tree.left right] right], tree.right]);
+})
 
 static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, id target, NSString *keyPath) {
 	[accumulator addObject:target];
@@ -44,37 +48,36 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 	}
 }
 
-
-@l3_test("recursively enumerates trees in depth-first order") {
-	RXPair *tree = [RXPair pairWithLeft:[RXPair pairWithLeft:@"x" right:[RXPair pairWithLeft:@"y" right:@"z"]] right:@"w"];
-	l3_assert(RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"elements"], @"", ^(NSString *memo, id each) {
-		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
-	}), @"xyzw");
+-(NSArray *)flattened {
+	if (!_flattened) {
+		NSMutableArray *flattened = [NSMutableArray new];
+		RXAccumulateRecursiveContentsOfTarget(flattened, self.target, self.keyPath);
+		self.flattened = flattened;
+	}
+	return _flattened;
 }
 
+
+l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
+	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
+	id folded = RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each, bool *stop) {
+		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
+	});
+	l3_expect(folded).to.equal(@"xyzw");
+})
+
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	NSMutableArray *flattened = nil;
-	if (state->state == 0) {
-		state->mutationsPtr = (__bridge_retained void *)(flattened = [NSMutableArray new]);
-		RXAccumulateRecursiveContentsOfTarget(flattened, self.target, self.keyPath);
-	} else {
-		flattened = (__bridge NSMutableArray *)(void *)state->mutationsPtr;
-	}
+	NSArray *flattened = self.flattened;
 	
 	NSUInteger count = 0;
 	if (state->state < flattened.count) {
-		
 		state->itemsPtr = buffer;
+		state->mutationsPtr = state->extra;
 		while ((state->state < flattened.count) && (count < len)) {
 			buffer[count] = flattened[state->state];
 			state->state++;
 			count++;
 		}
-	}
-	
-	if (count == 0) {
-		NSMutableArray *stuff = (__bridge_transfer NSMutableArray *)(void *)state->mutationsPtr;
-		[stuff self];
 	}
 	
 	return count;

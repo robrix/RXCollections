@@ -7,7 +7,7 @@
 /**
  RXRecursiveEnumerator
  
- Provides NSFastEnumeration (and thus for (… in …) support) for trees whose children are provided under a KVC-compliant selector.
+ Provides NSFastEnumeration (and therefore for(in) support) for trees whose children are provided under a KVC-compliant selector.
  
  For example:
  

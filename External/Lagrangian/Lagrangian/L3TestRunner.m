@@ -1,53 +1,39 @@
-//  L3TestRunner.m
-//  Created by Rob Rix on 2012-11-09.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
-
-#import <Cocoa/Cocoa.h>
-#import "L3OCUnitTestResultFormatter.h"
-#import "L3StringInflections.h"
-#import "L3TestResult.h"
-#import "L3TestResultBuilder.h"
+#import "L3Expectation.h"
+#import "L3SourceReference.h"
+#import "L3Test.h"
 #import "L3TestRunner.h"
-#import "L3TestSuite.h"
-#import "Lagrangian.h"
+
+#if !TARGET_OS_IPHONE
+#if __has_feature(modules)
+@import Cocoa;
+#else
+#import <Cocoa/Cocoa.h>
+#endif
+#endif
 
 NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
-NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_PREDICATE";
+NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_SUBJECT";
 
-@l3_suite_interface (L3TestRunner) <L3EventObserver>
-@property L3TestRunner *runner;
-@property NSMutableArray *events;
+
+@interface L3TestStatistics : NSObject
+@property (nonatomic) NSDate *startDate;
+@property (nonatomic) NSDate *endDate;
+@property (nonatomic) unsigned long testCount;
+@property (nonatomic) unsigned long assertionFailureCount;
+@property (nonatomic) unsigned long exceptionCount;
+@property (nonatomic) NSTimeInterval duration;
+
+-(void)addStatistics:(L3TestStatistics *)statistics;
 @end
 
+@interface L3TestRunner () <L3TestVisitor>
 
-@interface L3TestRunner () <L3TestResultFormatterDelegate, L3TestVisitor>
-
-@property (strong, nonatomic, readonly) NSMutableArray *mutableTests;
-@property (strong, nonatomic, readonly) NSMutableDictionary *mutableTestsByName;
-
-@property (strong, nonatomic, readonly) L3TestResultBuilder *testResultBuilder;
-@property (strong, nonatomic, readonly) id<L3TestResultFormatter> testResultFormatter;
-@property (strong, nonatomic) id<L3EventObserver> eventObserver;
-
-@property (strong, nonatomic, readonly) NSOperationQueue *queue;
-
-@property (strong, nonatomic, readonly) id<L3Test> test;
+@property (nonatomic, readonly) NSOperationQueue *queue;
+@property (nonatomic, readonly) L3TestStatistics *statistics;
 
 -(void)runAtLaunch;
 
 @end
-
-
-@l3_set_up {
-	test.runner = [L3TestRunner new];
-	test.events = [NSMutableArray new];
-	test.runner.eventObserver = test;
-}
-
-@l3_tear_down {
-	test.runner.eventObserver = nil; // break the retain cycle
-}
-
 
 @implementation L3TestRunner
 
@@ -56,33 +42,28 @@ NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName = @"L3_SUITE_
 }
 
 +(bool)isRunningInApplication {
+#if TARGET_OS_IPHONE
+	return YES;
+#else
 	return
 		([NSApplication class] != nil)
 	&&	[[NSBundle mainBundle].bundlePath.pathExtension isEqualToString:@"app"];
+#endif
 }
 
-+(NSPredicate *)defaultPredicate {
-	NSString *environmentPredicateFormat = [NSProcessInfo processInfo].environment[L3TestRunnerSuitePredicateEnvironmentVariableName];
-	NSPredicate *applicationPredicate = [NSPredicate predicateWithFormat:@"(imagePath = NULL) || (imagePath CONTAINS[cd] %@)", [NSBundle mainBundle].bundlePath.lastPathComponent];
-	return
-		(environmentPredicateFormat? [NSPredicate predicateWithFormat:environmentPredicateFormat] : nil)
-	?:	(self.isRunningInApplication? applicationPredicate : nil);
++(NSString *)subjectPath {
+	NSString *path = [NSProcessInfo processInfo].environment[L3TestRunnerSubjectEnvironmentVariableName];
+	if (!path && self.isRunningInApplication) {
+		path = [NSBundle mainBundle].bundlePath;
+	}
+	return path;
 }
 
 
 #pragma mark Constructors
 
-+(instancetype)runner {
-	static L3TestRunner *runner = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		runner = [self new];
-	});
-	return runner;
-}
-
-static void __attribute__((constructor)) L3TestRunnerLoader() {
-	L3TestRunner *runner = [L3TestRunner runner];
+L3_CONSTRUCTOR void L3TestRunnerLoader() {
+	L3TestRunner *runner = [L3TestRunner new];
 	
 	if ([L3TestRunner shouldRunTestsAtLaunch]) {
 		[runner runAtLaunch];
@@ -91,23 +72,10 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 
 -(instancetype)init {
 	if ((self = [super init])) {
-		_mutableTests = [NSMutableArray new];
-		_mutableTestsByName = [NSMutableDictionary new];
-		
-		_testResultFormatter = [L3OCUnitTestResultFormatter new];
-		_testResultFormatter.delegate = self;
-		
-		_testResultBuilder = [L3TestResultBuilder new];
-		_testResultBuilder.delegate = _testResultFormatter;
-		
-		_eventObserver = _testResultBuilder;
-		
 		_queue = [NSOperationQueue new];
 		_queue.maxConcurrentOperationCount = 1;
 		
-		_test = [L3TestSuite defaultSuite];
-		
-		_testSuitePredicate = [self.class defaultPredicate];
+		_statistics = [L3TestStatistics new];
 	}
 	return self;
 }
@@ -116,10 +84,18 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
+	NSArray *tests = [[L3Test registeredSuites] allValues];
+	if ([self.class subjectPath]) {
+		L3Test *suite = [L3Test registeredSuiteForFile:[self.class subjectPath]];
+		if (suite)
+			tests = @[suite];
+	}
+#if TARGET_OS_IPHONE
+#else
 	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
-			[self run];
+			[self enqueueTests:tests];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 			
@@ -129,193 +105,118 @@ static void __attribute__((constructor)) L3TestRunnerLoader() {
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{
-			[self run];
+			[self enqueueTests:tests];
 			
-			[self.queue addOperationWithBlock:^{
-				system("/usr/bin/osascript -e 'tell application \"Xcode\" to activate'");
-				
-				if ([self.class isRunningInApplication])
-					[[NSApplication sharedApplication] terminate:nil];
-				else
-					exit(0);
+			[self.queue addOperationWithBlock:^__attribute__((noreturn)){
+				exit(self.statistics.assertionFailureCount == 0);
 			}];
 		}];
 	}
+#endif
 }
 
--(void)run {
-	[self runTest:self.test];
-}
-
--(void)waitForTestsToComplete {
-	[self.queue waitUntilAllOperationsAreFinished];
-}
-
--(void)runTest:(id<L3Test>)test {
-	NSParameterAssert(test != nil);
-	
-	[test acceptVisitor:self];
-}
-
-
-#pragma mark L3TestResultFormatterDelegate
-
--(void)formatter:(id<L3TestResultFormatter>)formatter didFormatResult:(L3TestResult *)result asString:(NSString *)string {
-	if (string) {
-		fprintf(stdout, "%s\n", string.UTF8String);
-		fflush(stdout);
+-(void)enqueueTests:(NSArray *)tests {
+	for (L3Test *test in tests) {
+		[self enqueueTest:test];
 	}
+}
+
+-(void)enqueueTest:(L3Test *)test {
+	NSParameterAssert(test != nil);
+	[self.queue addOperationWithBlock:^{
+		[self.statistics addStatistics:[test acceptVisitor:self parents:nil context:nil]];
+	}];
+}
+
+-(bool)waitForTestsToComplete {
+	[self.queue waitUntilAllOperationsAreFinished];
+	return self.statistics.assertionFailureCount == 0;
 }
 
 
 #pragma mark L3TestVisitor
 
-static void test_function(L3TestState *state, L3TestCase *testCase) {}
-
-@l3_test("generates start events for cases") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
-	
-	[test.runner testCase:testCase inTestSuite:nil];
-	
-	[test.runner waitForTestsToComplete];
-
-	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
-		NSDictionary *event = test.events[0];
-		l3_assert(event[@"name"], l3_equals(@"name"));
-		l3_assert(event[@"type"], l3_equals(@"start"));
-	}
+-(void)write:(NSString *)format, ... NS_FORMAT_FUNCTION(1, 2) {
+	va_list arguments;
+	va_start(arguments, format);
+	NSString *string = [[NSString alloc] initWithFormat:format arguments:arguments];
+	fprintf(stdout, "%s", string.UTF8String);
+	va_end(arguments);
 }
 
-@l3_test("generates end events after running cases") {
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"name" file:@"" __FILE__ line:__LINE__ function:test_function];
-	
-	[test.runner testCase:testCase inTestSuite:nil];
-	
-	[test.runner waitForTestsToComplete];
-	
-	l3_assert(test.events.count, l3_greaterThanOrEqualTo(1));
-	NSDictionary *event = test.events.lastObject;
-	l3_assert(event[@"name"], l3_equals(@"name"));
-	l3_assert(event[@"type"], l3_equals(@"end"));
+-(NSString *)cardinalizeNoun:(NSString *)noun forCount:(NSInteger)count {
+	return [NSString stringWithFormat:@"%li %@%@", count, noun, count == 1? @"" : @"s"];
 }
 
-static void asynchronousTest(L3TestState *test, L3TestCase *_case);
-static void asynchronousTest(L3TestState *test, L3TestCase *_case) {
-	test.timeout = 0;
-	l3_defer();
+-(NSString *)formatStringAsTestName:(NSString *)string {
+	NSMutableString *mutable = [string mutableCopy];
+	[[NSRegularExpression regularExpressionWithPattern:@"[^\\w]+" options:NSRegularExpressionCaseInsensitive error:NULL] replaceMatchesInString:mutable options:NSMatchingWithTransparentBounds range:(NSRange){0, mutable.length} withTemplate:@"_"];
+	return [mutable copy];
 }
 
-@l3_test("generates failures when asynchronous tests time out") {
-	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
-	L3TestCase *testCase = [L3TestCase testCaseWithName:@"case" file:@"file.m" line:42 function:asynchronousTest];
-	
-	[test.runner testCase:testCase inTestSuite:suite];
-	
-	[test.runner waitForTestsToComplete];
-	
-	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(2))) {
-		NSDictionary *event = test.events[test.events.count - 2];
-		l3_assert(event[@"type"], l3_equals(@"failure"));
-		l3_assert([event[@"sourceReference"] subject], l3_equals(testCase));
-	}
+-(NSString *)caseNameWithSuiteName:(NSString *)suiteName assertivePhrase:(NSString *)phrase {
+	return [NSString stringWithFormat:@"-[%@ %@]", suiteName, [self formatStringAsTestName:phrase]];
 }
 
--(void)testCase:(L3TestCase *)testCase inTestSuite:(L3TestSuite *)suite {
-//	if (!self.testCasePredicate || [self.testCasePredicate evaluateWithObject:testCase])
+-(id)visitTest:(L3Test *)test parents:(NSArray *)parents lazyChildren:(NSMutableArray *)lazyChildren context:(id)context {
+	L3TestStatistics *statistics = [L3TestStatistics new];
+	NSString *suiteName = [self formatStringAsTestName:[test.sourceReference.subject description]];
+	[self write:@"Test Suite '%@' started at %@\n", suiteName, statistics.startDate];
+	[self write:@"\n"];
 	
-	[self.queue addOperationWithBlock:^{
-		[self.eventObserver testStartEventWithTest:testCase date:[NSDate date]];
-		
-		L3TestState *state = [[suite.stateClass alloc] initWithSuite:suite eventObserver:self.eventObserver];
-		
-		L3TestStep *setUp = suite.steps[L3TestSuiteSetUpStepName];
-		if (setUp)
-			[testCase performStep:setUp withState:state];
-		
-		testCase.function(state, testCase);
-		
-		if (state.isDeferred)
-			[testCase assertThat:l3_to_object([state wait]) matches:l3_to_pattern(YES) sourceReference:testCase.sourceReferenceForCaseEvents eventObserver:self.eventObserver];
-		
-		L3TestStep *tearDown = suite.steps[L3TestSuiteTearDownStepName];
-		if (tearDown)
-			[testCase performStep:tearDown withState:state];
-		
-		[self.eventObserver testEndEventWithTest:testCase date:[NSDate date]];
-	}];
-}
-
-
-@l3_test("generates start events for suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
+	[test setUp];
 	
-	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
-	
-	[test.runner waitForTestsToComplete];
-	
-	if (l3_assert(test.events.count, l3_greaterThanOrEqualTo(1))) {
-		NSDictionary *event = test.events[0];
-		l3_assert(event[@"name"], l3_equals(testSuite.name));
-		l3_assert(event[@"type"], l3_equals(@"start"));
-	}
-}
-
-@l3_test("generates end events after running suites") {
-	L3TestSuite *testSuite = [L3TestSuite testSuiteWithName:[NSString stringWithFormat:@"%@ test suite", _case.name]];
-	
-	[test.runner testSuite:testSuite inTestSuite:nil withChildren:^{}];
-	
-	[test.runner waitForTestsToComplete];
-	
-	NSDictionary *event = test.events.lastObject;
-	l3_assert(event[@"name"], l3_equals(testSuite.name));
-	l3_assert(event[@"type"], l3_equals(@"end"));
-}
-
-@l3_test("filters test suites with a predicate") {
-	test.runner.testSuitePredicate = [NSPredicate predicateWithBlock:^BOOL(L3TestSuite *evaluatedObject, NSDictionary *bindings) {
-		return NO;
+	[test run:^(id<L3Expectation> expectation, id<L3TestResult> result) {
+		NSDate *testCaseStart = [NSDate date];
+		statistics.testCount++;
+		NSString *caseName = [self caseNameWithSuiteName:suiteName assertivePhrase:result.hypothesisString];
+		[self write:@"Test Case '%@' started.\n", caseName];
+		if (!result.wasMet) {
+			[test self];
+			id<L3SourceReference> reference = result.subjectReference;
+			[self write:@"%@:%lu: error: %@ : %@\n", reference.file, (unsigned long)reference.line, caseName, result.observationString];
+			
+			statistics.assertionFailureCount++;
+			if (result.exception != nil)
+				statistics.exceptionCount++;
+		}
+		NSTimeInterval interval = -[testCaseStart timeIntervalSinceNow];
+		statistics.duration += interval;
+		[self write:@"Test Case '%@' %@ (%.3f seconds).\n", caseName, result.wasMet? @"passed" : @"failed", interval];
+		[self write:@"\n"];
 	}];
 	
-	L3TestSuite *suite = [L3TestSuite testSuiteWithName:@"suite"];
-	
-	[test.runner testSuite:suite inTestSuite:nil withChildren:^{}];
-	
-	l3_assert(test.events, l3_equals(@[]));
-}
-
--(void)testSuite:(L3TestSuite *)testSuite inTestSuite:(L3TestSuite *)suite withChildren:(void(^)())block {
-	if (!self.testSuitePredicate || [self.testSuitePredicate evaluateWithObject:testSuite]) {
-		[self.queue addOperationWithBlock:^{
-			[self.eventObserver testStartEventWithTest:testSuite date:[NSDate date]];
-		}];
-		
-		block();
-		
-		[self.queue addOperationWithBlock:^{
-			[self.eventObserver testEndEventWithTest:testSuite date:[NSDate date]];
-		}];
+	for (id(^lazyChild)() in lazyChildren) {
+		[statistics addStatistics:lazyChild()];
 	}
+	
+	[test tearDown];
+	
+	statistics.endDate = [NSDate date];
+	
+	[self write:@"Test Suite '%@' finished at %@.\n", suiteName, statistics.endDate];
+	[self write:@"Executed %@, with %@ (%lu unexpected) in %.3f (%.3f) seconds.\n", [self cardinalizeNoun:@"test" forCount:statistics.testCount], [self cardinalizeNoun:@"failure" forCount:statistics.assertionFailureCount], statistics.exceptionCount, statistics.duration, [statistics.endDate timeIntervalSinceDate:statistics.startDate]];
+	[self write:@"\n"];
+	
+	return statistics;
 }
 
 @end
 
-@l3_suite_implementation (L3TestRunner)
+@implementation L3TestStatistics
 
--(void)testStartEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"start" }];
+-(instancetype)init {
+	if ((self = [super init])) {
+		_startDate = [NSDate date];
+	}
+	return self;
 }
 
--(void)testEndEventWithTest:(id<L3Test>)test date:(NSDate *)date {
-	[self.events addObject:@{ @"name": test.name, @"date": date, @"type": @"end" }];
-}
-
--(void)assertionSuccessWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
-	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"success" }];
-}
-
--(void)assertionFailureWithSourceReference:(L3SourceReference *)sourceReference date:(NSDate *)date {
-	[self.events addObject:@{ @"sourceReference": sourceReference, @"date": date, @"type": @"failure" }];
+-(void)addStatistics:(L3TestStatistics *)statistics {
+	self.testCount += statistics.testCount;
+	self.assertionFailureCount += statistics.assertionFailureCount;
+	self.exceptionCount += statistics.exceptionCount;
+	self.duration += statistics.duration;
 }
 
 @end

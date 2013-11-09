@@ -30,7 +30,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4B62B3E16A117B200E42C84"
                BuildableName = "Lagrangian.octest"
-               BlueprintName = "RXCollections"
+               BlueprintName = "RXCollections tests"
                ReferencedContainer = "container:RXCollections.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,7 +48,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4B62B3E16A117B200E42C84"
                BuildableName = "Lagrangian.octest"
-               BlueprintName = "RXCollections"
+               BlueprintName = "RXCollections tests"
                ReferencedContainer = "container:RXCollections.xcodeproj">
             </BuildableReference>
          </TestableReference>

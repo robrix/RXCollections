@@ -1,92 +1,246 @@
-//  L3TestState.m
-//  Created by Rob Rix on 2012-11-10.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
-
 #import "L3TestState.h"
+
 #import "Lagrangian.h"
 
-@l3_suite("Test state");
+#if __has_feature(modules)
+@import ObjectiveC.runtime;
+#else
+#import <objc/runtime.h>
+#endif
 
-const NSTimeInterval L3TestStateDefaultTimeout = 5.;
+l3_setup((NSNumber *flag), ^{
+	NSLog(@"about to set the flag");
+	[self self];
+	self.state.flag = @YES;
+	[self self];
+})
+
+l3_test("l3_setup", ^{
+	l3_expect(self.state.flag).to.equal(@YES);
+})
+
+@protocol L3TestStateProtocolTest <NSObject>
+
+@property (nonatomic) NSString *string;
+@property (nonatomic) CGFloat floatValue;
+@property (nonatomic) NSFastEnumerationState fastEnumerationState;
+
+@end
+
 
 @interface L3TestState ()
 
-@property (nonatomic, readonly) NSMutableDictionary *contents;
-
-@property (strong, nonatomic, readonly) dispatch_semaphore_t completionSemaphore;
-
-@property (assign, nonatomic, readwrite, getter = isDeferred) bool deferred;
+@property (nonatomic, readonly) NSMutableDictionary *propertyNamesBySelectorString;
 
 @end
 
 @implementation L3TestState
 
-#pragma mark Constructors
+static inline NSString *L3TestStateGetterForProperty(objc_property_t property) {
+	const char *getterValue = property_copyAttributeValue(property, "G");
+	NSString *getter = getterValue? @(getterValue) : nil;
+	if (!getter)
+		getter = @(property_getName(property));
+	return getter;
+}
 
--(instancetype)initWithSuite:(L3TestSuite *)suite eventObserver:(id<L3EventObserver>)eventObserver {
-	if((self = [super init])) {
-		_contents = [NSMutableDictionary new];
-		_completionSemaphore = dispatch_semaphore_create(0);
+static inline NSString *L3TestStateSetterForProperty(objc_property_t property) {
+	const char *setterValue = property_copyAttributeValue(property, "S");
+	NSString *setter = setterValue? @(setterValue) : nil;
+	if (!setter) {
+		NSString *propertyName = @(property_getName(property));
+		setter = [NSString stringWithFormat:@"set%@%@:", [[propertyName substringToIndex:1] uppercaseString], [propertyName substringFromIndex:1]];
+	}
+	return setter;
+}
+
++(instancetype)stateWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	return [[self alloc] initWithProtocol:stateProtocol setUpBlock:setUpBlock];
+}
+
+-(instancetype)initWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	NSParameterAssert(stateProtocol != nil);
+	
+	if ((self = [super init])) {
+		_stateProtocol = stateProtocol;
+		_properties = [NSMutableDictionary new];
 		
-		_suite = suite;
-		_eventObserver = eventObserver;
+		_propertyNamesBySelectorString = [NSMutableDictionary new];
 		
-		_timeout = L3TestStateDefaultTimeout;
+		_setUpBlock = [setUpBlock copy];
+		
+		unsigned int propertyCount = 0;
+		objc_property_t *properties = protocol_copyPropertyList(self.stateProtocol, &propertyCount);
+		
+		for (NSUInteger i = 0; i < propertyCount; i++) {
+			_propertyNamesBySelectorString[L3TestStateGetterForProperty(properties[i])] =
+			_propertyNamesBySelectorString[L3TestStateSetterForProperty(properties[i])] =
+				@(property_getName(properties[i]));
+		}
+		
+		free(properties);
 	}
 	return self;
 }
 
 
-#pragma mark Test state
+#pragma mark Lifespan
 
--(id)objectForKeyedSubscript:(NSString *)key {
-	NSParameterAssert(key != nil);
-	return self.contents[key];
-}
-
--(void)setObject:(id)object forKeyedSubscript:(NSString *)key {
-	NSParameterAssert(object != nil);
-	NSParameterAssert(key != nil);
-	self.contents[key] = object;
+-(void)setUpWithTest:(L3Test *)test {
+	if (self.setUpBlock)
+		self.setUpBlock(test);
 }
 
 
-#pragma mark Asynchrony
+#pragma mark Method signatures
 
-@l3_test("can explicitly wait for asynchronous results to complete") {
-	__block NSString *text = nil;
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		text = @"text";
-		l3_complete();
-	});
-	l3_assert(l3_wait(), l3_did_not_timeout());
-	l3_assert(text, l3_equals(@"text"));
+enum L3ProtocolOptions : NSUInteger {
+	L3ProtocolMethodOptionRequired = 1 << 0,
+	L3ProtocolMethodOptionInstance = 1 << 1,
+	
+	L3ProtocolMethodOptionOptional = 0,
+	L3ProtocolMethodOptionClass = 0,
+};
+
+-(const char *)typesForMethodInProtocolWithSelector:(SEL)selector options:(enum L3ProtocolOptions)options {
+	return protocol_getMethodDescription(self.stateProtocol, selector, options & L3ProtocolMethodOptionRequired, options & L3ProtocolMethodOptionInstance).types;
 }
 
-@l3_test("can implicitly wait for asynchronous results to complete") {
-	l3_defer();
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		l3_assert(test.isDeferred, YES);
-		l3_complete();
-	});
+l3_test(@selector(typesForMethodInProtocolWithSelector:), ^{
+	L3TestState *state = [L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest) setUpBlock:nil];
+	
+	l3_expect([state typesForMethodInProtocolWithSelector:@selector(string)]).to.equal(@"@16@0:8");
+	l3_expect([state typesForMethodInProtocolWithSelector:@selector(setString:)]).to.equal(@"v24@0:8@16");
+})
+
+-(const char *)typesForMethodInProtocolWithSelector:(SEL)selector {
+	const char *types = NULL;
+	NSArray *allOptions = @[
+		@(L3ProtocolMethodOptionOptional | L3ProtocolMethodOptionClass),
+		@(L3ProtocolMethodOptionRequired | L3ProtocolMethodOptionClass),
+		@(L3ProtocolMethodOptionOptional | L3ProtocolMethodOptionInstance),
+		@(L3ProtocolMethodOptionRequired | L3ProtocolMethodOptionInstance),
+	];
+	for (NSNumber *options in allOptions) {
+		types = [self typesForMethodInProtocolWithSelector:selector options:options.unsignedIntegerValue];
+		if (types)
+			break;
+	}
+	return types;
 }
 
--(void)deferCompletion {
-	self.deferred = YES;
+-(NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+	NSMethodSignature *signature = [super methodSignatureForSelector:selector];
+	if (!signature)
+		signature = [NSMethodSignature signatureWithObjCTypes:[self typesForMethodInProtocolWithSelector:selector]];
+	return signature;
 }
 
--(void)complete {
-	dispatch_semaphore_signal(self.completionSemaphore);
+
+#pragma mark Responding
+
+-(BOOL)respondsToSelector:(SEL)selector {
+	return
+		[super respondsToSelector:selector]
+	||	[self typesForMethodInProtocolWithSelector:selector] != NULL;
 }
 
--(bool)wait {
-	return [self waitWithTimeout:self.timeout];
+
+#pragma mark Forwarding
+
+l3_test(@selector(forwardInvocation:), ^{
+	L3TestState<L3TestStateProtocolTest> *state = (L3TestState<L3TestStateProtocolTest> *)[L3TestState stateWithProtocol:@protocol(L3TestStateProtocolTest) setUpBlock:nil];
+	
+	l3_expect(state.string).to.equal(nil);
+	@autoreleasepool {
+		state.string = [NSString stringWithFormat:@"phrenolo%@y", @"g"];
+	}
+	l3_expect(state.string).to.equal(@"phrenology");
+	
+	l3_expect(state.floatValue).to.equal(@0.0);
+	state.floatValue = M_PI;
+	l3_expect(state.floatValue).to.equal(@M_PI);
+	
+	l3_expect(state.fastEnumerationState).to.equal([NSValue valueWithBytes:&(NSFastEnumerationState){0} objCType:@encode(NSFastEnumerationState)]);
+	
+	l3_expect(state.fastEnumerationState).to.equal([NSValue valueWithBytes:&(NSFastEnumerationState){0} objCType:@encode(NSFastEnumerationState)]);
+})
+
+-(void)forwardInvocation:(NSInvocation *)invocation {
+	NSString *selectorString = NSStringFromSelector(invocation.selector);
+	NSString *propertyName = self.propertyNamesBySelectorString[selectorString];
+	
+	if (L3TestStateSelectorStringIsSetter(selectorString)) {
+		bool isObject = L3TestStateTypeStringRepresentsObject([invocation.methodSignature getArgumentTypeAtIndex:2]);
+		intptr_t bytes[(invocation.methodSignature.frameLength - [self methodSignatureForSelector:@selector(description)].frameLength) / sizeof(intptr_t)];
+		[invocation getArgument:bytes atIndex:2];
+		self.properties[propertyName] = isObject?
+			(__bridge id)*(void **)bytes
+		:	[NSValue valueWithBytes:bytes objCType:[invocation.methodSignature getArgumentTypeAtIndex:2]];
+	} else {
+		bool isObject = L3TestStateTypeStringRepresentsObject(invocation.methodSignature.methodReturnType);
+		id value = self.properties[propertyName];
+		if (isObject) {
+			[invocation setReturnValue:&value];
+		} else {
+			intptr_t bytes[invocation.methodSignature.methodReturnLength];
+			if (value)
+				[value getValue:&bytes];
+			else
+				memset(bytes, 0, sizeof bytes);
+			[invocation setReturnValue:bytes];
+		}
+	}
 }
 
--(bool)waitWithTimeout:(NSTimeInterval)interval {
-	bool didTimeout =  dispatch_semaphore_wait(self.completionSemaphore, dispatch_time(DISPATCH_TIME_NOW, interval * NSEC_PER_SEC)) != 0;
-	self.deferred = NO;
-	return !didTimeout;
+
+#pragma mark Categorizing
+
+l3_test(@selector(selectorStringIsSetter:), ^{
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setFoo:")).to.equal(@YES);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setF:")).to.equal(@YES);
+	
+	l3_expect(L3TestStateSelectorStringIsSetter(@"set:")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"set")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setfoo:")).to.equal(@NO);
+	l3_expect(L3TestStateSelectorStringIsSetter(@"setFoo")).to.equal(@NO);
+})
+
+static inline bool L3TestStateSelectorStringIsSetter(NSString *selectorString) {
+	NSRegularExpression *setterExpression = [NSRegularExpression regularExpressionWithPattern:@"^set[A-Z_][a-zA-Z_]*:$" options:NSRegularExpressionDotMatchesLineSeparators error:NULL];
+	return [setterExpression numberOfMatchesInString:selectorString options:NSMatchingAnchored range:(NSRange){0, selectorString.length}];
+}
+
+static inline bool L3TestStateTypeStringRepresentsObject(const char *type) {
+	return strncmp(type, @encode(id), 1) == 0;
+}
+
+@end
+
+
+@interface L3TestStatePrototype ()
+
+@property (nonatomic, readonly) Protocol *stateProtocol;
+@property (nonatomic, readonly) L3TestStateBlock setUpBlock;
+
+@end
+
+@implementation L3TestStatePrototype
+
++(instancetype)statePrototypeWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	return [[self alloc] initWithProtocol:stateProtocol setUpBlock:setUpBlock];
+}
+
+-(instancetype)initWithProtocol:(Protocol *)stateProtocol setUpBlock:(L3TestStateBlock)setUpBlock {
+	if ((self = [super init])) {
+		_stateProtocol = stateProtocol;
+		_setUpBlock = [setUpBlock copy];
+	}
+	return self;
+}
+
+-(L3TestState *)createState {
+	return [[L3TestState alloc] initWithProtocol:self.stateProtocol setUpBlock:self.setUpBlock];
 }
 
 @end

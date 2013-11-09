@@ -2,19 +2,19 @@
 //  Created by Rob Rix on 2013-01-12.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+#import <RXCollections/RXTuple.h>
+#import <RXCollections/RXEquating.h>
 
-@interface RXPair : NSObject <NSCopying>
-
-+(instancetype)pairWithLeft:(id)left right:(id)right;
--(instancetype)initWithLeft:(id)left right:(id)right;
+@protocol RXPair <NSObject>
 
 @property (nonatomic, strong, readonly) id left;
 @property (nonatomic, strong, readonly) id right;
 
-@property (nonatomic, copy, readonly) NSArray *elements;
+@end
 
--(bool)isEqualToPair:(RXPair *)pair;
+@interface RXTuple (RXPair) <RXPair>
+
++(instancetype)tupleWithLeft:(id)left right:(id)right;
 
 @end
 
@@ -26,22 +26,22 @@
 
 @end
 
-@interface RXPair (RXKeyValuePair) <RXKeyValuePair>
+@interface RXTuple (RXKeyValuePair) <RXKeyValuePair>
 
-+(instancetype)pairWithKey:(id<NSCopying>)key value:(id)value;
++(instancetype)tupleWithKey:(id<NSCopying>)key value:(id)value;
 
 @end
 
 
-@protocol RXLinkedListNode <NSObject>
+@protocol RXLinkedListNode <NSObject, RXEquating>
 
 @property (nonatomic, strong, readonly) id first;
-@property (nonatomic, strong, readonly) id rest;
+@property (nonatomic, strong, readonly) id<RXLinkedListNode> rest;
 
 @end
 
-@interface RXPair (RXLinkedListNode) <RXLinkedListNode>
+@interface RXTuple (RXLinkedListNode) <RXLinkedListNode>
 
-+(instancetype)pairWithFirst:(id)first rest:(id)rest;
++(instancetype)tupleWithFirst:(id)first rest:(id<RXLinkedListNode>)rest;
 
 @end

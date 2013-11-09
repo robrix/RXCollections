@@ -1,0 +1,21 @@
+//  RXEquating.h
+//  Created by Rob Rix on 2013-05-08.
+//  Copyright (c) 2013 Rob Rix. All rights reserved.
+
+#import <Foundation/Foundation.h>
+
+@protocol RXEquating <NSObject>
+
+-(BOOL)isEqual:(id)object;
+
+@end
+
+static inline bool RXEqual(id<RXEquating> a, id<RXEquating> b) {
+	return
+		(a == b)
+	||	[a isEqual:b];
+}
+static bool (* const RXEquals)(id<RXEquating>, id<RXEquating>) = RXEqual;
+
+@interface NSObject (RXEquating) <RXEquating>
+@end
