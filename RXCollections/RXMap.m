@@ -32,10 +32,6 @@ RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 };
 
 
-static NSString *accumulate(NSString *each, bool *stop) {
-	return [each stringByAppendingString:@"Superlative"];
-}
-
 l3_test(&RXMap, ^{
 	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
 		return [each stringByAppendingString:@"Superlative"];

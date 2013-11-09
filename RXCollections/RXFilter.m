@@ -65,10 +65,6 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 };
 
 
-static bool itemsPrefixedWithA(id each, bool *stop) {
-	return [each hasPrefix:@"A"];
-}
-
 l3_test(&RXFilter, ^{
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
 	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(id each, bool *stop) {

@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef id (^RXFoldBlock)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
 typedef id (*RXFoldFunction)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the function
