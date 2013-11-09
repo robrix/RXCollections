@@ -1,5 +1,3 @@
-//  RXConvolution.m
-//  Created by Rob Rix on 2013-03-12.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXConvolution.h"
@@ -29,14 +27,7 @@ id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConv
 	});
 }
 
-id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function) {
-	return RXConvolveWith(sequences, ^id(NSUInteger count, const __unsafe_unretained id *objects, bool *stop) {
-		return function(count, objects, stop);
-	});
-}
-
 id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
-id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction) = RXConvolveWithF;
 
 l3_addTestSubjectTypeWithFunction(RXConvolve)
 
