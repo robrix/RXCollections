@@ -10,12 +10,22 @@
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
-@l3_suite("RXMap");
-
-@l3_test("identity map block returns its argument") {
-	__block bool stop = NO;
-	l3_assert(RXIdentityMapBlock(@"Equestrian", &stop), @"Equestrian");
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXMapBlock subject, L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
 }
+
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id<RXTraversal>(*subject)(id<NSObject, NSFastEnumeration>, RXMapBlock), L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
+}
+
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXMapBlock(*subject)(RXMapFunction), L3TestBlock block) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
+}
+
+l3_test(RXIdentityMapBlock, ^{
+	bool stop = NO;
+	l3_expect(RXIdentityMapBlock(@"Equestrian", &stop)).to.equal(@"Equestrian");
+})
 
 RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 	return x;
@@ -26,13 +36,12 @@ static NSString *accumulate(NSString *each, bool *stop) {
 	return [each stringByAppendingString:@"Superlative"];
 }
 
-@l3_test("collects the piecewise results of its block") {
-	l3_assert(RXConstructArray(RXMapF(@[@"Hegemony", @"Maleficent"], accumulate)), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
-	
-	l3_assert(RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
+l3_test(&RXMap, ^{
+	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
 		return [each stringByAppendingString:@"Superlative"];
-	})), (@[@"HegemonySuperlative", @"MaleficentSuperlative"]));
-}
+	}));
+	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
+})
 
 id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, nil, block));
@@ -43,17 +52,15 @@ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunctio
 }
 
 
-@l3_suite("RXMapBlockWithFunction");
-
 static id identityFunction(id each, bool *stop) {
 	return each;
 }
 
-@l3_test("identity function to block returns an identity block") {
+l3_test(&RXMapBlockWithFunction, ^{
 	NSObject *object = [NSObject new];
-	__block bool stop = NO;
-	l3_assert(RXMapBlockWithFunction(identityFunction)(object, &stop), object);
-}
+	bool stop = NO;
+	l3_expect(RXMapBlockWithFunction(identityFunction)(object, &stop)).to.equal(object);
+})
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
 	return ^(id each, bool *stop) {

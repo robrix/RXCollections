@@ -1,27 +1,17 @@
 # RXPreprocessing
 
-A variety of C preprocessor-based utilities useful for a variety of purposes. Unless otherwise noted, these do not have any dependencies outside of the C preprocessor itself.
+Metaprogramming and metapreprocessing utilities for the enterprising developer. Featuring old standbys and novelties alike, including:
 
+- good old token pasting — concat.h
+- variadic argument counting — count.h
+- differentiating between >=1- and 0-argument lists — count.h
+- boolean algebra, including NOT, OR, AND, and XOR — bool.h
+- conditional expressions — cond.h
+- left and right folds — fold.h
+- maps — map.h
+- arithmetic — math.h (incomplete)
 
-## RXPaste.h
-
-Simple token pasting, like grandma used to make. Primarily exists to support the other utilities.
-
-
-## RXCount.h
-
-Counting the arguments passed to variadic macros. Primarily exists to support the other utilities.
-
-
-## RXFold.h
-
-Folding a macro over a variadic list. This can make it easier to build variadic macros which do not need to defer their arguments to a function or method for processing.
-
-This is incredibly useful when you want to do something using a macro over a variable number of arguments:
-
-	#define add(x, y) y + x
-	int sum = rx_fold(add, 0, 1, 2, 3, 4, 5); → int sum = 0 + 1 + 2 + 3 + 4 + 5 + 6;
-
+Except where otherwise noted, these utilities are standard, cross-platform use of the C preprocessor, and do not rely on e.g. GNU extensions.
 
 ## RXInterpolation.h
 

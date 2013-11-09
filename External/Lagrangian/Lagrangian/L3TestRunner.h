@@ -1,16 +1,18 @@
-//  L3TestRunner.h
-//  Created by Rob Rix on 2012-11-09.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
+#ifndef L3_TEST_RUNNER_H
+#define L3_TEST_RUNNER_H
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
-#import <Lagrangian/L3Configuration.h>
+#endif
 
-extern NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
-extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
+#import <Lagrangian/L3Defines.h>
 
-@class L3TestSuite;
+L3_EXTERN NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;
+L3_EXTERN NSString * const L3TestRunnerSubjectEnvironmentVariableName;
 
-#if L3_DEBUG
+#if defined(L3_DEBUG)
 
 #define l3_main(argc, argv) \
 	do { \
@@ -26,16 +28,23 @@ extern NSString * const L3TestRunnerSuitePredicateEnvironmentVariableName;
 
 #endif
 
+@class L3Test;
+
 @interface L3TestRunner : NSObject
 
 +(bool)shouldRunTestsAtLaunch;
 +(bool)isRunningInApplication;
 
-+(instancetype)runner;
+-(void)enqueueTests:(NSArray *)tests;
+-(void)enqueueTest:(L3Test *)test;
 
-@property (strong, nonatomic) NSPredicate *testSuitePredicate;
-
--(void)run; // starts running asynchronously
--(void)waitForTestsToComplete;
+/**
+ Blocks until all tests have completed.
+ 
+ @return True if the tests completed successfully, and false otherwise.
+ */
+-(bool)waitForTestsToComplete;
 
 @end
+
+#endif // L3_TEST_RUNNER
