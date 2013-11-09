@@ -8,7 +8,7 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-@interface RXGeneratorTraversable : NSObject <RXGenerator>
+@interface RXGeneratorEnumerable : NSObject <RXGenerator>
 
 +(instancetype)generatorWithContext:(id<NSObject, NSCopying>)context block:(RXGeneratorBlock)block;
 
@@ -17,7 +17,7 @@
 @property (nonatomic, copy, readonly) RXGeneratorBlock block;
 @end
 
-@implementation RXGeneratorTraversable
+@implementation RXGeneratorEnumerable
 
 @synthesize context = _context;
 
@@ -36,7 +36,7 @@
 }
 
 l3_test(@selector(traversal), ^{
-	RXGeneratorBlock fibonacci = ^(RXGeneratorTraversable *self) {
+	RXGeneratorBlock fibonacci = ^(RXGeneratorEnumerable *self) {
 		NSNumber *previous = self.context[1], *next = @([self.context[0] unsignedIntegerValue] + [previous unsignedIntegerValue]);
 		self.context = (id)[RXTuple tupleWithArray:@[previous, next]];
 		return previous;
@@ -50,7 +50,7 @@ l3_test(@selector(traversal), ^{
 	l3_expect(series).to.equal(@[@1, @1, @2, @3, @5, @8, @13, @21, @34, @55, @89, @144]);
 	
 	NSUInteger n = 3;
-	RXGeneratorBlock block = ^(RXGeneratorTraversable *self) {
+	RXGeneratorBlock block = ^(RXGeneratorEnumerable *self) {
 		NSUInteger current = [(NSNumber *)self.context unsignedIntegerValue];
 		self.context = @(current + 1);
 		if (current >= n)
@@ -84,5 +84,5 @@ l3_test(@selector(traversal), ^{
 @end
 
 id<RXGenerator> RXGenerator(id<NSObject, NSCopying> context, RXGeneratorBlock block) {
-	return [RXGeneratorTraversable generatorWithContext:context block:block];
+	return [RXGeneratorEnumerable generatorWithContext:context block:block];
 }

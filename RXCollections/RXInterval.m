@@ -7,7 +7,7 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-@interface RXIntervalTraversable : NSObject <RXInterval>
+@interface RXIntervalEnumerable : NSObject <RXInterval>
 -(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count;
 
 @property (nonatomic, readonly) RXMagnitude from;
@@ -48,7 +48,7 @@ id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude 
 	NSCParameterAssert(absoluteStride > 0.0);
 	
 	RXMagnitude length = RXIntervalGetLength(from, to);
-	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
+	return [[RXIntervalEnumerable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
 }
 
 
@@ -67,11 +67,11 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 		length / (RXMagnitude)(count - 1)
 	:	length;
 	
-	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:count];
+	return [[RXIntervalEnumerable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:count];
 }
 
 
-@implementation RXIntervalTraversable
+@implementation RXIntervalEnumerable
 
 #pragma mark Construction
 
@@ -89,7 +89,7 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 
-#pragma mark RXTraversable
+#pragma mark RXEnumerable
 
 l3_test(@selector(traversal), ^{
 	l3_expect(RXConstructArray(RXIntervalByCount(-M_PI, M_PI, 3).traversal)).to.equal(@[@-M_PI, @0, @M_PI]);

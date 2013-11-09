@@ -35,7 +35,7 @@ static inline RXMagnitude RXMagnitudeGetAbsoluteValue(RXMagnitude x) {
 
 #pragma mark RXInterval
 
-@protocol RXInterval <NSObject, RXTraversable>
+@protocol RXInterval <NSObject, RXEnumerable>
 @property (nonatomic, readonly) RXMagnitude from;
 @property (nonatomic, readonly) RXMagnitude to;
 @property (nonatomic, readonly) RXMagnitude length;

@@ -256,7 +256,7 @@ l3_test(@selector(hash), ^{
 }
 
 
-#pragma mark RXTraversable
+#pragma mark RXEnumerable
 
 -(id<RXTraversal>)traversal {
 	return RXTraversalWithObjects(self, self.elements, self.count);
