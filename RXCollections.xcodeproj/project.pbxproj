@@ -22,6 +22,9 @@
 		D44C5B1D16E3B4FC00A2A350 /* RXEnumerationArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */; };
 		D44C5B1E16E3B4FC00A2A350 /* RXEnumerationArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */; };
 		D44C5B1F16E3B4FC00A2A350 /* RXEnumerationArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */; };
+		D44CF815182EB2BC00E00D77 /* RXEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D44CF814182EB2B400E00D77 /* RXEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D44CF816182EB2BD00E00D77 /* RXEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D44CF814182EB2B400E00D77 /* RXEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D44CF817182EB2BE00E00D77 /* RXEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = D44CF814182EB2B400E00D77 /* RXEnumerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4619F44175052110025C129 /* RXEquating.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC9FB0173AE98100D33495 /* RXEquating.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4619F47175052120025C129 /* RXEquating.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC9FB0173AE98100D33495 /* RXEquating.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4619F48175052130025C129 /* RXEquating.h in Headers */ = {isa = PBXBuildFile; fileRef = D4BC9FB0173AE98100D33495 /* RXEquating.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,6 +210,7 @@
 		D4416E131755BAB90081D480 /* RXTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXTree.m; sourceTree = "<group>"; };
 		D44C5B1816E3B4FC00A2A350 /* RXEnumerationArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXEnumerationArray.h; sourceTree = "<group>"; };
 		D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXEnumerationArray.m; sourceTree = "<group>"; };
+		D44CF814182EB2B400E00D77 /* RXEnumerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXEnumerator.h; sourceTree = "<group>"; };
 		D473F63616DA7E5D000FCD8D /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49C72A6179C242C0037626A /* RXSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXSingleton.h; sourceTree = "<group>"; };
 		D49C72A7179C242C0037626A /* RXSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXSingleton.m; sourceTree = "<group>"; };
@@ -297,6 +301,14 @@
 			name = Traversals;
 			sourceTree = "<group>";
 		};
+		D44CF812182EB2A500E00D77 /* Enumerators */ = {
+			isa = PBXGroup;
+			children = (
+				D44CF814182EB2B400E00D77 /* RXEnumerator.h */,
+			);
+			name = Enumerators;
+			sourceTree = "<group>";
+		};
 		D496E85F171AFA390033792D /* Higher-order functions */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,6 +370,7 @@
 		D49E8F95147978C8004490EA /* RXCollections */ = {
 			isa = PBXGroup;
 			children = (
+				D44CF812182EB2A500E00D77 /* Enumerators */,
 				D496E85F171AFA390033792D /* Higher-order functions */,
 				D4B5CA60171A819100069C92 /* Collections */,
 				D44C5B1216E3104A00A2A350 /* Traversals */,
@@ -451,6 +464,7 @@
 				D4EC50F816EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68516F015FD00C732A0 /* RXConvolution.h in Headers */,
 				D4B5CA5A171A79ED00069C92 /* RXFilteredMapTraversalSource.h in Headers */,
+				D44CF817182EB2BE00E00D77 /* RXEnumerator.h in Headers */,
 				D4BC9F8E1734A4D700D33495 /* RXTree.h in Headers */,
 				D4BC9F9E1734AA1500D33495 /* RXQueue.h in Headers */,
 				D4619F44175052110025C129 /* RXEquating.h in Headers */,
@@ -478,6 +492,7 @@
 				D4EC50F616EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68316F015FD00C732A0 /* RXConvolution.h in Headers */,
 				D4B5CA58171A79ED00069C92 /* RXFilteredMapTraversalSource.h in Headers */,
+				D44CF815182EB2BC00E00D77 /* RXEnumerator.h in Headers */,
 				D4BC9F8C1734A4D700D33495 /* RXTree.h in Headers */,
 				D4BC9F9C1734AA1500D33495 /* RXQueue.h in Headers */,
 				D4619F48175052130025C129 /* RXEquating.h in Headers */,
@@ -505,6 +520,7 @@
 				D4EC50F716EB15A700EB3B64 /* RXGenerator.h in Headers */,
 				D4ADB68416F015FD00C732A0 /* RXConvolution.h in Headers */,
 				D4B5CA59171A79ED00069C92 /* RXFilteredMapTraversalSource.h in Headers */,
+				D44CF816182EB2BD00E00D77 /* RXEnumerator.h in Headers */,
 				D4BC9F8D1734A4D700D33495 /* RXTree.h in Headers */,
 				D4BC9F9D1734AA1500D33495 /* RXQueue.h in Headers */,
 				D4619F47175052120025C129 /* RXEquating.h in Headers */,
