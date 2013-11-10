@@ -30,12 +30,12 @@ extern RXFilterBlock const RXAcceptNilFilterBlock;
 extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
- Returns a traversal of the elements of `enumeration` which are matched by `block` or `function`.
+ Returns a traversal of the elements of \c enumeration which are matched by \c block.
  */
 extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
- Returns the first element found in `collection` which is matched by `block` or `function`.
+ Returns the first element found in \c collection which is matched by \c block.
  */
 extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
 
