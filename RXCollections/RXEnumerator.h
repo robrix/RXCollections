@@ -9,7 +9,7 @@
 
 @property (nonatomic, readonly) bool isExhausted;
 @property (nonatomic, readonly) id currentObject;
--(void)advanceCurrentObject;
+-(void)consumeCurrentObject;
 
 @end
 
