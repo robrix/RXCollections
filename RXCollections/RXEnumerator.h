@@ -7,7 +7,7 @@
  */
 @protocol RXEnumerator <NSObject, NSCopying, NSFastEnumeration>
 
-@property (nonatomic, readonly) bool isExhausted;
+@property (nonatomic, readonly, getter = isEmpty) bool empty;
 @property (nonatomic, readonly) id currentObject;
 -(void)consumeCurrentObject;
 
