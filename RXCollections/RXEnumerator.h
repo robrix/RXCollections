@@ -15,11 +15,12 @@
 
 
 /**
- An enumerator which has a known length.
+ An enumerator which has a known count.
  */
 @protocol RXFiniteEnumerator <RXEnumerator>
 
-@property (nonatomic, readonly) NSUInteger length;
+/// The count of objects remaining to be enumerated.
+@property (nonatomic, readonly) NSUInteger count;
 
 @end
 
