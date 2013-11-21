@@ -36,8 +36,8 @@ l3_test(&RXConvolve, ^{
 	l3_expect(convoluted.count).to.equal(@2);
 	l3_expect(convoluted).to.equal(@[[RXTuple tupleWithArray:@[@0, @2]], [RXTuple tupleWithArray:@[@1, @3]]]);
 	
-	id<RXInterval> interval = RXIntervalByCount(0, 1, 128);
-	convoluted = RXConstructArray(RXConvolve(@[interval.traversal, interval.traversal]));
+	id<RXFiniteEnumerator> interval = [RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 1} count:128];
+	convoluted = RXConstructArray(RXConvolve(@[[interval copyWithZone:NULL], [interval copyWithZone:NULL]]));
 	
 	l3_expect(convoluted.lastObject).to.equal([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]);
 })

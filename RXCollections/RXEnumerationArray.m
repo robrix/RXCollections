@@ -46,7 +46,7 @@
 #pragma mark NSArray primitives
 
 l3_test(@selector(count), ^{
-	id<RXFiniteTraversal> items = (id)RXInterval(0, 63).traversal;
+	id<RXFiniteEnumerator> items = [RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}];
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:items count:items.count];
 	[array count];
 	l3_expect(array.enumeratedObjects).to.equal(nil);
@@ -63,7 +63,7 @@ l3_test(@selector(count), ^{
 }
 
 l3_test(@selector(objectAtIndex:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array objectAtIndex:0];
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	[array objectAtIndex:15];
@@ -81,7 +81,7 @@ l3_test(@selector(objectAtIndex:), ^{
 #pragma mark Populating
 
 l3_test(@selector(populateUpToIndex:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array populateUpToIndex:NSUIntegerMax];
 	l3_expect(array.enumeration).to.equal(nil);
 })
@@ -120,7 +120,7 @@ l3_test(@selector(populateUpToIndex:), ^{
 #pragma mark NSFastEnumeration
 
 l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	for (id x in array) { break; }
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	for (id x in array) { break; }
