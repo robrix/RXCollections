@@ -60,6 +60,9 @@
 		D49C72CE179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
 		D49C72CF179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
 		D49C72D0179C402C0037626A /* RXNilArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D49C72CA179C402C0037626A /* RXNilArray.m */; };
+		D4A4ACF0183D963200E25901 /* RXMagnitude.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A4ACEF183D963200E25901 /* RXMagnitude.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4A4ACF1183D963200E25901 /* RXMagnitude.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A4ACEF183D963200E25901 /* RXMagnitude.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4A4ACF2183D963200E25901 /* RXMagnitude.h in Headers */ = {isa = PBXBuildFile; fileRef = D4A4ACEF183D963200E25901 /* RXMagnitude.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920616CFD918006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4AA920716CFD929006F3655 /* RXTraversal.h in Headers */ = {isa = PBXBuildFile; fileRef = D4AA920516CFD8D9006F3655 /* RXTraversal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4ADB68316F015FD00C732A0 /* RXConvolution.h in Headers */ = {isa = PBXBuildFile; fileRef = D4ADB68116F015FD00C732A0 /* RXConvolution.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -233,6 +236,7 @@
 		D49E8F8C147978C8004490EA /* libRXCollections.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCollections.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E8F94147978C8004490EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D49E8F97147978C8004490EA /* RXCollections-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCollections-Prefix.pch"; sourceTree = "<group>"; };
+		D4A4ACEF183D963200E25901 /* RXMagnitude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMagnitude.h; sourceTree = "<group>"; };
 		D4AA920516CFD8D9006F3655 /* RXTraversal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXTraversal.h; sourceTree = "<group>"; };
 		D4ADB68116F015FD00C732A0 /* RXConvolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXConvolution.h; sourceTree = "<group>"; };
 		D4ADB68216F015FD00C732A0 /* RXConvolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXConvolution.m; sourceTree = "<group>"; };
@@ -418,6 +422,7 @@
 				D44C5B1916E3B4FC00A2A350 /* RXEnumerationArray.m */,
 				D4078DC016E124490005B4C8 /* RXInterval.h */,
 				D4078DC116E124490005B4C8 /* RXInterval.m */,
+				D4A4ACEF183D963200E25901 /* RXMagnitude.h */,
 				D49C72C9179C402C0037626A /* RXNilArray.h */,
 				D49C72CA179C402C0037626A /* RXNilArray.m */,
 				D4C8768A16A2172100208BE9 /* RXPair.h */,
@@ -478,6 +483,7 @@
 				D473F65016DA81DD000FCD8D /* RXTraversal.h in Headers */,
 				D49C72BD179C262D0037626A /* RXAllocation.h in Headers */,
 				D473F65116DA81DD000FCD8D /* RXCollections.h in Headers */,
+				D4A4ACF2183D963200E25901 /* RXMagnitude.h in Headers */,
 				D4078DC416E124490005B4C8 /* RXInterval.h in Headers */,
 				D49C72AA179C242C0037626A /* RXSingleton.h in Headers */,
 				D44C5B1C16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */,
@@ -508,6 +514,7 @@
 				D4CF2C6816D718B0005F5810 /* RXFold.h in Headers */,
 				D49C72BB179C262D0037626A /* RXAllocation.h in Headers */,
 				D4CF2C6D16D71996005F5810 /* RXCollections.h in Headers */,
+				D4A4ACF0183D963200E25901 /* RXMagnitude.h in Headers */,
 				D4078DC216E124490005B4C8 /* RXInterval.h in Headers */,
 				D49C72A8179C242C0037626A /* RXSingleton.h in Headers */,
 				D44C5B1A16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */,
@@ -538,6 +545,7 @@
 				D4CF2C6916D718B0005F5810 /* RXFold.h in Headers */,
 				D49C72BC179C262D0037626A /* RXAllocation.h in Headers */,
 				D4CF2C6E16D71996005F5810 /* RXCollections.h in Headers */,
+				D4A4ACF1183D963200E25901 /* RXMagnitude.h in Headers */,
 				D4078DC316E124490005B4C8 /* RXInterval.h in Headers */,
 				D49C72A9179C242C0037626A /* RXSingleton.h in Headers */,
 				D44C5B1B16E3B4FC00A2A350 /* RXEnumerationArray.h in Headers */,
