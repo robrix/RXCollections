@@ -2,7 +2,7 @@
 
 @import Foundation;
 
-@interface RXFastEnumerationEnumerator : NSEnumerator
+@interface RXFastEnumerator : NSEnumerator
 
 -(instancetype)initWithEnumeration:(id<NSFastEnumeration>)enumeration;
 

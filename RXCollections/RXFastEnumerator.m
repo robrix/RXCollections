@@ -1,16 +1,16 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import "RXFastEnumerationEnumerator.h"
+#import "RXFastEnumerator.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-@interface RXFastEnumerationEnumerator ()
+@interface RXFastEnumerator ()
 
 @property (nonatomic, readonly) id<NSFastEnumeration> enumeration;
 
 @end
 
-@implementation RXFastEnumerationEnumerator {
+@implementation RXFastEnumerator {
 	NSFastEnumerationState _state;
 	id __unsafe_unretained _objects[16];
 	NSUInteger _countProduced;
@@ -28,7 +28,7 @@
 
 
 l3_test(@selector(needsToFetchItems), ^{
-	RXFastEnumerationEnumerator *enumerator = [[RXFastEnumerationEnumerator alloc] initWithEnumeration:@[@1, @2, @3, @4]];
+	RXFastEnumerator *enumerator = [[RXFastEnumerator alloc] initWithEnumeration:@[@1, @2, @3, @4]];
 	l3_expect(enumerator.needsToFetchItems).to.equal(@YES);
 	[enumerator fetchItemsIfNeeded];
 	l3_expect(enumerator.needsToFetchItems).to.equal(@NO);
@@ -63,7 +63,7 @@ l3_test(@selector(needsToFetchItems), ^{
 
 
 l3_test(@selector(nextObject), ^{
-	RXFastEnumerationEnumerator *enumerator = [[RXFastEnumerationEnumerator alloc] initWithEnumeration:[@[@1, @2] objectEnumerator]];
+	RXFastEnumerator *enumerator = [[RXFastEnumerator alloc] initWithEnumeration:[@[@1, @2] objectEnumerator]];
 	
 	l3_expect([enumerator nextObject]).to.equal(@1);
 	l3_expect([enumerator nextObject]).to.equal(@2);
