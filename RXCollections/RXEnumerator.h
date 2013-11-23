@@ -13,6 +13,15 @@
 
 @end
 
+/**
+ An object which can provide an enumeration.
+ */
+@protocol RXEnumerable <NSObject>
+
+@property (nonatomic, readonly) id<NSObject, NSFastEnumeration> enumeration;
+
+@end
+
 
 /**
  An enumerator which has a known count.
