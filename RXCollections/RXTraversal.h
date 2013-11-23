@@ -17,7 +17,7 @@
 @end
 
 
-@protocol RXEnumerable <NSObject>
+@protocol RXTraversable <NSObject>
 
 // for implementors with more than one viable traversal, this should return the default one, i.e. the one that would be used for fast enumeration
 @property (nonatomic, readonly) id<RXTraversal> traversal;

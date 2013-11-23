@@ -4,7 +4,7 @@
 
 #import <RXCollections/RXTraversal.h>
 
-@protocol RXGenerator <NSObject, RXEnumerable>
+@protocol RXGenerator <NSObject, RXTraversable>
 
 @property (nonatomic, copy) id<NSObject, NSCopying> context;
 
