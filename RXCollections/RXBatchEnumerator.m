@@ -91,6 +91,7 @@
 
 -(void)consumeCurrentObject {
 	[self _consumeCount:1];
+	*_current = nil;
 }
 
 
@@ -102,7 +103,6 @@
 	id currentObject;
 	if (self._countRemaining > 0) {
 		currentObject = *_current;
-		*_current = nil;
 		[self consumeCurrentObject];
 	}
 	return currentObject;
