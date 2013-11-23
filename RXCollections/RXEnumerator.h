@@ -13,6 +13,18 @@
 
 @end
 
+
+/**
+ An NSEnumerator subclass which implements `-nextObject` in terms of \c RXEnumerator methods.
+ 
+ \c RXEnumerator methods are subclass responsibilities.
+ 
+ It is safe for subclasses to call super in `-copyWithZone:` and `-countByEnumeratingWithState:objects:count:`. It is not safe for subclasses to call super in `-empty`, `-currentObject`, or `-consumeCurrentObject`.
+ */
+@interface RXEnumerator : NSEnumerator
+@end
+
+
 /**
  An object which can provide an enumeration.
  */
