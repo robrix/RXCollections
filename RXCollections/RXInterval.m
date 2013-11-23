@@ -60,7 +60,7 @@ l3_test(&RXIntervalMakeWithLength, ^{
 #pragma mark RXBatchEnumerator
 
 l3_test(@selector(countOfObjectsProducedInBatch:count:), ^{
-	l3_expect([[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3] currentObject]).to.equal(@-M_PI);
+	l3_expect([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3].currentObject).to.equal(@-M_PI);
 	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3])).to.equal(@[@-M_PI, @0, @M_PI]);
 	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){.to = 1} count:64]).count).to.equal(@64);
 })
