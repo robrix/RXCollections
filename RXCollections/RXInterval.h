@@ -1,7 +1,7 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXMagnitude.h>
-#import <RXCollections/RXEnumerator.h>
+#import <RXCollections/RXBatchEnumerator.h>
 
 typedef struct {
 	RXMagnitude from;
@@ -19,7 +19,7 @@ static inline RXMagnitude RXIntervalGetLength(RXInterval interval) {
 	return RXMagnitudeGetAbsoluteValue(interval.to - interval.from);
 }
 
-@interface RXIntervalEnumerator : NSEnumerator <RXFiniteEnumerator>
+@interface RXIntervalEnumerator : RXBatchEnumerator <RXFiniteEnumerator>
 
 /**
  Implies a stride of 1.0.

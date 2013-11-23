@@ -16,7 +16,8 @@ l3_test(&RXIntervalMakeWithLength, ^{
 
 @interface RXIntervalEnumerator ()
 
-@property (nonatomic) NSUInteger count;
+// redeclared as a property so that @dynamic will work properly
+@property (nonatomic, readonly) NSNumber *nextObject;
 
 @end
 
@@ -56,45 +57,40 @@ l3_test(&RXIntervalMakeWithLength, ^{
 }
 
 
-#pragma mark RXEnumerator
+#pragma mark RXBatchEnumerator
 
--(bool)isEmpty {
-	return self.count == 0;
-}
-
-l3_test(@selector(currentObject), ^{
+l3_test(@selector(countOfObjectsProducedInBatch:count:), ^{
 	l3_expect([[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3] currentObject]).to.equal(@-M_PI);
 	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3])).to.equal(@[@-M_PI, @0, @M_PI]);
 	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){.to = 1} count:64]).count).to.equal(@64);
 })
 
--(NSNumber *)currentObject {
-	return @(self.interval.to - self.stride * (self.count - 1));
-}
-
--(void)consumeCurrentObject {
-	NSParameterAssert(!self.isEmpty);
+-(NSUInteger)countOfObjectsProducedInBatch:(id __strong [])batch count:(NSUInteger)count; {
+	NSUInteger produced = MIN(count, _count);
 	
-	self.count--;
-}
-
-
-#pragma mark NSEnumerator
-
--(NSNumber *)nextObject {
-	NSNumber *currentObject;
-	if (!self.isEmpty) {
-		currentObject = self.currentObject;
-		[self consumeCurrentObject];
+	id __strong *stop = batch + produced;
+	while (batch < stop) {
+		*batch = @(_interval.to - _stride * (stop - batch - 1));
+		batch++;
 	}
-	return currentObject;
+	
+	_count -= produced;
+	
+	return produced;
 }
+
+
+@dynamic nextObject;
 
 
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
-	return [[self.class alloc] initWithInterval:self.interval absoluteStride:RXMagnitudeGetAbsoluteValue(self.stride) count:self.count];
+	RXIntervalEnumerator *copy = [super copyWithZone:zone];
+	copy->_interval = _interval;
+	copy->_stride = _stride;
+	copy->_count = _count;
+	return copy;
 }
 
 @end
