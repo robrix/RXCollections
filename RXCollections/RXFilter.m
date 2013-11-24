@@ -3,11 +3,20 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilter.h"
-#import "RXFilteredMapTraversalSource.h"
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
 #import "RXMap.h"
 
 #import <Lagrangian/Lagrangian.h>
+
+@interface RXFilterEnumerator : RXEnumerator <RXEnumerator>
+
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXFilterBlock)block;
+
+@property (nonatomic, readonly) id<RXEnumerator> enumerator;
+@property (nonatomic, copy, readonly) RXFilterBlock block;
+
+@end
 
 l3_addTestSubjectTypeWithBlock(RXFilterBlock)
 l3_addTestSubjectTypeWithFunction(RXFilter)
@@ -69,8 +78,8 @@ l3_test(&RXFilter, ^{
 	l3_expect(stopped).to.equal(@[]);
 })
 
-id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
+id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
+	return [[RXFilterEnumerator alloc] initWithEnumerator:RXEnumeratorWithEnumeration(enumeration) block:block];
 }
 
 
@@ -90,3 +99,48 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 }
 
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
+
+
+@implementation RXFilterEnumerator {
+	bool _stop;
+}
+
+@synthesize currentObject = _currentObject;
+
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXFilterBlock)block {
+	NSParameterAssert(enumerator != nil);
+	NSParameterAssert(block != nil);
+	
+	if ((self = [super init])) {
+		_enumerator = enumerator;
+		_block = [block copy];
+	}
+	return self;
+}
+
+
+-(void)_consumeRejectedObjects {
+	while (!_stop && !self.enumerator.isEmpty && ![self _objectIsAccepted:self.enumerator.currentObject]) {
+		[self.enumerator consumeCurrentObject];
+	}
+}
+
+-(bool)_objectIsAccepted:(id)object {
+	return self.block(object, &_stop) && !_stop;
+}
+
+-(bool)isEmpty {
+	[self _consumeRejectedObjects];
+	return _stop || self.enumerator.isEmpty;
+}
+
+-(id)currentObject {
+	[self _consumeRejectedObjects];
+	return self.enumerator.currentObject;
+}
+
+-(void)consumeCurrentObject {
+	[self.enumerator consumeCurrentObject];
+}
+
+@end

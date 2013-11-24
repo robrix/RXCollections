@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
 /**
  A block type used for filtering.
@@ -32,7 +32,7 @@ extern RXFilterBlock const RXRejectNilFilterBlock;
 /**
  Returns a traversal of the elements of \c enumeration which are matched by \c block.
  */
-extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
+extern id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
  Returns the first element found in \c collection which is matched by \c block.
