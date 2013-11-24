@@ -6,7 +6,7 @@
 
 @interface RXFastEnumerator ()
 
-@property (nonatomic, readonly) id<NSFastEnumeration> enumeration;
+@property (nonatomic, readonly) id<NSObject, NSFastEnumeration> enumeration;
 
 @end
 
@@ -17,7 +17,7 @@
 	id __unsafe_unretained *_items;
 }
 
--(instancetype)initWithEnumeration:(id<NSFastEnumeration>)enumeration {
+-(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration {
 	NSParameterAssert(enumeration != nil);
 	
 	if ((self = [super init])) {
@@ -70,16 +70,31 @@ l3_test(@selector(nextObject), ^{
 	l3_expect([enumerator nextObject]).to.equal(nil);
 })
 
--(id __unsafe_unretained *)consumeCountItems:(NSUInteger)count {
+-(void)consumeCountItems:(NSUInteger)count {
 	[self fetchItemsIfNeeded];
-	
-	id __unsafe_unretained *items = _items;
 	
 	if (_items != NULL) {
 		_items += count;
 	}
+}
+
+
+#pragma mark RXEnumerator
+
+-(bool)isEmpty {
+	[self fetchItemsIfNeeded];
 	
-	return items ?: NULL;
+	return _items == NULL;
+}
+
+-(id)currentObject {
+	[self fetchItemsIfNeeded];
+	
+	return _items? *_items : nil;
+}
+
+-(void)consumeCurrentObject {
+	[self consumeCountItems:1];
 }
 
 
@@ -88,8 +103,28 @@ l3_test(@selector(nextObject), ^{
 -(id)nextObject {
 	[self fetchItemsIfNeeded];
 	
-	id __unsafe_unretained *item = [self consumeCountItems:1];
-	return item? *item : nil;
+	id currentObject;
+	if (!self.isEmpty) {
+		currentObject = self.currentObject;
+		[self consumeCountItems:1];
+	}
+	return currentObject;
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	id<NSObject, NSFastEnumeration> enumeration = [_enumeration respondsToSelector:@selector(copyWithZone:)]?
+		[(id<NSCopying>)_enumeration copyWithZone:zone]
+	:	_enumeration;
+	RXFastEnumerator *copy = [[self.class alloc] initWithEnumeration:enumeration];
+	copy->_state = _state;
+	
+	memcpy(copy->_objects, _objects, sizeof _objects);
+	copy->_countProduced = _countProduced;
+	copy->_items = _items;
+	return copy;
 }
 
 
@@ -98,10 +133,12 @@ l3_test(@selector(nextObject), ^{
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	[self fetchItemsIfNeeded];
 	
-	state->itemsPtr = [self consumeCountItems:self.countOfRemainingObjects];
+	state->itemsPtr = _items;
 	state->mutationsPtr = _state.mutationsPtr;
+	NSUInteger count = self.countOfRemainingObjects;
+	[self consumeCountItems:count];
 	
-	return self.countOfRemainingObjects;
+	return count;
 }
 
 @end
