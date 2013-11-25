@@ -81,10 +81,10 @@ l3_test(@selector(nextObject), ^{
 
 #pragma mark RXEnumerator
 
--(bool)isEmpty {
+-(bool)hasNextObject {
 	[self fetchItemsIfNeeded];
 	
-	return _items == NULL;
+	return _items != NULL;
 }
 
 -(id)currentObject {
@@ -104,7 +104,7 @@ l3_test(@selector(nextObject), ^{
 	[self fetchItemsIfNeeded];
 	
 	id currentObject;
-	if (!self.isEmpty) {
+	if (self.hasNextObject) {
 		currentObject = self.currentObject;
 		[self consumeCountItems:1];
 	}

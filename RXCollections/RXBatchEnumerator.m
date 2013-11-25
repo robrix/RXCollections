@@ -77,16 +77,16 @@
 
 #pragma mark RXEnumerator
 
--(bool)isEmpty {
-	return _batch == _capacity;
+-(bool)hasNextObject {
+	return _batch != _capacity;
 }
 
 -(id)currentObject {
 	[self _refillIfNeeded];
 	
-	return self.isEmpty?
-		nil
-	:	*_current;
+	return self.hasNextObject?
+		*_current
+	:	nil;
 }
 
 -(void)consumeCurrentObject {

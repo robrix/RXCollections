@@ -120,7 +120,7 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 
 
 -(void)_consumeRejectedObjects {
-	while (!_stop && !self.enumerator.isEmpty && ![self _objectIsAccepted:self.enumerator.currentObject]) {
+	while (!_stop && self.enumerator.hasNextObject && ![self _objectIsAccepted:self.enumerator.currentObject]) {
 		[self.enumerator consumeCurrentObject];
 	}
 }
@@ -129,9 +129,10 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 	return self.block(object, &_stop) && !_stop;
 }
 
--(bool)isEmpty {
+-(bool)hasNextObject {
 	[self _consumeRejectedObjects];
-	return _stop || self.enumerator.isEmpty;
+	
+	return !_stop && self.enumerator.hasNextObject;
 }
 
 -(id)currentObject {

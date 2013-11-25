@@ -12,7 +12,7 @@
 
 #pragma mark RXEnumerator
 
--(bool)isEmpty {
+-(bool)hasNextObject {
 	[self doesNotRecognizeSelector:_cmd];
 	return NO;
 }
@@ -31,7 +31,7 @@
 
 -(id)nextObject {
 	id currentObject;
-	if (!self.isEmpty) {
+	if (self.hasNextObject) {
 		currentObject = self.currentObject;
 		[self consumeCurrentObject];
 	}
@@ -49,15 +49,15 @@
 #pragma mark NSFastEnumeration
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
-	bool empty = self.isEmpty;
+	bool producedObject = self.hasNextObject;
 	state->itemsPtr = buffer;
 	state->mutationsPtr = state->extra;
 	
-	if (!empty) {
+	if (producedObject) {
 		buffer[0] = self.enumeratedObject = [self nextObject];
 	}
 	
-	return empty? 0 : 1;
+	return producedObject;
 }
 
 @end

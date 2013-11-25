@@ -88,17 +88,17 @@ l3_test(@selector(isFull), ^{
 
 #pragma mark RXEnumerator
 
-l3_test(@selector(isEmpty), ^{
+l3_test(@selector(hasNextObject), ^{
 	RXObjectBuffer *buffer = [[RXObjectBuffer alloc] initWithCapacity:2];
-	l3_expect(buffer.isEmpty).to.equal(@YES);
+	l3_expect(buffer.hasNextObject).to.equal(@NO);
 	[buffer enqueueObject:@"Lackadaisical"];
-	l3_expect(buffer.isEmpty).to.equal(@NO);
+	l3_expect(buffer.hasNextObject).to.equal(@YES);
 	[buffer enqueueObject:@"Arduous"];
-	l3_expect(buffer.isEmpty).to.equal(@NO);
+	l3_expect(buffer.hasNextObject).to.equal(@YES);
 })
 
--(bool)isEmpty {
-	return self.count == 0;
+-(bool)hasNextObject {
+	return self.count > 0;
 }
 
 -(id)currentObject {
