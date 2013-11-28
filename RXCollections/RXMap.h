@@ -1,6 +1,6 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
 /**
  A block type used for mapping.
@@ -16,11 +16,11 @@ typedef id (^RXMapBlock)(id each, bool *stop);
 extern RXMapBlock const RXIdentityMapBlock;
 
 /**
- Returns a traversal which lazily maps the values in \c enumeration using \c block.
+ Returns an enumerator which lazily maps the values in \c enumeration using \c block.
  
  It is valid for \c block to return nil.
  
  \param enumeration The enumeration to be mapped over.
  \param block The block to map with.
  */
-extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
+extern id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
