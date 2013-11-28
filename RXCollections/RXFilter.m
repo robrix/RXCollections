@@ -105,8 +105,6 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 	bool _stop;
 }
 
-@synthesize currentObject = _currentObject;
-
 -(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXFilterBlock)block {
 	NSParameterAssert(enumerator != nil);
 	NSParameterAssert(block != nil);

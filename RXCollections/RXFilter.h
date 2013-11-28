@@ -30,7 +30,7 @@ extern RXFilterBlock const RXAcceptNilFilterBlock;
 extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
- Returns a traversal of the elements of \c enumeration which are matched by \c block.
+ Returns an enumerator of the elements of \c enumeration which are matched by \c block.
  */
 extern id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 
