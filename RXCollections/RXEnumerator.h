@@ -11,6 +11,7 @@
 
 @property (nonatomic, readonly) id currentObject;
 -(void)consumeCurrentObject;
+-(id)nextObject;
 
 @end
 
