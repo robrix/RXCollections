@@ -23,7 +23,7 @@
  
  It is safe for subclasses to call super in `-copyWithZone:` and `-countByEnumeratingWithState:objects:count:`. It is not safe for subclasses to call super in `-empty`, `-currentObject`, or `-consumeCurrentObject`.
  */
-@interface RXEnumerator : NSEnumerator
+@interface RXEnumerator : NSEnumerator <NSCopying>
 @end
 
 
