@@ -142,4 +142,13 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 	[self.enumerator consumeCurrentObject];
 }
 
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXFilterEnumerator *copy = [super copyWithZone:zone];
+	copy->_stop = _stop;
+	return copy;
+}
+
 @end
