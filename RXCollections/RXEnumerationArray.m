@@ -1,5 +1,3 @@
-//  RXEnumerationArray.m
-//  Created by Rob Rix on 2013-03-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXInterval.h"
@@ -23,12 +21,12 @@
 
 #pragma mark Construction
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
-	return [[self alloc] initWithEnumeration:traversal count:count];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration count:(NSUInteger)count {
+	return [[self alloc] initWithEnumeration:enumeration count:count];
 }
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal {
-	return [self arrayWithEnumeration:traversal count:RXTraversalUnknownCount];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration {
+	return [self arrayWithEnumeration:enumeration count:RXTraversalUnknownCount];
 }
 
 -(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
