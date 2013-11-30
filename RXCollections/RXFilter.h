@@ -7,7 +7,7 @@
 /**
  A block type used for filtering.
  */
-typedef bool (^RXFilterBlock)(id each, bool *stop);
+typedef bool (^RXFilterBlock)(id each);
 
 /**
  A filter which accepts all objects.

@@ -6,9 +6,8 @@
  A block type used for mapping.
  
  \param each The object being mapped by this iteration.
- \param stop A flag which can be set to stop iteration, analogous to the \c break keyword.
  */
-typedef id (^RXMapBlock)(id each, bool *stop);
+typedef id (^RXMapBlock)(id each);
 
 /**
  Returns its argument.

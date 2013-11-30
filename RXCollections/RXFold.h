@@ -7,9 +7,8 @@
  
  \param memo The value produced by the previous iteration. On the first iteration, this will be the initial value.
  \param each The object being folded by this iteration.
- \param stop A flag which can be set to stop iteration, analogous to the \c break keyword.
  */
-typedef id (^RXFoldBlock)(id memo, id each, bool *stop);
+typedef id (^RXFoldBlock)(id memo, id each);
 
 /**
  Folds \c enumeration with \c block.

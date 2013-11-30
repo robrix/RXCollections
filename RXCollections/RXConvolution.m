@@ -1,30 +1,32 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXConvolution.h"
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
+#import "RXGenerator.h"
 #import "RXInterval.h"
 #import "RXTuple.h"
 #import "RXMap.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	RXTuple *sequenceTraversals = RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each, bool *stop) {
-		return RXTraversalWithEnumeration(each);
+id<RXEnumerator> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
+	RXTuple *sequenceEnumerators = RXConstructTuple(RXMap(sequences, ^id<RXEnumerator>(id<NSObject, NSFastEnumeration> each) {
+		return [[RXFastEnumerator alloc] initWithEnumeration:each];
 	}));
-	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
-		size_t arity = sequenceTraversals.count;
+	
+	return [[RXGenerator alloc] initWithBlock:^(RXGenerator *convolution){
+		size_t arity = sequenceEnumerators.count;
 		id objects[arity];
 		NSUInteger i = 0;
-		bool exhausted = NO;
-		for (id<RXTraversal> sequence in sequenceTraversals) {
-			exhausted = exhausted || sequence.isExhausted;
-			objects[i++] = [sequence nextObject];
+		bool shouldStop = NO;
+		for (id<RXEnumerator> sequence in sequenceEnumerators) {
+			id object = [sequence nextObject];
+			objects[i++] = object;
+			shouldStop = shouldStop || object == nil;
 		}
-		if (!exhausted)
-			[traversal addObject:block(arity, objects, &exhausted)];
-		return exhausted;
-	});
+		return shouldStop? nil : block(arity, objects);
+	}];
 }
 
 id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
@@ -42,8 +44,8 @@ l3_test(&RXConvolve, ^{
 	l3_expect(convoluted.lastObject).to.equal([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]);
 })
 
-id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
-	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count], bool *stop) {
+id<RXEnumerator> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
+	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count]) {
 		return [RXTuple tupleWithObjects:objects count:count];
 	});
 }

@@ -10,7 +10,7 @@
 l3_test("RXFold", ^{
 	NSArray *collection = @[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"];
 	
-	id folded = RXFold(collection, @"", ^(NSString *memo, NSString *each, bool *stop) {
+	id folded = RXFold(collection, @"", ^(NSString *memo, NSString *each) {
 		return [memo stringByAppendingString:each];
 	});
 	l3_expect(folded).to.equal(@"QuantumBoomerangPhysicistCognizant");
@@ -18,9 +18,8 @@ l3_test("RXFold", ^{
 
 id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	for (id each in enumeration) {
-		bool stop = NO;
-		initial = block(initial, each, &stop);
-		if (stop)
+		initial = block(initial, each);
+		if (!initial)
 			break;
 	}
 	return initial;
@@ -44,7 +43,7 @@ l3_test("RXConstructSet", ^{
 })
 
 NSSet *RXConstructSet(id<NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each, bool *stop) {
+	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each) {
 		[memo addObject:each];
 		return memo;
 	});
@@ -56,7 +55,7 @@ l3_test("RXConstructDictionary", ^{
 })
 
 NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each, bool *stop) {
+	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each) {
 		[memo setObject:each.value forKey:each.key];
 		return memo;
 	});
@@ -64,7 +63,7 @@ NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration) {
 
 
 RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration) {
-	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^(NSMutableArray *memo, id each, bool *stop) {
+	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^(NSMutableArray *memo, id each) {
 		[memo addObject:each];
 		return memo;
 	});

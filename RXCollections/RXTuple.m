@@ -166,7 +166,7 @@ l3_test(@selector(description), ^{
 })
 
 -(NSString *)description {
-	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element, bool *stop) {
+	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element) {
 		if (memo.length > 1)
 			[memo appendString:@", "];
 		[memo appendString:[element description] ?: @"(null)"];

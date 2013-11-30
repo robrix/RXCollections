@@ -60,7 +60,7 @@ static void RXAccumulateRecursiveContentsOfTarget(NSMutableArray *accumulator, i
 
 l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
 	RXTuple *tree = [RXTuple tupleWithLeft:[RXTuple tupleWithLeft:@"x" right:[RXTuple tupleWithLeft:@"y" right:@"z"]] right:@"w"];
-	id folded = RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each, bool *stop) {
+	id folded = RXFold([RXRecursiveEnumerator enumeratorWithTarget:tree keyPath:@"allObjects"], @"", ^(NSString *memo, id each) {
 		return [memo stringByAppendingString:[each isKindOfClass:[NSString class]]? each : @""];
 	});
 	l3_expect(folded).to.equal(@"xyzw");

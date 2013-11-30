@@ -7,10 +7,6 @@
  */
 @protocol RXEnumerator <NSObject, NSCopying, NSFastEnumeration>
 
-@property (nonatomic, readonly) bool hasNextObject;
-
-@property (nonatomic, readonly) id currentObject;
--(void)consumeCurrentObject;
 -(id)nextObject;
 
 @end

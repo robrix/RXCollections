@@ -16,21 +16,20 @@
 @end
 
 
-l3_addTestSubjectTypeWithBlock(RXMapBlock)
+//l3_addTestSubjectTypeWithBlock(RXMapBlock)
 l3_addTestSubjectTypeWithFunction(RXMap)
 
 l3_test(RXIdentityMapBlock, ^{
-	bool stop = NO;
-	l3_expect(RXIdentityMapBlock(@"Equestrian", &stop)).to.equal(@"Equestrian");
+	l3_expect(RXIdentityMapBlock(@"Equestrian")).to.equal(@"Equestrian");
 })
 
-RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
+RXMapBlock const RXIdentityMapBlock = ^(id x) {
 	return x;
 };
 
 
 l3_test(&RXMap, ^{
-	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
+	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
 		return [each stringByAppendingString:@"Superlative"];
 	}));
 	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
@@ -41,9 +40,7 @@ id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock b
 }
 
 
-@implementation RXMapEnumerator {
-	bool _stop;
-}
+@implementation RXMapEnumerator
 
 -(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXMapBlock)block {
 	NSParameterAssert(enumerator != nil);
@@ -57,22 +54,18 @@ id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock b
 }
 
 
--(bool)hasNextObject {
-	return !_stop && self.enumerator.hasNextObject;
-}
+#pragma mark RXEnumerator
 
-@synthesize currentObject = _currentObject;
-
--(id)currentObject {
-	if (!_currentObject) {
-		_currentObject = self.block(self.enumerator.currentObject, &_stop);
+-(id)map:(id)object {
+	id mapped = _block && object? _block(object) : nil;
+	if (!mapped) {
+		_enumerator = nil;
 	}
-	return _stop? nil : _currentObject;
+	return mapped;
 }
 
--(void)consumeCurrentObject {
-	[self.enumerator consumeCurrentObject];
-	_currentObject = nil;
+-(id)nextObject {
+	return [self map:[self.enumerator nextObject]];
 }
 
 
@@ -80,7 +73,7 @@ id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock b
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXMapEnumerator *copy = [super copyWithZone:zone];
-	copy->_stop = _stop;
+	copy->_block = [_block copy];
 	return copy;
 }
 
