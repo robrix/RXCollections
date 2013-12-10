@@ -1,5 +1,3 @@
-//  RXFilter.m
-//  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilter.h"
@@ -81,11 +79,14 @@ l3_test(&RXLinearSearch, ^{
 })
 
 id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
-	return RXFold(collection, nil, ^(id memo, id each) {
-		return block(each)?
+	__block id found;
+	RXFold(collection, nil, ^(id memo, id each) {
+		found = block(each)?
 			each
 		:	memo;
+		return found? nil : each;
 	});
+	return found;
 }
 
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
