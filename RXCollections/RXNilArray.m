@@ -8,8 +8,6 @@
 
 #import <Lagrangian/Lagrangian.h>
 
-@l3_suite("RXNilArray");
-
 @implementation RXNilArray
 
 +(instancetype)allocWithZone:(NSZone *)zone {
@@ -17,15 +15,15 @@
 }
 
 
-@l3_test("can contain non-nil entries") {
-	NSArray *array = [[RXNilArray alloc] initWithObjects:(const id[]){ test } count:1];
-	l3_assert(array[0], test);
-}
+l3_test(@selector(initWithObjects:count:), ^{
+	NSArray *array = [[RXNilArray alloc] initWithObjects:(const id[]){ self } count:1];
+	l3_expect(array[0]).to.equal(self);
+})
 
-@l3_test("can contain nil entries") {
+l3_test(@selector(initWithObjects:count:), ^{
 	NSArray *array = [[RXNilArray alloc] initWithObjects:(const id [1]){ nil } count:1];
-	l3_assert(array[0], nil);
-}
+	l3_expect(array[0]).to.equal(nil);
+})
 
 -(instancetype)initWithObjects:(const id [])objects count:(NSUInteger)count {
 	NSParameterAssert(objects != NULL);
@@ -68,8 +66,6 @@
 @end
 
 
-@l3_suite("RXMutableNilArray");
-
 @interface RXMutableNilArray ()
 
 @property (nonatomic) id __strong *objects;
@@ -99,13 +95,13 @@
 }
 
 
-@l3_test("calculates its capacity in multiples of 8") {
-	l3_assert([[RXMutableNilArray new] capacityForCount:0], 0);
-	l3_assert([[RXMutableNilArray new] capacityForCount:1], 8);
-	l3_assert([[RXMutableNilArray new] capacityForCount:7], 8);
-	l3_assert([[RXMutableNilArray new] capacityForCount:8], 8);
-	l3_assert([[RXMutableNilArray new] capacityForCount:9], 16);
-}
+l3_test(@selector(capacityForCount:), ^{
+	l3_expect([[RXMutableNilArray new] capacityForCount:0]).to.equal(@0);
+	l3_expect([[RXMutableNilArray new] capacityForCount:1]).to.equal(@8);
+	l3_expect([[RXMutableNilArray new] capacityForCount:7]).to.equal(@8);
+	l3_expect([[RXMutableNilArray new] capacityForCount:8]).to.equal(@8);
+	l3_expect([[RXMutableNilArray new] capacityForCount:9]).to.equal(@16);
+})
 
 -(NSUInteger)capacityForCount:(NSUInteger)count {
 	const CGFloat granularity = 8;
@@ -135,60 +131,37 @@
 
 #pragma mark NSMutableArray
 
-@l3_test("insertions at the end don't move anything") {
+l3_test(@selector(insertObject:atIndex:), ^{
 	NSMutableArray *array = [RXMutableNilArray new];
 	[array insertObject:@0 atIndex:0];
 	[array insertObject:@1 atIndex:1];
 	[array insertObject:@2 atIndex:2];
-	l3_assert(array, (@[@0, @1, @2]));
-}
-
-@l3_test("nil insertions are accepted") {
-	NSMutableArray *array = [RXMutableNilArray new];
-	[array insertObject:nil atIndex:0];
-	l3_assert([array objectAtIndex:0], nil);
-}
-
-@l3_test("insertions in the middle move later elements") {
-	NSMutableArray *array = [RXMutableNilArray new];
-	[array addObject:@0];
-	[array insertObject:@1 atIndex:0];
-	l3_assert(array, (@[@1, @0]));
-}
-
-@l3_test("insertions increment count") {
-	NSMutableArray *array = [RXMutableNilArray new];
-	l3_assert(array.count, 0);
-	[array addObject:@0];
-	l3_assert(array.count, 1);
-	[array insertObject:@1 atIndex:0];
-	l3_assert(array.count, 2);
-}
+	l3_expect(array).to.equal(@[@0, @1, @2]);
+	
+	[array insertObject:nil atIndex:1];
+	l3_expect(array[1]).to.equal(nil);
+	l3_expect(array[2]).to.equal(@1);
+	l3_expect(array.count).to.equal(@4);
+})
 
 -(void)insertObject:(id)object atIndex:(NSUInteger)index {
 	NSParameterAssert(index <= self.count);
 	id __strong *buffer = [self bufferForCount:self.count + 1];
-	memmove((void *)buffer + ((index + 1) * sizeof(id)), (void *)(buffer + (index * sizeof(id))), (self.count - index) * sizeof(id));
+	memmove((void *)(buffer + index + 1), (void *)(buffer + index), (self.count - index) * sizeof(id));
+	memset((void *)(buffer + index), 0, sizeof(id));
 	self.count++;
 	[self replaceObjectAtIndex:index withObject:object];
 }
 
-@l3_test("removals decrement the count") {
+l3_test(@selector(removeObjectAtIndex:), ^{
 	NSMutableArray *array = [RXMutableNilArray new];
-	[array addObject:@0];
-	l3_assert(array.count, 1);
-	[array removeObjectAtIndex:0];
-	l3_assert(array.count, 0);
-}
-
-@l3_test("removals move later elements earlier") {
-	NSMutableArray *array = [RXMutableNilArray new];
-	[array addObject:@0];
 	[array addObject:@1];
-	[array addObject:@2];
-	[array removeObjectAtIndex:1];
-	l3_assert(array, (@[@0, @2]));
-}
+	[array addObject:@0];
+	l3_expect(array.count).to.equal(@2);
+	[array removeObjectAtIndex:0];
+	l3_expect(array.count).to.equal(@1);
+	l3_expect(array[0]).to.equal(@0);
+})
 
 -(void)removeObjectAtIndex:(NSUInteger)index {
 	NSParameterAssert(index < self.count);
