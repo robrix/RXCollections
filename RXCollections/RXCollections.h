@@ -1,9 +1,8 @@
-//  RXCollections.h
-//  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#pragma mark Traversals
+#pragma mark Enumerators
 
+#import <RXCollections/RXEnumerator.h>
 #import <RXCollections/RXGenerator.h>
 #import <RXCollections/RXRecursiveEnumerator.h>
 #import <RXCollections/RXTraversal.h>

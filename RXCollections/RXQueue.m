@@ -1,5 +1,3 @@
-//  RXQueue.m
-//  Created by Rob Rix on 2013-05-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXQueue.h"
@@ -18,18 +16,16 @@
 
 @interface RXTraversalQueueNode : RXQueueNode
 
-+(instancetype)nodeWithFirst:(id<RXTraversal>)traversal rest:(id<RXLinkedListNode>)rest;
++(instancetype)nodeWithFirst:(id<RXEnumerator>)enumerator rest:(id<RXLinkedListNode>)rest;
 
-@property (nonatomic, readonly) id<RXTraversal> first;
+@property (nonatomic, readonly) id<RXEnumerator> first;
 
 @end
 
 
-@l3_suite("RXQueue");
-
-@l3_set_up {
-	test[@"queue"] = [RXQueue new];
-}
+l3_setup((RXQueue *queue), ^{
+	self.state.queue = [RXQueue new];
+})
 
 @interface RXQueue ()
 @property (nonatomic) id<RXLinkedListNode> headNode;
@@ -42,33 +38,25 @@
 	return [self dequeueObject];
 }
 
-@l3_test("cannot be exhausted") {
-	l3_assert([RXQueue new].isExhausted, NO);
-}
+
+l3_test(@selector(isExhausted), ^{
+	l3_expect([RXQueue new].isExhausted).to.equal(@NO);
+})
 
 -(bool)isExhausted {
 	return NO;
 }
 
-@l3_step("enqueue an object") {
-	RXQueue *queue = test[@"queue"];
-	NSString *object = test[@"object"] = @"Sesquipedalian";
-	[queue enqueueObject:object];
-}
 
-@l3_test("enqueueing an object on an empty queue sets it as the head and tail") {
-	l3_perform_step("enqueue an object");
-	RXQueue *queue = test[@"queue"];
-	l3_assert(queue.head, test[@"object"]);
-}
-
-@l3_test("enqueueing an object on a queue appends it to the tail node") {
-	l3_perform_step("enqueue an object");
-	RXQueue *queue = test[@"queue"];
-	NSString *object = @"Parsimony";
+l3_test(@selector(enqueueObject:), ^{
+	RXQueue *queue = [RXQueue new];
+	id object = @"Sesquipedalian";
 	[queue enqueueObject:object];
-	l3_assert(queue.tailNode.first, object);
-}
+	l3_expect(queue.head).to.equal(object);
+	object = @"Parsimony";
+	[queue enqueueObject:object];
+	l3_expect(queue.tailNode.first).to.equal(object);
+})
 
 -(void)appendNode:(id<RXLinkedListNode>)node {
 	self.tailNode = node;
@@ -80,27 +68,23 @@
 	[self appendNode:[RXQueueNode nodeWithFirst:object rest:self.tailNode]];
 }
 
--(void)enqueueTraversal:(id<RXTraversal>)traversal {
-	[self appendNode:[RXTraversalQueueNode nodeWithFirst:traversal rest:self.tailNode]];
+-(void)enqueueEnumerator:(id<RXEnumerator>)enumerator {
+	[self appendNode:[RXTraversalQueueNode nodeWithFirst:enumerator rest:self.tailNode]];
 }
 
 
-@l3_test("dequeueing from an empty queue blocks until something is added") {
+l3_test("dequeueing from an empty queue blocks until something is added", ^{
 	// fixme: figure out how best to test this
-}
+})
 
-@l3_test("dequeuing returns the head object") {
-	l3_perform_step("enqueue an object");
-	l3_assert([test[@"queue"] dequeueObject], test[@"object"]);
-}
-
-@l3_test("dequeueing removes the head object") {
-	l3_perform_step("enqueue an object");
-	RXQueue *queue = test[@"queue"];
-	[queue dequeueObject];
-	l3_assert(queue.headNode, nil);
-	l3_assert(queue.tailNode, nil);
-}
+l3_test(@selector(dequeueObject), ^{
+	RXQueue *queue = [RXQueue new];
+	id object = @"Faltering";
+	[queue enqueueObject:object];
+	l3_expect([queue dequeueObject]).to.equal(object);
+	l3_expect(queue.headNode).to.equal(nil);
+	l3_expect(queue.tailNode).to.equal(nil);
+})
 
 -(id)dequeueObject {
 	id object = self.headNode.first;
@@ -111,9 +95,9 @@
 }
 
 
-@l3_test("the head of an empty queue is nil") {
-	l3_assert([RXQueue new].head, nil);
-}
+l3_test(@selector(head), ^{
+	l3_expect([RXQueue new].head).to.equal(nil);
+})
 
 -(id)head {
 	return self.headNode.first;

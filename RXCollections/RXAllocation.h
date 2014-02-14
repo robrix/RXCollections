@@ -2,7 +2,7 @@
 //  Created by Rob Rix on 7/21/2013.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface NSObject (RXAllocation)
 

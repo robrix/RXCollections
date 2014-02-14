@@ -1,59 +1,43 @@
-//  RXFilter.h
-//  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
-
-typedef bool (^RXFilterBlock)(id each, bool *stop);
-typedef bool (*RXFilterFunction)(id each, bool *stop);
+#import <RXCollections/RXEnumerator.h>
 
 /**
- RXFilterBlock const RXAcceptFilterBlock
- 
+ A block type used for filtering.
+ */
+typedef bool (^RXFilterBlock)(id each);
+
+/**
  A filter which accepts all objects.
  */
 extern RXFilterBlock const RXAcceptFilterBlock;
 
 /**
- RXFilterBlock const RXRejectFilterBlock
- 
  A filter which rejects all objects.
  */
 extern RXFilterBlock const RXRejectFilterBlock;
 
 /**
- RXFilterBlock const RXAcceptNilFilterBlock
- 
  A filter which accepts only nil.
  */
 extern RXFilterBlock const RXAcceptNilFilterBlock;
 
 /**
- RXFilterBlock const RXRejectNilFilterBlock
- 
  A filter which rejects only nil.
  */
 extern RXFilterBlock const RXRejectNilFilterBlock;
 
 /**
- id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block)
- id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function)
- 
- Returns a traversal of the elements of `enumeration` which are matched by `block` or `function`.
+ Returns an enumerator of the elements of \c enumeration which are matched by \c block.
  */
-extern id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
-extern id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function);
+extern id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
- id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block)
- id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function)
- 
- Returns the first element found in `collection` which is matched by `block` or `function`.
- 
- RXDetect is a synonym for this RXLinearSearch.
- RXDetectF is a synonym for RXLinearSearchF.
+ Returns the first element found in \c collection which is matched by \c block.
  */
 extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
-extern id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function);
+
+/**
+ An alias for \c RXLinearSearch.
+ */
 extern id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock);
-extern id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction);

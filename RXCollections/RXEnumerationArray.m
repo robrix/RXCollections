@@ -1,5 +1,3 @@
-//  RXEnumerationArray.m
-//  Created by Rob Rix on 2013-03-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXInterval.h"
@@ -7,13 +5,6 @@
 #import "RXTraversal.h"
 
 #import <Lagrangian/Lagrangian.h>
-
-@l3_suite("RXEnumerationArray");
-
-@l3_set_up {
-	test[@"items"] = RXInterval(0, 63).traversal;
-	test[@"array"] = [RXEnumerationArray arrayWithEnumeration:test[@"items"]];
-}
 
 @interface RXEnumerationArray ()
 
@@ -30,12 +21,12 @@
 
 #pragma mark Construction
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
-	return [[self alloc] initWithEnumeration:traversal count:count];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration count:(NSUInteger)count {
+	return [[self alloc] initWithEnumeration:enumeration count:count];
 }
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal {
-	return [self arrayWithEnumeration:traversal count:RXTraversalUnknownCount];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration {
+	return [self arrayWithEnumeration:enumeration count:RXTraversalUnknownCount];
 }
 
 -(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
@@ -52,17 +43,16 @@
 
 #pragma mark NSArray primitives
 
-@l3_test("count can be passed in to avoid traversing the entire enumeration") {
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:test[@"items"] count:[test[@"items"] count]];
+l3_test(@selector(count), ^{
+	id<RXFiniteEnumerator> items = [RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:items count:items.count];
 	[array count];
-	l3_assert(array.enumeratedObjects, nil);
-}
-
-@l3_test("if count is inferred, it must traverse the entire enumeration") {
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[@[@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22, @23, @24, @25, @26, @27, @28, @29, @30, @31, @32, @33, @34, @35, @36, @37, @38, @39, @40, @41, @42, @43, @44, @45, @46, @47, @48, @49, @50, @51, @52, @53, @54, @55, @56, @57, @58, @59, @60, @61, @62, @63] objectEnumerator]];
+	l3_expect(array.enumeratedObjects).to.equal(nil);
+	
+	array = [RXEnumerationArray arrayWithEnumeration:[@[@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22, @23, @24, @25, @26, @27, @28, @29, @30, @31, @32, @33, @34, @35, @36, @37, @38, @39, @40, @41, @42, @43, @44, @45, @46, @47, @48, @49, @50, @51, @52, @53, @54, @55, @56, @57, @58, @59, @60, @61, @62, @63] objectEnumerator]];
 	[array count];
-	l3_assert(array.enumeratedObjects.count, 64);
-}
+	l3_expect(array.enumeratedObjects.count).to.equal(@64);
+})
 
 -(NSUInteger)count {
 	if (self.internalCount == RXTraversalUnknownCount)
@@ -70,15 +60,15 @@
 	return self.internalCount;
 }
 
-@l3_test("enumerates until it gets the index required") {
-	RXEnumerationArray *array = test[@"array"];
+l3_test(@selector(objectAtIndex:), ^{
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array objectAtIndex:0];
-	l3_assert(array.enumeratedObjects.count, 16);
+	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	[array objectAtIndex:15];
-	l3_assert(array.enumeratedObjects.count, 16);
+	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	[array objectAtIndex:16];
-	l3_assert(array.enumeratedObjects.count, 32);
-}
+	l3_expect(array.enumeratedObjects.count).to.equal(@32);
+})
 
 -(id)objectAtIndex:(NSUInteger)index {
 	[self populateUpToIndex:index];
@@ -88,11 +78,11 @@
 
 #pragma mark Populating
 
-@l3_test("nils out its enumeration when it has been exhausted") {
-	RXEnumerationArray *array = test[@"array"];
+l3_test(@selector(populateUpToIndex:), ^{
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array populateUpToIndex:NSUIntegerMax];
-	l3_assert(array.enumeration, nil);
-}
+	l3_expect(array.enumeration).to.equal(nil);
+})
 
 -(void)populateUpToIndex:(NSUInteger)index {
 	if (!self.enumeration || self.enumeratedObjects.count > index)
@@ -127,15 +117,15 @@
 
 #pragma mark NSFastEnumeration
 
-@l3_test("implements NSFastEnumeration by lazily populating its array") {
-	RXEnumerationArray *array = test[@"array"];
+l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	for (id x in array) { break; }
-	l3_assert(array.enumeratedObjects.count, 16);
+	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	for (id x in array) { break; }
-	l3_assert(array.enumeratedObjects.count, 16);
+	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	for (id x in array) {}
-	l3_assert(array.enumeratedObjects.count, 64);
-}
+	l3_expect(array.enumeratedObjects.count).to.equal(@64);
+})
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSUInteger count = 0;

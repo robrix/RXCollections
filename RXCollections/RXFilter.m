@@ -1,140 +1,124 @@
-//  RXFilter.m
-//  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilter.h"
-#import "RXFilteredMapTraversalSource.h"
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
 #import "RXMap.h"
 
 #import <Lagrangian/Lagrangian.h>
 
-static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
+@interface RXFilterEnumerator : RXEnumerator <RXEnumerator>
 
-@l3_suite("RXFilter");
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXFilterBlock)block;
 
-@l3_test("accept filters return YES") {
-	__block bool stop = NO;
-	l3_assert(RXAcceptFilterBlock(nil, &stop), YES);
-}
+@property (nonatomic, readonly) id<RXEnumerator> enumerator;
+@property (nonatomic, copy, readonly) RXFilterBlock block;
 
-RXFilterBlock const RXAcceptFilterBlock = ^bool(id each, bool *stop) {
+@end
+
+l3_addTestSubjectTypeWithBlock(RXFilterBlock)
+l3_addTestSubjectTypeWithFunction(RXFilter)
+l3_addTestSubjectTypeWithFunction(RXLinearSearch)
+
+l3_test(RXAcceptFilterBlock, ^{
+	l3_expect(RXAcceptFilterBlock(nil)).to.equal(@YES);
+})
+
+RXFilterBlock const RXAcceptFilterBlock = ^bool(id each) {
 	return YES;
 };
 
-@l3_test("reject filters return NO") {
-	__block bool stop = NO;
-	l3_assert(RXRejectFilterBlock(nil, &stop), NO);
-}
 
-RXFilterBlock const RXRejectFilterBlock = ^bool(id each, bool *stop) {
+l3_test(RXRejectFilterBlock, ^{
+	l3_expect(RXRejectFilterBlock(nil)).to.equal(@NO);
+})
+
+RXFilterBlock const RXRejectFilterBlock = ^bool(id each) {
 	return NO;
 };
 
-@l3_test("accept nil filters accept nil") {
-	__block bool stop = NO;
-	l3_assert(RXAcceptNilFilterBlock(nil, &stop), YES);
-}
 
-@l3_test("accept nil filters reject non-nil") {
-	__block bool stop = NO;
-	l3_assert(RXAcceptNilFilterBlock([NSObject new], &stop), NO);
-}
+l3_test(RXAcceptNilFilterBlock, ^{
+	l3_expect(RXAcceptNilFilterBlock(nil)).to.equal(@YES);
+	l3_expect(RXAcceptNilFilterBlock([NSObject new])).to.equal(@NO);
+})
 
-RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each, bool *stop) {
+RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each) {
 	return each == nil;
 };
 
 
-@l3_test("reject nil filters reject nil") {
-	__block bool stop = NO;
-	l3_assert(RXRejectNilFilterBlock(nil, &stop), NO);
-}
+l3_test(RXRejectNilFilterBlock, ^{
+	l3_expect(RXRejectNilFilterBlock(nil)).to.equal(@NO);
+	l3_expect(RXRejectNilFilterBlock([NSObject new])).to.equal(@YES);
+})
 
-@l3_test("reject nil filters accept non-nil") {
-	__block bool stop = NO;
-	l3_assert(RXRejectNilFilterBlock([NSObject new], &stop), YES);
-}
-
-RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
+RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 	return each != nil;
 };
 
 
-static bool itemsPrefixedWithA(id each, bool *stop) {
-	return [each hasPrefix:@"A"];
-}
-
-@l3_test("filters a collection with the piecewise results of its block") {
+l3_test(&RXFilter, ^{
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
-	l3_assert(RXConstructArray(RXFilter(unfiltered, ^bool(id each, bool *stop) {
+	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(id each) {
 		return [each hasPrefix:@"A"];
-	})), l3_equals(@[@"Ancestral", @"Azimuth"]));
-	
-	l3_assert(RXConstructArray(RXFilterF(unfiltered, itemsPrefixedWithA)), l3_equals(@[@"Ancestral", @"Azimuth"]));
-}
-
-static bool itemsPrefixedWithS(id each, bool *stop) {
-	return [each hasPrefix:@"S"];
-}
-
-@l3_test("produces a traversal of the elements of its enumeration which are matched by its block") {
-	NSArray *unfiltered = @[@"Sanguinary", @"Inspirational", @"Susurrus"];
-	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(NSString *each, bool *stop) {
-		return [each hasPrefix:@"S"];
 	}));
-	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
-	
-	filtered = RXConstructArray(RXFilterF(unfiltered, itemsPrefixedWithS));
-	l3_assert(filtered, l3_is(@[@"Sanguinary", @"Susurrus"]));
-}
+	l3_expect(filtered).to.equal(@[@"Ancestral", @"Azimuth"]);
+})
 
-@l3_test("stops iterating when the stop flag is set") {
-	l3_assert(RXConstructArray(RXFilter(@[@1, @2, @3], ^bool(id each, bool *stop) {
-		*stop = YES;
-		return nil;
-	})), @[]);
-}
-
-id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
-	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
-}
-
-id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {
-	return RXFilter(enumeration, RXFilterBlockWithFunction(function));
+id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
+	return [[RXFilterEnumerator alloc] initWithEnumerator:RXEnumeratorWithEnumeration(enumeration) block:block];
 }
 
 
-@l3_suite("RXLinearSearch");
-
-static bool itemIsPrefixedWithB(id each, bool *stop) {
-	return [each hasPrefix:@"B"];
-}
-
-@l3_test("returns the first encountered object for which its block returns true") {
-	l3_assert(RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each, bool *stop) {
+l3_test(&RXLinearSearch, ^{
+	id found = RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each) {
 		return [each hasPrefix:@"B"];
-	}), @"Belligerent");
-	
-	l3_assert(RXLinearSearchF(@[@"Amphibious", @"Belligerent", @"Bizarre"], itemIsPrefixedWithB), @"Belligerent");
-}
+	});
+	l3_expect(found).to.equal(@"Belligerent");
+})
 
 id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
-	return RXFold(collection, nil, ^(id memo, id each, bool *stop) {
-		return block(each, stop) && (*stop = YES)?
+	__block id found;
+	RXFold(collection, nil, ^(id memo, id each) {
+		found = block(each)?
 			each
-		:	nil;
+		:	memo;
+		return found? nil : each;
 	});
-}
-
-id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
-	return RXLinearSearch(collection, RXFilterBlockWithFunction(function));
+	return found;
 }
 
 id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
-id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
 
 
-static inline RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {
-	return ^(id each, bool *stop){ return function(each, stop); };
-};
+@implementation RXFilterEnumerator
+
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXFilterBlock)block {
+	NSParameterAssert(enumerator != nil);
+	NSParameterAssert(block != nil);
+	
+	if ((self = [super init])) {
+		_enumerator = enumerator;
+		_block = [block copy];
+	}
+	return self;
+}
+
+
+-(id)nextObject {
+	id object;
+	while ((object = [self.enumerator nextObject]) && !self.block(object));
+	return object;
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXFilterEnumerator *copy = [super copyWithZone:zone];
+	copy->_block = [_block copy];
+	return copy;
+}
+
+@end

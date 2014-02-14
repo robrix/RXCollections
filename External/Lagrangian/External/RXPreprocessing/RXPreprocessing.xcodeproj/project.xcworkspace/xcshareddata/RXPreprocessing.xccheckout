@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>DDF2113B-13BD-4778-B4F6-4CAC53C702A1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RXPreprocessing</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8B64768A-0E60-44DE-86CF-40A9F514377F</key>
+		<string>ssh://github.com/robrix/Lagrangian.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>External/RXPreprocessing/RXPreprocessing.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8B64768A-0E60-44DE-86CF-40A9F514377F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/robrix/Lagrangian.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8B64768A-0E60-44DE-86CF-40A9F514377F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B64768A-0E60-44DE-86CF-40A9F514377F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Lagrangian</string>
+		</dict>
+	</array>
+</dict>
+</plist>
