@@ -25,7 +25,7 @@ extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock bloc
 #pragma mark Constructors
 
 /**
- Constructs an array with the elements of the specified traversal. The enumeration's elements must not be nil.
+ Constructs an array with the elements of an enumeration. The enumeration's elements must not be nil.
  */
 extern NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration);
 

@@ -1,5 +1,3 @@
-//  RXQueue.m
-//  Created by Rob Rix on 2013-05-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXQueue.h"
@@ -18,9 +16,9 @@
 
 @interface RXTraversalQueueNode : RXQueueNode
 
-+(instancetype)nodeWithFirst:(id<RXTraversal>)traversal rest:(id<RXLinkedListNode>)rest;
++(instancetype)nodeWithFirst:(id<RXEnumerator>)enumerator rest:(id<RXLinkedListNode>)rest;
 
-@property (nonatomic, readonly) id<RXTraversal> first;
+@property (nonatomic, readonly) id<RXEnumerator> first;
 
 @end
 
@@ -70,8 +68,8 @@ l3_test(@selector(enqueueObject:), ^{
 	[self appendNode:[RXQueueNode nodeWithFirst:object rest:self.tailNode]];
 }
 
--(void)enqueueTraversal:(id<RXTraversal>)traversal {
-	[self appendNode:[RXTraversalQueueNode nodeWithFirst:traversal rest:self.tailNode]];
+-(void)enqueueEnumerator:(id<RXEnumerator>)enumerator {
+	[self appendNode:[RXTraversalQueueNode nodeWithFirst:enumerator rest:self.tailNode]];
 }
 
 

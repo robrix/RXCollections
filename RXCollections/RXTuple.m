@@ -256,13 +256,6 @@ l3_test(@selector(hash), ^{
 }
 
 
-#pragma mark RXTraversable
-
--(id<RXTraversal>)traversal {
-	return RXTraversalWithObjects(self, self.elements, self.count);
-}
-
-
 #pragma mark NSFastEnumeration
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
