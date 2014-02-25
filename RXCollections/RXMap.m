@@ -10,17 +10,7 @@
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXMapBlock subject, L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
-}
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id<RXTraversal>(*subject)(id<NSObject, NSFastEnumeration>, RXMapBlock), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXMapBlock(*subject)(RXMapFunction), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
+l3_addTestSubjectTypeWithBlock(RXMapBlock);
 
 l3_test(RXIdentityMapBlock, ^{
 	bool stop = NO;
@@ -31,6 +21,8 @@ RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 	return x;
 };
 
+
+l3_addTestSubjectTypeWithFunction(RXMap);
 
 l3_test(&RXMap, ^{
 	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
@@ -47,6 +39,8 @@ id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunctio
 	return RXMap(enumeration, RXMapBlockWithFunction(function));
 }
 
+
+l3_addTestSubjectTypeWithFunction(RXMapBlockWithFunction);
 
 static id identityFunction(id each, bool *stop) {
 	return each;

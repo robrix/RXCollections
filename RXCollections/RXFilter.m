@@ -6,22 +6,12 @@
 #import "RXFilteredMapTraversalSource.h"
 #import "RXFold.h"
 #import "RXMap.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, RXFilterBlock subject, L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
-}
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id<RXTraversal>(*subject)(id<NSObject, NSFastEnumeration>, RXFilterBlock), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
-
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id(*subject)(id<NSFastEnumeration>, RXFilterBlock), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
-}
+l3_addTestSubjectTypeWithBlock(RXFilterBlock);
 
 l3_test(RXAcceptFilterBlock, ^{
 	bool stop = NO;
@@ -65,6 +55,8 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 };
 
 
+l3_addTestSubjectTypeWithFunction(RXFilter);
+
 l3_test(&RXFilter, ^{
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
 	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(id each, bool *stop) {
@@ -87,6 +79,8 @@ id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterF
 	return RXFilter(enumeration, RXFilterBlockWithFunction(function));
 }
 
+
+l3_addTestSubjectTypeWithFunction(RXLinearSearch);
 
 l3_test(&RXLinearSearch, ^{
 	id found = RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each, bool *stop) {
