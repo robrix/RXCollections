@@ -58,6 +58,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @implementation RXTraversal
 
 -(id const __unsafe_unretained *)objects {
+	__builtin_unreachable();
 	[self doesNotRecognizeSelector:_cmd];
 	return NULL;
 }
