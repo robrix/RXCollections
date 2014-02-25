@@ -31,11 +31,11 @@ l3_test(&RXMap, ^{
 	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
 })
 
-id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
+id<RXTraversal> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, nil, block));
 }
 
-id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function) {
+id<RXTraversal> RXMapF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function) {
 	return RXMap(enumeration, RXMapBlockWithFunction(function));
 }
 

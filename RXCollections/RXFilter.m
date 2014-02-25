@@ -71,11 +71,11 @@ l3_test(&RXFilter, ^{
 	l3_expect(stopped).to.equal(@[]);
 })
 
-id<RXTraversal> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
+id<RXTraversal> RXFilter(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock block) {
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
 }
 
-id<RXTraversal> RXFilterF(id<NSObject, NSFastEnumeration> enumeration, RXFilterFunction function) {
+id<RXTraversal> RXFilterF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterFunction function) {
 	return RXFilter(enumeration, RXFilterBlockWithFunction(function));
 }
 
@@ -89,7 +89,7 @@ l3_test(&RXLinearSearch, ^{
 	l3_expect(found).to.equal(@"Belligerent");
 })
 
-id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
+id RXLinearSearch(id<NSObject, NSCopying, NSFastEnumeration> collection, RXFilterBlock block) {
 	return RXFold(collection, nil, ^(id memo, id each, bool *stop) {
 		return block(each, stop) && (*stop = YES)?
 			each
@@ -97,12 +97,12 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	});
 }
 
-id RXLinearSearchF(id<NSFastEnumeration> collection, RXFilterFunction function) {
+id RXLinearSearchF(id<NSObject, NSCopying, NSFastEnumeration> collection, RXFilterFunction function) {
 	return RXLinearSearch(collection, RXFilterBlockWithFunction(function));
 }
 
-id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
-id (* const RXDetectF)(id<NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
+id (* const RXDetect)(id<NSObject, NSCopying, NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
+id (* const RXDetectF)(id<NSObject, NSCopying, NSFastEnumeration>, RXFilterFunction) = RXLinearSearchF;
 
 
 static inline RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function) {

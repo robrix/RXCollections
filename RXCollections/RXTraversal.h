@@ -67,7 +67,7 @@ typedef bool(^RXCompositeTraversalSource)(id<RXCompositeTraversal> traversal);
 extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
 extern id<RXTraversal> RXTraversalWithSource(RXTraversalSource source);
 extern id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source);
-extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
+extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 extern id<RXTraversal> RXTraversalWithObject(id object);
 
 

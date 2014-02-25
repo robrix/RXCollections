@@ -5,4 +5,4 @@
 #import <RXCollections/RXFilter.h>
 #import <RXCollections/RXMap.h>
 
-extern RXTraversalSource RXFilteredMapTraversalSource(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock filter, RXMapBlock map);
+extern RXTraversalSource RXFilteredMapTraversalSource(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock filter, RXMapBlock map);

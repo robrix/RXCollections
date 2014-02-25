@@ -5,7 +5,7 @@
 #import "RXFilteredMapTraversalSource.h"
 #import "RXTraversal.h"
 
-RXTraversalSource RXFilteredMapTraversalSource(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock filter, RXMapBlock map) {
+RXTraversalSource RXFilteredMapTraversalSource(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock filter, RXMapBlock map) {
 	id<RXTraversal> enumerationTraversal = RXTraversalWithEnumeration(enumeration);
 	return ^bool(id<RXRefillableTraversal> traversal) {
 		bool exhausted = enumerationTraversal.isExhausted;

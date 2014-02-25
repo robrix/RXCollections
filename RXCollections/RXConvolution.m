@@ -7,11 +7,10 @@
 #import "RXInterval.h"
 #import "RXTuple.h"
 #import "RXMap.h"
-
 #import <Lagrangian/Lagrangian.h>
 
-id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	RXTuple *sequenceTraversals = RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSFastEnumeration> each, bool *stop) {
+id<RXTraversal> RXConvolveWith(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionBlock block) {
+	RXTuple *sequenceTraversals = RXConstructTuple(RXMap(sequences, ^id(id<NSObject, NSCopying, NSFastEnumeration> each, bool *stop) {
 		return RXTraversalWithEnumeration(each);
 	}));
 	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
@@ -29,14 +28,14 @@ id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConv
 	});
 }
 
-id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function) {
+id<RXTraversal> RXConvolveWithF(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionFunction function) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, const __unsafe_unretained id *objects, bool *stop) {
 		return function(count, objects, stop);
 	});
 }
 
-id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
-id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction) = RXConvolveWithF;
+id (* const RXZipWith)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
+id (* const RXZipWithF)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionFunction) = RXConvolveWithF;
 
 l3_addTestSubjectTypeWithFunction(RXConvolve)
 
@@ -51,10 +50,10 @@ l3_test(&RXConvolve, ^{
 	l3_expect(convoluted.lastObject).to.equal([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]);
 })
 
-id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
+id<RXTraversal> RXConvolve(id<NSObject, NSCopying, NSFastEnumeration> sequences) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count], bool *stop) {
 		return [RXTuple tupleWithObjects:objects count:count];
 	});
 }
 
-id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
+id (* const RXZip)(id<NSObject, NSCopying, NSFastEnumeration>) = RXConvolve;

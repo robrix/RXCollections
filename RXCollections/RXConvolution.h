@@ -12,15 +12,15 @@ typedef id(*RXConvolutionFunction)(NSUInteger count, id const objects[count], bo
  
  RXZipWith is a synonym for RXConvolveWith.
  */
-extern id<RXTraversal> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block);
-extern id<RXTraversal> RXConvolveWithF(id<NSObject, NSFastEnumeration> sequences, RXConvolutionFunction function);
-extern id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock);
-extern id (* const RXZipWithF)(id<NSObject, NSFastEnumeration>, RXConvolutionFunction);
+extern id<RXTraversal> RXConvolveWith(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionBlock block);
+extern id<RXTraversal> RXConvolveWithF(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionFunction function);
+extern id (* const RXZipWith)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionBlock);
+extern id (* const RXZipWithF)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionFunction);
 
 /**
  Traverses the elements of the sequences in lockstep, producing a tuple for each one.
  
  RXZip is a synonym for RXConvolve.
  */
-extern id<RXTraversal> RXConvolve(id<NSObject, NSFastEnumeration> sequences);
-extern id (* const RXZip)(id<NSObject, NSFastEnumeration>);
+extern id<RXTraversal> RXConvolve(id<NSObject, NSCopying, NSFastEnumeration> sequences);
+extern id (* const RXZip)(id<NSObject, NSCopying, NSFastEnumeration>);
