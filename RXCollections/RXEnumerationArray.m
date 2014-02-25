@@ -31,7 +31,7 @@
 
 -(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count {
 	if ((self = [super init])) {
-		_enumeration = traversal;
+		_enumeration = [traversal copyWithZone:NULL];
 		if ((count == RXTraversalUnknownCount) && ([traversal conformsToProtocol:@protocol(RXFiniteTraversal)]))
 			_internalCount = [(id<RXFiniteTraversal>)traversal count];
 		else

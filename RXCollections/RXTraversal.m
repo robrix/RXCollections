@@ -36,7 +36,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @interface RXFastEnumerationTraversal : RXRefillingTraversal
 +(instancetype)traversalWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration;
 
-@property (nonatomic, strong) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
+@property (nonatomic, copy) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
 @end
 
 @interface RXInteriorTraversal : RXTraversal
@@ -365,7 +365,7 @@ id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source
 
 id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
 	return [enumeration isKindOfClass:[RXTraversal class]]?
-		(RXTraversal *)enumeration
+		[(RXTraversal *)enumeration copy]
 	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
 }
 
