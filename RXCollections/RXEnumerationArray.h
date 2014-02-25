@@ -6,7 +6,7 @@
 
 @interface RXEnumerationArray : NSArray
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal;
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count;
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal;
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count;
 
 @end

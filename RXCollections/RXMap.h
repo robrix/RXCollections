@@ -8,19 +8,14 @@ typedef id (^RXMapBlock)(id each, bool *stop);
 typedef id (*RXMapFunction)(id each, bool *stop);
 
 /**
- RXMapBlock const RXIdentityMapBlock
- 
  Returns its argument.
  */
 
 extern RXMapBlock const RXIdentityMapBlock;
 
 /**
- id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block)
- id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function)
- 
  Returns a traversal which lazily maps the values in `collection` using `block` or `function`. `block` or `function` can return nil.
  */
 
-extern id<RXTraversal> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
-extern id<RXTraversal> RXMapF(id<NSObject, NSFastEnumeration> enumeration, RXMapFunction function);
+extern id<RXTraversal> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block);
+extern id<RXTraversal> RXMapF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function);

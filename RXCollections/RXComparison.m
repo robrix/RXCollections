@@ -18,7 +18,7 @@ l3_test(&RXMin, ^{
 	l3_expect(RXMin(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); })).to.equal(@"1");
 })
 
-id RXMin(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+id RXMin(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id minimum;
 	return RXFold(enumeration, nil, ^(id memo, id each, bool *stop) {
 		id value = block? block(each, stop) : each;
@@ -30,7 +30,7 @@ id RXMin(id<NSFastEnumeration> enumeration, RXMapBlock block) {
 	});
 }
 
-id RXMinF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
+id RXMinF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function) {
 	return RXMin(enumeration, function? RXMapBlockWithFunction(function) : nil);
 }
 
@@ -42,7 +42,7 @@ l3_test(&RXMax, ^{
 	l3_expect(RXMax(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); })).to.equal(@"123");
 })
 
-id RXMax(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+id RXMax(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id maximum;
 	return RXFold(enumeration, nil, ^(id memo, id each, bool *stop) {
 		id value = block? block(each, stop) : each;
@@ -54,7 +54,7 @@ id RXMax(id<NSFastEnumeration> enumeration, RXMapBlock block) {
 	});
 }
 
-id RXMaxF(id<NSFastEnumeration> enumeration, RXMapFunction function) {
+id RXMaxF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function) {
 	return RXMax(enumeration, function? RXMapBlockWithFunction(function) : nil);
 }
 

@@ -10,7 +10,7 @@
 
 @interface RXEnumerationArray ()
 
-@property (nonatomic, strong) id<NSObject, NSFastEnumeration> enumeration;
+@property (nonatomic, strong) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
 @property (nonatomic, assign) NSUInteger internalCount;
 @property (nonatomic, assign) NSUInteger enumeratedCount;
 @property (nonatomic, assign) NSUInteger processedCount;
@@ -23,15 +23,15 @@
 
 #pragma mark Construction
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count {
 	return [[self alloc] initWithEnumeration:traversal count:count];
 }
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal {
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal {
 	return [self arrayWithEnumeration:traversal count:RXTraversalUnknownCount];
 }
 
--(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)traversal count:(NSUInteger)count {
+-(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_enumeration = traversal;
 		if ((count == RXTraversalUnknownCount) && ([traversal conformsToProtocol:@protocol(RXFiniteTraversal)]))

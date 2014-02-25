@@ -132,7 +132,7 @@ l3_test(@selector(capacityForCount:), ^{
 #pragma mark NSMutableArray
 
 l3_test(@selector(insertObject:atIndex:), ^{
-	NSMutableArray *array = [RXMutableNilArray new];
+	RXMutableNilArray *array = [RXMutableNilArray new];
 	[array insertObject:@0 atIndex:0];
 	[array insertObject:@1 atIndex:1];
 	[array insertObject:@2 atIndex:2];
