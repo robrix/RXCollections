@@ -13,7 +13,7 @@ In short:
 	
 	RXFold(chunksOfText, @"", ^(NSString *full, NSString *each) { return [full stringByAppendingString:each]; });
 	
-	RXLinearSearch(scientists, ^(Scientist *each) { return [each.name isEqualToString:@"Richard Feynman"]; });
+	RXLinearSearch(scientists, ^bool(Scientist *each, bool *stop) { return [each.name isEqualToString:@"Richard Feynman"]; });
 	
 	RXConvolveWith(@[names, addresses, phoneNumbers], ^(NSUInteger count, id const objects[count]) {
 		return [BusinessCard withName:objects[0] address:objects[1] phoneNumber:object[2]];
