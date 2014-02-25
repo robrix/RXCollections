@@ -1,5 +1,3 @@
-//  RXEnumerationArray.m
-//  Created by Rob Rix on 2013-03-03.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXInterval.h"

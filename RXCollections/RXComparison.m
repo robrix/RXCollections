@@ -1,5 +1,3 @@
-//  RXComparison.m
-//  Created by Rob Rix on 10/18/2013.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXComparison.h"

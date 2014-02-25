@@ -1,10 +1,7 @@
-//  RXInterval.m
-//  Created by Rob Rix on 2013-03-01.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFold.h"
 #import "RXInterval.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXIntervalTraversable : NSObject <RXInterval>
