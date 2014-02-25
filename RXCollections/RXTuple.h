@@ -1,5 +1,3 @@
-//  RXTuple.h
-//  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import <RXCollections/RXTraversal.h>

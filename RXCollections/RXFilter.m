@@ -1,5 +1,3 @@
-//  RXFilter.m
-//  Created by Rob Rix on 2013-02-21.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFilter.h"

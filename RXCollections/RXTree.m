@@ -1,10 +1,7 @@
-//  RXTree.m
-//  Created by Rob Rix on 2013-05-29.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXTuple.h"
 #import "RXTree.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 static inline RXCompositeTraversalSource RXTreeDepthFirstNodeTraversalSource(id<RXTraversal> nodes) {
