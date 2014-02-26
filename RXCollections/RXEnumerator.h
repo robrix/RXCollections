@@ -28,7 +28,7 @@
  */
 @protocol RXEnumerable <NSObject>
 
-@property (nonatomic, readonly) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
+@property (nonatomic, readonly) id<RXEnumerator> enumeration;
 
 @end
 
@@ -42,6 +42,9 @@
 @property (nonatomic, readonly) NSUInteger count;
 
 @end
+
+extern const NSUInteger RXEnumeratorUnknownCount;
+
 
 
 /**

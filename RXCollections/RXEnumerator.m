@@ -2,6 +2,8 @@
 
 #import "RXEnumerator.h"
 
+const NSUInteger RXEnumeratorUnknownCount = NSUIntegerMax;
+
 @interface RXEnumerator ()
 
 @property (nonatomic, strong) id enumeratedObject;

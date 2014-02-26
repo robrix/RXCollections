@@ -3,7 +3,6 @@
 #import "RXInterval.h"
 #import "RXEnumerationArray.h"
 #import "RXGenerator.h"
-#import "RXTraversal.h"
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXEnumerationArray ()
@@ -26,14 +25,14 @@
 }
 
 +(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
-	return [self arrayWithEnumeration:enumeration count:RXTraversalUnknownCount];
+	return [self arrayWithEnumeration:enumeration count:RXEnumeratorUnknownCount];
 }
 
 -(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_enumeration = [enumeration copyWithZone:NULL];
-		if ((count == RXTraversalUnknownCount) && ([enumeration conformsToProtocol:@protocol(RXFiniteTraversal)]))
-			_internalCount = [(id<RXFiniteTraversal>)enumeration count];
+		if ((count == RXEnumeratorUnknownCount) && ([enumeration conformsToProtocol:@protocol(RXFiniteEnumerator)]))
+			_internalCount = [(id<RXFiniteEnumerator>)enumeration count];
 		else
 			_internalCount = count;
 	}
@@ -60,7 +59,7 @@ l3_test(@selector(count), ^{
 })
 
 -(NSUInteger)count {
-	if (self.internalCount == RXTraversalUnknownCount)
+	if (self.internalCount == RXEnumeratorUnknownCount)
 		[self populateUpToIndex:NSUIntegerMax];
 	return self.internalCount;
 }
@@ -109,7 +108,7 @@ l3_test(@selector(populateUpToIndex:), ^{
 			}
 		}
 		
-		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (double)kChunkCount) * kChunkCount));
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXEnumeratorUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (double)kChunkCount) * kChunkCount));
 		
 		for (NSUInteger i = 0; i < count; i++) {
 			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];

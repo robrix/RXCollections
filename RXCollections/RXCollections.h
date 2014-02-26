@@ -4,7 +4,6 @@
 
 #import <RXCollections/RXEnumerator.h>
 #import <RXCollections/RXGenerator.h>
-#import <RXCollections/RXTraversal.h>
 
 
 #pragma mark Higher-order functions
