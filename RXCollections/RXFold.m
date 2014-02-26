@@ -4,15 +4,12 @@
 #import "RXPair.h"
 #import "RXEnumerationArray.h"
 #import "RXTuple.h"
-
 #import <Lagrangian/Lagrangian.h>
-
-static RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function);
 
 l3_test("RXFold", ^{
 	NSArray *collection = @[@"Quantum", @"Boomerang", @"Physicist", @"Cognizant"];
 	
-	id folded = RXFold(collection, @"", ^(NSString *memo, NSString *each, bool *stop) {
+	id folded = RXFold(collection, @"", ^(NSString *memo, NSString *each) {
 		return [memo stringByAppendingString:each];
 	});
 	l3_expect(folded).to.equal(@"QuantumBoomerangPhysicistCognizant");
@@ -20,16 +17,11 @@ l3_test("RXFold", ^{
 
 id RXFold(id<NSObject, NSCopying, NSFastEnumeration> enumeration, id initial, RXFoldBlock block) {
 	for (id each in enumeration) {
-		bool stop = NO;
-		initial = block(initial, each, &stop);
-		if (stop)
+		initial = block(initial, each);
+		if (!initial)
 			break;
 	}
 	return initial;
-}
-
-id RXFoldF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, id initial, RXFoldFunction function) {
-	return RXFold(enumeration, initial, RXFoldBlockWithFunction(function));
 }
 
 
@@ -50,7 +42,7 @@ l3_test("RXConstructSet", ^{
 })
 
 NSSet *RXConstructSet(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each, bool *stop) {
+	return RXFold(enumeration, [NSMutableSet set], ^(NSMutableSet *memo, id each) {
 		[memo addObject:each];
 		return memo;
 	});
@@ -62,7 +54,7 @@ l3_test("RXConstructDictionary", ^{
 })
 
 NSDictionary *RXConstructDictionary(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
-	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each, bool *stop) {
+	return RXFold(enumeration, [NSMutableDictionary new], ^(NSMutableDictionary *memo, id<RXKeyValuePair> each) {
 		[memo setObject:each.value forKey:each.key];
 		return memo;
 	});
@@ -70,14 +62,9 @@ NSDictionary *RXConstructDictionary(id<NSObject, NSCopying, NSFastEnumeration> e
 
 
 RXTuple *RXConstructTuple(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
-	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^(NSMutableArray *memo, id each, bool *stop) {
+	NSArray *objects = RXFold(enumeration, [NSMutableArray new], ^(NSMutableArray *memo, id each) {
 		[memo addObject:each];
 		return memo;
 	});
 	return [RXTuple tupleWithArray:objects];
-}
-
-
-static inline RXFoldBlock RXFoldBlockWithFunction(RXFoldFunction function) {
-	return ^(id memo, id each, bool *stop){ return function(memo, each, stop); };
 }

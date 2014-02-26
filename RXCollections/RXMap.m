@@ -1,21 +1,27 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXMap.h"
-#import "RXFilteredMapTraversalSource.h"
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
-
 #import <Lagrangian/Lagrangian.h>
 
-static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
+@interface RXMapEnumerator : RXEnumerator <RXEnumerator>
 
-l3_addTestSubjectTypeWithBlock(RXMapBlock);
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXMapBlock)block;
+
+@property (nonatomic, readonly) id<RXEnumerator> enumerator;
+@property (nonatomic, copy, readonly) RXMapBlock block;
+
+@end
+
+
+//l3_addTestSubjectTypeWithBlock(RXMapBlock);
 
 l3_test(RXIdentityMapBlock, ^{
-	bool stop = NO;
-	l3_expect(RXIdentityMapBlock(@"Equestrian", &stop)).to.equal(@"Equestrian");
+	l3_expect(RXIdentityMapBlock(@"Equestrian")).to.equal(@"Equestrian");
 })
 
-RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
+RXMapBlock const RXIdentityMapBlock = ^(id x) {
 	return x;
 };
 
@@ -23,35 +29,53 @@ RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 l3_addTestSubjectTypeWithFunction(RXMap);
 
 l3_test(&RXMap, ^{
-	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
+	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
 		return [each stringByAppendingString:@"Superlative"];
 	}));
 	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
 })
 
-id<RXTraversal> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
-	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, nil, block));
-}
-
-id<RXTraversal> RXMapF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function) {
-	return RXMap(enumeration, RXMapBlockWithFunction(function));
+id<RXEnumerator> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
+	return [[RXMapEnumerator alloc] initWithEnumerator:RXEnumeratorWithEnumeration(enumeration) block:block];
 }
 
 
-l3_addTestSubjectTypeWithFunction(RXMapBlockWithFunction);
+@implementation RXMapEnumerator
 
-static id identityFunction(id each, bool *stop) {
-	return each;
+-(instancetype)initWithEnumerator:(id<RXEnumerator>)enumerator block:(RXMapBlock)block {
+	NSParameterAssert(enumerator != nil);
+	NSParameterAssert(block != nil);
+	
+	if ((self = [super init])) {
+		_enumerator = enumerator;
+		_block = [block copy];
+	}
+	return self;
 }
 
-l3_test(&RXMapBlockWithFunction, ^{
-	NSObject *object = [NSObject new];
-	bool stop = NO;
-	l3_expect(RXMapBlockWithFunction(identityFunction)(object, &stop)).to.equal(object);
-})
 
-static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
-	return ^(id each, bool *stop) {
-		return function(each, stop);
-	};
+#pragma mark RXEnumerator
+
+-(id)map:(id)object {
+	id mapped = _block && object? _block(object) : nil;
+	if (!mapped) {
+		_enumerator = nil;
+	}
+	return mapped;
 }
+
+-(id)nextObject {
+	return [self map:[self.enumerator nextObject]];
+}
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXMapEnumerator *copy = [super copyWithZone:zone];
+	copy->_enumerator = [_enumerator copyWithZone:zone];
+	copy->_block = [_block copyWithZone:zone];
+	return copy;
+}
+
+@end

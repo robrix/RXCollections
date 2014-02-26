@@ -2,35 +2,45 @@
 
 @import Foundation;
 
-typedef id (^RXFoldBlock)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the block
-typedef id (*RXFoldFunction)(id memo, id each, bool *stop); // memo is the initial value on the first invocation, and thereafter the value returned by the previous invocation of the function
+/**
+ A block type used for folding.
+ 
+ \param memo The value produced by the previous iteration. On the first iteration, this will be the initial value.
+ \param each The object being folded by this iteration.
+ */
+typedef id (^RXFoldBlock)(id memo, id each);
 
 /**
- Folds a `enumeration` with `block` or `function`, using `initial` as the `memo` argument to `block` or `function` for the first element.
+ Folds \c enumeration with \c block.
+ 
+ This is a strictly-evaluated fold.
+ 
+ \param enumeration The enumeration to be folded over.
+ \param initial The value passed to \c block as its \c memo argument.
+ \param block The block to fold with.
  */
 extern id RXFold(id<NSObject, NSCopying, NSFastEnumeration> enumeration, id initial, RXFoldBlock block);
-extern id RXFoldF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, id initial, RXFoldFunction function);
 
 
 #pragma mark Constructors
 
 /**
- Constructs an array with the elements of the specified traversal. The enumeration's elements must not be nil.
+ Constructs an array with the elements of an enumeration. The enumeration's elements must not be \c nil.
  */
 extern NSArray *RXConstructArray(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be nil.
+ Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be \c nil.
  */
 extern NSSet *RXConstructSet(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be nil, and must conform to RXKeyValuePair.
+ Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be \c nil, and must conform to \c RXKeyValuePair.
  */
 extern NSDictionary *RXConstructDictionary(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be nil.
+ Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be \c nil.
  */
 @class RXTuple;
 extern RXTuple *RXConstructTuple(id<NSObject, NSCopying, NSFastEnumeration> enumeration);

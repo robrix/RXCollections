@@ -1,5 +1,6 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
 #import "RXNilArray.h"
 #import "RXTuple.h"
@@ -163,7 +164,7 @@ l3_test(@selector(description), ^{
 })
 
 -(NSString *)description {
-	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element, bool *stop) {
+	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element) {
 		if (memo.length > 1)
 			[memo appendString:@", "];
 		[memo appendString:[element description] ?: @"(null)"];
@@ -253,10 +254,10 @@ l3_test(@selector(hash), ^{
 }
 
 
-#pragma mark RXTraversable
+#pragma mark RXEnumerable
 
--(id<RXTraversal>)traversal {
-	return RXTraversalWithObjects(self, self.elements, self.count);
+-(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
+	return [[RXFastEnumerator alloc] initWithEnumeration:self];
 }
 
 

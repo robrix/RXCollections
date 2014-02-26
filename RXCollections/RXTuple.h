@@ -1,8 +1,8 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
-@interface RXTuple : NSObject <NSCopying, RXTraversable, NSFastEnumeration>
+@interface RXTuple : NSObject <NSCopying, RXEnumerable, NSFastEnumeration>
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count;
 +(instancetype)tupleWithArray:(NSArray *)array;

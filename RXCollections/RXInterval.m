@@ -4,80 +4,50 @@
 #import "RXInterval.h"
 #import <Lagrangian/Lagrangian.h>
 
-@interface RXIntervalTraversable : NSObject <RXInterval>
--(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count;
+l3_addTestSubjectTypeWithFunction(RXIntervalMakeWithLength)
 
-@property (nonatomic, readonly) RXMagnitude from;
-@property (nonatomic, readonly) RXMagnitude to;
-@property (nonatomic, readonly) RXMagnitude length;
-@property (nonatomic, readonly) RXMagnitude stride;
-@property (nonatomic, readonly) NSUInteger count;
+l3_test(&RXIntervalMakeWithLength, ^{
+	RXInterval interval = RXIntervalMakeWithLength(1, 3);
+	l3_expect(interval.from).to.equal(@1);
+	l3_expect(interval.to).to.equal(@4);
+})
+
+
+@interface RXIntervalEnumerator ()
+
+// redeclared as a property so that @dynamic will work properly
+@property (nonatomic, readonly) NSNumber *nextObject;
+
 @end
 
+@implementation RXIntervalEnumerator
 
-l3_addTestSubjectTypeWithFunction(RXInterval)
-
-l3_test(&RXInterval, ^{
-	id<RXInterval> interval = RXInterval(0, 1);
-	l3_expect(interval.stride).to.equal(@1);
-	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @1]);
-	
-	interval = RXInterval(1, 0);
-	l3_expect(interval.stride).to.equal(@-1);
-})
-
-id<RXInterval> RXInterval(RXMagnitude from, RXMagnitude to) {
-	return RXIntervalByStride(from, to, 1.0);
++(instancetype)enumeratorWithInterval:(RXInterval)interval {
+	return [self enumeratorWithInterval:interval stride:1.0];
 }
 
-l3_addTestSubjectTypeWithFunction(RXIntervalByStride)
-
-l3_test(&RXIntervalByStride, ^{
-	id<RXInterval> interval = RXIntervalByStride(0, 20, 5);
-	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @5, @10, @15, @20]);
-	
-	interval = RXIntervalByStride(0, 1, 0.5);
-	l3_expect(RXConstructArray(interval.traversal)).to.equal(@[@0, @0.5, @1]);
-})
-
-id<RXInterval> RXIntervalByStride(RXMagnitude from, RXMagnitude to, RXMagnitude stride) {
++(instancetype)enumeratorWithInterval:(RXInterval)interval stride:(RXMagnitude)stride {
 	RXMagnitude absoluteStride = RXMagnitudeGetAbsoluteValue(stride);
-	NSCParameterAssert(absoluteStride > 0.0);
+	NSParameterAssert(absoluteStride > 0.0);
 	
-	RXMagnitude length = RXIntervalGetLength(from, to);
-	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:ceil((length / stride) + 1)];
+	return [[self alloc] initWithInterval:interval absoluteStride:absoluteStride count:ceil((RXIntervalGetLength(interval) / absoluteStride) + 1)];
 }
 
-
-l3_addTestSubjectTypeWithFunction(RXIntervalByCount)
-
-l3_test(&RXIntervalByCount, ^{
-	id<RXInterval> interval = RXIntervalByCount(0, 10, 5);
-	l3_expect(interval.stride).to.equal(@2.5f);
-})
-
-id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger count) {
-	NSCParameterAssert(count > 0);
++(instancetype)enumeratorWithInterval:(RXInterval)interval count:(NSUInteger)count {
+	NSParameterAssert(count > 0);
 	
-	RXMagnitude length = RXIntervalGetLength(from, to);
+	RXMagnitude length = RXIntervalGetLength(interval);
 	RXMagnitude absoluteStride = count > 1?
 		length / (RXMagnitude)(count - 1)
 	:	length;
 	
-	return [[RXIntervalTraversable alloc] initFromMagnitude:from toMagnitude:to length:length absoluteStride:absoluteStride count:count];
+	return [[self alloc] initWithInterval:interval absoluteStride:absoluteStride count:count];
 }
 
-
-@implementation RXIntervalTraversable
-
-#pragma mark Construction
-
--(instancetype)initFromMagnitude:(RXMagnitude)from toMagnitude:(RXMagnitude)to length:(RXMagnitude)length absoluteStride:(RXMagnitude)stride count:(NSUInteger)count {
+-(instancetype)initWithInterval:(RXInterval)interval absoluteStride:(RXMagnitude)stride count:(NSUInteger)count {
 	if ((self = [super init])) {
-		_from = from;
-		_to = to;
-		_length = length;
-		_stride = to > from?
+		_interval = interval;
+		_stride = interval.to > interval.from?
 			stride
 		:	-stride;
 		_count = count;
@@ -86,19 +56,40 @@ id<RXInterval> RXIntervalByCount(RXMagnitude from, RXMagnitude to, NSUInteger co
 }
 
 
-#pragma mark RXTraversable
+#pragma mark RXBatchEnumerator
 
-l3_test(@selector(traversal), ^{
-	l3_expect(RXConstructArray(RXIntervalByCount(-M_PI, M_PI, 3).traversal)).to.equal(@[@-M_PI, @0, @M_PI]);
-	l3_expect(RXConstructArray(RXIntervalByCount(0, 1, 32).traversal).count).to.equal(@32);
+l3_test(@selector(countOfObjectsProducedInBatch:count:), ^{
+	l3_expect([[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3] nextObject]).to.equal(@-M_PI);
+	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){-M_PI, M_PI} count:3])).to.equal(@[@-M_PI, @0, @M_PI]);
+	l3_expect(RXConstructArray([RXIntervalEnumerator enumeratorWithInterval:(RXInterval){.to = 1} count:64]).count).to.equal(@64);
 })
 
--(id<RXTraversal>)traversal {
-	__block NSUInteger count = 0;
-	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {
-		[traversal addObject:@(self.from + (self.stride * count++))];
-		return count >= self.count;
-	});
+-(NSUInteger)countOfObjectsProducedInBatch:(id __strong [])batch count:(NSUInteger)count; {
+	NSUInteger produced = MIN(count, _count);
+	
+	id __strong *stop = batch + produced;
+	while (batch < stop) {
+		*batch = @(_interval.to - _stride * (stop - batch - 1));
+		batch++;
+	}
+	
+	_count -= produced;
+	
+	return produced;
+}
+
+
+@dynamic nextObject;
+
+
+#pragma mark NSCopying
+
+-(instancetype)copyWithZone:(NSZone *)zone {
+	RXIntervalEnumerator *copy = [super copyWithZone:zone];
+	copy->_interval = _interval;
+	copy->_stride = _stride;
+	copy->_count = _count;
+	return copy;
 }
 
 @end

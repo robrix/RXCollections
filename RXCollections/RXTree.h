@@ -1,11 +1,5 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
-@protocol RXTreeNode <NSObject>
-
--(id<RXTraversal>)nodeTraversal;
-
-@end
-
-extern id<RXTraversal> RXTreeDepthFirstTraversal(id<RXTreeNode> tree);
+extern id<RXEnumerator> RXTreeDepthFirstEnumerator(id<RXEnumerable> tree);

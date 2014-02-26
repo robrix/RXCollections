@@ -3,7 +3,6 @@
 #import "RXInterval.h"
 #import "RXEnumerationArray.h"
 #import "RXGenerator.h"
-#import "RXTraversal.h"
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXEnumerationArray ()
@@ -26,14 +25,14 @@
 }
 
 +(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
-	return [self arrayWithEnumeration:enumeration count:RXTraversalUnknownCount];
+	return [self arrayWithEnumeration:enumeration count:RXEnumeratorUnknownCount];
 }
 
 -(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration count:(NSUInteger)count {
 	if ((self = [super init])) {
 		_enumeration = [enumeration copyWithZone:NULL];
-		if ((count == RXTraversalUnknownCount) && ([enumeration conformsToProtocol:@protocol(RXFiniteTraversal)]))
-			_internalCount = [(id<RXFiniteTraversal>)enumeration count];
+		if ((count == RXEnumeratorUnknownCount) && ([enumeration conformsToProtocol:@protocol(RXFiniteEnumerator)]))
+			_internalCount = [(id<RXFiniteEnumerator>)enumeration count];
 		else
 			_internalCount = count;
 	}
@@ -44,28 +43,29 @@
 #pragma mark NSArray primitives
 
 l3_test(@selector(count), ^{
-	id<RXFiniteTraversal> items = (id)RXInterval(0, 63).traversal;
+	id<RXFiniteEnumerator> items = [RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}];
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:items count:items.count];
 	[array count];
 	l3_expect(array.enumeratedObjects).to.equal(nil);
 	
-	array = [RXEnumerationArray arrayWithEnumeration:RXGenerator(@0, ^id(id<RXGenerator> generator) {
-		NSNumber *context = (NSNumber *)generator.context;
-		if (context.unsignedIntegerValue == 63) [generator complete];
-		return generator.context = @(context.unsignedIntegerValue + 1);
-	}).traversal];
+	__block NSNumber *context = @0;
+	array = [RXEnumerationArray arrayWithEnumeration:[[RXGenerator alloc] initWithBlock:^(RXGenerator *generator) {
+		return context.unsignedIntegerValue < 64?
+			(context = @(context.unsignedIntegerValue + 1))
+		:	nil;
+	}]];
 	[array count];
 	l3_expect(array.enumeratedObjects.count).to.equal(@64);
 })
 
 -(NSUInteger)count {
-	if (self.internalCount == RXTraversalUnknownCount)
+	if (self.internalCount == RXEnumeratorUnknownCount)
 		[self populateUpToIndex:NSUIntegerMax];
 	return self.internalCount;
 }
 
 l3_test(@selector(objectAtIndex:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array objectAtIndex:0];
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	[array objectAtIndex:15];
@@ -83,7 +83,7 @@ l3_test(@selector(objectAtIndex:), ^{
 #pragma mark Populating
 
 l3_test(@selector(populateUpToIndex:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	[array populateUpToIndex:NSUIntegerMax];
 	l3_expect(array.enumeration).to.equal(nil);
 })
@@ -108,7 +108,7 @@ l3_test(@selector(populateUpToIndex:), ^{
 			}
 		}
 		
-		NSUInteger count = MIN(self.enumeratedCount, (index == RXTraversalUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (double)kChunkCount) * kChunkCount));
+		NSUInteger count = MIN(self.enumeratedCount, (index == RXEnumeratorUnknownCount)? NSUIntegerMax : (ceil((index + 1) / (double)kChunkCount) * kChunkCount));
 		
 		for (NSUInteger i = 0; i < count; i++) {
 			[self.enumeratedObjects addObject:self.state.itemsPtr[i + self.processedCount]];
@@ -122,7 +122,7 @@ l3_test(@selector(populateUpToIndex:), ^{
 #pragma mark NSFastEnumeration
 
 l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
-	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
+	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:[RXIntervalEnumerator enumeratorWithInterval:(RXInterval){0, 63}]];
 	for (id x in array) { break; }
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	for (id x in array) { break; }

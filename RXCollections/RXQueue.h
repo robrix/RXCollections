@@ -1,11 +1,11 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
-@interface RXQueue : NSObject <RXTraversal>
+@interface RXQueue : RXEnumerator <RXEnumerator>
 
 -(void)enqueueObject:(id)object;
--(void)enqueueTraversal:(id<RXTraversal>)traversal;
+-(void)enqueueEnumerator:(id<RXEnumerator>)enumerator;
 
 -(id)dequeueObject;
 

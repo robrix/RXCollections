@@ -1,19 +1,25 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
-#import <RXCollections/RXTraversal.h>
+#import <RXCollections/RXEnumerator.h>
 
-typedef id (^RXMapBlock)(id each, bool *stop);
-typedef id (*RXMapFunction)(id each, bool *stop);
+/**
+ A block type used for mapping.
+ 
+ \param each The object being mapped by this iteration.
+ */
+typedef id (^RXMapBlock)(id each);
 
 /**
  Returns its argument.
  */
-
 extern RXMapBlock const RXIdentityMapBlock;
 
 /**
- Returns a traversal which lazily maps the values in `collection` using `block` or `function`. `block` or `function` can return nil.
+ Returns an enumerator which lazily maps the values in \c enumeration using \c block.
+ 
+ It is valid for \c block to return nil.
+ 
+ \param enumeration The enumeration to be mapped over.
+ \param block The block to map with.
  */
-
-extern id<RXTraversal> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block);
-extern id<RXTraversal> RXMapF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction function);
+extern id<RXEnumerator> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block);
