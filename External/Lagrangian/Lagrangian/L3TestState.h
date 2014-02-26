@@ -1,16 +1,8 @@
 #ifndef L3_TEST_STATE_H
 #define L3_TEST_STATE_H
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
 #import <Lagrangian/L3Defines.h>
-
-#import <RXPreprocessing/concat.h>
-#import <RXPreprocessing/fold.h>
 
 
 #pragma mark API
@@ -27,20 +19,19 @@
 	@interface L3Test (_l3_state_protocol_name(uid)) \
 	@property (nonatomic, readonly) L3TestState<_l3_state_protocol_name(uid)> *state; \
 	@end \
-	L3_CONSTRUCTOR void rx_concat(L3TestStateConstructor, uid)(void) { \
-		L3Test *suite = [L3Test suiteForFile:@(__FILE__) inImageForAddress:rx_concat(L3TestStateConstructor, uid)]; \
+	L3_CONSTRUCTOR void metamacro_concat(L3TestStateConstructor, uid)(void) { \
+		L3Test *suite = [L3Test suiteForFile:@(__FILE__) inImageForAddress:metamacro_concat(L3TestStateConstructor, uid)]; \
 		suite.statePrototype = (id)L3TestStatePrototypeDefine(@protocol(_l3_state_protocol_name(uid)), ^(L3Test *self){ (__VA_ARGS__)(); }); \
 	}
 
-#define _l3_declaration_as_property(memo, each) \
+#define _l3_declaration_as_property(_, each) \
 	@property (nonatomic) each; \
-	memo
 
 #define _l3_declarations_as_properties(...) \
-	rx_fold(_l3_declaration_as_property, , __VA_ARGS__)
+	metamacro_foreach(_l3_declaration_as_property, , __VA_ARGS__)
 
 #define _l3_state_protocol_name(uid) \
-	rx_concat(L3TestStateProtocol_line_, rx_concat(__LINE__, rx_concat(_uid_, uid)))
+	metamacro_concat(L3TestStateProtocol_line_, metamacro_concat(__LINE__, metamacro_concat(_uid_, uid)))
 
 #else // defined(L3_INCLUDE_TESTS)
 

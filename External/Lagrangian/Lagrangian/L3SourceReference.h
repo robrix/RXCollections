@@ -1,12 +1,7 @@
 #ifndef L3_SOURCE_REFERENCE_H
 #define L3_SOURCE_REFERENCE_H
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
 #import <Lagrangian/L3Defines.h>
 
 

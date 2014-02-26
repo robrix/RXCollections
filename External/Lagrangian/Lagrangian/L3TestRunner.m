@@ -4,11 +4,7 @@
 #import "L3TestRunner.h"
 
 #if !TARGET_OS_IPHONE
-#if __has_feature(modules)
-@import Cocoa;
-#else
 #import <Cocoa/Cocoa.h>
-#endif
 #endif
 
 NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName = @"L3_RUN_TESTS_ON_LAUNCH";
