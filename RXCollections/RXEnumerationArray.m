@@ -21,19 +21,19 @@
 
 #pragma mark Construction
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count {
-	return [[self alloc] initWithEnumeration:traversal count:count];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration count:(NSUInteger)count {
+	return [[self alloc] initWithEnumeration:enumeration count:count];
 }
 
-+(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal {
-	return [self arrayWithEnumeration:traversal count:RXTraversalUnknownCount];
++(instancetype)arrayWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
+	return [self arrayWithEnumeration:enumeration count:RXTraversalUnknownCount];
 }
 
--(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)traversal count:(NSUInteger)count {
+-(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration count:(NSUInteger)count {
 	if ((self = [super init])) {
-		_enumeration = [traversal copyWithZone:NULL];
-		if ((count == RXTraversalUnknownCount) && ([traversal conformsToProtocol:@protocol(RXFiniteTraversal)]))
-			_internalCount = [(id<RXFiniteTraversal>)traversal count];
+		_enumeration = [enumeration copyWithZone:NULL];
+		if ((count == RXTraversalUnknownCount) && ([enumeration conformsToProtocol:@protocol(RXFiniteTraversal)]))
+			_internalCount = [(id<RXFiniteTraversal>)enumeration count];
 		else
 			_internalCount = count;
 	}
