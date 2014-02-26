@@ -2,8 +2,8 @@
 
 #import "RXInterval.h"
 #import "RXEnumerationArray.h"
+#import "RXGenerator.h"
 #import "RXTraversal.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXEnumerationArray ()
@@ -49,7 +49,11 @@ l3_test(@selector(count), ^{
 	[array count];
 	l3_expect(array.enumeratedObjects).to.equal(nil);
 	
-	array = [RXEnumerationArray arrayWithEnumeration:[@[@0, @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @16, @17, @18, @19, @20, @21, @22, @23, @24, @25, @26, @27, @28, @29, @30, @31, @32, @33, @34, @35, @36, @37, @38, @39, @40, @41, @42, @43, @44, @45, @46, @47, @48, @49, @50, @51, @52, @53, @54, @55, @56, @57, @58, @59, @60, @61, @62, @63] objectEnumerator]];
+	array = [RXEnumerationArray arrayWithEnumeration:RXGenerator(@0, ^id(id<RXGenerator> generator) {
+		NSNumber *context = (NSNumber *)generator.context;
+		if (context.unsignedIntegerValue == 63) [generator complete];
+		return generator.context = @(context.unsignedIntegerValue + 1);
+	}).traversal];
 	[array count];
 	l3_expect(array.enumeratedObjects.count).to.equal(@64);
 })
