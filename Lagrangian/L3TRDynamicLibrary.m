@@ -1,14 +1,5 @@
-//  L3TRDynamicLibrary.m
-//  Created by Rob Rix on 2012-12-21.
-//  Copyright (c) 2012 Rob Rix. All rights reserved.
-
 #import "L3TRDynamicLibrary.h"
-
-#if __has_feature(modules)
-@import Darwin.POSIX.dlfcn;
-#else
 #import <dlfcn.h>
-#endif
 
 @interface L3TRDynamicLibrary ()
 @property (nonatomic, readonly) void *handle;
