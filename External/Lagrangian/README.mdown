@@ -1,7 +1,71 @@
 # Lagrangian
 
-Lagrangian is an iconoclastic unit testing framework.
+Lagrangian, *n*.
 
-Unit tests inextricably linked to your project’s mass.
+1. A function that summarizes the dynamics of the system.
+2. Unit tests inextricably linked to your project’s mass.
 
-A function that summarizes the dynamics of the system.
+Lagrangian is an iconoclastic unit testing framework designed to lower the barrier to using unit tests in Objective-C projects.
+
+
+## How do I use it?
+
+TBD 😰
+
+### Adding Lagrangian to your project
+
+### Adding a test
+
+### Running tests
+
+
+## Why another unit testing framework?
+
+Traditionally, SenTestingKit, XCTest, and many other testing frameworks place your tests in another target, which Xcode runs for you. Unfortunately this means that they also live in another file, out of sight and out of mind. It also means that it’s far too easy to get them out of sync with the code that they’re testing.
+
+Lagrangian is designed to optimize for a few desirable qualities.
+
+1. The barrier to adding a new test should be as low as possible, regardless of whether any tests already exist for the class in question.
+2. Similarly, running the tests should be as convenient as possible, e.g. integrating with Xcode’s Test/⌘U feature.
+3. It should be easy to discern what a test accomplishes by reading it. Put another way, tests should state their expectations.
+4. It should be easy to discern what failed during a test by reading the error message, but without raising the barrier to writing tests—naming things is hard. Put another way, tests should state which of their expectations were not met.
+5. Testing should not impede shipping; rather, it should enable it.
+
+
+## How does it achieve these goals?
+
+### Writing: Inline tests
+
+Tests in a Lagrangian application are typically written embedded in the files which contain the code being tested. This results in several improvements relative to having them in another file and target.
+
+1. They are read and written alongside their subject matter. Unit tests are not black box tests; testing the internals of the class is a good strategy for deriving and building confidence in their correct behaviour.
+
+2. They are compiled in debug builds, making it much more difficult for them to fall out of sync with the code they are testing. It is possible for the semantics underlying the test to change without invalidating the syntax which the test uses (e.g. method names and arity, type names), but this is now the proper domain of the test itself: making up for the stuff that we can’t express by means of our type system.
+
+3. They serve as effective documentation as to how the class operates and expects to be used. This is as useful a lens on the code’s assumptions and intentions during development as it is during review.
+
+
+TBD 😰
+
+### Running: Xcode integration
+
+TBD 😰
+
+### Reading: Expectations say what they mean
+
+TBD 😰
+
+### Debugging: Expectations tell you why they were not met
+
+TBD 😰
+
+### Shipping: Build configuration
+
+While tests are compiled into debug builds by default, they are not compiled into release builds. Your tests won’t pollute your customers’ experience of your app.
+
+
+## What are the pain points?
+
+- integration with Xcode is imperfect
+
+TBD 😰

@@ -3,7 +3,6 @@
 #import "RXMap.h"
 #import "RXFastEnumerator.h"
 #import "RXFold.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXMapEnumerator : RXEnumerator <RXEnumerator>
@@ -16,8 +15,7 @@
 @end
 
 
-//l3_addTestSubjectTypeWithBlock(RXMapBlock)
-l3_addTestSubjectTypeWithFunction(RXMap)
+//l3_addTestSubjectTypeWithBlock(RXMapBlock);
 
 l3_test(RXIdentityMapBlock, ^{
 	l3_expect(RXIdentityMapBlock(@"Equestrian")).to.equal(@"Equestrian");
@@ -28,6 +26,8 @@ RXMapBlock const RXIdentityMapBlock = ^(id x) {
 };
 
 
+l3_addTestSubjectTypeWithFunction(RXMap);
+
 l3_test(&RXMap, ^{
 	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each) {
 		return [each stringByAppendingString:@"Superlative"];
@@ -35,7 +35,7 @@ l3_test(&RXMap, ^{
 	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
 })
 
-id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block) {
+id<RXEnumerator> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	return [[RXMapEnumerator alloc] initWithEnumerator:RXEnumeratorWithEnumeration(enumeration) block:block];
 }
 
@@ -73,7 +73,8 @@ id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock b
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXMapEnumerator *copy = [super copyWithZone:zone];
-	copy->_block = [_block copy];
+	copy->_enumerator = [_enumerator copyWithZone:zone];
+	copy->_block = [_block copyWithZone:zone];
 	return copy;
 }
 

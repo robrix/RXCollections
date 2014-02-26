@@ -1,12 +1,6 @@
 #import "L3TestState.h"
-
 #import "Lagrangian.h"
-
-#if __has_feature(modules)
-@import ObjectiveC.runtime;
-#else
 #import <objc/runtime.h>
-#endif
 
 l3_setup((NSNumber *flag), ^{
 	NSLog(@"about to set the flag");

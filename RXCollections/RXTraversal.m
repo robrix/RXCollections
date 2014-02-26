@@ -1,9 +1,6 @@
-//  RXTraversal.m
-//  Created by Rob Rix on 2013-03-13.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXTraversal.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
@@ -37,9 +34,9 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @end
 
 @interface RXFastEnumerationTraversal : RXRefillingTraversal
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration;
++(instancetype)traversalWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration;
 
-@property (nonatomic, strong) id<NSFastEnumeration> enumeration;
+@property (nonatomic, copy) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
 @end
 
 @interface RXInteriorTraversal : RXTraversal
@@ -58,6 +55,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 @implementation RXTraversal
 
 -(id const __unsafe_unretained *)objects {
+	__builtin_unreachable();
 	[self doesNotRecognizeSelector:_cmd];
 	return NULL;
 }
@@ -219,7 +217,7 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 	id __unsafe_unretained _objects[16];
 }
 
-+(instancetype)traversalWithEnumeration:(id<NSFastEnumeration>)enumeration {
++(instancetype)traversalWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
 	RXFastEnumerationTraversal *source = [self new];
 	source.enumeration = enumeration;
 	return source;
@@ -365,9 +363,9 @@ id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source
 	return [RXCompositeTraversal traversalWithSource:source];
 }
 
-id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration) {
+id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
 	return [enumeration isKindOfClass:[RXTraversal class]]?
-		(RXTraversal *)enumeration
+		[(RXTraversal *)enumeration copy]
 	:	[RXFastEnumerationTraversal traversalWithEnumeration:enumeration];
 }
 

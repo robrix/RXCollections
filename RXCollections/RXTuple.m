@@ -1,12 +1,10 @@
-//  RXTuple.m
-//  Created by Rob Rix on 2013-03-06.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
+#import "RXFastEnumerator.h"
 #import "RXFold.h"
 #import "RXNilArray.h"
 #import "RXTuple.h"
 #import <objc/runtime.h>
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXTuple ()
@@ -253,6 +251,13 @@ l3_test(@selector(hash), ^{
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	return self;
+}
+
+
+#pragma mark RXEnumerable
+
+-(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
+	return [[RXFastEnumerator alloc] initWithEnumeration:self];
 }
 
 

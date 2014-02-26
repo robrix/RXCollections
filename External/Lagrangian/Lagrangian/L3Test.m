@@ -1,13 +1,7 @@
 #import "L3Block.h"
 #import "L3Test.h"
-
 #import "Lagrangian.h"
-
-#if __has_feature(modules)
-@import Darwin.POSIX.dlfcn;
-#else
 #import <dlfcn.h>
-#endif
 
 
 NSString * const L3ErrorDomain = @"com.antitypical.lagrangian";

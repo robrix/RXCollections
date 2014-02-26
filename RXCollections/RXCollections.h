@@ -4,7 +4,6 @@
 
 #import <RXCollections/RXEnumerator.h>
 #import <RXCollections/RXGenerator.h>
-#import <RXCollections/RXRecursiveEnumerator.h>
 #import <RXCollections/RXTraversal.h>
 
 

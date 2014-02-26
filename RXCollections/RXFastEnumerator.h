@@ -4,12 +4,12 @@
 
 @interface RXFastEnumerator : NSEnumerator <RXEnumerator>
 
--(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration;
+-(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration;
 
 @end
 
 
-static inline id<RXEnumerator> RXEnumeratorWithEnumeration(id<NSObject, NSFastEnumeration> enumeration) {
+static inline id<RXEnumerator> RXEnumeratorWithEnumeration(id<NSObject, NSCopying, NSFastEnumeration> enumeration) {
 	return [enumeration conformsToProtocol:@protocol(RXEnumerator)]?
 		(id<RXEnumerator>)enumeration
 	:	[[RXFastEnumerator alloc] initWithEnumeration:enumeration];

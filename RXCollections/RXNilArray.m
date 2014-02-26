@@ -1,11 +1,8 @@
-//  RXNilArray.m
-//  Created by Rob Rix on 7/21/2013.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXAllocation.h"
 #import "RXNilArray.h"
 #import "RXSingleton.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @implementation RXNilArray
@@ -132,7 +129,7 @@ l3_test(@selector(capacityForCount:), ^{
 #pragma mark NSMutableArray
 
 l3_test(@selector(insertObject:atIndex:), ^{
-	NSMutableArray *array = [RXMutableNilArray new];
+	RXMutableNilArray *array = [RXMutableNilArray new];
 	[array insertObject:@0 atIndex:0];
 	[array insertObject:@1 atIndex:1];
 	[array insertObject:@2 atIndex:2];

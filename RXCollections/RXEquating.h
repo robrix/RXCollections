@@ -1,5 +1,3 @@
-//  RXEquating.h
-//  Created by Rob Rix on 2013-05-08.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 @import Foundation;
@@ -16,6 +14,7 @@ static inline bool RXEqual(id<RXEquating> a, id<RXEquating> b) {
 	||	[a isEqual:b];
 }
 static bool (* const RXEquals)(id<RXEquating>, id<RXEquating>) = RXEqual;
+
 
 @interface NSObject (RXEquating) <RXEquating>
 @end

@@ -4,7 +4,6 @@
 #import "RXGenerator.h"
 #import "RXMap.h"
 #import "RXTuple.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXGenerator ()

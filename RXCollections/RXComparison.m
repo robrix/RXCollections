@@ -2,7 +2,6 @@
 
 #import "RXComparison.h"
 #import "RXFold.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 #pragma mark Minima
@@ -14,7 +13,7 @@ l3_test(&RXMin, ^{
 	l3_expect(RXMin(@[@"123", @"1", @"12"], ^(NSString *each) { return @(each.length); })).to.equal(@"1");
 })
 
-id RXMin(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+id RXMin(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id minimum;
 	return RXFold(enumeration, nil, ^(id memo, id each) {
 		id value = block? block(each) : each;
@@ -34,7 +33,7 @@ l3_test(&RXMax, ^{
 	l3_expect(RXMax(@[@"123", @"1", @"12"], ^(NSString *each) { return @(each.length); })).to.equal(@"123");
 })
 
-id RXMax(id<NSFastEnumeration> enumeration, RXMapBlock block) {
+id RXMax(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id maximum;
 	return RXFold(enumeration, nil, ^(id memo, id each) {
 		id value = block? block(each) : each;

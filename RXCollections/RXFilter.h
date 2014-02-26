@@ -30,14 +30,14 @@ extern RXFilterBlock const RXRejectNilFilterBlock;
 /**
  Returns an enumerator of the elements of \c enumeration which are matched by \c block.
  */
-extern id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block);
+extern id<RXEnumerator> RXFilter(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock block);
 
 /**
  Returns the first element found in \c collection which is matched by \c block.
  */
-extern id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block);
+extern id RXLinearSearch(id<NSObject, NSCopying, NSFastEnumeration> collection, RXFilterBlock block);
 
 /**
  An alias for \c RXLinearSearch.
  */
-extern id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock);
+extern id (* const RXDetect)(id<NSObject, NSCopying, NSFastEnumeration>, RXFilterBlock);

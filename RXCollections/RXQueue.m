@@ -14,7 +14,7 @@
 
 @end
 
-@interface RXTraversalQueueNode : RXQueueNode
+@interface RXEnumeratorQueueNode : RXQueueNode
 
 +(instancetype)nodeWithFirst:(id<RXEnumerator>)enumerator rest:(id<RXLinkedListNode>)rest;
 
@@ -69,7 +69,7 @@ l3_test(@selector(enqueueObject:), ^{
 }
 
 -(void)enqueueEnumerator:(id<RXEnumerator>)enumerator {
-	[self appendNode:[RXTraversalQueueNode nodeWithFirst:enumerator rest:self.tailNode]];
+	[self appendNode:[RXEnumeratorQueueNode nodeWithFirst:enumerator rest:self.tailNode]];
 }
 
 
@@ -176,10 +176,10 @@ l3_test(@selector(head), ^{
 
 @end
 
-@implementation RXTraversalQueueNode
+@implementation RXEnumeratorQueueNode
 
-+(instancetype)nodeWithFirst:(id<RXTraversal>)traversal rest:(id<RXLinkedListNode>)rest {
-	return [[self alloc] initWithObject:traversal rest:rest];
++(instancetype)nodeWithFirst:(id<RXEnumerator>)enumerator rest:(id<RXLinkedListNode>)rest {
+	return [[self alloc] initWithObject:enumerator rest:rest];
 }
 
 @end

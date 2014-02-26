@@ -11,12 +11,12 @@ typedef id(^RXConvolutionBlock)(NSUInteger count, id const objects[count]);
  \param block The block to be called with each set of objects.
  \return An enumeration of the results of \c block called with the elements produced by \c sequences in order.
  */
-extern id<RXEnumerator> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block);
+extern id<RXEnumerator> RXConvolveWith(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionBlock block);
 
 /**
  An alias for \c RXConvolveWith.
  */
-extern id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock);
+extern id (* const RXZipWith)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionBlock);
 
 /**
  Enumerates the elements of the sequences in lockstep, producing a tuple for each one.
@@ -24,9 +24,9 @@ extern id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBloc
  \param sequences An enumeration producing the enumerations to be convolved.
  \return An enumeration of tuples of the elements produced by \c sequences in order.
  */
-extern id<RXEnumerator> RXConvolve(id<NSObject, NSFastEnumeration> sequences);
+extern id<RXEnumerator> RXConvolve(id<NSObject, NSCopying, NSFastEnumeration> sequences);
 
 /**
  An alias for \c RXConvolve.
  */
-extern id (* const RXZip)(id<NSObject, NSFastEnumeration>);
+extern id (* const RXZip)(id<NSObject, NSCopying, NSFastEnumeration>);

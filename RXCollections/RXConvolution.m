@@ -7,11 +7,10 @@
 #import "RXInterval.h"
 #import "RXTuple.h"
 #import "RXMap.h"
-
 #import <Lagrangian/Lagrangian.h>
 
-id<RXEnumerator> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXConvolutionBlock block) {
-	RXTuple *sequenceEnumerators = RXConstructTuple(RXMap(sequences, ^id<RXEnumerator>(id<NSObject, NSFastEnumeration> each) {
+id<RXEnumerator> RXConvolveWith(id<NSObject, NSCopying, NSFastEnumeration> sequences, RXConvolutionBlock block) {
+	RXTuple *sequenceEnumerators = RXConstructTuple(RXMap(sequences, ^id<RXEnumerator>(id<NSObject, NSCopying, NSFastEnumeration> each) {
 		return [[RXFastEnumerator alloc] initWithEnumeration:each];
 	}));
 	
@@ -29,7 +28,8 @@ id<RXEnumerator> RXConvolveWith(id<NSObject, NSFastEnumeration> sequences, RXCon
 	}];
 }
 
-id (* const RXZipWith)(id<NSObject, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
+id (* const RXZipWith)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionBlock) = RXConvolveWith;
+
 
 l3_addTestSubjectTypeWithFunction(RXConvolve)
 
@@ -44,10 +44,10 @@ l3_test(&RXConvolve, ^{
 	l3_expect(convoluted.lastObject).to.equal([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]);
 })
 
-id<RXEnumerator> RXConvolve(id<NSObject, NSFastEnumeration> sequences) {
+id<RXEnumerator> RXConvolve(id<NSObject, NSCopying, NSFastEnumeration> sequences) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count]) {
 		return [RXTuple tupleWithObjects:objects count:count];
 	});
 }
 
-id (* const RXZip)(id<NSObject, NSFastEnumeration>) = RXConvolve;
+id (* const RXZip)(id<NSObject, NSCopying, NSFastEnumeration>) = RXConvolve;

@@ -1,12 +1,7 @@
 #ifndef L3_TEST_RUNNER_H
 #define L3_TEST_RUNNER_H
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
 #import <Lagrangian/L3Defines.h>
 
 L3_EXTERN NSString * const L3TestRunnerRunTestsOnLaunchEnvironmentVariableName;

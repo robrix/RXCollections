@@ -1,12 +1,7 @@
 #ifndef L3_EXPECT_H
 #define L3_EXPECT_H
 
-#if __has_feature(modules)
-@import Foundation;
-#else
 #import <Foundation/Foundation.h>
-#endif
-
 #import <Lagrangian/L3Defines.h>
 #import <Lagrangian/L3SourceReference.h>
 

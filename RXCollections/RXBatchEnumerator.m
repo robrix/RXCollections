@@ -2,7 +2,6 @@
 
 #import "RXBatchEnumerator.h"
 #import "RXFold.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @implementation RXBatchEnumerator {

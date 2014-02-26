@@ -2,7 +2,6 @@
 
 #import "RXFold.h"
 #import "RXInterval.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 l3_addTestSubjectTypeWithFunction(RXIntervalMakeWithLength)

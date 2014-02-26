@@ -28,7 +28,7 @@
  */
 @protocol RXEnumerable <NSObject>
 
-@property (nonatomic, readonly) id<NSObject, NSFastEnumeration> enumeration;
+@property (nonatomic, readonly) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
 
 @end
 

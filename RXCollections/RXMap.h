@@ -22,4 +22,4 @@ extern RXMapBlock const RXIdentityMapBlock;
  \param enumeration The enumeration to be mapped over.
  \param block The block to map with.
  */
-extern id<RXEnumerator> RXMap(id<NSObject, NSFastEnumeration> enumeration, RXMapBlock block);
+extern id<RXEnumerator> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block);

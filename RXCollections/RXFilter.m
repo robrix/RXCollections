@@ -4,7 +4,6 @@
 #import "RXFastEnumerator.h"
 #import "RXFold.h"
 #import "RXMap.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXFilterEnumerator : RXEnumerator <RXEnumerator>
@@ -16,9 +15,7 @@
 
 @end
 
-l3_addTestSubjectTypeWithBlock(RXFilterBlock)
-l3_addTestSubjectTypeWithFunction(RXFilter)
-l3_addTestSubjectTypeWithFunction(RXLinearSearch)
+l3_addTestSubjectTypeWithBlock(RXFilterBlock);
 
 l3_test(RXAcceptFilterBlock, ^{
 	l3_expect(RXAcceptFilterBlock(nil)).to.equal(@YES);
@@ -58,6 +55,8 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each) {
 };
 
 
+l3_addTestSubjectTypeWithFunction(RXFilter);
+
 l3_test(&RXFilter, ^{
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
 	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(id each) {
@@ -66,10 +65,12 @@ l3_test(&RXFilter, ^{
 	l3_expect(filtered).to.equal(@[@"Ancestral", @"Azimuth"]);
 })
 
-id<RXEnumerator> RXFilter(id<NSObject, NSFastEnumeration> enumeration, RXFilterBlock block) {
+id<RXEnumerator> RXFilter(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock block) {
 	return [[RXFilterEnumerator alloc] initWithEnumerator:RXEnumeratorWithEnumeration(enumeration) block:block];
 }
 
+
+l3_addTestSubjectTypeWithFunction(RXLinearSearch);
 
 l3_test(&RXLinearSearch, ^{
 	id found = RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each) {
@@ -78,7 +79,7 @@ l3_test(&RXLinearSearch, ^{
 	l3_expect(found).to.equal(@"Belligerent");
 })
 
-id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
+id RXLinearSearch(id<NSObject, NSCopying, NSFastEnumeration> collection, RXFilterBlock block) {
 	__block id found;
 	RXFold(collection, nil, ^(id memo, id each) {
 		found = block(each)?
@@ -89,7 +90,7 @@ id RXLinearSearch(id<NSFastEnumeration> collection, RXFilterBlock block) {
 	return found;
 }
 
-id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
+id (* const RXDetect)(id<NSObject, NSCopying, NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 
 
 @implementation RXFilterEnumerator
@@ -117,7 +118,8 @@ id (* const RXDetect)(id<NSFastEnumeration>, RXFilterBlock) = RXLinearSearch;
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXFilterEnumerator *copy = [super copyWithZone:zone];
-	copy->_block = [_block copy];
+	copy->_enumerator = [_enumerator copyWithZone:zone];
+	copy->_block = [_block copyWithZone:zone];
 	return copy;
 }
 

@@ -1,5 +1,3 @@
-//  RXTraversal.h
-//  Created by Rob Rix on 2013-02-16.
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 @import Foundation;
@@ -7,7 +5,6 @@
 /**
  Defines the interface for traversing some collection of objects in sequence.
 */
-
 @protocol RXTraversal <NSObject, NSCopying, NSFastEnumeration>
 
 -(id)nextObject;
@@ -61,7 +58,7 @@ typedef bool(^RXCompositeTraversalSource)(id<RXCompositeTraversal> traversal);
 extern id<RXTraversal> RXTraversalWithObjects(id owner, const id *objects, NSUInteger count);
 extern id<RXTraversal> RXTraversalWithSource(RXTraversalSource source);
 extern id<RXTraversal> RXCompositeTraversalWithSource(RXCompositeTraversalSource source);
-extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSFastEnumeration> enumeration);
+extern id<RXTraversal> RXTraversalWithEnumeration(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 extern id<RXTraversal> RXTraversalWithObject(id object);
 
 
@@ -70,11 +67,8 @@ extern id<RXTraversal> RXTraversalWithObject(id object);
 
 
 /**
- RXFiniteTraversal
- 
  Defines the interface for traversing some finite collection of objects with known cardinality in sequence.
  */
-
 @protocol RXFiniteTraversal <RXTraversal>
 
 @property (nonatomic, readonly) NSUInteger count;

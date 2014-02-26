@@ -19,28 +19,28 @@ typedef id (^RXFoldBlock)(id memo, id each);
  \param initial The value passed to \c block as its \c memo argument.
  \param block The block to fold with.
  */
-extern id RXFold(id<NSFastEnumeration> enumeration, id initial, RXFoldBlock block);
+extern id RXFold(id<NSObject, NSCopying, NSFastEnumeration> enumeration, id initial, RXFoldBlock block);
 
 
 #pragma mark Constructors
 
 /**
- Constructs an array with the elements of an enumeration. The enumeration's elements must not be nil.
+ Constructs an array with the elements of an enumeration. The enumeration's elements must not be \c nil.
  */
-extern NSArray *RXConstructArray(id<NSObject, NSFastEnumeration> enumeration);
+extern NSArray *RXConstructArray(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be nil.
+ Constructs a set with the elements of the specified enumeration. The enumeration's elements must not be \c nil.
  */
-extern NSSet *RXConstructSet(id<NSFastEnumeration> enumeration);
+extern NSSet *RXConstructSet(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be nil, and must conform to RXKeyValuePair.
+ Constructs a dictionary with the elements of the specified enumeration. The enumeration's elements must not be \c nil, and must conform to \c RXKeyValuePair.
  */
-extern NSDictionary *RXConstructDictionary(id<NSFastEnumeration> enumeration);
+extern NSDictionary *RXConstructDictionary(id<NSObject, NSCopying, NSFastEnumeration> enumeration);
 
 /**
- Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be nil.
+ Constructs a tuple with the elements of the specified enumeration. The enumeration's elements may be \c nil.
  */
 @class RXTuple;
-extern RXTuple *RXConstructTuple(id<NSFastEnumeration> enumeration);
+extern RXTuple *RXConstructTuple(id<NSObject, NSCopying, NSFastEnumeration> enumeration);

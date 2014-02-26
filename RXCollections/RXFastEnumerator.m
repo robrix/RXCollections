@@ -1,12 +1,11 @@
 //  Copyright (c) 2013 Rob Rix. All rights reserved.
 
 #import "RXFastEnumerator.h"
-
 #import <Lagrangian/Lagrangian.h>
 
 @interface RXFastEnumerator ()
 
-@property (nonatomic, readonly) id<NSObject, NSFastEnumeration> enumeration;
+@property (nonatomic, readonly) id<NSObject, NSCopying, NSFastEnumeration> enumeration;
 
 @end
 
@@ -17,7 +16,7 @@
 	id __unsafe_unretained *_items;
 }
 
--(instancetype)initWithEnumeration:(id<NSObject, NSFastEnumeration>)enumeration {
+-(instancetype)initWithEnumeration:(id<NSObject, NSCopying, NSFastEnumeration>)enumeration {
 	NSParameterAssert(enumeration != nil);
 	
 	if ((self = [super init])) {
@@ -63,7 +62,7 @@ l3_test(@selector(needsToFetchItems), ^{
 
 
 l3_test(@selector(nextObject), ^{
-	RXFastEnumerator *enumerator = [[RXFastEnumerator alloc] initWithEnumeration:[@[@1, @2] objectEnumerator]];
+	RXFastEnumerator *enumerator = [[RXFastEnumerator alloc] initWithEnumeration:@[@1, @2]];
 	
 	l3_expect([enumerator nextObject]).to.equal(@1);
 	l3_expect([enumerator nextObject]).to.equal(@2);
@@ -115,7 +114,7 @@ l3_test(@selector(nextObject), ^{
 #pragma mark NSCopying
 
 -(instancetype)copyWithZone:(NSZone *)zone {
-	id<NSObject, NSFastEnumeration> enumeration = [_enumeration respondsToSelector:@selector(copyWithZone:)]?
+	id<NSObject, NSCopying, NSFastEnumeration> enumeration = [_enumeration respondsToSelector:@selector(copyWithZone:)]?
 		[(id<NSCopying>)_enumeration copyWithZone:zone]
 	:	_enumeration;
 	RXFastEnumerator *copy = [[self.class alloc] initWithEnumeration:enumeration];
