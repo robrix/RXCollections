@@ -54,7 +54,7 @@ NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_S
 +(NSString *)subjectPath {
 	NSString *path = [NSProcessInfo processInfo].environment[L3TestRunnerSubjectEnvironmentVariableName];
 	if (!path && self.isRunningInApplication) {
-		path = [NSBundle mainBundle].bundlePath;
+		path = [NSBundle mainBundle].executablePath;
 	}
 	return path;
 }
@@ -84,18 +84,21 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 #pragma mark Running
 
 -(void)runAtLaunch {
-	NSArray *tests = [[L3Test registeredSuites] allValues];
-	if ([self.class subjectPath]) {
-		L3Test *suite = [L3Test registeredSuiteForFile:[self.class subjectPath]];
-		if (suite)
-			tests = @[suite];
-	}
+	NSArray *(^registeredTests)(void) = ^{
+		NSArray *tests = [[L3Test registeredSuites] allValues];
+		if ([self.class subjectPath]) {
+			L3Test *suite = [L3Test registeredSuiteForFile:[self.class subjectPath]];
+			if (suite)
+				tests = @[suite];
+		}
+		return tests;
+	};
 #if TARGET_OS_IPHONE
 #else
 	if ([self.class isRunningInApplication]) {
 		__block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidFinishLaunchingNotification object:nil queue:self.queue usingBlock:^(NSNotification *note) {
 			
-			[self enqueueTests:tests];
+			[self enqueueTests:registeredTests()];
 			
 			[[NSNotificationCenter defaultCenter] removeObserver:observer name:NSApplicationDidFinishLaunchingNotification object:nil];
 			
@@ -105,7 +108,7 @@ L3_CONSTRUCTOR void L3TestRunnerLoader() {
 		}];
 	} else {
 		[self.queue addOperationWithBlock:^{
-			[self enqueueTests:tests];
+			[self enqueueTests:registeredTests()];
 			
 			[self.queue addOperationWithBlock:^__attribute__((noreturn)){
 				exit(self.statistics.assertionFailureCount == 0);
