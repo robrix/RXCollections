@@ -15,14 +15,14 @@
 #if defined(L3_INCLUDE_TESTS)
 
 #define _l3_test_construct(uid, ...) \
-	L3_INLINE void _l3_test_function_name(uid) (L3Test *suite, L3Test *self); \
+	L3_INLINE void _l3_test_function_name(uid) (L3Test *self); \
 	L3_CONSTRUCTOR void _l3_test_constructor_name(uid) (void) { \
 		L3Test *suite = [L3Test suiteForFile:@__FILE__ inImageForAddress:_l3_test_constructor_name(uid)]; \
-		__block L3Test *test = L3TestDefine(@__FILE__, __LINE__, __VA_ARGS__, ^{ _l3_test_function_name(uid)(suite, test); }); \
+		L3Test *test = L3TestDefine(@__FILE__, __LINE__, @#__VA_ARGS__, __VA_ARGS__, &_l3_test_function_name(uid)); \
 		test.statePrototype = suite.statePrototype; \
 		[suite addChild:test]; \
 	} \
-	L3_INLINE void _l3_test_function_name(uid) (L3Test *suite, L3Test *self)
+	L3_INLINE void _l3_test_function_name(uid) (L3Test *self)
 
 #define _l3_test_constructor_name(uid) \
 	metamacro_concat(L3TestConstructor, uid)
@@ -33,12 +33,12 @@
 #else // defined(L3_INCLUDE_TESTS)
 
 #define _l3_test_construct(uid, ...) \
-	L3_UNUSABLE void metamacro_concat(metamacro_concat(L3, uid), UnusableTestFunction) (L3Test *suite, L3Test *self)
+	L3_UNUSABLE void metamacro_concat(metamacro_concat(L3, uid), UnusableTestFunction) (L3Test *self)
 
 #endif // defined(L3_INCLUDE_TESTS)
 
 
-typedef void(^L3TestBlock)(void);
+typedef void (*L3TestFunction)(L3Test *self);
 
 enum {
 	L3AssertionFailedError
@@ -60,8 +60,8 @@ L3_EXTERN NSString * const L3ExpectationErrorKey;
 +(instancetype)registeredSuiteForFile:(NSString *)file;
 +(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address;
 
-+(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
--(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
++(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference function:(L3TestFunction)function;
+-(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference function:(L3TestFunction)function;
 
 @property (readonly) id<L3SourceReference> sourceReference;
 
@@ -101,20 +101,20 @@ L3_EXTERN NSString *L3TestSymbolForFunction(L3FunctionTestSubject subject);
 typedef id (^L3BlockTestSubject)();
 L3_EXTERN L3FunctionTestSubject L3TestFunctionForBlock(L3BlockTestSubject subject);
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, SEL subject, L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, NSStringFromSelector(subject)) block:block];
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, SEL subject, L3TestFunction function) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, NSStringFromSelector(subject)) function:function];
 }
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, const char *subject, L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, @(subject)) block:block];
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, const char *subject, L3TestFunction function) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, @(subject)) function:function];
 }
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *(*subject)(NSString *, NSDictionary *), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block];
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, NSString *(*subject)(NSString *, NSDictionary *), L3TestFunction function) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) function:function];
 }
 
-L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id (^subject)(id), L3TestBlock block) {
-	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block];
+L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, id (^subject)(id), L3TestFunction function) {
+	return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) function:function];
 }
 
 /**
@@ -125,8 +125,8 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id (^subje
  \param functionSubject The function whose type should be valid as a test subject.
  */
 #define l3_addTestSubjectTypeWithFunction(functionSubject) \
-	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, __typeof__(functionSubject) subject, L3TestBlock block) { \
-		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) block:block]; \
+	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, __typeof__(functionSubject) subject, L3TestFunction function) { \
+		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, L3TestSymbolForFunction((L3FunctionTestSubject)subject)) function:function]; \
 	}
 
 /**
@@ -135,8 +135,8 @@ L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, id (^subje
  \param blockSubject The block whose type should be valid as a test subject.
  */
 #define l3_addTestSubjectTypeWithBlock(blockSubject) \
-	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, __typeof__(blockSubject) subject, L3TestBlock block) { \
-		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, nil, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) block:block]; \
+	L3_OVERLOADABLE L3Test *L3TestDefine(NSString *file, NSUInteger line, NSString *subjectSource, __typeof__(blockSubject) subject, L3TestFunction function) { \
+		return [L3Test testWithSourceReference:L3SourceReferenceCreate(nil, file, line, subjectSource, L3TestSymbolForFunction((L3FunctionTestSubject)L3TestFunctionForBlock((L3BlockTestSubject)subject))) function:function]; \
 	}
 
 #endif // L3_TEST_H

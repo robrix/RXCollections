@@ -38,6 +38,15 @@
 	return self;
 }
 
+
+#pragma mark NSObject
+
+-(NSString *)description {
+	return self.subject?
+		[NSString stringWithFormat:@"%@ @ %@:%lu (%@ = %@)", super.description, self.file, self.line, self.subjectSource, self.subject]
+	:	[NSString stringWithFormat:@"%@ @ %@:%lu", super.description, self.file, self.line];
+}
+
 @end
 
 

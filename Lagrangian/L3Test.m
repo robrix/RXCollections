@@ -15,7 +15,7 @@ l3_setup(L3Test, (L3Test *test)) {
 
 @interface L3Test ()
 
-@property (readonly) L3TestBlock block;
+@property (readonly) L3TestFunction function;
 
 @property (readonly) NSMutableArray *mutableExpectations;
 @property (readonly) NSMutableArray *mutableChildren;
@@ -68,28 +68,28 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 +(instancetype)suiteForImageWithAddress:(void(*)(void))address {
 	NSString *file = L3PathForImageWithAddress(address);
 	return [self suiteForFile:file initializer:^L3Test *{
-		return [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, file.lastPathComponent) block:nil];
+		return [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, file.lastPathComponent) function:NULL];
 	}];
 }
 
 +(instancetype)suiteForFile:(NSString *)file inImageForAddress:(void(*)(void))address {
 	return [self suiteForFile:file initializer:^L3Test *{
-		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file.lastPathComponent stringByDeletingPathExtension]) block:nil];
+		L3Test *suite = [[self alloc] initWithSourceReference:L3SourceReferenceCreate(@0, file, 0, nil, [file.lastPathComponent stringByDeletingPathExtension]) function:NULL];
 		L3Test *imageSuite = [self suiteForImageWithAddress:address];
 		[imageSuite addChild:suite];
 		return suite;
 	}];
 }
 
-+(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block {
-	return [[self alloc] initWithSourceReference:sourceReference block:block];
++(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference function:(L3TestFunction)function {
+	return [[self alloc] initWithSourceReference:sourceReference function:function];
 }
 
--(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block {
+-(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference function:(L3TestFunction)function {
 	if ((self = [super init])) {
 		_sourceReference = sourceReference;
 		
-		_block = [block copy];
+		_function = function;
 		
 		_mutableExpectations = [NSMutableArray new];
 		_mutableChildren = [NSMutableArray new];
@@ -127,8 +127,7 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 
 -(void)run:(L3TestExpectationBlock)expectationCallback {
 	self.expectationCallback = expectationCallback;
-	if (self.block)
-		self.block();
+	if (self.function) self.function(self);
 }
 
 -(void)expectation:(id<L3Expectation>)expectation producedResult:(id<L3TestResult>)result {
@@ -152,6 +151,13 @@ static inline NSString *L3PathForImageWithAddress(void(*address)(void)) {
 		[lazyChildren addObject:^{ return [child acceptVisitor:visitor parents:childParents context:context]; }];
 	}
 	return [visitor visitTest:self parents:parents lazyChildren:lazyChildren context:context];
+}
+
+
+#pragma mark NSObject
+
+-(NSString *)description {
+	return [NSString stringWithFormat:@"%@ (%@)", super.description, self.sourceReference];
 }
 
 @end
