@@ -14,25 +14,25 @@
 
 @protocol L3Expectation <NSObject>
 
-@property (nonatomic, readonly) id<L3SourceReference> subjectReference;
+@property (readonly) id<L3SourceReference> subjectReference;
 
-@property (nonatomic, readonly) id<L3Expectation> to;
-@property (nonatomic, readonly) id<L3Expectation> not;
+@property (readonly) id<L3Expectation> to;
+@property (readonly) id<L3Expectation> not;
 
-@property (nonatomic, readonly) bool (^equal)(id object);
+@property (readonly) bool (^equal)(id object);
 
 @end
 
 
 @protocol L3TestResult <NSObject>
 
-@property (nonatomic, readonly) id<L3SourceReference> subjectReference;
+@property (readonly) id<L3SourceReference> subjectReference;
 
-@property (nonatomic, readonly) NSString *hypothesisString;
-@property (nonatomic, readonly) NSString *observationString;
+@property (readonly) NSString *hypothesisString;
+@property (readonly) NSString *observationString;
 
-@property (nonatomic, readonly) bool wasMet;
-@property (nonatomic, readonly) NSException *exception;
+@property (readonly) bool wasMet;
+@property (readonly) NSException *exception;
 
 @end
 

@@ -9,22 +9,31 @@
 
 #pragma mark API
 
+#define l3_test(...) \
+	_l3_test_construct(__COUNTER__, __VA_ARGS__)
+
 #if defined(L3_INCLUDE_TESTS)
 
-#define l3_test(...) \
-	_l3_test(__FILE__, __LINE__, __COUNTER__, __VA_ARGS__)
+#define _l3_test_construct(uid, ...) \
+	L3_INLINE void _l3_test_function_name(uid) (L3Test *suite, L3Test *self); \
+	L3_CONSTRUCTOR void _l3_test_constructor_name(uid) (void) { \
+		L3Test *suite = [L3Test suiteForFile:@__FILE__ inImageForAddress:_l3_test_constructor_name(uid)]; \
+		__block L3Test *test = L3TestDefine(@__FILE__, __LINE__, __VA_ARGS__, ^{ _l3_test_function_name(uid)(suite, test); }); \
+		test.statePrototype = suite.statePrototype; \
+		[suite addChild:test]; \
+	} \
+	L3_INLINE void _l3_test_function_name(uid) (L3Test *suite, L3Test *self)
 
-#define _l3_test(file, line, uid, ...) \
-	L3_CONSTRUCTOR void metamacro_concat(L3Test, uid)(void) { \
-		L3Test *suite = [L3Test suiteForFile:@(file) inImageForAddress:metamacro_concat(L3Test, uid)]; \
-		__block L3Test *self = L3TestDefine(@(file), line, __VA_ARGS__); \
-		self.statePrototype = suite.statePrototype; \
-		[suite addChild:self]; \
-	}
+#define _l3_test_constructor_name(uid) \
+	metamacro_concat(L3TestConstructor, uid)
+
+#define _l3_test_function_name(uid) \
+	metamacro_concat(L3TestFunction, uid)
 
 #else // defined(L3_INCLUDE_TESTS)
 
-#define l3_test(...)
+#define _l3_test_construct(uid, ...) \
+	L3_UNUSABLE void metamacro_concat(metamacro_concat(L3, uid), UnusableTestFunction) (L3Test *suite, L3Test *self)
 
 #endif // defined(L3_INCLUDE_TESTS)
 
@@ -54,15 +63,15 @@ L3_EXTERN NSString * const L3ExpectationErrorKey;
 +(instancetype)testWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 -(instancetype)initWithSourceReference:(id<L3SourceReference>)sourceReference block:(L3TestBlock)block;
 
-@property (nonatomic, readonly) id<L3SourceReference> sourceReference;
+@property (readonly) id<L3SourceReference> sourceReference;
 
-@property (nonatomic, readonly) NSArray *expectations;
+@property (readonly) NSArray *expectations;
 -(void)addExpectation:(id<L3Expectation>)expectation;
 
-@property (nonatomic, readonly) NSArray *children;
+@property (readonly) NSArray *children;
 -(void)addChild:(L3Test *)test;
 
-@property (nonatomic) L3TestStatePrototype *statePrototype;
+@property L3TestStatePrototype *statePrototype;
 
 -(void)setUp;
 -(void)tearDown;

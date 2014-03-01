@@ -33,7 +33,7 @@
 	return self;
 }
 
-l3_test(@selector(traversal), ^{
+l3_test(@selector(traversal)) {
 	RXGeneratorBlock fibonacci = ^(RXGeneratorTraversable *self) {
 		NSNumber *previous = self.context[1], *next = @([self.context[0] unsignedIntegerValue] + [previous unsignedIntegerValue]);
 		self.context = (id)[RXTuple tupleWithArray:@[previous, next]];
@@ -57,7 +57,7 @@ l3_test(@selector(traversal), ^{
 	};
 	NSArray *integers = RXConstructArray(RXGenerator(nil, block).traversal);
 	l3_expect(integers).to.equal(@[@0, @1, @2, @3]);
-})
+}
 
 -(id<RXTraversal>)traversal {
 	return RXTraversalWithSource(^bool(id<RXRefillableTraversal> traversal) {

@@ -237,14 +237,14 @@ const NSUInteger RXTraversalUnknownCount = NSUIntegerMax;
 
 #pragma mark NSCopying
 
-l3_test(@selector(copyWithZone:), ^{
+l3_test(@selector(copyWithZone:)) {
 	id<RXTraversal> original = [RXFastEnumerationTraversal traversalWithEnumeration:@[@1, @2, @3]];
 	[original nextObject];
 	id<RXTraversal> copy = [original copyWithZone:NULL];
 	
 	l3_expect([copy nextObject]).to.equal(@2);
 	l3_expect([original nextObject]).to.equal(@2);
-})
+}
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXFastEnumerationTraversal *copy = [super copyWithZone:zone];
@@ -284,14 +284,14 @@ l3_test(@selector(copyWithZone:), ^{
 
 #pragma mark NSCopying
 
-l3_test(@selector(copyWithZone:), ^{
+l3_test(@selector(copyWithZone:)) {
 	id<RXTraversal> original = [RXInteriorTraversal traversalWithInteriorObjects:(const __autoreleasing id []){ @1, @2, @3 } count:3 owner:[NSObject new]];
 	[original nextObject];
 	id<RXTraversal> copy = [original copyWithZone:NULL];
 	
 	l3_expect([copy nextObject]).to.equal(@2);
 	l3_expect([original nextObject]).to.equal(@2);
-})
+}
 
 -(instancetype)copyWithZone:(NSZone *)zone {
 	RXInteriorTraversal *copy = [super copyWithZone:zone];

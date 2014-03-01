@@ -16,22 +16,22 @@
 
 #pragma mark Construction
 
-l3_test(@selector(classNameWithCount:), ^{
+l3_test(@selector(classNameWithCount:)) {
 	l3_expect([RXTuple classNameWithCount:0]).to.equal(@"RX0Tuple");
-})
+}
 
 +(NSString *)classNameWithCount:(NSUInteger)count {
 	return [NSString stringWithFormat:@"RX%luTuple", (unsigned long)count];
 }
 
 
-l3_test(@selector(subclassWithCount:), ^{
+l3_test(@selector(subclassWithCount:)) {
 	Class subclass = [RXTuple subclassWithCount:2];
 	l3_expect(subclass).not.to.equal(Nil);
 	
 	Class secondSubclass = [RXTuple subclassWithCount:2];
 	l3_expect((uintptr_t)subclass).to.equal(@((uintptr_t)secondSubclass));
-})
+}
 
 +(Class)subclassWithCount:(NSUInteger)count {
 	const char *subclassName = [self classNameWithCount:count].UTF8String;
@@ -56,11 +56,11 @@ l3_test(@selector(subclassWithCount:), ^{
 }
 
 
-l3_test(@selector(tupleWithObjects:count:), ^{
+l3_test(@selector(tupleWithObjects:count:)) {
 	id const objects[] = {@1, @1, @2};
 	RXTuple *tuple = [RXTuple tupleWithObjects:objects count:sizeof objects / sizeof *objects];
 	l3_expect(tuple).to.equal([RXTuple tupleWithArray:@[@1, @1, @2]]);
-})
+}
 
 +(instancetype)tupleWithObjects:(id const [])objects count:(NSUInteger)count {
 	return [[(id)[self subclassWithCount:count] alloc] initWithObjects:objects count:count];
@@ -79,10 +79,10 @@ l3_test(@selector(tupleWithObjects:count:), ^{
 }
 
 
-l3_test(@selector(tupleWithArray:), ^{
+l3_test(@selector(tupleWithArray:)) {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	l3_expect(tuple).not.to.equal(nil);
-})
+}
 
 +(instancetype)tupleWithArray:(NSArray *)array {
 	return [[(id)[self subclassWithCount:array.count] alloc] initWithArray:array];
@@ -115,22 +115,22 @@ l3_test(@selector(tupleWithArray:), ^{
 
 #pragma mark Access
 
-l3_test(@selector(allObjects), ^{
+l3_test(@selector(allObjects)) {
 	NSArray *allObjects = [[RXTuple tupleWithArray:@[@1, @2]] allObjects];
 	l3_expect(allObjects).to.equal(@[@1, @2]);
 	
 	l3_expect([[RXTuple tupleWithObjects:(const id[]){nil} count:1] allObjects][0]).to.equal(nil);
-})
+}
 
 -(NSArray *)allObjects {
 	return [RXNilArray arrayWithObjects:self.elements count:self.count];
 }
 
 
-l3_test(@selector(count), ^{
+l3_test(@selector(count)) {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@M_PI, @M_PI]];
 	l3_expect(tuple.count).to.equal(@2);
-})
+}
 
 -(NSUInteger)count {
 	[self doesNotRecognizeSelector:_cmd];
@@ -143,10 +143,10 @@ l3_test(@selector(count), ^{
 }
 
 
-l3_test(@selector(objectAtIndexedSubscript:), ^{
+l3_test(@selector(objectAtIndexedSubscript:)) {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@0, @1, @2]];
 	l3_expect(tuple[2]).to.equal(@2);
-})
+}
 
 -(id)objectAtIndexedSubscript:(NSUInteger)subscript {
 	NSParameterAssert(subscript < self.count);
@@ -157,10 +157,10 @@ l3_test(@selector(objectAtIndexedSubscript:), ^{
 
 #pragma mark NSObject
 
-l3_test(@selector(description), ^{
+l3_test(@selector(description)) {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	l3_expect([tuple description]).to.equal(@"(1, 2, 3)");
-})
+}
 
 -(NSString *)description {
 	NSMutableString *description = RXFold(self, [@"(" mutableCopy], ^(NSMutableString *memo, id element, bool *stop) {
@@ -174,18 +174,18 @@ l3_test(@selector(description), ^{
 }
 
 
-l3_test(@selector(debugDescription), ^{
+l3_test(@selector(debugDescription)) {
 	RXTuple *tuple = [RXTuple tupleWithArray:@[]];
 	l3_expect([[tuple debugDescription] hasPrefix:@"<RX0Tuple: 0x"]).to.equal(@YES);
 	l3_expect([[tuple debugDescription] hasSuffix:@"> ()"]).to.equal(@YES);
-})
+}
 
 -(NSString *)debugDescription {
 	return [NSString stringWithFormat:@"<%@: %p> %@", self.class, self, self.description];
 }
 
 
-l3_test(@selector(isEqualToTuple:), ^{
+l3_test(@selector(isEqualToTuple:)) {
 	RXTuple *left = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	RXTuple *right = [RXTuple tupleWithArray:@[@1, @2, @3]];
 	l3_expect([left isEqualToTuple:right]).to.equal(@YES);
@@ -194,7 +194,7 @@ l3_test(@selector(isEqualToTuple:), ^{
 	left = [RXTuple tupleWithObjects:objects count:2];
 	right = [RXTuple tupleWithObjects:objects count:2];
 	l3_expect([left isEqualToTuple:right]).to.equal(@YES);
-})
+}
 
 -(bool)isEqualToTuple:(RXTuple *)tuple {
 	bool isEqual =
@@ -217,7 +217,7 @@ l3_test(@selector(isEqualToTuple:), ^{
 }
 
 
-l3_test(@selector(hash), ^{
+l3_test(@selector(hash)) {
 	l3_expect([RXTuple tupleWithArray:@[]].hash).to.equal(@0);
 	RXTuple *unary = [RXTuple tupleWithArray:@[@""]];
 	RXTuple *tuple = [RXTuple tupleWithArray:@[unary, unary, unary]];
@@ -227,7 +227,7 @@ l3_test(@selector(hash), ^{
 	NSUInteger expected = ((1ul << 20ul) | (1ul << 10ul) | 1ul) + 3;
 #endif
 	l3_expect(tuple.hash).to.equal(@(expected));
-})
+}
 
 -(NSUInteger)hash {
 	const NSUInteger kCount = self.count;

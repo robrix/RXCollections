@@ -7,13 +7,13 @@
 
 @protocol L3SourceReference <NSObject, NSCopying>
 
-@property (nonatomic, readonly) id identifier;
+@property (readonly) id identifier;
 
-@property (nonatomic, readonly) NSString *file;
-@property (nonatomic, readonly) NSUInteger line;
+@property (readonly) NSString *file;
+@property (readonly) NSUInteger line;
 
-@property (nonatomic, readonly) NSString *subjectSource;
-@property (nonatomic, readonly) id subject;
+@property (readonly) NSString *subjectSource;
+@property (readonly) id subject;
 
 @end
 

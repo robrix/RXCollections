@@ -10,11 +10,10 @@ static RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 #pragma mark Minima
 
 l3_addTestSubjectTypeWithFunction(RXMin)
-
-l3_test(&RXMin, ^{
+l3_test(&RXMin) {
 	l3_expect(RXMin(@[@3, @1, @2], nil)).to.equal(@1);
 	l3_expect(RXMin(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); })).to.equal(@"1");
-})
+}
 
 id RXMin(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id minimum;
@@ -35,10 +34,10 @@ id RXMinF(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapFunction 
 
 #pragma mark Maxima
 
-l3_test(&RXMax, ^{
+l3_test(&RXMax) {
 	l3_expect(RXMax(@[@3, @1, @2], nil)).to.equal(@3);
 	l3_expect(RXMax(@[@"123", @"1", @"12"], ^(NSString *each, bool *stop) { return @(each.length); })).to.equal(@"123");
-})
+}
 
 id RXMax(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	__block id maximum;

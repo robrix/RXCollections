@@ -12,15 +12,15 @@
 }
 
 
-l3_test(@selector(initWithObjects:count:), ^{
+l3_test(@selector(initWithObjects:count:)) {
 	NSArray *array = [[RXNilArray alloc] initWithObjects:(const id[]){ self } count:1];
 	l3_expect(array[0]).to.equal(self);
-})
+}
 
-l3_test(@selector(initWithObjects:count:), ^{
+l3_test(@selector(initWithObjects:count:)) {
 	NSArray *array = [[RXNilArray alloc] initWithObjects:(const id [1]){ nil } count:1];
 	l3_expect(array[0]).to.equal(nil);
-})
+}
 
 -(instancetype)initWithObjects:(const id [])objects count:(NSUInteger)count {
 	NSParameterAssert(objects != NULL);
@@ -92,13 +92,13 @@ l3_test(@selector(initWithObjects:count:), ^{
 }
 
 
-l3_test(@selector(capacityForCount:), ^{
+l3_test(@selector(capacityForCount:)) {
 	l3_expect([[RXMutableNilArray new] capacityForCount:0]).to.equal(@0);
 	l3_expect([[RXMutableNilArray new] capacityForCount:1]).to.equal(@8);
 	l3_expect([[RXMutableNilArray new] capacityForCount:7]).to.equal(@8);
 	l3_expect([[RXMutableNilArray new] capacityForCount:8]).to.equal(@8);
 	l3_expect([[RXMutableNilArray new] capacityForCount:9]).to.equal(@16);
-})
+}
 
 -(NSUInteger)capacityForCount:(NSUInteger)count {
 	const CGFloat granularity = 8;
@@ -128,7 +128,7 @@ l3_test(@selector(capacityForCount:), ^{
 
 #pragma mark NSMutableArray
 
-l3_test(@selector(insertObject:atIndex:), ^{
+l3_test(@selector(insertObject:atIndex:)) {
 	RXMutableNilArray *array = [RXMutableNilArray new];
 	[array insertObject:@0 atIndex:0];
 	[array insertObject:@1 atIndex:1];
@@ -139,7 +139,7 @@ l3_test(@selector(insertObject:atIndex:), ^{
 	l3_expect(array[1]).to.equal(nil);
 	l3_expect(array[2]).to.equal(@1);
 	l3_expect(array.count).to.equal(@4);
-})
+}
 
 -(void)insertObject:(id)object atIndex:(NSUInteger)index {
 	NSParameterAssert(index <= self.count);
@@ -150,7 +150,7 @@ l3_test(@selector(insertObject:atIndex:), ^{
 	[self replaceObjectAtIndex:index withObject:object];
 }
 
-l3_test(@selector(removeObjectAtIndex:), ^{
+l3_test(@selector(removeObjectAtIndex:)) {
 	NSMutableArray *array = [RXMutableNilArray new];
 	[array addObject:@1];
 	[array addObject:@0];
@@ -158,7 +158,7 @@ l3_test(@selector(removeObjectAtIndex:), ^{
 	[array removeObjectAtIndex:0];
 	l3_expect(array.count).to.equal(@1);
 	l3_expect(array[0]).to.equal(@0);
-})
+}
 
 -(void)removeObjectAtIndex:(NSUInteger)index {
 	NSParameterAssert(index < self.count);

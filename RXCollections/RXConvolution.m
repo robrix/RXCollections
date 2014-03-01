@@ -36,8 +36,7 @@ id (* const RXZipWith)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolution
 id (* const RXZipWithF)(id<NSObject, NSCopying, NSFastEnumeration>, RXConvolutionFunction) = RXConvolveWithF;
 
 l3_addTestSubjectTypeWithFunction(RXConvolve)
-
-l3_test(&RXConvolve, ^{
+l3_test(&RXConvolve) {
 	NSArray *convoluted = RXConstructArray(RXConvolve(@[@[@0, @1, @2], @[@2, @3]]));
 	l3_expect(convoluted.count).to.equal(@2);
 	l3_expect(convoluted).to.equal(@[[RXTuple tupleWithArray:@[@0, @2]], [RXTuple tupleWithArray:@[@1, @3]]]);
@@ -46,7 +45,7 @@ l3_test(&RXConvolve, ^{
 	convoluted = RXConstructArray(RXConvolve(@[interval.traversal, interval.traversal]));
 	
 	l3_expect(convoluted.lastObject).to.equal([RXTuple tupleWithObjects:(const id[]){@1, @1} count:2]);
-})
+}
 
 id<RXTraversal> RXConvolve(id<NSObject, NSCopying, NSFastEnumeration> sequences) {
 	return RXConvolveWith(sequences, ^id(NSUInteger count, id const objects[count], bool *stop) {

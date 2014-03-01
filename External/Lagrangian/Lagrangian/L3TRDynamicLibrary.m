@@ -2,7 +2,7 @@
 #import <dlfcn.h>
 
 @interface L3TRDynamicLibrary ()
-@property (nonatomic, readonly) void *handle;
+@property (readonly) void *handle;
 @end
 
 @implementation L3TRDynamicLibrary

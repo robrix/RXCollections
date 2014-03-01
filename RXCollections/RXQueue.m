@@ -23,9 +23,9 @@
 @end
 
 
-l3_setup((RXQueue *queue), ^{
+l3_setup(RXQueue, (RXQueue *queue)) {
 	self.state.queue = [RXQueue new];
-})
+}
 
 @interface RXQueue ()
 @property (nonatomic) id<RXLinkedListNode> headNode;
@@ -39,16 +39,16 @@ l3_setup((RXQueue *queue), ^{
 }
 
 
-l3_test(@selector(isExhausted), ^{
+l3_test(@selector(isExhausted)) {
 	l3_expect([RXQueue new].isExhausted).to.equal(@NO);
-})
+}
 
 -(bool)isExhausted {
 	return NO;
 }
 
 
-l3_test(@selector(enqueueObject:), ^{
+l3_test(@selector(enqueueObject:)) {
 	RXQueue *queue = [RXQueue new];
 	id object = @"Sesquipedalian";
 	[queue enqueueObject:object];
@@ -56,7 +56,7 @@ l3_test(@selector(enqueueObject:), ^{
 	object = @"Parsimony";
 	[queue enqueueObject:object];
 	l3_expect(queue.tailNode.first).to.equal(object);
-})
+}
 
 -(void)appendNode:(id<RXLinkedListNode>)node {
 	self.tailNode = node;
@@ -73,18 +73,18 @@ l3_test(@selector(enqueueObject:), ^{
 }
 
 
-l3_test("dequeueing from an empty queue blocks until something is added", ^{
+l3_test("dequeueing from an empty queue blocks until something is added") {
 	// fixme: figure out how best to test this
-})
+}
 
-l3_test(@selector(dequeueObject), ^{
+l3_test(@selector(dequeueObject)) {
 	RXQueue *queue = [RXQueue new];
 	id object = @"Faltering";
 	[queue enqueueObject:object];
 	l3_expect([queue dequeueObject]).to.equal(object);
 	l3_expect(queue.headNode).to.equal(nil);
 	l3_expect(queue.tailNode).to.equal(nil);
-})
+}
 
 -(id)dequeueObject {
 	id object = self.headNode.first;
@@ -95,9 +95,9 @@ l3_test(@selector(dequeueObject), ^{
 }
 
 
-l3_test(@selector(head), ^{
+l3_test(@selector(head)) {
 	l3_expect([RXQueue new].head).to.equal(nil);
-})
+}
 
 -(id)head {
 	return self.headNode.first;

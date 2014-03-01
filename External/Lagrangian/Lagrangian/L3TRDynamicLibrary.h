@@ -4,7 +4,7 @@
 
 +(instancetype)openLibraryAtPath:(NSString *)path error:(NSError * __autoreleasing *)error;
 
-@property (nonatomic, readonly) NSString *path;
+@property (readonly) NSString *path;
 
 -(void *)loadSymbolWithName:(NSString *)symbolName error:(NSError * __autoreleasing *)error;
 

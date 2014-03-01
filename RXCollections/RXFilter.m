@@ -11,42 +11,42 @@ static RXFilterBlock RXFilterBlockWithFunction(RXFilterFunction function);
 
 l3_addTestSubjectTypeWithBlock(RXFilterBlock);
 
-l3_test(RXAcceptFilterBlock, ^{
+l3_test(RXAcceptFilterBlock) {
 	bool stop = NO;
 	l3_expect(RXAcceptFilterBlock(nil, &stop)).to.equal(@YES);
-})
+}
 
 RXFilterBlock const RXAcceptFilterBlock = ^bool(id each, bool *stop) {
 	return YES;
 };
 
 
-l3_test(RXRejectFilterBlock, ^{
+l3_test(RXRejectFilterBlock) {
 	bool stop = NO;
 	l3_expect(RXRejectFilterBlock(nil, &stop)).to.equal(@NO);
-})
+}
 
 RXFilterBlock const RXRejectFilterBlock = ^bool(id each, bool *stop) {
 	return NO;
 };
 
 
-l3_test(RXAcceptNilFilterBlock, ^{
+l3_test(RXAcceptNilFilterBlock) {
 	bool stop = NO;
 	l3_expect(RXAcceptNilFilterBlock(nil, &stop)).to.equal(@YES);
 	l3_expect(RXAcceptNilFilterBlock([NSObject new], &stop)).to.equal(@NO);
-})
+}
 
 RXFilterBlock const RXAcceptNilFilterBlock = ^bool(id each, bool *stop) {
 	return each == nil;
 };
 
 
-l3_test(RXRejectNilFilterBlock, ^{
+l3_test(RXRejectNilFilterBlock) {
 	bool stop = NO;
 	l3_expect(RXRejectNilFilterBlock(nil, &stop)).to.equal(@NO);
 	l3_expect(RXRejectNilFilterBlock([NSObject new], &stop)).to.equal(@YES);
-})
+}
 
 RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 	return each != nil;
@@ -55,7 +55,7 @@ RXFilterBlock const RXRejectNilFilterBlock = ^bool(id each, bool *stop) {
 
 l3_addTestSubjectTypeWithFunction(RXFilter);
 
-l3_test(&RXFilter, ^{
+l3_test(&RXFilter) {
 	NSArray *unfiltered = @[@"Ancestral", @"Philanthropic", @"Harbinger", @"Azimuth"];
 	NSArray *filtered = RXConstructArray(RXFilter(unfiltered, ^bool(id each, bool *stop) {
 		return [each hasPrefix:@"A"];
@@ -67,7 +67,7 @@ l3_test(&RXFilter, ^{
 		return YES;
 	}));
 	l3_expect(stopped).to.equal(@[]);
-})
+}
 
 id<RXTraversal> RXFilter(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXFilterBlock block) {
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, block, nil));
@@ -80,12 +80,12 @@ id<RXTraversal> RXFilterF(id<NSObject, NSCopying, NSFastEnumeration> enumeration
 
 l3_addTestSubjectTypeWithFunction(RXLinearSearch);
 
-l3_test(&RXLinearSearch, ^{
+l3_test(&RXLinearSearch) {
 	id found = RXLinearSearch(@[@"Amphibious", @"Belligerent", @"Bizarre"], ^bool(id each, bool *stop) {
 		return [each hasPrefix:@"B"];
 	});
 	l3_expect(found).to.equal(@"Belligerent");
-})
+}
 
 id RXLinearSearch(id<NSObject, NSCopying, NSFastEnumeration> collection, RXFilterBlock block) {
 	return RXFold(collection, nil, ^(id memo, id each, bool *stop) {

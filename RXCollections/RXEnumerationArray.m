@@ -43,7 +43,7 @@
 
 #pragma mark NSArray primitives
 
-l3_test(@selector(count), ^{
+l3_test(@selector(count)) {
 	id<RXFiniteTraversal> items = (id)RXInterval(0, 63).traversal;
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:items count:items.count];
 	[array count];
@@ -56,7 +56,7 @@ l3_test(@selector(count), ^{
 	}).traversal];
 	[array count];
 	l3_expect(array.enumeratedObjects.count).to.equal(@64);
-})
+}
 
 -(NSUInteger)count {
 	if (self.internalCount == RXTraversalUnknownCount)
@@ -64,7 +64,7 @@ l3_test(@selector(count), ^{
 	return self.internalCount;
 }
 
-l3_test(@selector(objectAtIndex:), ^{
+l3_test(@selector(objectAtIndex:)) {
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
 	[array objectAtIndex:0];
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
@@ -72,7 +72,7 @@ l3_test(@selector(objectAtIndex:), ^{
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	[array objectAtIndex:16];
 	l3_expect(array.enumeratedObjects.count).to.equal(@32);
-})
+}
 
 -(id)objectAtIndex:(NSUInteger)index {
 	[self populateUpToIndex:index];
@@ -82,11 +82,11 @@ l3_test(@selector(objectAtIndex:), ^{
 
 #pragma mark Populating
 
-l3_test(@selector(populateUpToIndex:), ^{
+l3_test(@selector(populateUpToIndex:)) {
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
 	[array populateUpToIndex:NSUIntegerMax];
 	l3_expect(array.enumeration).to.equal(nil);
-})
+}
 
 -(void)populateUpToIndex:(NSUInteger)index {
 	if (!self.enumeration || self.enumeratedObjects.count > index)
@@ -121,7 +121,7 @@ l3_test(@selector(populateUpToIndex:), ^{
 
 #pragma mark NSFastEnumeration
 
-l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
+l3_test(@selector(countByEnumeratingWithState:objects:count:)) {
 	RXEnumerationArray *array = [RXEnumerationArray arrayWithEnumeration:RXInterval(0, 63).traversal];
 	for (id x in array) { break; }
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
@@ -129,7 +129,7 @@ l3_test(@selector(countByEnumeratingWithState:objects:count:), ^{
 	l3_expect(array.enumeratedObjects.count).to.equal(@16);
 	for (id x in array) {}
 	l3_expect(array.enumeratedObjects.count).to.equal(@64);
-})
+}
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
 	NSUInteger count = 0;

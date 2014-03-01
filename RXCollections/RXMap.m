@@ -10,10 +10,10 @@ static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function);
 
 l3_addTestSubjectTypeWithBlock(RXMapBlock);
 
-l3_test(RXIdentityMapBlock, ^{
+l3_test(RXIdentityMapBlock) {
 	bool stop = NO;
 	l3_expect(RXIdentityMapBlock(@"Equestrian", &stop)).to.equal(@"Equestrian");
-})
+}
 
 RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 	return x;
@@ -22,12 +22,12 @@ RXMapBlock const RXIdentityMapBlock = ^(id x, bool *stop) {
 
 l3_addTestSubjectTypeWithFunction(RXMap);
 
-l3_test(&RXMap, ^{
+l3_test(&RXMap) {
 	id mapped = RXConstructArray(RXMap(@[@"Hegemony", @"Maleficent"], ^(NSString *each, bool *stop) {
 		return [each stringByAppendingString:@"Superlative"];
 	}));
 	l3_expect(mapped).to.equal(@[@"HegemonySuperlative", @"MaleficentSuperlative"]);
-})
+}
 
 id<RXTraversal> RXMap(id<NSObject, NSCopying, NSFastEnumeration> enumeration, RXMapBlock block) {
 	return RXTraversalWithSource(RXFilteredMapTraversalSource(enumeration, nil, block));
@@ -44,11 +44,11 @@ static id identityFunction(id each, bool *stop) {
 	return each;
 }
 
-l3_test(&RXMapBlockWithFunction, ^{
+l3_test(&RXMapBlockWithFunction) {
 	NSObject *object = [NSObject new];
 	bool stop = NO;
 	l3_expect(RXMapBlockWithFunction(identityFunction)(object, &stop)).to.equal(object);
-})
+}
 
 static inline RXMapBlock RXMapBlockWithFunction(RXMapFunction function) {
 	return ^(id each, bool *stop) {
