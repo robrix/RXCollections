@@ -12,20 +12,20 @@ NSString * const L3TestRunnerSubjectEnvironmentVariableName = @"L3_TEST_RUNNER_S
 
 
 @interface L3TestStatistics : NSObject
-@property (nonatomic) NSDate *startDate;
-@property (nonatomic) NSDate *endDate;
-@property (nonatomic) unsigned long testCount;
-@property (nonatomic) unsigned long assertionFailureCount;
-@property (nonatomic) unsigned long exceptionCount;
-@property (nonatomic) NSTimeInterval duration;
+@property NSDate *startDate;
+@property NSDate *endDate;
+@property unsigned long testCount;
+@property unsigned long assertionFailureCount;
+@property unsigned long exceptionCount;
+@property NSTimeInterval duration;
 
 -(void)addStatistics:(L3TestStatistics *)statistics;
 @end
 
 @interface L3TestRunner () <L3TestVisitor>
 
-@property (nonatomic, readonly) NSOperationQueue *queue;
-@property (nonatomic, readonly) L3TestStatistics *statistics;
+@property (readonly) NSOperationQueue *queue;
+@property (readonly) L3TestStatistics *statistics;
 
 -(void)runAtLaunch;
 

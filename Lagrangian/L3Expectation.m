@@ -8,13 +8,13 @@
 
 @interface L3TestResult : NSObject <L3TestResult>
 
-@property (nonatomic) id<L3SourceReference> subjectReference;
+@property id<L3SourceReference> subjectReference;
 
-@property (nonatomic) NSString *hypothesisString;
-@property (nonatomic) NSString *observationString;
+@property NSString *hypothesisString;
+@property NSString *observationString;
 
-@property (nonatomic) bool wasMet;
-@property (nonatomic) NSException *exception;
+@property bool wasMet;
+@property NSException *exception;
 
 @end
 
@@ -24,11 +24,11 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
 @interface L3Predicate : NSObject
 
-@property (nonatomic, weak, readonly) id<L3Expectation> expectation;
-@property (nonatomic, readonly) NSString *description;
-@property (nonatomic, readonly) L3PredicateBlock block;
+@property (weak, readonly) id<L3Expectation> expectation;
+@property (readonly) NSString *description;
+@property (readonly) L3PredicateBlock block;
 
-@property (nonatomic, strong) L3Predicate *next;
+@property (strong) L3Predicate *next;
 
 -(bool)testWithSubject:(id)subject;
 
@@ -57,13 +57,13 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
 @interface L3Expectation : NSObject <L3Expectation>
 
-@property (nonatomic, weak) L3Test *test;
+@property (weak) L3Test *test;
 
-@property (nonatomic) L3Predicate *predicate;
+@property L3Predicate *predicate;
 
-@property (nonatomic, getter = isInverted) bool inverted;
+@property (getter = isInverted) bool inverted;
 
-@property (nonatomic, copy) void(^completionHandler)(id<L3Expectation>, bool wasMet);
+@property (copy) void(^completionHandler)(id<L3Expectation>, bool wasMet);
 
 @end
 
@@ -85,9 +85,9 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 	return self;
 }
 
-l3_test(@selector(not), ^{
+l3_test(@selector(not)) {
 	l3_expect(@0).not.to.equal(@1);
-})
+}
 
 -(id<L3Expectation>)not {
 	self.inverted = YES;

@@ -7,6 +7,7 @@
 #define L3_CONSTRUCTOR __attribute__((constructor)) static inline
 #define L3_EXTERN extern
 #define L3_INLINE static inline
+#define L3_UNUSABLE __attribute__((unused)) __attribute__((unavailable)) static inline
 
 
 #pragma mark Configuration
