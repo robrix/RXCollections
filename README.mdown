@@ -16,7 +16,7 @@ In short:
 	RXLinearSearch(scientists, ^bool(Scientist *each, bool *stop) { return [each.name isEqualToString:@"Richard Feynman"]; });
 	
 	RXConvolveWith(@[names, addresses, phoneNumbers], ^(NSUInteger count, id const objects[count]) {
-		return [BusinessCard withName:objects[0] address:objects[1] phoneNumber:object[2]];
+		return [BusinessCard withName:objects[0] address:objects[1] phoneNumber:objects[2]];
 	});
 
 (Yeah, yeah, you can call it `RXZipWith` instead if you like that so much better.)
