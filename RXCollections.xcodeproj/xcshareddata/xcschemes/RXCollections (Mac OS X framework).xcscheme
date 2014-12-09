@@ -96,6 +96,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D4B62BA516A15F7000E42C84"
+            BuildableName = "RXCollections.framework"
+            BlueprintName = "RXCollections (Mac OS X framework)"
+            ReferencedContainer = "container:RXCollections.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
