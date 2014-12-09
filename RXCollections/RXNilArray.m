@@ -7,6 +7,9 @@
 
 @implementation RXNilArray
 
+@synthesize count = _count;
+
+
 +(instancetype)allocWithZone:(NSZone *)zone {
 	return RXSingleton(self, ^{ return [self allocateWithExtraSize:0]; });
 }
@@ -72,6 +75,9 @@ l3_test(@selector(initWithObjects:count:)) {
 @end
 
 @implementation RXMutableNilArray
+
+@synthesize count = _count;
+
 
 -(instancetype)initWithObjects:(const id [])objects count:(NSUInteger)count {
 	if ((self = [super init])) {

@@ -36,6 +36,9 @@ typedef bool (^L3PredicateBlock)(L3Predicate *predicate, id subject);
 
 @implementation L3Predicate
 
+@synthesize description = _description;
+
+
 -(instancetype)initWithExpectation:(id<L3Expectation>)expectation description:(NSString *)description block:(L3PredicateBlock)block {
 	NSParameterAssert(block != nil);
 	
