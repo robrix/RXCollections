@@ -1,3 +1,8 @@
+# Obsolete!
+
+This is obsolete and unmaintained. Don’t use it! Use [Reducers](https://github.com/robrix/Reducers) or [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) or Swift instead.
+
+
 # RXCollections
 
 Lazily-evaluated (when feasible) higher-order functions for Cocoa collections (including your own), with as little chaff as possible.
